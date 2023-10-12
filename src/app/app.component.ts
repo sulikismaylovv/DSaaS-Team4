@@ -9,7 +9,7 @@ import { SupabaseService } from './supabase.service'
 })
 
 export class AppComponent implements OnInit {
-  title = 'DSaaS';  
+  title = 'DSaaS';
 
   session = this.supabase.session
 
@@ -17,5 +17,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
+  }
+  hideForm = false;
+  toggle(){
+    this.hideForm=!this.hideForm;
   }
 }
