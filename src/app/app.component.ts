@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'DSaaS';
+  title = 'Twitter x Fut mob';
+
 }
