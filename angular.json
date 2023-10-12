@@ -14,7 +14,10 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash"
+              "lodash",
+              "lodash-es",
+              "moment",
+              "moment-timezone"
             ],
             "outputPath": "dist/dsaa-s",
             "index": "src/index.html",
