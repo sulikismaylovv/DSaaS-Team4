@@ -29,10 +29,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --prod
+        run: npm run build --prod
 
       - name: Test
-        run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+        run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
 
   Deploy-Preview:
     needs: build_and_test
