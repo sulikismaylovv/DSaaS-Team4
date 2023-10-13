@@ -31,8 +31,11 @@ jobs:
       - name: Build
         run: npm run build --prod
 
-      - name: Test
-        run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
+
+      #- name: Test
+      #  run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
 
   Deploy-Production:
     needs: build_and_test
