@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build_and_test:
@@ -43,7 +43,11 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          APP_TITLE: ${{ secrets.APP_TITLE_PREVIEW }} # Assuming you've also set this secret in GitHub secrets
         run: npm run build --prod
+
+
 
       #- name: Test
       #  run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox

@@ -43,7 +43,10 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          APP_TITLE: ${{ secrets.APP_TITLE }} # Assuming you've also set this secret in GitHub secrets
         run: npm run build --prod
+
 
 
 

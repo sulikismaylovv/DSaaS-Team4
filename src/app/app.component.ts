@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from './supabase.service'
-
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { SupabaseService } from './supabase.service'
 })
 
 export class AppComponent implements OnInit {
-  title = 'DSaaS';
+  title: string = "Default Title";
 
   session = this.supabase.session
 
@@ -17,9 +17,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
+
+    // Set the title based on the environment
+    if (environment.production) {
+      this.title = process.env['APP_TITLE'] || 'My Title (production)';
+    } else {
+      this.title = process.env['APP_TITLE_PREVIEW'] || 'My Title (preview)';
+    }
   }
+
   hideForm = true;
-  toggle(){
-    this.hideForm=!this.hideForm;
+  toggle() {
+    this.hideForm = !this.hideForm;
   }
 }
