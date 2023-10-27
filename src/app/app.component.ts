@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
     // Set the title based on the environment
     if (environment.production) {
-      this.title = process.env['APP_TITLE'] || 'My Title (production)';
+      this.title = process.env['APP_TITLE'] ? process.env['APP_TITLE'] : 'My Title (production)';
     } else {
       this.title = process.env['APP_TITLE_PREVIEW'] || 'My Title (preview)';
     }
