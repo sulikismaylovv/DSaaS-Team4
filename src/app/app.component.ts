@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from './supabase.service'
+import { initFlowbite } from 'flowbite';
+
+
 import { environment } from '../environments/environment';
 
 @Component({
@@ -12,9 +15,7 @@ export class AppComponent implements OnInit {
   title: string = "Default Title";
 
   session = this.supabase.session
-
   constructor(private readonly supabase: SupabaseService) {}
-
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
 
@@ -24,10 +25,12 @@ export class AppComponent implements OnInit {
     } else {
       this.title = process.env['APP_TITLE_PREVIEW'] || 'My Title (preview)';
     }
+    initFlowbite();
   }
 
   hideForm = true;
   toggle() {
     this.hideForm = !this.hideForm;
   }
+
 }
