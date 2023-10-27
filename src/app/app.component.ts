@@ -3,6 +3,7 @@ import { SupabaseService } from './supabase.service'
 import { initFlowbite } from 'flowbite';
 import { environment } from '../environments/environment';
 import { inject } from '@vercel/analytics';
+import { ThemeService } from './theme.service';
 
 
 
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   title = environment.appTitle;
 
   session = this.supabase.session
-  constructor(private readonly supabase: SupabaseService) {}
+  constructor(private readonly supabase: SupabaseService, public themeService: ThemeService) {}
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
     initFlowbite();
@@ -27,6 +28,9 @@ export class AppComponent implements OnInit {
   hideForm = true;
   toggle() {
     this.hideForm = !this.hideForm;
+  }
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
 

@@ -1,5 +1,6 @@
 
 
+
 <section class="bg-light-mode dark:bg-dark-mode">
   <div class="px-4 mx-auto max-w-screen-xl">
     <div [hidden]="hideForm" class="col mb-3">
@@ -10,6 +11,9 @@
       <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>
     </div>
     <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggle()">Show Login Demo</button> <br>
+    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggleTheme()">
+      Toggle {{ themeService.isDarkModeEnabled() ? 'White' : 'Dark' }} Mode
+    </button>
   </div>
 
   <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
