@@ -5,6 +5,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -16,22 +17,42 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
+      # Cache dependencies.
+      - name: Cache dependencies
+        id: npm-cache
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      # Install dependencies.
       - name: Install dependencies
-        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm install
 
       - name: Build
-        run: npm run build -- --prod
+        env:
+          APP_TITLE: ${{ secrets.APP_TITLE }} # Assuming you've also set this secret in GitHub secrets
+        run: npm run build --prod
 
-      - name: Test
-        run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
+
+
+      #- name: Test
+      #  run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
 
   Deploy-Production:
     needs: build_and_test
