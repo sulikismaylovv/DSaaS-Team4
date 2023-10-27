@@ -15,14 +15,12 @@ import { inject } from '@vercel/analytics';
 })
 
 export class AppComponent implements OnInit {
-  title: string = "Default Title";
+  title = environment.appTitle;
 
   session = this.supabase.session
   constructor(private readonly supabase: SupabaseService) {}
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
-    // Set the title based on the environment
-    this.title = environment.appTitle;
     initFlowbite();
   }
 

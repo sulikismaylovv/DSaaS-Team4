@@ -42,12 +42,13 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Replace titles with GitHub Secrets for deployment
+      - name: Set App Title from GitHub Secret
         run: |
-          sed -i 's/My Title (preview)/${{ secrets.APP_TITLE_PREVIEW }}/g' src/environments/environment.ts
-          sed -i 's/My Title (production)/${{ secrets.APP_TITLE }}/g' src/environments/environment.prod.ts
+          sed -i "s/'My Title (preview)'/'${{ secrets.APP_TITLE_PREVIEW }}'/g" src/environments/environment.ts
+          sed -i "s/'My Title (production)'/'${{ secrets.APP_TITLE }}'/g" src/environments/environment.prod.ts
 
 
+      #Build
       - name: Build
         env:
           APP_TITLE: ${{ secrets.APP_TITLE_PREVIEW }} # Assuming you've also set this secret in GitHub secrets
