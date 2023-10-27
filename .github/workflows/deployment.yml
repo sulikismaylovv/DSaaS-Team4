@@ -48,6 +48,12 @@ jobs:
           sed -i "s/'My Title (production)'/'${{ secrets.APP_TITLE }}'/g" src/environments/environment.prod.ts
 
 
+      - name: Display updated files for debugging
+        run: |
+          cat src/environments/environment.development.ts
+          cat src/environments/environment.prod.ts
+
+
       #Build
       - name: Build
         env:
