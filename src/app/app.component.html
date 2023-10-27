@@ -1,56 +1,59 @@
 <div class="container py-2">
-    <div [hidden]="hideForm" class="col mb-3">
-      <app-account *ngIf="session; else auth" [session]="session"></app-account>
-      <ng-template #auth>
-        <app-auth></app-auth>
-      </ng-template>
-      <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>
-    </div>
-    <button class="btn btn-primary" (click)="toggle()">Show Login Demo</button> <br>
+<!--    <div [hidden]="hideForm" class="col mb-3">-->
+<!--      <app-account *ngIf="session; else auth" [session]="session"></app-account>-->
+<!--      <ng-template #auth>-->
+<!--        <app-auth></app-auth>-->
+<!--      </ng-template>-->
+<!--      <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>-->
+<!--    </div>-->
+<!--    <button class="btn btn-primary" (click)="toggle()">Show Login Demo</button> <br>-->
+<!--<app-login></app-login>-->
+  <app-registeration></app-registeration>
+  <app-registeration2></app-registeration2>
 
-  <div class="row justify-content-center">
-    <h1 class="text-center">{{title}}</h1>
-    <div class="col-6 py-3">
-      <p> Alright, honey, hold onto your football boots because THIS is THE social media haven for football fanatics.
-        Imagine if Twitter had a wild love affair with Futmob – BOOM! That’s what we're serving.</p>
-      <p> Ready for a pitch invasion of awesomeness? Here we go:</p>
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-6">
-      <div class="overflow-auto" style="height:300px;">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><strong>💁‍♂️ Goal Reactions:</strong> No more basic "likes". Now you can properly freak out or sob uncontrollably when your team scores (or misses, oops).</li>
-          <li class="list-group-item"><strong>🥅 Automated Goal Posts:</strong> Get goals served hot and fresh, like morning pastries, but with more screaming fans.</li>
-          <li class="list-group-item"><strong>🔄 Transfer Tea & Lineup Goss:</strong> Want the latest who's-going-where drama? We gotchu!</li>
-          <li class="list-group-item"><strong>🛡️ Show Your Colors:</strong> Rock that club badge next to your name like it's the latest fashion trend.</li>
-          <li class="list-group-item"><strong>💸 Virtual Bling:</strong> Let’s make it rain virtual coins, ‘cause why not? Buy, earn, or flaunt them, your choice.</li>
-          <li class="list-group-item"><strong>🔮 Betting & Guesswork:</strong> Put your virtual money where your mouth is! Predict, bet, and maybe join the elite predictor squads.</li>
-          <li class="list-group-item"><strong>🌟 Fantasy Football Glam:</strong> Build your dreamy team of studs. And by studs, we mean ace players, duh.</li>
-          <li class="list-group-item"><strong>🃏 Player Trading Cards:</strong> Think Pokémon cards but hotter. Gotta collect 'em all!</li>
-          <li class="list-group-item"><strong>💹 Economy Realness:</strong> We'll keep it classy, not trashy. Balancing the virtual coins like a boss.</li>
-          <li class="list-group-item"><strong>💳 Swipe the Card:</strong> Add some real cash, get virtual coins. We're basically the footballing ATM.</li>
-          <li class="list-group-item"><strong>✨ Profile Glow-Up:</strong> Customize it. Flaunt it. Make it YOU.</li>
-          <li class="list-group-item"><strong>🔔 No More FOMO:</strong> Get all the juicy notifications. Never miss a beat.</li>
-          <li class="list-group-item"><strong>🎙️ Live Match Chit-Chat:</strong> We spill the beans, play-by-play. You bring the popcorn.</li>
-          <li class="list-group-item"><strong>🎥 Reel Highlights:</strong> Rewatch that legendary kick or that embarrassing miss whenever your heart desires.</li>
-          <li class="list-group-item"><strong>📣 Football Gossip Share:</strong> Tell your pals, show your foes. Everyone needs a taste of this awesomeness.</li>
-          <li class="list-group-item"><strong>💌 Slide into DMs:</strong> Got football feelings or just wanna chat? Say no more!</li>
-          <li class="list-group-item"><strong>🗣️ Football Banter Boards:</strong> Got opinions? Drop ‘em here. Respectfully, of course.</li>
-          <li class="list-group-item"><strong>✌️ Peace & Love:</strong> We’ve got mods keeping things civil. It's a football party, not a brawl!</li>
-          <li class="list-group-item"><strong>💎 Shiny In-App Buys:</strong> Get the shiny stuff! We’re talking rare player cards or that swanky profile glow.</li>
-          <li class="list-group-item"><strong>📊 Stats & Gossip:</strong> Nerd out on player stats or just enjoy the juicy team stories.</li>
-          <li class="list-group-item"><strong>🏆 Footie Fun Challenges:</strong> Quiz up and win more of those shiny coins!</li>
-          <li class="list-group-item"><strong>📊 Feel the Pulse with Live Polls:</strong> Vote and see what the tribe feels!</li>
-          <li class="list-group-item"><strong>📢 Your Football Stage:</strong> Got footie wisdom? Share your content, and let's make you the star!</li>
-          <li class="list-group-item"><strong>💬 Footie Chat Rooms:</strong> Because watching football alone is so last season.</li>
-        </ul>
-      </div>
-      <p class="pt-2">Now, tell me, darling, ARE YOU IN or ARE YOU IN? 😉🎉</p>
-      <img src="https://media.tenor.com/204sDQ60w88AAAAC/applause-crowd.gif" class="rounded mx-auto d-block pb-4 " alt="...">
-    </div>
-  </div>
-</div>
+  <!--  <div class="row justify-content-center">-->
+<!--    <h1 class="text-center">{{title}}</h1>-->
+<!--    <div class="col-6 py-3">-->
+<!--      <p> Alright, honey, hold onto your football boots because THIS is THE social media haven for football fanatics.-->
+<!--        Imagine if Twitter had a wild love affair with Futmob – BOOM! That’s what we're serving.</p>-->
+<!--      <p> Ready for a pitch invasion of awesomeness? Here we go:</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="row justify-content-center">-->
+<!--    <div class="col-6">-->
+<!--      <div class="overflow-auto" style="height:300px;">-->
+<!--        <ul class="list-group list-group-flush">-->
+<!--          <li class="list-group-item"><strong>💁‍♂️ Goal Reactions:</strong> No more basic "likes". Now you can properly freak out or sob uncontrollably when your team scores (or misses, oops).</li>-->
+<!--          <li class="list-group-item"><strong>🥅 Automated Goal Posts:</strong> Get goals served hot and fresh, like morning pastries, but with more screaming fans.</li>-->
+<!--          <li class="list-group-item"><strong>🔄 Transfer Tea & Lineup Goss:</strong> Want the latest who's-going-where drama? We gotchu!</li>-->
+<!--          <li class="list-group-item"><strong>🛡️ Show Your Colors:</strong> Rock that club badge next to your name like it's the latest fashion trend.</li>-->
+<!--          <li class="list-group-item"><strong>💸 Virtual Bling:</strong> Let’s make it rain virtual coins, ‘cause why not? Buy, earn, or flaunt them, your choice.</li>-->
+<!--          <li class="list-group-item"><strong>🔮 Betting & Guesswork:</strong> Put your virtual money where your mouth is! Predict, bet, and maybe join the elite predictor squads.</li>-->
+<!--          <li class="list-group-item"><strong>🌟 Fantasy Football Glam:</strong> Build your dreamy team of studs. And by studs, we mean ace players, duh.</li>-->
+<!--          <li class="list-group-item"><strong>🃏 Player Trading Cards:</strong> Think Pokémon cards but hotter. Gotta collect 'em all!</li>-->
+<!--          <li class="list-group-item"><strong>💹 Economy Realness:</strong> We'll keep it classy, not trashy. Balancing the virtual coins like a boss.</li>-->
+<!--          <li class="list-group-item"><strong>💳 Swipe the Card:</strong> Add some real cash, get virtual coins. We're basically the footballing ATM.</li>-->
+<!--          <li class="list-group-item"><strong>✨ Profile Glow-Up:</strong> Customize it. Flaunt it. Make it YOU.</li>-->
+<!--          <li class="list-group-item"><strong>🔔 No More FOMO:</strong> Get all the juicy notifications. Never miss a beat.</li>-->
+<!--          <li class="list-group-item"><strong>🎙️ Live Match Chit-Chat:</strong> We spill the beans, play-by-play. You bring the popcorn.</li>-->
+<!--          <li class="list-group-item"><strong>🎥 Reel Highlights:</strong> Rewatch that legendary kick or that embarrassing miss whenever your heart desires.</li>-->
+<!--          <li class="list-group-item"><strong>📣 Football Gossip Share:</strong> Tell your pals, show your foes. Everyone needs a taste of this awesomeness.</li>-->
+<!--          <li class="list-group-item"><strong>💌 Slide into DMs:</strong> Got football feelings or just wanna chat? Say no more!</li>-->
+<!--          <li class="list-group-item"><strong>🗣️ Football Banter Boards:</strong> Got opinions? Drop ‘em here. Respectfully, of course.</li>-->
+<!--          <li class="list-group-item"><strong>✌️ Peace & Love:</strong> We’ve got mods keeping things civil. It's a football party, not a brawl!</li>-->
+<!--          <li class="list-group-item"><strong>💎 Shiny In-App Buys:</strong> Get the shiny stuff! We’re talking rare player cards or that swanky profile glow.</li>-->
+<!--          <li class="list-group-item"><strong>📊 Stats & Gossip:</strong> Nerd out on player stats or just enjoy the juicy team stories.</li>-->
+<!--          <li class="list-group-item"><strong>🏆 Footie Fun Challenges:</strong> Quiz up and win more of those shiny coins!</li>-->
+<!--          <li class="list-group-item"><strong>📊 Feel the Pulse with Live Polls:</strong> Vote and see what the tribe feels!</li>-->
+<!--          <li class="list-group-item"><strong>📢 Your Football Stage:</strong> Got footie wisdom? Share your content, and let's make you the star!</li>-->
+<!--          <li class="list-group-item"><strong>💬 Footie Chat Rooms:</strong> Because watching football alone is so last season.</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      <p class="pt-2">Now, tell me, darling, ARE YOU IN or ARE YOU IN? 😉🎉</p>-->
+<!--      <img src="https://media.tenor.com/204sDQ60w88AAAAC/applause-crowd.gif" class="rounded mx-auto d-block pb-4 " alt="...">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">

@@ -1,0 +1,53 @@
+
+
+<div class="min-h-screen bg-purple-400 flex justify-center items-center">
+  <div class="absolute w-60 h-60 rounded-xl bg-purple-300 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+  </div>
+  <div class="absolute w-48 h-48 rounded-xl bg-purple-300 -bottom-6 -right-10 transform rotate-12 hidden md:block">
+  </div>
+  <div class="py-12 px-12 bg-white rounded-2xl shadow-xl z-20">
+    <div>
+      <div class="flex justify-center items-center">
+        <img src="assets/images/lightlogo.png" alt="Logo" class="w-40 h-40 object-cover rounded-full mb-4">
+      </div>
+
+      <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">Few more steps</h1>
+      <p class="w-80 text-center text-sm mb-8 font-semibold text-gray-700 tracking-wide cursor-pointer">Help us personalize your experience
+    </div>
+    <div class="space-y-4">
+      <div class="mb-4">
+        <label for="favorite-league" class="block text-sm font-semibold mb-2">Favorite League:</label>
+        <select id="favorite-league" class="block text-sm py-3 px-4 rounded-lg w-full border focus:ring focus:ring-purple-500">
+          <option value="" selected disabled>Select a league</option>
+          <option value="premier-league">Premier League</option>
+          <option value="la-liga">La Liga</option>
+          <option value="serie-a">Serie A</option>
+          <!-- Add more leagues as options here -->
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="favorite-club" class="block text-sm font-semibold mb-2">Favorite Club in Selected League:</label>
+        <select id="favorite-club" class="block text-sm py-3 px-4 rounded-lg w-full border focus:ring focus:ring-purple-500">
+          <option value="" selected disabled>Select a club</option>
+          <!-- You will populate this dynamically based on the chosen league. For now, I'll provide an example for Premier League. -->
+          <option value="manchester-united">Manchester United</option>
+          <option value="liverpool">Liverpool</option>
+          <option value="chelsea">Chelsea</option>
+          <!-- Add more clubs as options here -->
+        </select>
+      </div>
+
+
+    </div>
+    <div class="text-center mt-6">
+      <button type="submit" style="background-color: rgb(176,75,214);" onmouseover="this.style.backgroundColor = 'rgb(66,47,151)';" onmouseout="this.style.backgroundColor = 'rgb(176,75,214)';" class="w-full flex justify-center text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
+        next
+      </button>
+    </div>
+  </div>
+  <div class="w-40 h-40 absolute bg-purple-300 rounded-full top-0 right-12 hidden md:block"></div>
+  <div
+    class="w-20 h-40 absolute bg-purple-300 rounded-full bottom-20 left-10 transform rotate-45 hidden md:block">
+  </div>
+</div>
