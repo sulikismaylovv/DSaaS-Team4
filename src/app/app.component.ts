@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from './supabase.service'
 import { initFlowbite } from 'flowbite';
 import { environment } from '../environments/environment';
+import { inject } from '@vercel/analytics';
+
 
 
 
@@ -33,5 +35,7 @@ export class AppComponent implements OnInit {
   toggle() {
     this.hideForm = !this.hideForm;
   }
+
+
 
 }
