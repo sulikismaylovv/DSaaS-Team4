@@ -37,20 +37,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      # Install dependencies.
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm install
-
-      - name: Set App Title from GitHub Secret
-        run: |
-          sed -i "s/'My Title (preview)'/'${{ secrets.APP_TITLE_PREVIEW }}'/g" src/environments/environment.development.ts
-
 
       #Build
       - name: Build
-        env:
-          APP_TITLE: ${{ secrets.APP_TITLE_PREVIEW }} # Assuming you've also set this secret in GitHub secrets
         run: npm run ng build --configuration=development
 
 

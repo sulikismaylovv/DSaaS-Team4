@@ -42,20 +42,10 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Set App Title from GitHub Secret
-        run: |
-          sed -i "s/'My Title (production)'/'${{ secrets.APP_TITLE }}'/g" src/environments/environment.prod.ts
-
-
-      - name: Display updated files for debugging
-        run: |
-          cat src/environments/environment.prod.ts
 
 
       #Build
       - name: Build
-        env:
-          APP_TITLE: ${{ secrets.APP_TITLE }}
         run: npm run build --prod
 
 
