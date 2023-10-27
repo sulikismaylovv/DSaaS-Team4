@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from './supabase.service'
 import { initFlowbite } from 'flowbite';
 import { environment } from '../environments/environment';
+import { inject } from '@vercel/analytics';
+
 
 
 
@@ -19,13 +21,8 @@ export class AppComponent implements OnInit {
   constructor(private readonly supabase: SupabaseService) {}
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session))
-
     // Set the title based on the environment
-    if (environment.production) {
-      this.title = process.env['APP_TITLE'] || 'My Title (production)';
-    } else {
-      this.title = process.env['APP_TITLE_PREVIEW'] || 'My Title (preview)';
-    }
+    this.title = environment.appTitle;
     initFlowbite();
   }
 
@@ -33,5 +30,7 @@ export class AppComponent implements OnInit {
   toggle() {
     this.hideForm = !this.hideForm;
   }
+
+
 
 }
