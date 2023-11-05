@@ -14,7 +14,7 @@ export class AuthComponent {
 
   // Separate form groups for sign-in and registration
   signInForm = this.formBuilder.group({
-    email: '',
+    usernameOrEmail: '',
     password: '',
   });
 
@@ -67,13 +67,16 @@ export class AuthComponent {
   async onSignIn(): Promise<void> {
     try {
       this.loading = true;
-      const email = this.signInForm.value.email as string;
+      const usernameOrEmail = this.signInForm.value.usernameOrEmail as string;
       const password = this.signInForm.value.password as string;
 
-      const response = await this.supabase.signIn(email, password); // Adjust the signIn method to accept password
+      // Call the signIn method with the usernameOrEmail and password
+      const response = await this.supabase.signIn({ usernameOrEmail, password });
       if (response.error) throw response.error;
 
       // Handle successful sign-in
+      // Redirect to dashboard or perform other actions as needed
+      alert('You are successfully signed in!');
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

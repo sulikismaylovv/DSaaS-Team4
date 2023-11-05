@@ -55,9 +55,38 @@
     }
 
 
-    async signIn(email: string, password: string) {
-      return this.supabase.auth.signInWithPassword({ email, password });
+    // SupabaseService
+    async signIn(credentials: { usernameOrEmail: string; password: string }) {
+      const { usernameOrEmail, password } = credentials;
+
+      // Check if the input is an email or username
+      const isEmail = usernameOrEmail.includes('@');
+
+      if (isEmail) {
+        // If it's an email, proceed with the normal sign-in process
+        return this.supabase.auth.signInWithPassword({ email: usernameOrEmail, password });
+      } else {
+        // If it's a username, you need to find the associated email
+        // Query your 'users' table where the username column matches the provided username
+        const { data, error } = await this.supabase
+          .from('users')
+          .select('email')
+          .eq('username', usernameOrEmail)
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        // If an associated email is found, use it to sign in
+        if (data && data.email) {
+          return this.supabase.auth.signInWithPassword({ email: data.email, password });
+        } else {
+          throw new Error('User not found');
+        }
+      }
     }
+
 
 
     signOut() {
