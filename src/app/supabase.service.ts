@@ -75,6 +75,7 @@
           .single();
 
         if (error) {
+          console.error('Sign In Error:', error.message);
           throw error;
         }
 
