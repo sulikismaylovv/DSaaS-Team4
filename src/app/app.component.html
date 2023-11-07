@@ -1,158 +1,93 @@
+<section class="bg-gray-200 dark:bg-dark-mode">
+  <div class="px-4 mx-auto max-w-screen-xl md:flex md:space-x-4 relative"> <!-- Add relative positioning to the container -->
+    <!-- Logo at the top-left -->
+    <img src="assets/logo1.png" alt="Logo" class="top-logo absolute top-0 left-0 z-10"> <!-- Add absolute positioning, and set z-index to 10 -->
 
+    <!-- Login -->
+    <aside class="w-full md:w-1/6 flex flex-col items-center justify-center"> <!-- Remove z-index to keep it in front -->
+      <!-- Icon -->
+      <div class="text-center mb-4">
+        <i class="fas fa-question-circle fa-2x text-light-mode-text dark:text-light-mode"></i>
+      </div>
+      <div>
+        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Log In</h4>
+        <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 show-login-button">Show Login Demo</button> <!-- Added a class "show-login-button" -->
+      </div>
+    </aside>
+    <!-- Main Content and Matches -->
+    <div class="w-full md:w-4/6 py-8 px-4 mx-auto max-w-screen-xl"> <!-- Adjust the width to 4/6 -->
+      <!-- Main Content -->
+      <div>
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-light-mode-text dark:text-light-mode">Remontada</h2>
+        <p class="text-light-mode-text sm:text-xl dark:text-light-mode">Alright, hoNey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
+        <!-- Add the rest of your main content here -->
+      </div>
 
-<section class="bg-light-mode dark:bg-dark-mode">
-  <div class="px-4 mx-auto max-w-screen-xl">
-    <div [hidden]="hideForm" class="col mb-3">
-      <app-account *ngIf="session; else auth" [session]="session"></app-account>
-      <ng-template #auth>
-        <app-auth></app-auth>
-      </ng-template>
-      <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>
-    </div>
-    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggle()">Show Login Demo</button> <br>
-  </div>
-
-  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-    <div class="max-w-screen-md mb-8 lg:mb-16">
-      <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-light-mode-text dark:text-light-mode">Remontada</h2>
-      <p class="text-light-mode-text sm:text-xl dark:text-light-mode">Alright, honey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
-    </div>
-    <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          💁‍♂️
+      <!-- Matches -->
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-1 gap-4">
+        <!-- Match 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <!-- Team 1 Icon -->
+            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
+          </div>
+          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
+          <div class="flex items-center">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
+            <!-- Team 2 Icon -->
+            <img src="/assets/logo1.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
+          </div>
         </div>
-        <h3 class="mb-2 text-xl text-light-mode-text font-bold dark:text-light-mode">Goal Reactions</h3>
-        <p class="text-light-mode-text dark:text-light-mode">No more basic "likes". Properly freak out or sob when your team scores or misses.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🥅
+        <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
+        <!-- Match 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <!-- Team 1 Icon -->
+            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
+          </div>
+          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
+          <div class="flex items-center">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
+            <!-- Team 2 Icon -->
+            <img src="/assets/team1-icon.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
+          </div>
         </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Automated Goal Posts</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Get goals served hot. Plus, the latest transfer and lineup drama.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🔄
+        <!-- Match 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <!-- Team 1 Icon -->
+            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
+          </div>
+          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
+          <div class="flex items-center">
+            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
+            <!-- Team 2 Icon -->
+            <img src="/assets/team1-icon.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
+          </div>
         </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Transfer Tea & Lineup Goss</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Want the latest who's-going-where drama? We gotchu!</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🛡️
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Show Your Colors</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Rock that club badge next to your name like it's the latest fashion trend.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          💸
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Virtual Bling</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Let’s make it rain virtual coins, ‘cause why not? Buy, earn, or flaunt them, your choice.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🔮
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Betting & Guesswork</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Put your virtual money where your mouth is! Predict, bet, and maybe join the elite predictor squads.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🌟
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Fantasy Football Glam</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Build your dreamy team of studs. And by studs, we mean ace players, duh.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🃏
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Player Trading Cards</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Think Pokémon cards but hotter. Gotta collect 'em all!</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          💹
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Economy Realness</h3>
-        <p class="text-light-mode-text dark:text-light-mode">We'll keep it classy, not trashy. Balancing the virtual coins like a boss.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          💳
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Swipe the Card:</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Think Pokémon cards but hotter. Gotta collect 'em all!</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          ✨
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Player Trading Cards</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Customize it. Flaunt it. Make it YOU.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🔔
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">No More FOMO</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Get all the juicy notifications. Never miss a beat.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🎙️
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Live Match Chit-Chat</h3>
-        <p class="text-light-mode-text dark:text-light-mode">We spill the beans, play-by-play. You bring the popcorn.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🎥
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Reel Highlights</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Rewatch that legendary kick or that embarrassing miss whenever your heart desires.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          📣
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Football Gossip Share</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Tell your pals, show your foes. Everyone needs a taste of this awesomeness.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          🗣️
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Football Banter Boards</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Got opinions? Drop ‘em here. Respectfully, of course.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          📊
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Stats & Gossip</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Nerd out on player stats or just enjoy the juicy team stories.</p>
-      </div>
-      <div>
-        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-          💬
-        </div>
-        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Chat Rooms</h3>
-        <p class="text-light-mode-text dark:text-light-mode">Because watching football alone is so last season.</p>
       </div>
     </div>
+
+    <!-- Settings -->
+    <aside class="w-full md:w-1/6"> <!-- Adjust the width to 1/6 and remove padding classes -->
+      <div class="mb-4">
+        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>
+        <ul>
+          <li>Setting 1</li>
+          <li>Setting 2</li>
+          <!-- Add more settings -->
+        </ul>
+      </div>
+    </aside>
   </div>
 </section>
 
-
-<footer class="rounded-lg shadow m-4 bg-light-mode dark:bg-dark-mode">
+<footer class="rounded-lg shadow m-4 bg-gray-200 dark:bg-dark-mode">
   <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm sm:text-center text-light-mode-text dark:text-light-mode">© 2023 <a href="https://flowbite.com/" class="hover:underline">Remontada™</a>. All Rights Reserved.
-    </span>
+    <span class="text-sm sm:text-center text-light-mode-text dark:text-light-mode">© 2023 <a href="https://flowbite.com/" class="hover:underline">Remontada™</a>. All Rights Reserved.</span>
     <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-light-mode-text dark:text-light-mode sm:mt-0">
       <li>
         <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
@@ -169,3 +104,20 @@
     </ul>
   </div>
 </footer>
+
+<style>
+  /* Reset margin and padding for Login and Settings sections */
+  aside {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* CSS for a larger logo at the top */
+  .top-logo {
+    width: 150px; /* Adjust the width as needed for a larger logo */
+    height: 150px; /* Adjust the height as needed for a larger logo */
+    left: 6%; /* Horizontally centered */
+    transform: translateX(-50%); /* Horizontally centered */
+    z-index: 0; /* Behind other content */
+  }
+</style>
