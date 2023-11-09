@@ -1,4 +1,4 @@
-<section class="bg-gray-200 dark:bg-dark-mode">
+<section class="bg-gray-200 dark:bg-dark-mode" xmlns="http://www.w3.org/1999/html">
   <div class="px-4 mx-auto max-w-screen-xl md:flex md:space-x-4 relative"> <!-- Add relative positioning to the container -->
     <!-- Logo at the top-left -->
     <img src="assets/logo1.png" alt="Logo" class="top-logo absolute top-0 left-0 z-10"> <!-- Add absolute positioning, and set z-index to 10 -->
@@ -14,60 +14,21 @@
         <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 show-login-button">Show Login Demo</button> <!-- Added a class "show-login-button" -->
       </div>
     </aside>
-    <!-- Main Content and Matches -->
+    <!-- Main Content and Posts/Matches -->
     <div class="w-full md:w-4/6 py-8 px-4 mx-auto max-w-screen-xl"> <!-- Adjust the width to 4/6 -->
       <!-- Main Content -->
       <div>
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-light-mode-text dark:text-light-mode">Remontada</h2>
         <p class="text-light-mode-text sm:text-xl dark:text-light-mode">Alright, hoNey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
+        <nav class="flex justify-center mt-4 space-x-4">
+          <a routerLink="/posts" class="text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
+          <a routerLink="/games" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
+        </nav>
         <!-- Add the rest of your main content here -->
       </div>
-
-      <!-- Matches -->
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-1 gap-4">
-        <!-- Match 1 -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-          <div class="flex items-center">
-            <!-- Team 1 Icon -->
-            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
-          </div>
-          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
-          <div class="flex items-center">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
-            <!-- Team 2 Icon -->
-            <img src="/assets/logo1.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-          </div>
-        </div>
-        <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
-        <!-- Match 2 -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-          <div class="flex items-center">
-            <!-- Team 1 Icon -->
-            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
-          </div>
-          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
-          <div class="flex items-center">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
-            <!-- Team 2 Icon -->
-            <img src="/assets/team1-icon.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-          </div>
-        </div>
-        <!-- Match 3 -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-          <div class="flex items-center">
-            <!-- Team 1 Icon -->
-            <img src="../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 1</span>
-          </div>
-          <div class="font-bold text-xl text-light-mode-text dark:text-light-mode">2 - 1</div>
-          <div class="flex items-center">
-            <span class="font-semibold text-lg text-light-mode-text dark:text-light-mode">Team 2</span>
-            <!-- Team 2 Icon -->
-            <img src="/assets/team1-icon.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-          </div>
-        </div>
+      <!-- Posts and Matches come here -->
+      <div class="w-full mx-auto max-w-screen-xl">
+        <router-outlet></router-outlet>
       </div>
     </div>
 
@@ -77,9 +38,62 @@
         <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>
         <ul>
           <li>Setting 1</li>
-          <li>Setting 2</li>
-          <!-- Add more settings -->
         </ul>
+        <!-- Next Match -->
+      </div>
+      <div class="dark:bg-gray-900 rounded-lg shadow-md mt-8 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+        <div class="flex justify-center">
+          <span class="text-white content-center mt-3 text-xl">Next Match</span>
+        </div>
+        <div class ="flex items-center justify-center">
+          <img src="../assets/team1-icon.png" alt="Team 1" class="w-20 h-20 rounded-full mt-2">
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <span class="text-white mt-3 text-l">KV Kortrijk</span>
+          <span class="text-white text-l">Tue, 26 oct 21:00</span>
+        </div>
+      </div>
+      <div class="dark:bg-gray-900 rounded-lg shadow-md mt-5 mb-8 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+        <div class="flex justify-center">
+          <span class="text-white content-center mt-3 text-xl">Raymontada League</span>
+        </div>
+        <div class ="flex items-center justify-center">
+          <img src="../assets/img.png" alt="Raymontada League" class="w-32 h-32 rounded-full mt-2">
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <span class="text-white mb-3 mx-4 text-sm">Login Required</span>
+        </div>
+        <div class="mb-3 grid grid-cols-1 md:grid-cols-1 gap-1 mx-2">
+          <!-- Rankings -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="../assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
+              <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#1</span>
+            </div>
+            <div class="flex-1 items-center ml-3">
+              <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player One</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="../assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
+              <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#2</span>
+            </div>
+            <div class="flex-1 items-center ml-3">
+              <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Two</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="../assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
+              <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#3</span>
+            </div>
+            <div class="flex-1 items-center ml-3">
+              <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three</div>
+            </div>
+          </div>
+          <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
+        </div>
       </div>
     </aside>
   </div>
