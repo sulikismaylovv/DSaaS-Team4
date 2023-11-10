@@ -1,0 +1,26 @@
+/* Hide the vertical scroll bar */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* Optionally, you can change the scroll bar background color to match your background */
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Optionally, you can change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: none;
+}
+
+/* For Firefox */
+.overflow-y-auto.scrollbar {
+  width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* For Firefox, change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto.scrollbar-thumb {
+  background: transparent;
+  border: none;
+}

@@ -1,7 +1,8 @@
-<section class="bg-gray-200 dark:bg-dark-mode" xmlns="http://www.w3.org/1999/html">
-  <div class="px-4 mx-auto max-w-screen-xl md:flex md:space-x-4 relative"> <!-- Add relative positioning to the container -->
+
+<section class="bg-dark-mode text-white dark:text-white" xmlns="http://www.w3.org/1999/html">
+  <div class="mx-auto max-w-screen-xl md:flex md:space-x-4 relative p-16">    <!-- Add relative positioning to the container -->
     <!-- Logo at the top-left -->
-    <img src="assets/logo1.png" alt="Logo" class="top-logo absolute top-0 left-0 z-10"> <!-- Add absolute positioning, and set z-index to 10 -->
+    <img src="assets/logo2.png" alt="Logo" class="top-logo absolute top-0 left-0 z-10"> <!-- Add absolute positioning, and set z-index to 10 -->
 
     <!-- Login -->
     <aside class="w-full md:w-1/6 flex flex-col items-center justify-center"> <!-- Remove z-index to keep it in front -->
@@ -15,14 +16,14 @@
       </div>
     </aside>
     <!-- Main Content and Posts/Matches -->
-    <div class="w-full md:w-4/6 py-8 px-4 mx-auto max-w-screen-xl"> <!-- Adjust the width to 4/6 -->
+    <div class="w-full mx-auto max-w-screen-xl light-mode-text  px-8"> <!-- Adjust the width to 4/6 -->
       <!-- Main Content -->
       <div>
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-light-mode-text dark:text-light-mode">Remontada</h2>
-        <p class="text-light-mode-text sm:text-xl dark:text-light-mode">Alright, hoNey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white dark:text-light-mode mt-16">Remontada</h2>
+        <p class="text-white sm:text-xl dark:text-light-mode">Alright, hoNey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
         <nav class="flex justify-center mt-4 space-x-4">
-          <a routerLink="/posts" class="text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
-          <a routerLink="/games" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
+          <a routerLink="/posts" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
+          <a routerLink="/games" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
         </nav>
         <!-- Add the rest of your main content here -->
       </div>
@@ -35,10 +36,10 @@
     <!-- Settings -->
     <aside class="w-full md:w-1/6"> <!-- Adjust the width to 1/6 and remove padding classes -->
       <div class="mb-4">
-        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>
-        <ul>
-          <li>Setting 1</li>
-        </ul>
+<!--        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>-->
+<!--        <ul>-->
+<!--          <li>Setting 1</li>-->
+<!--        </ul>-->
         <!-- Next Match -->
       </div>
       <div class="dark:bg-gray-900 rounded-lg shadow-md mt-8 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
@@ -99,25 +100,27 @@
   </div>
 </section>
 
-<footer class="rounded-lg shadow m-4 bg-gray-200 dark:bg-dark-mode">
+<footer class="rounded-lg shadow m-4 bg-light-mode-text dark:bg-dark-mode">
   <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-    <span class="text-sm sm:text-center text-light-mode-text dark:text-light-mode">© 2023 <a href="https://flowbite.com/" class="hover:underline">Remontada™</a>. All Rights Reserved.</span>
-    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-light-mode-text dark:text-light-mode sm:mt-0">
+    <span class="text-sm sm:text-center text-white dark:text-white">© 2023 <a href="https://flowbite.com/" class="hover:underline text-white dark:text-white">Remontada™</a>. All Rights Reserved.</span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-white dark:text-white sm:mt-0">
       <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">About</a>
       </li>
       <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">Privacy Policy</a>
       </li>
       <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">Licensing</a>
       </li>
       <li>
-        <a href="#" class="hover:underline">Contact</a>
+        <a href="#" class="hover:underline text-white dark:text-white">Contact</a>
       </li>
     </ul>
   </div>
 </footer>
+
+
 
 <style>
   /* Reset margin and padding for Login and Settings sections */
@@ -128,8 +131,8 @@
 
   /* CSS for a larger logo at the top */
   .top-logo {
-    width: 150px; /* Adjust the width as needed for a larger logo */
-    height: 150px; /* Adjust the height as needed for a larger logo */
+    width: 250px; /* Adjust the width as needed for a larger logo */
+    height: 250px; /* Adjust the height as needed for a larger logo */
     left: 6%; /* Horizontally centered */
     transform: translateX(-50%); /* Horizontally centered */
     z-index: 0; /* Behind other content */
