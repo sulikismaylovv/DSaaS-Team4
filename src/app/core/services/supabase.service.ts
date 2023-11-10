@@ -10,8 +10,8 @@
     providedIn: 'root',
   })
   export class SupabaseService {
-    public supabase: SupabaseClient;
+    public supabaseClient: SupabaseClient;
     constructor() {
-      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+      this.supabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
   }

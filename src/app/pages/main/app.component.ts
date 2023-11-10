@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(
       private router: Router,
-      public readonly authService: AuthService,
+      protected readonly authService: AuthService,
       public themeService: ThemeService
   ) {}
 
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   redirectToLogin() {
-    this.router.navigate(['/login']); // Replace '/login' with your actual login route
+    this.router.navigate(['/login']).then(r =>  true); // Replace '/login' with your actual login route
   }
 
   hideForm = true;

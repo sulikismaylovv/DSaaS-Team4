@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import { SupabaseService } from '../../core/services/supabase.service';
 import {ReactiveFormsModule , Validators } from "@angular/forms";
 
-import { AuthService } from '../../core/services/auth.service';
+import {AuthService, Profile} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -23,8 +23,7 @@ export class AuthComponent {
   }
 
   constructor(
-
-    public readonly authService: AuthService,
+      protected readonly authService: AuthService,
 
     private formBuilder: FormBuilder) {
       this.registerForm = this.formBuilder.group({
@@ -47,7 +46,16 @@ export class AuthComponent {
       const email = this.registerForm.value.email as string;
       const password = this.registerForm.value.password as string;
 
-      const response = await this.authService.register(email, password);
+      // Define additional user details
+      const additionalDetails: Profile = {
+        username: 'someUsername', // You might want to add this to your form
+        email: email,
+        first_name: '', // Set default or get from form
+        last_name: '', // Set default or get from form
+        // other fields as needed
+      };
+
+      const response = await this.authService.register(email, password, additionalDetails);
       if (response.error) throw response.error;
 
       alert('You are successfully registered!');

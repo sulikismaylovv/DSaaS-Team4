@@ -27,9 +27,9 @@ export class ProfileGuard implements CanActivate {
           // If the user is not signed in and does not have a profile, do not allow access
           else {
             // Redirect to the /login route, while capturing the current url so we can redirect after login
-            this.router.navigate(['/'], {
-              queryParams: { redirect_url: state.url }
-            });
+            //this.router.navigate(['/login'], {
+              //queryParams: { redirect_url: state.url }
+            //});
             return false;
           }
         })

@@ -13,7 +13,7 @@ export class LoginComponent {
   loading = false;
 
   constructor(
-      public readonly authService: AuthService,
+      protected readonly authService: AuthService,
       private router: Router,
       private formBuilder: FormBuilder) {
           this.signInForm = this.formBuilder.group({

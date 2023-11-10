@@ -8,7 +8,7 @@ import {AppComponent} from "./pages/main/app.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: '',component: AppComponent}
 ];
 

@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit {
   private initializeForm() {
     this.updateProfileForm = this.formBuilder.group({
       username: [''],
-      avatar_url: [''],
       email: [''],
       birthdate: [null],
       first_name: [''],
