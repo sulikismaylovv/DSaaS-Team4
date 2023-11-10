@@ -1,6 +1,6 @@
-import {AuthService} from "../../core/services/auth.service"
+import { AuthService } from "../../core/services/auth.service";
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,40 +13,38 @@ export class LoginComponent {
   loading = false;
 
   constructor(
-      protected readonly authService: AuthService,
-      private router: Router,
-      private formBuilder: FormBuilder) {
-          this.signInForm = this.formBuilder.group({
+    protected readonly authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.signInForm = this.formBuilder.group({
       usernameOrEmail: '',
       password: '',
     });
   }
 
-
   // Sign-in method
   async onSignIn(): Promise<void> {
-    try {
-      this.loading = true;
-      const usernameOrEmail = this.signInForm.value.usernameOrEmail as string;
-      const password = this.signInForm.value.password as string;
+    this.loading = true;
+    const usernameOrEmail = this.signInForm.value.usernameOrEmail as string;
+    const password = this.signInForm.value.password as string;
 
+    try {
       // Call the signIn method with the usernameOrEmail and password
       const response = await this.authService.signIn({ usernameOrEmail, password });
       if (response.error) throw response.error;
 
       // Handle successful sign-in
-      // Redirect to dashboard or perform other actions as needed
-      this.router.navigate(['/dashboard']);
+      //await this.router.navigate(['/dashboard']); // Redirect to dashboard
       alert('You are successfully signed in!');
     } catch (error) {
+      // Handle the sign-in error
       if (error instanceof Error) {
-        alert(error.message);
+        alert(error.message); // Show error message
+        this.signInForm.reset(); // Reset the form in case of error
       }
     } finally {
-      this.signInForm.reset();
-      this.loading = false;
+      this.loading = false; // Stop the loading indicator
     }
   }
 }
-
-

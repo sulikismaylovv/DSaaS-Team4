@@ -15,7 +15,7 @@ export interface Profile {
 }
 
 interface RegisterResponse {
-    data?: Profile; // Assuming the successful response includes the Profile
+    dataProfile?: Profile; // Assuming the successful response includes the Profile
     error?: any; // You can replace 'any' with a more specific error type if available
 }
 
@@ -23,6 +23,7 @@ interface RegisterResponse {
   providedIn: 'root'
 })
 export class AuthService {
+
 
     // Supabase user state
     private _$user = new BehaviorSubject<User | null | undefined>(undefined);
@@ -35,6 +36,13 @@ export class AuthService {
     private profile_subscription?: RealtimeChannel;
 
     constructor(private supabase: SupabaseService) {
+      this.supabase.supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN') {
+          this._$user.next(session?.user ?? null);
+        } else if (event === 'SIGNED_OUT') {
+          this._$user.next(null);
+        }
+      });
 
 //         // Initialize Supabase user
 //         // Get initial user from the current session, if exists
@@ -138,25 +146,34 @@ export class AuthService {
         }
     }
 
-    async register(email: string, password: string, additionalDetails: Profile): Promise<RegisterResponse> {
-        const signUpResponse = await this.supabase.supabaseClient.auth.signUp({email, password});
-        if (signUpResponse.error) throw signUpResponse.error;
+  async register(email: string, password: string, additionalDetails: Profile): Promise<RegisterResponse> {
+    const signUpResponse = await this.supabase.supabaseClient.auth.signUp({email, password});
+    if (signUpResponse.error) throw signUpResponse.error;
 
-        // Extract user ID from the response
-        const userId = signUpResponse.data?.user?.id;
-        if (!userId) throw new Error('User ID not found after registration.');
+    // Notify the user to verify their email before updating the profile
+    alert('Registration successful! Please check your email to verify your account.');
 
-        // Insert additional user details into your custom 'users' table
-        const { data, error } = await this.supabase.supabaseClient
-            .from('users')
-            .insert([{ ...additionalDetails, id: userId }])
-            .single();
+    // Extract user ID from the response
+    const userId = signUpResponse.data?.user?.id;
+    if (!userId) throw new Error('User ID not found after registration.');
 
-        if (error) throw error;
+    // The next steps should be performed after the user has verified their email
+    // Typically, you would have an email verification callback in which you would
+    // call a method similar to `completeProfileSetup` to finalize the registration process
+    return { dataProfile: await this.completeProfileSetup(userId, additionalDetails) };
 
-        return data;
-    }
+  }
 
+  // You can call this method from the email verification callback component
+  async completeProfileSetup(userId: string, additionalDetails: Profile): Promise<Profile> {
+    const { data, error } = await this.supabase.supabaseClient
+      .from('users')
+      .insert([{ ...additionalDetails, id: userId }])
+      .single();
+
+    if (error) throw error;
+    return data;
+  }
 
     async updateProfile(profile: Profile) {
         const update = {
