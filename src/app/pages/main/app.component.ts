@@ -15,9 +15,9 @@ export class AppComponent implements OnInit {
   session: any; // Adjust the type based on your session object
 
   constructor(
-      private router: Router,
-      protected readonly authService: AuthService,
-      public themeService: ThemeService
+    private router: Router,
+    protected readonly authService: AuthService,
+    public themeService: ThemeService
   ) {}
 
   ngOnInit() {
@@ -37,5 +37,10 @@ export class AppComponent implements OnInit {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+  }
+
+  isAuthenticated(): boolean {
+    // Check if there is a valid session
+    return !!this.session;
   }
 }

@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {AuthService, Profile} from "../../core/services/auth.service";
-import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { AuthService, Profile } from "../../core/services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,13 +11,12 @@ import {Router} from "@angular/router";
 export class DashboardComponent implements OnInit {
   loading = false;
   updateProfileForm!: FormGroup;
-  profile!: Profile | null;
-  private subscriptions: Subscription[] = [];
+  profile!: Profile | null | undefined;
 
   constructor(
-      private readonly authService: AuthService,
-      private readonly router: Router,
-      private formBuilder: FormBuilder
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +27,6 @@ export class DashboardComponent implements OnInit {
   private initializeForm() {
     this.updateProfileForm = this.formBuilder.group({
       username: [''],
-      email: [''],
       birthdate: [null],
       first_name: [''],
       last_name: [''],
@@ -37,14 +34,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadProfile() {
-    // Subscribe to profile BehaviorSubject
-    const profileSubscription = this.authService.$profile.subscribe(profile => {
-      if (profile) {
-        this.profile = profile;
-        this.updateProfileForm.patchValue(profile);
-      }
-    });
-    this.subscriptions.push(profileSubscription);
+    // Directly get the profile from authService
+    this.profile = this.authService.getProfile();
+    if (this.profile) {
+      this.updateProfileForm.patchValue(this.profile);
+    }
   }
 
   async updateProfile(): Promise<void> {
@@ -64,10 +58,5 @@ export class DashboardComponent implements OnInit {
   async signOut() {
     await this.authService.logout();
     await this.router.navigate(['/login']);
-  }
-
-  ngOnDestroy() {
-    // Unsubscribe to avoid memory leaks
-    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

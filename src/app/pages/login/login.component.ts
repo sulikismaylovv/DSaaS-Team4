@@ -31,12 +31,11 @@ export class LoginComponent {
 
     try {
       // Call the signIn method with the usernameOrEmail and password
-      const response = await this.authService.signIn({ usernameOrEmail, password });
-      if (response.error) throw response.error;
+      await this.authService.signIn({ usernameOrEmail, password });
+
 
       // Handle successful sign-in
-      //await this.router.navigate(['/dashboard']); // Redirect to dashboard
-      alert('You are successfully signed in!');
+      await this.router.navigate(['/dashboard']); // Redirect to dashboard
     } catch (error) {
       // Handle the sign-in error
       if (error instanceof Error) {

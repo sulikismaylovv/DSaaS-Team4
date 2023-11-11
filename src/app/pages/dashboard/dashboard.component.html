@@ -1,8 +1,6 @@
 <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
     <div>
-        <label for="email">Email</label>
-        <!-- Bind email form control, keep it disabled -->
-        <input id="email" type="text" formControlName="email" [disabled]="loading">
+        <p>Email: </p>
     </div>
     <div>
         <label for="first_name">First Name</label>

@@ -3,10 +3,9 @@
 <section class="bg-light-mode dark:bg-dark-mode">
   <div class="px-4 mx-auto max-w-screen-xl">
     <div [hidden]="hideForm" class="col mb-3">
-      <!-- Use ngIf with authService.$user observable for session check -->
-      <ng-container *ngIf="authService.$user | async as user; else auth">
-        <app-dashboard *ngIf="user"></app-dashboard>
-      </ng-container>
+      <div *ngIf="isAuthenticated(); else auth">
+        <app-dashboard></app-dashboard>
+      </div>
       <ng-template #auth>
         <app-auth></app-auth>
         <app-login></app-login>
@@ -178,3 +177,4 @@
     </ul>
   </div>
 </footer>
+
