@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
-import { SupabaseService } from 'src/app/core/services/supabase.service';
+import {SupabaseService} from 'src/app/core/services/supabase.service';
 
 export interface Profile {
   id?: string;

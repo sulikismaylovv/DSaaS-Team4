@@ -7,85 +7,53 @@
       <div
         class="xl:flex xl:flex-col xl:justify-between xl:mx-auto xl:mt-10 xl:max-w-[28.125rem]"
       >
-        <!-- Step 1 -->
+        <!-- Step 1 - User Profile Update -->
         <section *ngIf="currentStep === 1">
-          <h1 class="text-2xl mb-2 font-bold xl:text-3xl">Personal info</h1>
-          <p class="text-neutral-cool-gray mb-5 xl:mb-8">
-            Please provide your name, email address and password.
-          </p>
-          <div class="flex flex-col gap-1 text-xs">
-            <div class="flex justify-between">
-              <label class="xl:text-base">Name</label>
-              <p
-                class="text-primary-strawberry-red font-semibold"
-                *ngIf="
-                form.controls['name'].invalid &&
-                (form.controls['name'].dirty || form.controls['name'].touched)
-              "
-              >
-                This field is required
-              </p>
-            </div>
-            <input
-              [ngClass]="{
-              'border-primary-strawberry-red':
-                form.controls['name'].invalid &&
-                (form.controls['name'].dirty || form.controls['name'].touched)
-            }"
-              formControlName="name"
-              class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-              type="text"
-              required
-              placeholder="e.g. Stephen King"
-            />
+          <h1 class="text-2xl mb-2 font-bold xl:text-3xl">Update Profile</h1>
+          <form [formGroup]="updateProfileForm" (ngSubmit)="completeProfile()">
+            <div class="flex flex-col gap-1 text-xs">
+              <div>
+                <p class="text-lg font-semibold text-primary-marine">
+                  Email: {{ profile?.email }}
+                </p>
+              </div>
 
-            <div class="flex justify-between mt-2 xl:mt-5">
-              <label class="xl:text-base">Email Address</label>
-              <p
-                class="text-primary-strawberry-red font-semibold"
-                *ngIf="
-                form.controls['email'].invalid &&
-                (form.controls['email'].dirty || form.controls['email'].touched)
-              "
-              >
-                This field is required
-              </p>
+              <!-- First Name -->
+              <div class="flex justify-between mt-2 xl:mt-5">
+                <label class="xl:text-base">First Name</label>
+                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)">This field is required</p>
+              </div>
+              <input formControlName="first_name" type="text" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" placeholder="e.g. John" />
+
+              <!-- Last Name -->
+              <div class="flex justify-between mt-2 xl:mt-5">
+                <label class="xl:text-base">Last Name</label>
+                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)">This field is required</p>
+              </div>
+              <input formControlName="last_name" type="text" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" placeholder="e.g. Doe" />
+
+              <!-- Username -->
+              <div class="flex justify-between mt-2 xl:mt-5">
+                <label class="xl:text-base">Username</label>
+                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)">This field is required</p>
+              </div>
+              <input formControlName="username" type="text" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" placeholder="e.g. johndoe123" />
+
+              <!-- Birthdate -->
+              <div class="flex justify-between mt-2 xl:mt-5">
+                <label class="xl:text-base">Birthdate</label>
+                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)">This field is required</p>
+              </div>
+              <input formControlName="birthdate" type="date" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" />
+
+              <!-- Update Button -->
+              <div class="mt-4">
+                <button type="submit" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed">Update</button>
+              </div>
             </div>
-            <input
-              [ngClass]="{
-              'border-primary-strawberry-red':
-                form.controls['email'].invalid &&
-                (form.controls['email'].dirty || form.controls['email'].touched)
-            }"
-              formControlName="email"
-              class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-              type="email"
-              required
-              placeholder="e.g. stephenking@lorem.com"
-            />
-            <div class="flex justify-between mt-2 xl:mt-5">
-              <label class="xl:text-base">Password</label>
-              <p
-                class="text-primary-strawberry-red font-semibold"
-                *ngIf="
-      form.controls['password'].invalid &&
-      (form.controls['password'].dirty || form.controls['password'].touched)">
-                This field is required
-              </p>
-            </div>
-            <input
-              [ngClass]="{
-    'border-primary-strawberry-red':
-      form.controls['password'].invalid &&
-      (form.controls['password'].dirty || form.controls['password'].touched)}"
-              formControlName="password"
-              class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-              type="password"
-              required
-              placeholder="Enter your password"
-            />
-          </div>
+          </form>
         </section>
+
 
         <!-- Step 2 -->
 
@@ -204,3 +172,4 @@
       </div>
     </form>
   </div>
+</div>

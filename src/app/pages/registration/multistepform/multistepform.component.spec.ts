@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MultistepformComponent } from './multistepform.component';
+import {MultistepformComponent} from './multistepform.component';
 
 describe('MultistepformComponent', () => {
   let component: MultistepformComponent;

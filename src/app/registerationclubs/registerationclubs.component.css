@@ -1,7 +1,0 @@
-/* This is pseudo-code - replace with actual Tailwind utility classes */
-.favorite-team {
-  @apply bg-yellow-500; /* Tailwind class for favorite team color */
-}
-.followed-team {
-  @apply bg-green-500; /* Tailwind class for followed teams color */
-}
