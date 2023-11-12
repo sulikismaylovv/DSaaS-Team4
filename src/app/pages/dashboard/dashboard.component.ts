@@ -56,7 +56,13 @@ export class DashboardComponent implements OnInit {
   async updateProfile(): Promise<void> {
     try {
       this.loading = true;
-      const updatedProfile = this.updateProfileForm.value as Profile;
+      const formValues = this.updateProfileForm.value;
+      const updatedProfile = {
+        username: formValues.username,
+        last_name: formValues.last_name,
+        first_name: formValues.first_name,
+        birthdate: formValues.birthdate
+      };
       await this.authService.updateProfile(updatedProfile);
     } catch (error) {
       if (error instanceof Error) {

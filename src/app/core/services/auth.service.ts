@@ -5,7 +5,7 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
 export interface Profile {
   id?: string;
   username: string;
-  email: string;
+  email?: string;
   birthdate?: Date;
   password?: string;
   first_name: string;
@@ -104,9 +104,22 @@ export class AuthService {
   }
 
   async updateProfile(profile: Profile) {
-    const update = { ...profile, updated_at: new Date() };
+    // Extract only the fields you want to update
+    const { username, last_name, first_name, birthdate } = profile;
+
+    const update = {
+      id: this._session?.user?.id, // Ensure the correct user ID is used
+      email: this._session?.user?.email, // Ensure the correct email is used
+      username,
+      last_name,
+      first_name,
+      birthdate,
+      updated_at: new Date()
+    };
+    console.log(update);
     return this.supabase.supabaseClient.from('users').upsert(update);
   }
+
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
     return this.supabase.supabaseClient.auth.onAuthStateChange(callback);
