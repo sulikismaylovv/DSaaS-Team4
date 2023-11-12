@@ -35,7 +35,7 @@ export class LoginComponent {
       await this.authService.signIn({ usernameOrEmail, password });
       console.log("User is authenticated, navigating to dashboard");
       // Handle successful sign-in
-      await this.router.navigate(['/dashboard']); // Redirect to dashboard
+      await this.router.navigate(['/home']); // Redirect to dashboard
     } catch (error) {
       // Handle the sign-in error
       if (error instanceof Error) {

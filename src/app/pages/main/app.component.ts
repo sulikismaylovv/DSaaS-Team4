@@ -25,19 +25,4 @@ export class AppComponent implements OnInit {
     this.authService.authChanges((_, session) => (this.session = session));
     initFlowbite();
   }
-
-
-  hideForm = true;
-  toggle() {
-    this.hideForm = !this.hideForm;
-  }
-
-  toggleTheme() {
-    this.themeService.toggleTheme();
-  }
-
-  isAuthenticated(): boolean {
-    // Use the isAuthenticated method from AuthService
-    return this.authService.isAuthenticated();
-  }
 }

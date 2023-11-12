@@ -6,11 +6,12 @@ import { AuthComponent } from './pages/auth/auth.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './pages/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component'
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HomeComponent } from './pages/home/home.component'
 
 @NgModule({
   declarations: [
-    AppComponent, AuthComponent, LoginComponent, DashboardComponent
+    AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule

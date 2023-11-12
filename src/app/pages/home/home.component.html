@@ -1,0 +1,159 @@
+
+
+<section class="bg-light-mode dark:bg-dark-mode">
+  <div class="px-4 mx-auto max-w-screen-xl">
+    <div [hidden]="hideForm" class="col mb-3">
+      <div *ngIf="isAuthenticated(); else auth">
+        <app-dashboard></app-dashboard>
+      </div>
+      <ng-template #auth>
+        <app-auth></app-auth>
+      </ng-template>
+      <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>
+
+    </div>
+    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggle()">Show Register Demo</button> <br>
+    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggleTheme()">
+      Toggle {{ themeService.isDarkModeEnabled() ? 'White' : 'Dark' }} Mode
+    </button>
+  </div>
+
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="max-w-screen-md mb-8 lg:mb-16">
+      <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-light-mode-text dark:text-light-mode">Remontada</h2>
+      <p class="text-light-mode-text sm:text-xl dark:text-light-mode">Alright, honey, hold onto your football boots because THIS is THE social media haven for football fanatics.</p>
+    </div>
+    <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          💁‍♂️
+        </div>
+        <h3 class="mb-2 text-xl text-light-mode-text font-bold dark:text-light-mode">Goal Reactions</h3>
+        <p class="text-light-mode-text dark:text-light-mode">No more basic "likes". Properly freak out or sob when your team scores or misses.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🥅
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Automated Goal Posts</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Get goals served hot. Plus, the latest transfer and lineup drama.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🔄
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Transfer Tea & Lineup Goss</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Want the latest who's-going-where drama? We gotchu!</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🛡️
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Show Your Colors</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Rock that club badge next to your name like it's the latest fashion trend.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          💸
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Virtual Bling</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Let’s make it rain virtual coins, ‘cause why not? Buy, earn, or flaunt them, your choice.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🔮
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Betting & Guesswork</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Put your virtual money where your mouth is! Predict, bet, and maybe join the elite predictor squads.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🌟
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Fantasy Football Glam</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Build your dreamy team of studs. And by studs, we mean ace players, duh.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🃏
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Player Trading Cards</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Think Pokémon cards but hotter. Gotta collect 'em all!</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          💹
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Economy Realness</h3>
+        <p class="text-light-mode-text dark:text-light-mode">We'll keep it classy, not trashy. Balancing the virtual coins like a boss.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          💳
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Swipe the Card:</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Think Pokémon cards but hotter. Gotta collect 'em all!</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          ✨
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Player Trading Cards</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Customize it. Flaunt it. Make it YOU.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🔔
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">No More FOMO</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Get all the juicy notifications. Never miss a beat.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🎙️
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Live Match Chit-Chat</h3>
+        <p class="text-light-mode-text dark:text-light-mode">We spill the beans, play-by-play. You bring the popcorn.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🎥
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Reel Highlights</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Rewatch that legendary kick or that embarrassing miss whenever your heart desires.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          📣
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Football Gossip Share</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Tell your pals, show your foes. Everyone needs a taste of this awesomeness.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          🗣️
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Football Banter Boards</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Got opinions? Drop ‘em here. Respectfully, of course.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          📊
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Stats & Gossip</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Nerd out on player stats or just enjoy the juicy team stories.</p>
+      </div>
+      <div>
+        <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+          💬
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-light-mode-text dark:text-light-mode">Chat Rooms</h3>
+        <p class="text-light-mode-text dark:text-light-mode">Because watching football alone is so last season.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
