@@ -1,0 +1,47 @@
+
+<div class="min-h-screen bg-purple-400 flex justify-center items-center">
+  <div class="pt-1 pb-8 px-24 bg-white rounded-2xl shadow-xl z-20">
+    <div>
+      <div class="flex justify-center items-center">
+        <img src="assets/images/lightlogo.png" alt="Logo" class="w-40 h-40 object-cover rounded-full mb-4">
+      </div>
+      <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">Few more steps</h1>
+      <div class="flex justify-center">
+
+      </div>
+    </div>
+
+    <!-- Inside your RegistrationclubsComponent template -->
+
+    <!-- Inside your RegistrationclubsComponent template -->
+
+    <!-- Section for selecting the favorite team -->
+    <div *ngIf="selectingFavorites">
+      <p>Choose your favorite team</p>
+      <div class="grid grid-cols-6 gap-5">
+        <app-team *ngFor="let team of teams"
+                  [team]="team"
+                  [selected]="team === favoriteTeam"
+                  [favorite]="team === favoriteTeam"
+                  (selectTeam)="onTeamSelect(team)"> <!-- This calls onTeamSelect for setting a favorite -->
+        </app-team>
+      </div>
+    </div>
+
+    <!-- Section for selecting teams to follow -->
+    <div *ngIf="!selectingFavorites">
+      <p>Choose teams you want to follow</p>
+      <div class="grid grid-cols-6 gap-5">
+        <app-team *ngFor="let team of teams"
+                  [team]="team"
+                  [selected]="selectedTeams.has(team)"
+                  [favorite]="team === favoriteTeam"
+                  (selectTeam)="toggleTeamFollow(team)"> <!-- This calls toggleTeamFollow for following teams -->
+        </app-team>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

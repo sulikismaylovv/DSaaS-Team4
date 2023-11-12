@@ -1,0 +1,180 @@
+multistepform .checkbox-box input[type="checkbox"]:checked ~ div,
+multistepform .checkbox-box input[type="radio"]:checked ~ div {
+  background-color: hsl(231, 100%, 99%);
+  border: 0.063rem solid hsl(243, 100%, 62%);
+  border-radius: 0.5rem;
+  transition: none;
+}
+
+multistepform .checkbox-box:hover input[type="checkbox"] ~ div,
+multistepform .checkbox-box:hover input[type="radio"] ~ div {
+  border: 0.063rem solid hsl(243, 100%, 62%);
+  cursor: pointer;
+}
+h2 {
+  margin-bottom: 8px; /* Adjust as needed */
+}
+
+.grid-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Full viewport height */
+  gap: 2px; /* Adjust the gap between grid items */
+  padding: 0;
+  margin: 0;
+
+}
+.grid-container * {
+  margin: 0;
+  padding: 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(160px, 1fr));
+  gap: 8px; /* Adjust the gap between grid items */
+  justify-content: center;
+  margin: 0; /* Remove margin to ensure the grid is centered */
+  margin-bottom: 16px; /* Reducing space below the heading */
+
+
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 16px; /* Adjust as needed */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.team-card.favorite {
+  border-color: gold;
+  border-width: thick;/* Gold border for selected team */}
+
+.team-card.followed {
+  border-color: mediumpurple;
+  border-width: thick;/* Gold border for selected team */
+  border-radius: 12px;
+
+}
+
+.team-card img {
+  width: 100px; /* Fixed width */
+  height: 100px; /* Fixed height */
+  object-fit: contain; /* Keep aspect ratio */
+  margin-bottom: auto; /* Push everything else to the bottom */
+}
+
+.team-card p {
+  margin-top: auto; /* Push text to the bottom */
+  width: 100%; /* Full width of the card */
+}
+
+.team-card.selected, .team-card.favorite {
+  border-color: gold; /* Consistent gold border for selected/favorite team */
+  border-width: thick; /* Adjust the border width as needed */
+  border-style: solid; /* Make sure to specify the border style */
+  border-radius: 12px; /* Consistent border-radius */
+}
+
+
+
+.team-card.favorite .star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2em; /* Adjust size as needed */
+  color: gold; /* Gold color for the star */
+  padding: 5px; /* Space around the star */
+}
+
+.team-card .plus-sign {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2em; /* Adjust size as needed */
+  color: mediumpurple; /* Gold color for the star */
+  padding: 5px; /* Space around the star */
+}
+
+.plus-sign {
+  color: mediumpurple;
+  position: absolute;
+  top: 10px; /* Adjust as needed, smaller values will move the star upwards */
+  right: 10px; /* Adjust as needed, smaller values will move the star to the right */
+  font-size: 2em; /* Adjust as needed, increase for a bigger star */
+  display: block;
+  z-index: 10;
+}
+
+.team-card.selected {
+  border-color: gold;
+  border-width: thick;/* Gold border for selected team */
+  border-radius: 12px;
+}
+
+.team-logo {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.team-name {
+  margin-top: 8px;
+}
+
+/* Ensure the grid is centered */
+.grid {
+  justify-content: center;
+  align-items: center;
+}
+
+.team-card.selected {
+  border-color: gold; /* Gold border for selected */
+}
+.team-card.selected .star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2em; /* Adjust size as needed */
+  color: gold; /* Gold color for the star */
+  padding: 5px; /* Space around the star */
+}
+
+.team-card .star {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  right: -10px; /* Adjust as needed */
+  color: gold;
+  font-size: 24px; /* Adjust size as needed */
+}
+
+
+.team-card:hover {
+  transform: translateY(-5px); /* Lift card on hover */
+}
+
+.team-logo {
+  width: 100%; /* Use a percentage to make it responsive */
+  height: auto;
+  object-fit: contain; /* This will prevent distortion */
+}
+
+.team-name {
+  margin-top: 8px; /* Space between logo and name */
+  font-size: 1rem; /* Adjust the font size as needed */
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* Adjust for smaller screens */
+  }
+}

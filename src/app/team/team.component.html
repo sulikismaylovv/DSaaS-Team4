@@ -1,0 +1,35 @@
+<!--<div class="flex flex-col items-center p-4 border rounded shadow cursor-pointer hover:bg-gray-100"-->
+<!--     [class.bg-blue-200]="selected"-->
+<!--     (click)="toggleSelection()">-->
+<!--  <img [src]="team.logoPath" alt="{{ team.name }} Logo" class="h-20 w-20 object-contain mb-2">-->
+<!--  <span>{{ team.name }}</span>-->
+<!--</div>-->
+<!-- team.component.html -->
+
+<!-- team.component.html -->
+<!-- team.component.html -->
+
+
+<!-- team.component.html -->
+<!-- team.component.html -->
+<!-- team.component.html -->
+
+<!-- team.component.html -->
+<div class="p-4 rounded shadow cursor-pointer transition-colors relative"
+     [ngClass]="{
+       'border-4 border-gold': favorite,
+       'bg-purple-500': selected && !favorite,
+       'hover:bg-purple-300': !selected
+     }"
+     (mouseenter)="hover = true"
+     (mouseleave)="hover = false"
+     (click)="toggleSelection()">
+  <div *ngIf="favorite" class="absolute top-0 right-0 p-1">
+    <!-- Star SVG icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gold" class="w-6 h-6">
+      <path d="M12 .587l3.297 6.673 7.4.747-5.367 5.233 1.269 7.383L12 18.21l-6.599 3.463 1.269-7.383-5.367-5.233 7.4-.747L12 .587z"/>
+    </svg>
+  </div>
+  <img [src]="team.logoPath" alt="{{ team.name }} Logo" class="h-20 w-20 object-contain mb-2">
+  <span>{{ team.name }}</span>
+</div>
