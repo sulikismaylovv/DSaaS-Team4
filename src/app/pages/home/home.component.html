@@ -1,16 +1,18 @@
 
 
-
 <section class="bg-light-mode dark:bg-dark-mode">
   <div class="px-4 mx-auto max-w-screen-xl">
     <div [hidden]="hideForm" class="col mb-3">
-      <app-account *ngIf="session; else auth" [session]="session"></app-account>
+      <div *ngIf="isAuthenticated(); else auth">
+        <app-dashboard></app-dashboard>
+      </div>
       <ng-template #auth>
         <app-auth></app-auth>
       </ng-template>
       <p> This login is not yet beautiful enough...Hide it by clicking the button below </p>
+
     </div>
-    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggle()">Show Login Demo</button> <br>
+    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggle()">Show Register Demo</button> <br>
     <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" (click)="toggleTheme()">
       Toggle {{ themeService.isDarkModeEnabled() ? 'White' : 'Dark' }} Mode
     </button>
@@ -153,23 +155,5 @@
 </section>
 
 
-<footer class="rounded-lg shadow m-4 bg-light-mode dark:bg-dark-mode">
-  <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm sm:text-center text-light-mode-text dark:text-light-mode">© 2023 <a href="https://flowbite.com/" class="hover:underline">Remontada™</a>. All Rights Reserved.
-    </span>
-    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-light-mode-text dark:text-light-mode sm:mt-0">
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
-      </li>
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-      </li>
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline">Contact</a>
-      </li>
-    </ul>
-  </div>
-</footer>
+
+

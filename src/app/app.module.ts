@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
-import { AppComponent } from './app.component'
-import { AuthComponent } from './auth/auth.component'
-import { AccountComponent } from './account/account.component'
+import { AppComponent } from './pages/main/app.component'
+import { AuthComponent } from './pages/auth/auth.component'
 import { ReactiveFormsModule } from '@angular/forms'
-import { AvatarComponent } from './avatar/avatar.component';
-import { AppRoutingModule } from './app-routing.module'
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HomeComponent } from './pages/home/home.component'
 
 @NgModule({
   declarations: [
-    AppComponent, AuthComponent, AccountComponent, AvatarComponent
+    AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule
