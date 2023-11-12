@@ -26,9 +26,6 @@ export class AppComponent implements OnInit {
     initFlowbite();
   }
 
-  redirectToLogin() {
-    this.router.navigate(['/login']).then(r =>  true); // Replace '/login' with your actual login route
-  }
 
   hideForm = true;
   toggle() {
@@ -40,7 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   isAuthenticated(): boolean {
-    // Check if there is a valid session
-    return !!this.session;
+    // Use the isAuthenticated method from AuthService
+    return this.authService.isAuthenticated();
   }
 }

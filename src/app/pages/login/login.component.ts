@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
   signInForm!: FormGroup;
   loading = false;
@@ -32,8 +33,7 @@ export class LoginComponent {
     try {
       // Call the signIn method with the usernameOrEmail and password
       await this.authService.signIn({ usernameOrEmail, password });
-
-
+      console.log("User is authenticated, navigating to dashboard");
       // Handle successful sign-in
       await this.router.navigate(['/dashboard']); // Redirect to dashboard
     } catch (error) {

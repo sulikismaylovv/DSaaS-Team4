@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
+import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 export interface Profile {
@@ -21,24 +21,34 @@ interface RegisterResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUser: User | null = null;
-  private currentProfile: Profile | null = null;
+  private _session: AuthSession | null = null;
 
   constructor(private supabase: SupabaseService) {
     this.supabase.supabaseClient.auth.onAuthStateChange(async (event, session) => {
+      this._session = session;
       if (event === 'SIGNED_IN') {
-        this.currentUser = session?.user ?? null;
-        // Load the profile data when the user signs in
-        await this.loadProfile();
+        console.log('User signed in:', session?.user);
+        try {
+        } catch (error) {
+          console.error('Error while loading profile:', error);
+        }
       } else if (event === 'SIGNED_OUT') {
-        this.currentUser = null;
-        this.currentProfile = null; // Clear profile data on sign out
+        console.log('User signed out');
       }
     });
   }
 
+
   isAuthenticated(): boolean {
-    return !!this.currentUser;
+    return !!this._session?.user;
+  }
+
+
+  get session() {
+    this.supabase.supabaseClient.auth.getSession().then(({ data }) => {
+      this._session = data.session
+    })
+    return this._session
   }
 
   async signIn(credentials: { usernameOrEmail: string; password: string }): Promise<void> {
@@ -102,28 +112,24 @@ export class AuthService {
     return this.supabase.supabaseClient.auth.onAuthStateChange(callback);
   }
 
-  private async loadProfile() {
-    if (this.currentUser) {
-      const { data, error } = await this.supabase.supabaseClient
-        .from('users')
-        .select('*')
-        .eq('id', this.currentUser.id)
-        .single();
 
-      if (error) {
-        console.error('Error loading profile:', error.message);
-        return;
-      }
 
-      this.currentProfile = data;
+  async logout() {
+    try {
+      await this.supabase.supabaseClient.auth.signOut();
+      console.log('User logged out successfully');
+    } catch (error) {
+      console.error('Logout Error:', error);
+      // Handle logout error appropriately
     }
   }
 
-  async logout() {
-    await this.supabase.supabaseClient.auth.signOut();
-  }
 
-  public getProfile(): Profile | null | undefined {
-    return this.currentProfile;
+  profile(user: User) {
+    return this.supabase.supabaseClient
+      .from('users')
+      .select(`*`)
+      .eq('id', user.id)
+      .single()
   }
 }

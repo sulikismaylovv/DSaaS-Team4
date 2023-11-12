@@ -7,9 +7,10 @@ import { LoginComponent } from './pages/login/login.component';
 import {AppComponent} from "./pages/main/app.component";
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard] },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: '',component: AppComponent}
+  { path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full', },
+  { path: 'home', component: AppComponent, pathMatch: 'full'}
 ];
 
 @NgModule({

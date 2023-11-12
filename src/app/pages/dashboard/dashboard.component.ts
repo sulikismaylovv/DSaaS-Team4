@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { AuthService, Profile } from "../../core/services/auth.service";
-import { Router } from "@angular/router";
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService, Profile } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +10,8 @@ import { Router } from "@angular/router";
 })
 export class DashboardComponent implements OnInit {
   loading = false;
+  profile: Profile | undefined;
   updateProfileForm!: FormGroup;
-  profile!: Profile | null | undefined;
 
   constructor(
     private readonly authService: AuthService,
@@ -19,25 +19,37 @@ export class DashboardComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    this.initializeForm();
-    this.loadProfile();
-  }
-
-  private initializeForm() {
+  async ngOnInit(): Promise<void> {
     this.updateProfileForm = this.formBuilder.group({
       username: [''],
       birthdate: [null],
       first_name: [''],
       last_name: [''],
     });
+
+    await this.getProfile();
   }
 
-  private loadProfile() {
-    // Directly get the profile from authService
-    this.profile = this.authService.getProfile();
-    if (this.profile) {
-      this.updateProfileForm.patchValue(this.profile);
+  async getProfile() {
+    try {
+      this.loading = true;
+      const user = this.authService.session?.user;
+      if (user) {
+        const { data: profile, error } = await this.authService.profile(user);
+        if (error) {
+          throw error;
+        }
+        if (profile) {
+          this.profile = profile;
+          this.updateProfileForm.patchValue(profile);
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -56,7 +68,11 @@ export class DashboardComponent implements OnInit {
   }
 
   async signOut() {
-    await this.authService.logout();
-    await this.router.navigate(['/login']);
+    try {
+      await this.authService.logout();
+      await this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Error during sign out:', error);
+    }
   }
 }

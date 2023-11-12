@@ -16,16 +16,16 @@ export class ProfileGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree {
-    // Check if the user is authenticated
+    console.log('Guard checking authentication status');
     if (this.authService.isAuthenticated()) {
-      // Allow access if the user is authenticated
+      console.log('User is authenticated');
       return true;
     } else {
-      // If the user is not authenticated, redirect to the login page
-      // and pass the redirect URL so the user can be redirected back after logging in
+      console.log('User is not authenticated, redirecting to login');
       return this.router.createUrlTree(['/login'], {
         queryParams: { redirect_url: state.url }
       });
     }
   }
+
 }
