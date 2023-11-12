@@ -3,15 +3,12 @@ import { SupabaseService } from './supabase.service'
 import { initFlowbite } from 'flowbite';
 import { environment } from '../environments/environment';
 import { inject } from '@vercel/analytics';
-
-
-
-
+import { MultistepformComponent} from "./multistepform/multistepform.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 
 export class AppComponent implements OnInit {
