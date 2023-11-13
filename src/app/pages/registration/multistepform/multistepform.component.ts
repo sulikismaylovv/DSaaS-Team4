@@ -18,7 +18,7 @@ interface Team {
 export class MultistepformComponent implements OnInit {
   currentStep = 1;
   lastPage = false;
-  form!: FormGroup;
+  updateProfileForm!: FormGroup;
   arcadePlan = 9;
   advancedPlan = 12;
   proPlan = 15;
@@ -76,7 +76,6 @@ export class MultistepformComponent implements OnInit {
   }
 
   profile: Profile | undefined;
-  updateProfileForm!: FormGroup;
   loading = false;
 
   constructor(
@@ -86,19 +85,7 @@ export class MultistepformComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.form = new FormGroup({
-      name: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"),
-      ]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-
-
-    });
-
+  async ngOnInit(): Promise<void> {
     this.updateProfileForm = this.formBuilder.group({
       username: ['', Validators.required],
       birthdate: [null, Validators.required],
@@ -106,28 +93,31 @@ export class MultistepformComponent implements OnInit {
       last_name: ['', Validators.required],
     });
 
-    this.fetch().then(r => console.log(r));
+    await this.fetch();
   }
 
 
-  onSubmit() {
+  async onSubmit() {
+    await this.completeProfile();
     this.lastPage = true;
-    this.form.reset();
+    this.updateProfileForm.reset();
+
+    await this.router.navigate(['/home']);
   }
 
   changePage(isNextPage: boolean) {
     const addOns =
-      (this.form.get('onlineService')?.value && this.onlineService) +
-      (this.form.get('storage')?.value && this.storage) +
-      (this.form.get('customProfile')?.value && this.customProfile);
+      (this.updateProfileForm.get('onlineService')?.value && this.onlineService) +
+      (this.updateProfileForm.get('storage')?.value && this.storage) +
+      (this.updateProfileForm.get('customProfile')?.value && this.customProfile);
 
     if (!isNextPage) {
       return this.currentStep--;
     } else {
       if (this.currentStep === 3) {
-        if (this.form.get('plan')?.value === 'arcadePlan') {
+        if (this.updateProfileForm.get('plan')?.value === 'arcadePlan') {
           this.total = this.arcadePlan + addOns;
-        } else if (this.form.get('plan')?.value === 'advanced') {
+        } else if (this.updateProfileForm.get('plan')?.value === 'advanced') {
           this.total = this.advancedPlan + addOns;
         } else {
           this.total = this.proPlan + addOns;
@@ -139,7 +129,7 @@ export class MultistepformComponent implements OnInit {
 
   submitForm(): void {
     console.log('Form submitted');
-    console.log(this.form.value);
+    console.log(this.updateProfileForm.value);
     console.log('Favorite Team:', this.favoriteTeam);
     console.log('Followed Teams:', Array.from(this.selectedFollowedTeams));
     // Perform submission logic here
@@ -157,6 +147,7 @@ export class MultistepformComponent implements OnInit {
         }
         if (profile) {
           this.profile = profile;
+          console.log("Profile: " + profile);
           this.updateProfileForm.patchValue(profile);
         }
       }
@@ -179,6 +170,7 @@ export class MultistepformComponent implements OnInit {
         first_name: formValues.first_name,
         birthdate: formValues.birthdate
       };
+      console.log(updatedProfile);
       await this.authService.updateProfile(updatedProfile);
     } catch (error) {
       if (error instanceof Error) {

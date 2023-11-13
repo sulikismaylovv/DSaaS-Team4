@@ -38,4 +38,7 @@ export class HomeComponent {
     return this.authService.isAuthenticated();
   }
 
+  async goComplete() {
+    await this.router.navigate(['/complete-profile']);
+  }
 }
