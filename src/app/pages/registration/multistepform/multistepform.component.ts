@@ -2,8 +2,10 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation,} from '@a
 import {FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {Preference, PreferencesService} from "../../../core/services/preference.service";
 
 interface Team {
+  id: number;
   name: string;
   logoPath: string;
   favorite?: boolean;
@@ -28,22 +30,22 @@ export class MultistepformComponent implements OnInit {
   total = 9;
 
   teams = [
-    {name: 'OH Leuven', logoPath: 'assets/logos/oud-heverlee-leuven-seeklogo.com-3.svg', favorite: false},
-    {name: 'KVC Westerlo', logoPath: 'assets/logos/kvc-westerlo.svg', favorite: false},
-    {name: 'KV Mechelen', logoPath: 'assets/logos/KV_Mechelen_logo.svg', favorite: false},
-    {name: 'Anderlecht', logoPath: 'assets/logos/RSC_Anderlecht_logo.svg', favorite: false},
-    {name: 'Club Brugge KV', logoPath: 'assets/logos/Club_Brugge_KV_logo.svg', favorite: false},
-    {name: 'Gent', logoPath: 'assets/logos/KAA_Gent_logo.svg', favorite: false},
-    {name: 'Standard Liege', logoPath: 'assets/logos/Royal_Standard_de_Liege.svg', favorite: false},
-    {name: 'Kortrijk', logoPath: 'assets/logos/KV_Kortrijk_logo.svg', favorite: false},
-    {name: 'St. Truiden', logoPath: 'assets/logos/VV_St._Truiden_Logo.svg', favorite: false},
-    {name: 'Charleroi', logoPath: 'assets/logos/Royal_Charleroi_Sporting_Club_logo.svg', favorite: false},
-    {name: 'AS Eupen', logoPath: 'assets/logos/Kas_Eupen_Logo.svg', favorite: false},
-    {name: 'Antwerp', logoPath: 'assets/logos/Royal_Antwerp_Football_Club_logo.svg', favorite: false},
-    {name: 'Cercle Brugge', logoPath: 'assets/logos/Logo_Cercle_Bruges_KSV_-_2022.svg', favorite: false},
-    {name: 'Genk', logoPath: 'assets/logos/KRC_Genk_Logo_2016.svg', favorite: false},
-    {name: 'Union St. Gilloise', logoPath: 'assets/logos/union-saint-gilloise.svg', favorite: false},
-    {name: 'RWDM', logoPath: 'assets/logos/Logo_RWDMolenbeek.svg', favorite: false},
+    {id: 260, name: 'OH Leuven', logoPath: 'assets/logos/oud-heverlee-leuven-seeklogo.com-3.svg', favorite: false},
+    {id: 261, name: 'KVC Westerlo', logoPath: 'assets/logos/kvc-westerlo.svg', favorite: false},
+    {id: 266, name: 'KV Mechelen', logoPath: 'assets/logos/KV_Mechelen_logo.svg', favorite: false},
+    {id: 554, name: 'Anderlecht', logoPath: 'assets/logos/RSC_Anderlecht_logo.svg', favorite: false},
+    {id: 569, name: 'Club Brugge KV', logoPath: 'assets/logos/Club_Brugge_KV_logo.svg', favorite: false},
+    {id: 631, name: 'Gent', logoPath: 'assets/logos/KAA_Gent_logo.svg', favorite: false},
+    {id: 733, name: 'Standard Liege', logoPath: 'assets/logos/Royal_Standard_de_Liege.svg', favorite: false},
+    {id: 734, name: 'Kortrijk', logoPath: 'assets/logos/KV_Kortrijk_logo.svg', favorite: false},
+    {id: 735, name: 'St. Truiden', logoPath: 'assets/logos/VV_St._Truiden_Logo.svg', favorite: false},
+    {id: 736, name: 'Charleroi', logoPath: 'assets/logos/Royal_Charleroi_Sporting_Club_logo.svg', favorite: false},
+    {id: 739, name: 'AS Eupen', logoPath: 'assets/logos/Kas_Eupen_Logo.svg', favorite: false},
+    {id: 740, name: 'Antwerp', logoPath: 'assets/logos/Royal_Antwerp_Football_Club_logo.svg', favorite: false},
+    {id: 741, name: 'Cercle Brugge', logoPath: 'assets/logos/Logo_Cercle_Bruges_KSV_-_2022.svg', favorite: false},
+    {id: 742, name: 'Genk', logoPath: 'assets/logos/KRC_Genk_Logo_2016.svg', favorite: false},
+    {id: 1393, name: 'Union St. Gilloise', logoPath: 'assets/logos/union-saint-gilloise.svg', favorite: false},
+    {id: 6224, name: 'RWDM', logoPath: 'assets/logos/Logo_RWDMolenbeek.svg', favorite: false},
   ];
 
   selectedFollowedTeams = new Set<Team>();
@@ -82,6 +84,7 @@ export class MultistepformComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private preferencesService: PreferencesService
   ) {
   }
 
@@ -98,11 +101,50 @@ export class MultistepformComponent implements OnInit {
 
 
   async onSubmit() {
-    await this.completeProfile();
-    this.lastPage = true;
-    this.updateProfileForm.reset();
+    try {
+      await this.completeProfile();
+      await this.updatePreferences();
+      this.lastPage = true;
+      this.updateProfileForm.reset();
 
-    await this.router.navigate(['/home']);
+      await this.router.navigate(['/home']);
+    } catch (error) {
+      if (error instanceof Error) {
+        // Show an error message and allow the user to try again
+        alert('An error occurred: ' + error.message + ' Please try again.');
+        // Optionally, reset part of your form or state here if needed
+      }
+    }
+  }
+
+  async updatePreferences(): Promise<void> {
+    try {
+      const user = this.authService.session?.user;
+      if (!user || !user.id) throw new Error('User ID is undefined');
+
+      const userId = user.id; // Ensured to be a string
+
+      if (this.favoriteTeam) {
+        await this.preferencesService.upsertPreference({
+          user_id: userId,
+          club_id: this.favoriteTeam.id.toString(),
+          favorite_club: true,
+          followed_club: false
+        });
+      }
+
+      for (const team of this.selectedFollowedTeams) {
+        await this.preferencesService.upsertPreference({
+          user_id: userId,
+          club_id: team.id.toString(), // Convert to string
+          favorite_club: false,
+          followed_club: true,
+          updated_at: new Date()
+        });
+      }
+    } catch (error) {
+      console.error('Error updating preferences:', error);
+    }
   }
 
   changePage(isNextPage: boolean) {
@@ -126,15 +168,6 @@ export class MultistepformComponent implements OnInit {
       return this.currentStep++;
     }
   }
-
-  submitForm(): void {
-    console.log('Form submitted');
-    console.log(this.updateProfileForm.value);
-    console.log('Favorite Team:', this.favoriteTeam);
-    console.log('Followed Teams:', Array.from(this.selectedFollowedTeams));
-    // Perform submission logic here
-  }
-
   async fetch() {
     // ... implementation of getProfile ...
     try {
