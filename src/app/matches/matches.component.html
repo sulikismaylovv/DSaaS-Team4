@@ -1,43 +1,37 @@
-<!-- Header section with buttons -->
-<div class="flex justify-center items-center mb-4 space-x-2">
-  <!-- Container for buttons -->
-  <div class="flex">
-    <!-- Previous Button -->
-    <button (click)="goToPreviousDay()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l transition duration-150 ease-in-out">
-      Previous
-    </button>
-    <!-- Calendar Button -->
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 transition duration-150 ease-in-out">
-      <i class="fa fa-calendar"></i> Today
-    </button>
-    <!-- Next Button -->
-    <button (click)="goToNextDay()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r transition duration-150 ease-in-out">
-      Next
-    </button>
-
+<div class="flex justify-center my-4">
+  <div class="flex rounded-full shadow-lg" role="group">
+    <button
+      class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Previous</button>
+    <button
+      class="bg-gray-500 text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none">Today</button>
+    <button
+      class="bg-gray-300 text-gray-800 font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Next</button>
   </div>
 </div>
 
-<div class="mt-8 grid grid-cols-1 gap-4 overflow-auto max-h-96">
-  <div *ngFor="let fixture of fixtures" class="bg-indigo-100 dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 flex items-center justify-between">
-    
-    <!-- Team 1 -->
-    <div class="flex-1 flex items-center justify-start">
-      <img [src]="fixture.teams.home.logo" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-      <span class="font-semibold text-lg truncate">{{ fixture.teams.home.name }}</span>
-    </div>
-    
-    <!-- Score, centered both vertically and horizontally -->
-    <div class="font-bold text-xl flex-none w-16 text-center">
-      {{ fixture.score.fulltime.home }} - {{ fixture.score.fulltime.away }}
-    </div>
-    
-    <!-- Team 2 -->
-    <div class="flex-1 flex items-center justify-end">
-      <span class="font-semibold text-lg truncate">{{ fixture.teams.away.name }}</span>
-      <img [src]="fixture.teams.away.logo" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-    </div>
 
+<div class="bg-gray-800 p-6 rounded-lg shadow-md">
+  <div class="grid grid-cols-1 gap-4">
+    <div *ngFor="let fixture of fixtures"
+      class="bg-indigo-100 dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 flex items-center justify-between">
+
+      <!-- Team 1 -->
+      <div class="flex-1 flex items-center justify-start">
+        <img [src]="fixture.teams.home.logo" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
+        <span class="font-semibold text-lg truncate">{{ fixture.teams.home.name }}</span>
+      </div>
+
+      <!-- Score, centered both vertically and horizontally -->
+      <div class="font-bold text-xl flex-none w-16 text-center">
+        {{ fixture.score.fulltime.home }} - {{ fixture.score.fulltime.away }}
+      </div>
+
+      <!-- Team 2 -->
+      <div class="flex-1 flex items-center justify-end">
+        <span class="font-semibold text-lg truncate">{{ fixture.teams.away.name }}</span>
+        <img [src]="fixture.teams.away.logo" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
+      </div>
+
+    </div>
   </div>
 </div>
-
