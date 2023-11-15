@@ -4,6 +4,7 @@ import { Fixture } from '../models/fixtures.model';
 import { DatePipe } from '@angular/common';
 import { initFlowbite } from 'flowbite';
 import { startOfWeek, endOfWeek, addDays, subDays } from 'date-fns';
+import { groupBy } from 'lodash';
 
 @Component({
   selector: 'app-matches',
@@ -14,7 +15,7 @@ import { startOfWeek, endOfWeek, addDays, subDays } from 'date-fns';
 export class MatchesComponent implements OnInit {
 
   fixtures: Fixture[] = [];
-
+  groupedFixtures: {[key: string]: Fixture[]} = {};  //grouped by date
   currentDate: Date;
   startDate: Date = new Date();;
   endDate: Date = new Date();;
@@ -49,6 +50,13 @@ export class MatchesComponent implements OnInit {
         console.log(this.fixtures);
       }
     );
+  }
+  groupFixturesByDate() {
+    // Assuming each fixture has a 'date' property in a string format (YYYY-MM-DD)
+    this.groupedFixtures = groupBy(this.fixtures, (fixture) => fixture.fixtureInfo.date);
+  }
+  getGroupedFixtureDates(): string[] {
+    return Object.keys(this.groupedFixtures);
   }
 
   goToNextWeek() {
