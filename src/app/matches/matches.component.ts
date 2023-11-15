@@ -12,6 +12,7 @@ import { initFlowbite } from 'flowbite';
 export class MatchesComponent implements OnInit {
 
   fixtures: Fixture[] = [];
+
   currentDate: Date;
   stringDate: string;
 
