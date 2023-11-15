@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {environment} from "../../../environments/environment";
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../core/services/auth.service";
 import {ThemeService} from "../../core/services/theme.service";
@@ -25,7 +24,7 @@ export class HomeComponent {
     initFlowbite();
   }
 
-  hideForm = true;
+  hideForm = false;
   toggle() {
     this.hideForm = !this.hideForm;
   }
@@ -39,4 +38,7 @@ export class HomeComponent {
     return this.authService.isAuthenticated();
   }
 
+  async goComplete() {
+    await this.router.navigate(['/complete-profile']);
+  }
 }

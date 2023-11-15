@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import { SupabaseService } from '../../core/services/supabase.service';
-import {ReactiveFormsModule , Validators } from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+
 
 import {AuthService, Profile} from '../../core/services/auth.service';
 
@@ -16,6 +16,7 @@ export class AuthComponent {
   loading = false;
 
 
+
   matchingPasswords(group: FormGroup): { [key: string]: any } | null {
     const password = group.controls['password'].value;
     const confirmPassword = group.controls['confirmPassword'].value;
@@ -24,6 +25,7 @@ export class AuthComponent {
 
   constructor(
       protected readonly authService: AuthService,
+      private router: Router,
 
     private formBuilder: FormBuilder) {
       this.registerForm = this.formBuilder.group({
@@ -56,6 +58,7 @@ export class AuthComponent {
       };
 
       const response = await this.authService.register(email, password, additionalDetails);
+      await this.router.navigate(['/complete-profile']);
       if (response.error) throw response.error;
 
       alert('You are successfully registered!');
