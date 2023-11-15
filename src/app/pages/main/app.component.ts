@@ -4,6 +4,7 @@ import {initFlowbite} from 'flowbite';
 import {environment} from '../../../environments/environment';
 import {ThemeService} from '../../core/services/theme.service';
 import {Router} from '@angular/router';
+import {GameComponent} from "../game/game.component";
 
 @Component({
   selector: 'app-root',
@@ -25,4 +26,6 @@ export class AppComponent implements OnInit {
     this.authService.authChanges((_, session) => (this.session = session));
     initFlowbite();
   }
+
+    protected readonly GameComponent = GameComponent;
 }
