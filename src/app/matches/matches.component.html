@@ -1,10 +1,10 @@
 <div class="flex justify-center my-4">
   <div class="flex rounded-full shadow-lg" role="group">
-    <button
+    <button (click)="goToPreviousWeek()"
       class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Previous</button>
     <button
-      class="bg-gray-500 text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none">Today</button>
-    <button
+      class="bg-gray-500 text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none">{{formatShortDate(startDate)}} - {{formatShortDate(endDate)}}</button>
+    <button (click)="goToNextWeek()"
       class="bg-gray-300 text-gray-800 font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Next</button>
   </div>
 </div>

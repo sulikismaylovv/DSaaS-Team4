@@ -35,5 +35,20 @@ export class ApiService {
     );
   }
 
+  fetchFixturesDateRange(leagueId: number, startDate: string, endDate: string, season: string = '2023'): Observable<Fixture[]> {
+    const options = {
+      params: {
+        league: leagueId.toString(),
+        season: season,
+        from: startDate,
+        to: endDate
+      },
+      headers: this.headers
+    };
+    return this.http.get<{ response: Fixture[] }>(this.apiUrl + "/fixtures", options).pipe(
+      map(response => response.response)
+    );
+  }
+
 
 }
