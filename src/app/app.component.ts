@@ -3,6 +3,8 @@ import { SupabaseService } from './supabase.service'
 import { initFlowbite } from 'flowbite';
 import { environment } from '../environments/environment';
 import { ApiService } from './services/api.service';
+//import {ThemeService} from '../../core/services/theme.service';
+
 
 
 
@@ -14,7 +16,7 @@ import { ApiService } from './services/api.service';
 
 export class AppComponent implements OnInit {
   title = environment.appTitle;
-  session = this.supabase.session  
+  session = this.supabase.session
 
   constructor(private readonly supabase: SupabaseService, private apiService: ApiService) {}
   // constructor(private readonly supabase: SupabaseService) {}

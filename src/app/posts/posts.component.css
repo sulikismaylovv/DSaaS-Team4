@@ -24,3 +24,57 @@
   background: transparent;
   border: none;
 }
+
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout */
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+/* Card Styles */
+.post-card {
+  background: linear-gradient(135deg, #ce0fd5, #3f25a2); /* Pinkish-purple gradient for card background */
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;}
+
+.post-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* Body Styles */
+.post-body {
+  background: rgba(18, 27, 73, 0.76); /* Rich dark purple for content background */
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  color: white; /* White text for contrast *//* No fixed or minimum height */
+}
+
+/* Text and Image Styles */
+.text-xs {
+  font-size: 0.75rem;
+  color: #ddd; /* Lighter text for better contrast against dark background */
+}
+
+.bg-dark-mode {
+  background-color: #121b49; /* Even darker than before */
+}
+
+.bg-light-mode-text {
+  color: #333; /* This can remain the same or be adjusted if needed */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
