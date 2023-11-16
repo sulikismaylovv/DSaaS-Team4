@@ -1,12 +1,12 @@
 export interface Fixture {
-    fixtureInfo: FixtureInfo;
+    fixture: fixtureInfo;
     league: league;
     teams: Teams;
     goals: Score;
     score: Score;
 }
 
-export interface FixtureInfo {
+export interface fixtureInfo {
     id: number;
     referee: string;
     timezone: string;
