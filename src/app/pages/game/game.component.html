@@ -1,6 +1,4 @@
-<section class="bg-dark-mode dark:bg-dark-mode">
-
-
+<section class="bg-light-mode dark:bg-dark-mode">
   <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -8,7 +6,7 @@
     </svg>
   </button>
 
-  <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+  <aside id="logo-sidebar" class="fixed top-0 left-0 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">
       <a href="#" class="flex items-center ps-2.5 mb-5">
         <img src="assets/icons/logo-dark.png" class="h-6 me-3 sm:h-7" alt="Remontada Logo" />
@@ -28,7 +26,7 @@
             <svg class="w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Explore</span>
+            <span class="flex-1 ms-3 whitespace-nowrap">Search</span>
           </a>
         </li>
         <li>
@@ -44,7 +42,7 @@
             <svg class="w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 5h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-2v3l-4-3H8m4-13H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2v3l4-3h4a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
             </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Messages</span>
+            <span class="flex-1 ms-3 whitespace-nowrap">League</span>
           </a>
         </li>
         <li>
@@ -109,10 +107,10 @@
   </aside>
 
   <div class="p-4 sm:ml-64">
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <div class="grid gap-4 mb-4">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[1000px] ">
+      <div class="grid grid-rows-[auto_1fr] gap-4">
         <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <div class="flex items-start justify-between">
+          <div class=" flex items-start justify-between">
             <button type="button" class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
@@ -122,102 +120,45 @@
               <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
             </div>
           </div>
-          <div class="flex items-start justify-between  p-4">
+          <div class="flex items-start justify-between p-4">
             <div class="flex items-center">
               <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-16 h-16">
-              <p class="ml-2"> Royal Antwerp Football Club  </p>
+              <p class="ml-2 text-white"> Royal Antwerp Football Club  </p>
             </div>
             <div class="flex flex-col items-center">
-              <p class="text-black font-bold">5:30PM</p>
+              <p class="text-white font-bold">5:30PM</p>
               <p class="text-gray-400 font-semibold">Today</p>
             </div>
             <div class="flex items-center">
-              <p class="ml-2"> Royal Charleroi Sproting Club  </p>
+              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
               <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-16 h-16">
             </div>
           </div>
         </div>
-      </div>
-
-
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
-        </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-          </p>
+        <div class="h-full rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+          <p class="text-2xl mt-2 ml-2 text-white font-bold">Place your bets!</p>
+          <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
+          <div class="flex items-center justify-center pb-3"><!--Teams-->
+            <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
+              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
+              <p class="text-white"> Royal Antwerp Football Club </p>
+              <p class="text-gray-400 font-semibold"> 45% </p>
+            </div>
+            <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
+              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
+              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
+              <p class="text-gray-400 font-semibold"> 55% </p>
+            </div>
+          </div>
+          <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent" [class.pointer-events-none]="!showContent">
+            <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
+            <form class="flex items-start ml-2">
+              <input type="text" id="betPoints" class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="I'm hungry" required>
+              <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
 </section>
