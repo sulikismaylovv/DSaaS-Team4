@@ -23,6 +23,7 @@ module.exports = {
       '4': '4px', // In case you don't have this already
     },
     width: {
+      '100': '25rem',
       '112': '28rem',
       '128': '32rem',
       '144': '36rem',
