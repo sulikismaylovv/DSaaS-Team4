@@ -54,7 +54,7 @@ export class MatchesComponent implements OnInit {
   }
 
   // logList(){
-  //   this.groupFixturesByDate() 
+  //   this.groupFixturesByDate()
   //   console.log("grouping fixtures by date");
   //   console.log(this.groupedFixtures);
   // }
@@ -76,19 +76,19 @@ export class MatchesComponent implements OnInit {
     this.groupedFixtures = groupBy(this.fixtures, (fixture) => {
       return format(parseISO(fixture.fixture.date), 'yyyy-MM-dd');
     });
-  
+
     // Sort the groups by date
     this.groupedFixtureKeys = Object.keys(this.groupedFixtures).sort();
-  
+
     // Sort fixtures within each group by the full date and time
     this.groupedFixtureKeys.forEach(date => {
       this.groupedFixtures[date].sort((a, b) => compareAsc(parseISO(a.fixture.date), parseISO(b.fixture.date)));
     });
   }
 
-  getGroupedFixtureDates(): string[] {
-    return Object.keys(this.groupedFixtures);
-  }
+  // getGroupedFixtureDates(): string[] {
+  //   return Object.keys(this.groupedFixtures);
+  // }
 
   goToNextWeek() {
     this.setWeek(addDays(this.startDate, 7));
@@ -111,7 +111,7 @@ export class MatchesComponent implements OnInit {
   formatShortDate(date: Date): string {
     return this.datePipe.transform(date, 'MMM d') || '';
   }
-  
+
   //convert from type string YYYY-MM-DD to type string MMM d
   formatShortDateString(dateString: string): string {
     const date = new Date(dateString);
