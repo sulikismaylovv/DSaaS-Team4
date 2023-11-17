@@ -14,6 +14,8 @@ import {MultistepformComponent} from './modules/registration_module/multistepfor
 import {StepperComponent} from './modules/registration_module/stepper/stepper.component';
 import { VerifyEmailComponent } from './modules/registration_module/verify-email/verify-email.component';
 import { GameComponent } from './modules/game_module/game.component';
+import { HttpClientModule } from '@angular/common/http'
+
 
 
 
@@ -23,7 +25,7 @@ import { GameComponent } from './modules/game_module/game.component';
     , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule
+    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
