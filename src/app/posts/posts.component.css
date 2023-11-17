@@ -1,0 +1,88 @@
+/* Hide the vertical scroll bar */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* Optionally, you can change the scroll bar background color to match your background */
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Optionally, you can change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: none;
+}
+
+/* For Firefox */
+.overflow-y-auto.scrollbar {
+  width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* For Firefox, change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto.scrollbar-thumb {
+  background: transparent;
+  border: none;
+}
+
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout */
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+/* Card Styles */
+.post-card {
+  background: linear-gradient(135deg, #ce0fd5, #3f25a2); /* Pinkish-purple gradient for card background */
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;}
+
+.post-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* Body Styles */
+.post-body {
+  background: linear-gradient(135deg, rgba(206, 15, 213, 0.7), rgba(63, 37, 162, 0.7));
+  /* Rich dark purple for content background */
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  color: white; /* White text for contrast *//* No fixed or minimum height */
+}
+
+/* Text and Image Styles */
+.text-xs {
+  font-size: 0.75rem;
+  color: #ddd; /* Lighter text for better contrast against dark background */
+}
+
+.bg-dark-mode {
+  background-color: rgba(28, 38, 50, 0.89); /* Even darker than before */
+}
+
+.bg-light-mode-text {
+  color: #333; /* This can remain the same or be adjusted if needed */
+}
+
+.profile-img {
+  width: auto; /* Adjust as necessary, or use a specific width that maintains the aspect ratio */
+  height: 32px; /* Example height, adjust as necessary */
+  object-fit: cover; /* This will cover the area of the given dimensions, cropping the image if necessary */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+

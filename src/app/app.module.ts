@@ -22,10 +22,10 @@ import { HttpClientModule } from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule
+    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule , NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent],

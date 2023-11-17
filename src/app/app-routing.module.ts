@@ -19,7 +19,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full', },
   { path: 'home', component: HomeComponent, pathMatch: 'full'},
   { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
-  { path: 'game', component:GameComponent, pathMatch: 'full'}
+  { path: 'game', component:GameComponent, pathMatch: 'full'},
+    { path: 'posts', component: PostsComponent },
+    { path: 'games', component: MatchesComponent },
 ];
 
 @NgModule({
