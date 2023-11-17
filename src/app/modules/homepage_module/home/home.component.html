@@ -1,12 +1,13 @@
-<section class="bg-dark-mode text-white flex flex-col h-screen" xmlns="http://www.w3.org/1999/html">
-  <div class="mx-auto  md:flex md:space-x-4 relative px-16 h-screen">    <!-- Add relative positioning to the container -->
+<section class="bg-dark-mode text-white flex flex-col min-h-screen " xmlns="http://www.w3.org/1999/html">
+  <div class="flex flex-1 flex-wrap md:flex-nowrap">
     <!-- Logo at the top-left -->
     <!-- Add absolute positioning, and set z-index to 10 -->
 
     <!-- Login -->
-    <aside class="w-full md:w-1/6 flex flex-col items-center justify-center"> <!-- Remove z-index to keep it in front -->
-
+    <aside class="bg-dark-mode text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out"> <!-- Remove z-index to keep it in front -->
     </aside>
+
+
     <aside id="logo-sidebar" class=" bg-dark-mode text-white fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
       <div class="h-full px-3 py-4 overflow-y-auto bg-dark-mode text-white dark:bg-dark-mode">
         <a href="#" class="flex items-center ps-0 mb-5">
