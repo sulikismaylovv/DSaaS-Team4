@@ -18,8 +18,8 @@ export class MatchesComponent implements OnInit {
   groupedFixtures: {[key: string]: Fixture[]} = {};  //grouped by date
   groupedFixtureKeys: string[] = [];
   currentDate: Date;
-  startDate: Date = new Date();;
-  endDate: Date = new Date();;
+  startDate: Date = new Date();
+  endDate: Date = new Date();
   stringDate: string;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) {
