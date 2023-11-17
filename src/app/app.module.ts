@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 
-import {AppComponent} from './pages/main/app.component'
+import {AppComponent} from './app.component'
 import {AuthComponent} from './pages/registration_module/auth/auth.component'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {AppRoutingModule} from './app-routing.module';
