@@ -1,0 +1,68 @@
+.user-details {
+  display: flex;
+  align-items: center;
+}
+
+.rank-number {
+  margin-right: 10px; /* Adds space between the rank number and the profile picture */
+}
+
+.profile-picture {
+  width: 40px; /* Adjust as needed */
+  height: 40px; /* Adjust as needed */
+  border-radius: 50%; /* Makes the picture round */
+  object-fit: cover; /* Ensures the image covers the area properly */
+  margin-right: 10px; /* Adds space between the profile picture and the username */
+}
+
+.username {
+  /* Any additional styling for the username */
+}
+
+
+.league-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust the gap between crests as needed */
+
+}
+
+.league-badge {
+  width: 60px; /* Example size, adjust as needed */
+  height: 80px; /* Example size, adjust as needed */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Replace the background-color with actual images for crests */
+.bronze { background-image: url('src/assets/crests/bronzecrest.svg'); }
+.silver { background-image: url('src/assets/crests/silvercrest.svg'); }
+.gold { background-image: url('src/assets/crests/goldencrest.svg');
+  transform: scale(1.2); /* Enlarge the badge */
+  z-index: 10; /* Ensure it's above other elements if they overlap */
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+.platinum { background-image: url('src/assets/crests/platinumcrest.svg');
+  opacity: 0.5; /* Decrease opacity to give a "disabled" look */
+  filter: blur(1px); /* Optional: Add a blur effect to indicate it's locked */
+  pointer-events: none; /* Disable interactions */}
+
+.active {
+  /* Add some styling for the active league */
+  transform: scale(1.1); /* Slightly increase size for emphasis */
+}
+
+.league-info {
+  text-align: center;
+  color: #333; /* Dark text color, adjust as needed */
+  margin-top: 20px; /* Spacing between crests and text */
+}
+
+/* Optional: Add a hover effect */
+.league-badge:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}

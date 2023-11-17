@@ -1,0 +1,45 @@
+<!-- league.component.html -->
+<div class="bg-dark-mode min-h-screen p-6">
+  <!-- League Rankings Section -->
+
+  <div class="rankings-section bg-gray rounded-lg p-4 w-full max-w-4xl mx-auto text-white">
+    <div class="league-container">
+      <div class="league-badge bronze"></div>
+      <div class="league-badge silver"></div>
+      <div class="league-badge gold"></div>
+      <div class="league-badge platinum"></div>
+    </div>
+
+    <br>
+    <h2 class="text-xl font-semibold mb-4 text-center">Remontada Gold League - Top 3 advance to the Platinum league</h2>
+
+    <div class="flex flex-col items-center gap-4">
+      <div *ngFor="let user of usersSortedByPoints; let i = index" class="user-card bg-lighter-purple  rounded-lg p-4 w-full max-w-sm flex items-center justify-between shadow-lg relative">
+        <div *ngIf="i < 3" class="indicator-bar bg-green-500 absolute left-0 top-0 bottom-0 w-2"></div>
+        <div *ngIf="usersSortedByPoints.length - i <= 3" class="indicator-bar bg-red-500 absolute left-0 top-0 bottom-0 w-2"></div>
+        <span class="font-bold ml-4">
+
+        <span class="user-details">
+          <span *ngIf="i > 2" class="rank-number">{{ i + 1 }}</span>
+          <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
+          <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
+          <span *ngIf="i === 2" class="text-bronze mr-2">🥉</span>
+          <img src="{{ user.profilePictureUrl }}" alt="Profile Picture" class="profile-picture">
+          <span class="username">{{ user.username }}</span>
+        </span>
+    </span>
+        <div class="flex items-center">
+          <span *ngIf="i < 3" class="text-green-500 ml-2">&#9650;</span>
+          <span *ngIf="usersSortedByPoints.length - i <= 3" class="text-red-500 ml-2">&#9660;</span>
+          <span class="text-sm bg-primary-700 px-3 py-1 rounded-full">{{ user.points }} XP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend text-sm mt-4 flex justify-center gap-8">
+      <div><span class="inline-block w-3 h-3 bg-green-500 mr-2"></span> Promotion to higher league</div>
+      <div><span class="inline-block w-3 h-3 bg-red-500 mr-2"></span> Relegation to lower league</div>
+    </div>
+    </div>
+  </div>

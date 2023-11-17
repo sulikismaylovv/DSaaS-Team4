@@ -12,12 +12,13 @@ import {CommonModule} from "@angular/common";
 import {TeamComponent} from './pages/registration/team/team.component';
 import {MultistepformComponent} from './pages/registration/multistepform/multistepform.component';
 import {StepperComponent} from './pages/registration/stepper/stepper.component';
+import { LeagueComponent } from './pages/league/league.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, LeagueComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule
