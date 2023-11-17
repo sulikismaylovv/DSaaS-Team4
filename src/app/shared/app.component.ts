@@ -26,5 +26,9 @@ export class AppComponent implements OnInit {
     initFlowbite();
   }
 
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
     protected readonly GameComponent = GameComponent;
 }

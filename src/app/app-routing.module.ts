@@ -22,8 +22,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full'},
   { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
   { path: 'game', component:GameComponent, pathMatch: 'full'},
-  { path: 'posts', component: PostsComponent, pathMatch: 'full'},
-  { path: 'games', component: MatchesComponent, pathMatch: 'full' },
+  { path: 'posts', component: PostsComponent},
+  { path: 'games', component: MatchesComponent},
 ];
 
 @NgModule({

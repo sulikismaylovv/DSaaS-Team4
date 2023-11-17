@@ -38,7 +38,16 @@ export class HomeComponent {
     return this.authService.isAuthenticated();
   }
 
-  async goComplete() {
-    await this.router.navigate(['/complete-profile']);
+  showPosts: boolean = true;
+  showMatches: boolean = false;
+
+  showPostsContent() {
+    this.showPosts = true;
+    this.showMatches = false;
+  }
+
+  showMatchesContent() {
+    this.showPosts = false;
+    this.showMatches = true;
   }
 }

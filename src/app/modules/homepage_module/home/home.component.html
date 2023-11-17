@@ -1,5 +1,4 @@
-
-<section class="bg-dark-mode text-white dark:text-white" xmlns="http://www.w3.org/1999/html">
+<section class="bg-dark-mode text-white flex flex-col h-screen" xmlns="http://www.w3.org/1999/html">
   <div class="mx-auto  md:flex md:space-x-4 relative px-16 h-screen">    <!-- Add relative positioning to the container -->
     <!-- Logo at the top-left -->
     <!-- Add absolute positioning, and set z-index to 10 -->
@@ -121,14 +120,20 @@
         </div>
         <!-- Links for posts/matches -->
         <nav class="flex justify-center py-4 space-x-4">
-          <a routerLink="/posts" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
-          <a routerLink="/games" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
+          <a (click)="showPostsContent()" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
+          <a (click)="showMatchesContent()" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
         </nav>
         <!-- Add the rest of your main content here -->
       </div>
       <!-- Posts and Matches come here -->
       <div class="w-full mx-auto max-w-screen-xl h-5/6 pt-8">
-        <router-outlet></router-outlet>
+        <div *ngIf="showPosts">
+          <app-posts></app-posts> <!-- Display only if showPosts is true -->
+        </div>
+        <div *ngIf="showMatches">
+          <app-matches></app-matches> <!-- Display only if showMatches is true -->
+        </div>
+
       </div>
     </div>
 
@@ -200,28 +205,6 @@
     </aside>
   </div>
 </section>
-
-<!--<footer class="rounded-lg shadow m-4 bg-light-mode-text dark:bg-dark-mode">-->
-<!--  <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">-->
-<!--    <span class="text-sm sm:text-center text-white dark:text-white">© 2023 <a href="https://flowbite.com/" class="hover:underline text-white dark:text-white">Remontada™</a>. All Rights Reserved.</span>-->
-<!--    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-white dark:text-white sm:mt-0">-->
-<!--      <li>-->
-<!--        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">About</a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">Privacy Policy</a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="#" class="mr-4 hover:underline md:mr-6 text-white dark:text-white">Licensing</a>-->
-<!--      </li>-->
-<!--      <li>-->
-<!--        <a href="#" class="hover:underline text-white dark:text-white">Contact</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </div>-->
-<!--</footer>-->
-
-
 
 <style>
   /* Reset margin and padding for Login and Settings sections */
