@@ -1,4 +1,4 @@
-<div class="flex justify-center my-4">
+<div class="flex justify-center py-4 h-1/6">
   <div class="flex rounded-full shadow-lg" role="group">
     <button (click)="goToPreviousWeek()"
       class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Previous</button>
@@ -10,7 +10,7 @@
 </div>
 
 
-<div class="bg-gray-800 p-6 rounded-lg shadow-md">
+<div class="bg-gray-800 p-6 rounded-lg shadow-md overflow-y-auto h-5/6">
   <div class="grid grid-cols-1 gap-4">
 
     <!-- Outer loop for grouped fixtures by date -->
@@ -49,3 +49,4 @@
 </div>
 
 <!-- <button (click)="logList()">LOG LIST</button> -->
+

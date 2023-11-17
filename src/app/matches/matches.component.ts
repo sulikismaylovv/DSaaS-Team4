@@ -48,9 +48,10 @@ export class MatchesComponent implements OnInit {
       (data: Fixture[]) => {
         this.fixtures = data;
         console.log(this.fixtures);
+        this.groupFixturesByDate();
+
       }
     );
-    this.groupFixturesByDate();
   }
 
   // logList(){

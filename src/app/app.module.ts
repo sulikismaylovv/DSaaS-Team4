@@ -12,14 +12,15 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import { MatchesComponent } from './matches/matches.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, AccountComponent, AvatarComponent, PostsComponent, MatchesComponent
   ],
-  imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, RouterLink, RouterLinkActive, HttpClientModule, FormsModule
-  ],
+    imports: [
+        BrowserModule, ReactiveFormsModule, AppRoutingModule, RouterLink, RouterLinkActive, HttpClientModule, FormsModule, NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })
