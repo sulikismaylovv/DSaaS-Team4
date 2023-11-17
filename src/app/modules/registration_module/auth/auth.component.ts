@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 
-import {AuthService, Profile} from '../../core/services/auth.service';
+import {AuthService, Profile} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -43,32 +43,29 @@ export class AuthComponent {
 
   // Registration method
   async onRegister(): Promise<void> {
-    try {
-      this.loading = true;
-      const email = this.registerForm.value.email as string;
-      const password = this.registerForm.value.password as string;
+    if (this.registerForm.valid) {
+      try {
+        this.loading = true;
+        const email = this.registerForm.value.email as string;
+        const password = this.registerForm.value.password as string;
 
-      // Define additional user details
-      const additionalDetails: Profile = {
-        username: 'someUsername', // You might want to add this to your form
-        email: email,
-        first_name: '', // Set default or get from form
-        last_name: '', // Set default or get from form
-        // other fields as needed
-      };
-
-      const response = await this.authService.register(email, password, additionalDetails);
-      await this.router.navigate(['/complete-profile']);
-      if (response.error) throw response.error;
-
-      alert('You are successfully registered!');
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
+        // Call the simplified register method without additional details
+        await this.authService.register(email, password);
+        // After the alert in the register method, control returns here.
+        // Navigate to the email verification page
+        await this.router.navigate(['/verify-email']);
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message);
+        }
+      } finally {
+        this.registerForm.reset();
+        this.loading = false;
       }
-    } finally {
-      this.registerForm.reset();
-      this.loading = false;
+    } else {
+      // If the form is not valid, you can handle the errors here
+      // For example, you can trigger validation messages in your template
+      alert('Please correct the errors on the form.');
     }
   }
 
