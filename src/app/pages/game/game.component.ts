@@ -8,6 +8,7 @@ import {ThemeService} from "../../core/services/theme.service";
 export class GameComponent {
   showContent: boolean = false;
   clickedImage: string | null = null;
+  
   constructor(public themeService: ThemeService) {}
   toggleTheme() {
     this.themeService.toggleTheme();

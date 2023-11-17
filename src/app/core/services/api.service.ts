@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Fixture } from '../models/fixtures.model';
+import { Fixture } from '../../models/fixtures.model';
 
 @Injectable({
   providedIn: 'root'
