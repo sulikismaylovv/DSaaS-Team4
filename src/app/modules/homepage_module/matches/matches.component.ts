@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { Fixture } from '../models/fixtures.model';
 import { DatePipe } from '@angular/common';
 import { initFlowbite } from 'flowbite';
 import { format, parseISO, compareAsc , startOfWeek, endOfWeek, addDays, subDays } from 'date-fns';
 import { groupBy } from 'lodash';
+import {Fixture} from "../../../core/models/fixtures.model";
+import {ApiService} from "../../../core/services/api.service";
 
 @Component({
   selector: 'app-matches',

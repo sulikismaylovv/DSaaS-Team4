@@ -8,13 +8,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './modules/login/login.component';
 import {DashboardComponent} from './modules/account_module/dashboard/dashboard.component';
 import {HomeComponent} from './modules/homepage_module/home/home.component'
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {TeamComponent} from './modules/registration_module/team/team.component';
 import {MultistepformComponent} from './modules/registration_module/multistepform/multistepform.component';
 import {StepperComponent} from './modules/registration_module/stepper/stepper.component';
 import { VerifyEmailComponent } from './modules/registration_module/verify-email/verify-email.component';
 import { GameComponent } from './modules/game_module/game.component';
 import { HttpClientModule } from '@angular/common/http'
+import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
+import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
 
 
 
