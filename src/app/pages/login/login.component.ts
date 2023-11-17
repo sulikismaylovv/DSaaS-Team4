@@ -46,4 +46,14 @@ export class LoginComponent {
       this.loading = false; // Stop the loading indicator
     }
   }
+
+  async signInWithProvider() {
+    try {
+      await this.authService.signInWithProvider();
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  }
 }
