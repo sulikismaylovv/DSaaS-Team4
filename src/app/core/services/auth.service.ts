@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
 import {SupabaseService} from 'src/app/core/services/supabase.service';
+import {ConfigService} from "./config.service";
 
 export interface Profile {
   id?: string;
@@ -23,21 +24,48 @@ interface RegisterResponse {
 export class AuthService {
   private _session: AuthSession | null = null;
 
-  constructor(private supabase: SupabaseService) {
-    this.supabase.supabaseClient.auth.onAuthStateChange(async (event, session) => {
-      this._session = session;
-      if (event === 'SIGNED_IN') {
-        console.log('User signed in:', session?.user);
-        try {
-        } catch (error) {
-          console.error('Error while loading profile:', error);
-        }
-      } else if (event === 'SIGNED_OUT') {
-        console.log('User signed out');
-      }
-    });
-  }
 
+    constructor(
+        private readonly configService: ConfigService,
+        private supabase: SupabaseService
+    ) {
+        // Call restoreSession within an async IIFE (Immediately Invoked Function Expression)
+        (async () => {
+            await this.restoreSession();
+        })();
+        this.supabase.supabaseClient.auth.onAuthStateChange((event, session) => {
+            this.handleAuthChange(event, session);
+        });
+    }
+
+    private async restoreSession() {
+        try {
+            const { data: sessionData, error } = await this.supabase.supabaseClient.auth.getSession();
+            if (error) {
+                console.error('Error restoring session:', error);
+                return;
+            }
+            this._session = sessionData.session;
+            if (this._session) {
+                console.log('Session restored:', this._session);
+                // You may want to perform additional logic here if a session is restored
+            }
+        } catch (error) {
+            console.error('Unexpected error restoring session:', error);
+        }
+    }
+
+
+    private handleAuthChange(event: AuthChangeEvent, session: Session | null) {
+        this._session = session;
+        if (event === 'SIGNED_IN') {
+            console.log('User signed in:', session?.user);
+            // Handle successful sign in
+        } else if (event === 'SIGNED_OUT') {
+            console.log('User signed out');
+            // Handle sign out
+        }
+    }
 
   isAuthenticated(): boolean {
     return !!this._session?.user;
@@ -49,6 +77,15 @@ export class AuthService {
       this._session = data.session
     })
     return this._session
+  }
+
+  async signInWithProvider() {
+    return this.supabase.supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+        options: {
+          redirectTo: this.configService.getFullUrl('home')
+        }
+      });
   }
 
   async signIn(credentials: { usernameOrEmail: string; password: string }): Promise<void> {
@@ -81,22 +118,22 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string, additionalDetails: Profile): Promise<RegisterResponse> {
-    const signUpResponse = await this.supabase.supabaseClient.auth.signUp({ email, password });
+  async register(email: string, password: string): Promise<void> {
+    const redirectUrl = this.configService.getFullUrl('complete-profile');
+    const signUpResponse = await this.supabase.supabaseClient.auth.signUp({ email, password
+      , options: {
+      emailRedirectTo: redirectUrl
+    }});
+
     if (signUpResponse.error) throw signUpResponse.error;
 
     alert('Registration successful! Please check your email to verify your account.');
-
-    const userId = signUpResponse.data?.user?.id;
-    if (!userId) throw new Error('User ID not found after registration.');
-
-    return { dataProfile: await this.completeProfileSetup(userId, additionalDetails) };
   }
 
   async completeProfileSetup(userId: string, additionalDetails: Profile): Promise<Profile> {
     const { data, error } = await this.supabase.supabaseClient
       .from('users')
-      .insert([{ ...additionalDetails, id: userId }])
+      .upsert([{ ...additionalDetails, id: userId }])
       .single();
 
     if (error) throw error;
