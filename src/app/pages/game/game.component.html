@@ -6,7 +6,7 @@
     </svg>
   </button>
 
-  <aside id="logo-sidebar" class="fixed top-0 left-0 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+  <aside id="logo-sidebar" class="fixed top-0 left-0 w-72 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">
       <a href="#" class="flex items-center ps-2.5 mb-5">
         <img src="assets/icons/logo-dark.png" class="h-6 me-3 sm:h-7" alt="Remontada Logo" />
@@ -92,7 +92,7 @@
           </a>
         </li>
         <li>
-          <a class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer" (click)="toggleTheme()">
+          <a class="flex items-center p-12 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer" (click)="toggleTheme()">
             <svg *ngIf="!themeService.isDarkModeEnabled()" class="w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3V1m0 18v-2M5.05 5.05 3.636 3.636m12.728 12.728L14.95 14.95M3 10H1m18 0h-2M5.05 14.95l-1.414 1.414M16.364 3.636 14.95 5.05M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/>
             </svg>
@@ -106,14 +106,13 @@
     </div>
   </aside>
 
-  <div class="p-4 sm:ml-64">
+  <div class="p-4 sm:ml-72">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[1000px] ">
       <div class="grid grid-rows-[auto_1fr_auto] gap-4">
         <!--First_widget-->
-        <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+        <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col p-6">
           <div class=" flex items-start justify-between">
-            <button type="button" class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <button (click)="logData()" type="button" class="ml-2 mt-2 text-white hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:hover:bg-purple-700 dark:focus:ring-purple-800" style="background-color: #6b2bd9;">              <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
               </svg>
             </button>
@@ -143,12 +142,12 @@
           <div class="flex items-center justify-center pb-3"><!--Teams-->
             <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
               <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
-              <p class="text-white"> Royal Antwerp Football Club </p>
+              <p class="text-white"> {{currentFixture.teams.home.name}} </p>
               <p class="text-gray-400 font-semibold"> 45% </p>
             </div>
             <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
               <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
-              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
+              <p class="truncate ml-2 text-white "> {{currentFixture.teams.away.name}}  </p>
               <p class="text-gray-400 font-semibold"> 55% </p>
             </div>
           </div>
@@ -156,7 +155,7 @@
             <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
             <form class="flex items-start mt-2 ml-2 mb-4">
               <input type="text" id="betPoints" class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="I'm hungry" required>
-              <button type="submit" data-modal-target= "popup-modal" data-modal-toggle="popup-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
+              <button type="submit" data-modal-target= "popup-modal" data-modal-toggle="popup-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" style="background-color: #6b2bd9">Bet</button>
             </form>
           </div>
           <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

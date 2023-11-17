@@ -13,6 +13,7 @@ import {TeamComponent} from './pages/registration/team/team.component';
 import {MultistepformComponent} from './pages/registration/multistepform/multistepform.component';
 import {StepperComponent} from './pages/registration/stepper/stepper.component';
 import { GameComponent } from './pages/game/game.component';
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { GameComponent } from './pages/game/game.component';
     , TeamComponent, MultistepformComponent, StepperComponent, GameComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule
+    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

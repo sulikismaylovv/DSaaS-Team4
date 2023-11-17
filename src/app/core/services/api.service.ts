@@ -20,6 +20,16 @@ export class ApiService {
   });
 
 
+  fetchSpecificFixture(fixtureID: number): Observable<Fixture[]> {
+    const options = {
+      params: {
+        id: fixtureID.toString()      },
+      headers: this.headers
+    };
+    return this.http.get<{ response: Fixture[] }>(this.apiUrl + "/fixtures", options).pipe(
+      map(response => response.response)
+    );
+  }
 
   fetchFixtures(leagueId: number, date: string, season: string = '2023'): Observable<Fixture[]> {
     const options = {
