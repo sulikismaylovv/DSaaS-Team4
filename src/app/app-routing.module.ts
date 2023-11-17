@@ -8,7 +8,7 @@ import {HomeComponent} from "./modules/homepage_module/home/home.component";
 import {AuthComponent} from "./modules/registration_module/auth/auth.component";
 import {MultistepformComponent} from "./modules/registration_module/multistepform/multistepform.component";
 import {VerifyEmailComponent} from "./modules/registration_module/verify-email/verify-email.component";
-import {GameComponent} from "./pages/game/game.component";
+import {GameComponent} from "./modules/game_module/game.component";
 
 
 const routes: Routes = [

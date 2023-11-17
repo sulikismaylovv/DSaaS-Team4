@@ -4,8 +4,7 @@ import {initFlowbite} from 'flowbite';
 import {environment} from '../../environments/environment';
 import {ThemeService} from '../core/services/theme.service';
 import {Router} from '@angular/router';
-import {GameComponent} from "../game/game.component";
-
+import {GameComponent} from "../modules/game_module/game.component";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

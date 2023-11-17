@@ -13,7 +13,7 @@ import {TeamComponent} from './modules/registration_module/team/team.component';
 import {MultistepformComponent} from './modules/registration_module/multistepform/multistepform.component';
 import {StepperComponent} from './modules/registration_module/stepper/stepper.component';
 import { VerifyEmailComponent } from './modules/registration_module/verify-email/verify-email.component';
-import { GameComponent } from './pages/game/game.component';
+import { GameComponent } from './modules/game_module/game.component';
 
 
 
