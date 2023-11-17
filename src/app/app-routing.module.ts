@@ -1,13 +1,13 @@
 // app-routing.module.ts
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ProfileGuard} from './guards/profile.guard';
-import {DashboardComponent} from './pages/dashboard/dashboard.component';
-import {LoginComponent} from './pages/login/login.component';
-import {HomeComponent} from "./pages/home/home.component";
-import {AuthComponent} from "./pages/registration_module/auth/auth.component";
-import {MultistepformComponent} from "./pages/registration_module/multistepform/multistepform.component";
-import {VerifyEmailComponent} from "./pages/registration_module/verify-email/verify-email.component";
+import {ProfileGuard} from './core/guards/profile.guard';
+import {DashboardComponent} from './modules/account_module/dashboard/dashboard.component';
+import {LoginComponent} from './modules/login/login.component';
+import {HomeComponent} from "./modules/homepage_module/home/home.component";
+import {AuthComponent} from "./modules/registration_module/auth/auth.component";
+import {MultistepformComponent} from "./modules/registration_module/multistepform/multistepform.component";
+import {VerifyEmailComponent} from "./modules/registration_module/verify-email/verify-email.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full' },

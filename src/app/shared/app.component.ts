@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from './core/services/auth.service';
+import {AuthService} from '../core/services/auth.service';
 import {initFlowbite} from 'flowbite';
-import {environment} from '../environments/environment';
-import {ThemeService} from './core/services/theme.service';
+import {environment} from '../../environments/environment';
+import {ThemeService} from '../core/services/theme.service';
 import {Router} from '@angular/router';
 
 @Component({
