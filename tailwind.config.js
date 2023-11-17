@@ -14,7 +14,8 @@ module.exports = {
         'light-mode-text':"#422f97",
         'gray':"#4C5474",
         'light-gray':"#848CA9",
-        'lighter-purple':'#6F44C8'
+        'lighter-purple':'#6F44C8',
+        'very-light-purple':'#D2C7EE',
       }
     },
     fontFamily: {

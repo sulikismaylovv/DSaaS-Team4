@@ -1,0 +1,73 @@
+<div class="container bg-slate-800 mx-auto p-6" *ngIf="leagueForm">
+
+  <h1 class="text-3xl font-bold mb-4 text-white">Create your own League</h1>
+  <form [formGroup]="leagueForm" (ngSubmit)="onSubmit()" class="bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+    <!-- League Name Field -->
+    <div class="mb-4">
+      <label class="block text-sm font-bold mb-2 text-white" for="leagueName">
+        League Name
+      </label>
+      <input formControlName="leagueName" id="leagueName" type="text"
+             placeholder="Enter league name"
+             class="bg-very-light-purple text-dark-mode border border-light-gray rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+             required>
+    </div>
+
+    <!-- Invite Friends Section -->
+    <div class="mb-4">
+      <label class="block text-sm font-bold mb-2 text-white">
+        Invite Friends
+      </label>
+
+      <!-- Container for added friends -->
+      <!-- Container for added friends -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+        <div *ngFor="let friendControl of friends.controls; let i = index" class="flex items-center">
+          <div class="bg-lighter-purple text-white rounded px-4 py-2 mr-2 flex-grow ">
+            {{ friendControl.value.username }}
+          </div>
+          <button (click)="removeFriend(i)" type="button" class="bg-red-500 text-white w-8 h-8 rounded flex items-center justify-center">
+            X
+          </button>
+        </div>
+      </div>
+
+      <!-- Input to add a new friend -->
+      <div class="flex items-center mb-2">
+        <input #newFriendInput type="text" placeholder="Enter username"
+               class="bg-very-light-purple text-dark-mode border border-light-gray rounded  px-4 py-2 mr-2 flex-grow">
+        <button (click)="addAndClear(newFriendInput.value, newFriendInput)" type="button"
+                class="bg-green-500 text-white w-8 h-8 rounded flex items-center justify-center">
+          +
+        </button>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button class="bg-lighter-purple hover:bg-light-mode-text text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Create League
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+  <!-- Modal for displaying feedback -->
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showModal">
+  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div class="mt-3 text-center">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">League Created Successfully!</h3>
+      <div class="mt-2 px-7 py-3">
+        <p class="text-sm text-gray-500">League Name: {{ submittedLeagueName }}</p>
+        <p class="text-sm text-gray-500">
+          Friends Invited:
+        <ul>
+          <li *ngFor="let username of submittedFriendsUsernames">{{ username }}</li>
+        </ul>
+      </div>
+      <div class="items-center px-4 pb-3">
+        <button class="bg-blue-500 text-white rounded-md px-4 py-2" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
