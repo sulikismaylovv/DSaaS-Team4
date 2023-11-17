@@ -13,6 +13,7 @@ module.exports = {
         'light-mode': "#fffff0",
         'light-mode-text':"#422f97",
         'pink':"#d154dd",
+        'dark-gray':"#2c3642",
         'gray':"#4C5474",
         'light-gray':"#848CA9",
         'lighter-purple':'#6F44C8',

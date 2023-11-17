@@ -119,12 +119,14 @@
     <div class="w-full mx-auto my-0 max-w-screen-xl light-mode-text  px-40 h-full"> <!-- Adjust the width to 4/6 -->
       <!-- Main Content -->
       <div class="h-1/6 pt-7 px-4">
-        <div class="flex bg-gray-900 rounded-full p-3">
+        <!-- Search Bar -->
+        <div class="flex bg-dark-gray rounded-full p-3">
           <form class="flex items-center ">
             <img src="./assets/search-137.png" class="mx-2 w-6 h-6">
             <input type="text" name="searchbar" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-400 focus:ring-0 sm:text-xl sm:leading-6" placeholder="search">
           </form>
         </div>
+        <!-- Links for posts/matches -->
         <nav class="flex justify-center py-4 space-x-4">
           <a routerLink="/posts" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
           <a routerLink="/games" class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
