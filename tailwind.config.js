@@ -16,7 +16,8 @@ module.exports = {
         'gray':"#4C5474",
         'light-gray':"#848CA9",
         'lighter-purple':'#6F44C8',
-        'very-light-purple':'#D2C7EE'
+        'very-light-purple':'#D2C7EE',
+        'search-bar':"rgba(28,38,50,0.59)"
 
       }
     },
