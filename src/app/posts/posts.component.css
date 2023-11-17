@@ -51,7 +51,8 @@ body {
 
 /* Body Styles */
 .post-body {
-  background: rgba(18, 27, 73, 0.76); /* Rich dark purple for content background */
+  background: linear-gradient(135deg, rgba(206, 15, 213, 0.7), rgba(63, 37, 162, 0.7));
+  /* Rich dark purple for content background */
   margin: 10px;
   padding: 15px;
   border-radius: 10px;
@@ -65,11 +66,17 @@ body {
 }
 
 .bg-dark-mode {
-  background-color: #121b49; /* Even darker than before */
+  background-color: rgba(18, 27, 73, 0.51); /* Even darker than before */
 }
 
 .bg-light-mode-text {
   color: #333; /* This can remain the same or be adjusted if needed */
+}
+
+.profile-img {
+  width: auto; /* Adjust as necessary, or use a specific width that maintains the aspect ratio */
+  height: 32px; /* Example height, adjust as necessary */
+  object-fit: cover; /* This will cover the area of the given dimensions, cropping the image if necessary */
 }
 
 /* Responsive Design */
@@ -78,3 +85,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
