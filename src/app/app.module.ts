@@ -13,10 +13,11 @@ import { MatchesComponent } from './matches/matches.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 import {NgOptimizedImage} from "@angular/common";
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent, AuthComponent, AccountComponent, AvatarComponent, PostsComponent, MatchesComponent
+    AppComponent, AuthComponent, AccountComponent, AvatarComponent, PostsComponent, MatchesComponent, HomePageComponent
   ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule, RouterLink, RouterLinkActive, HttpClientModule, FormsModule, NgOptimizedImage
