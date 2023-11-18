@@ -19,14 +19,30 @@
   /* Any additional styling for the username */
 }
 
-
 .league-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px; /* Adjust the gap between crests as needed */
+  justify-content: space-around; /* This will space out the crests evenly */
+  align-items: flex-end; /* Aligns the badges at the bottom */
+  flex-wrap: wrap; /* Allows the badges to wrap onto the next line if necessary */
+  gap: 5px; /* Adjust the gap between crests as needed */
+}
+
+.crest {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the badges and text in a column */
+  width: 80px;
+  height: auto;
+  margin-bottom: 1rem; /* Adds space below each crest */
+
 
 }
+.league-info {
+  text-align: center;
+  margin-top: 8px; /* Spacing between crests and text, adjust as needed */
+  padding: 5px;
+}
+
 
 .league-badge {
   width: 60px; /* Example size, adjust as needed */
@@ -35,31 +51,49 @@
   background-position: center;
   background-size: cover;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  padding: 5px;
+  margin-bottom: 0.5rem; /* Adds space below the badge */
+
 }
 
 /* Replace the background-color with actual images for crests */
-.bronze { background-image: url('src/assets/crests/bronzecrest.svg'); }
-.silver { background-image: url('src/assets/crests/silvercrest.svg'); }
-.gold { background-image: url('src/assets/crests/goldencrest.svg');
-  transform: scale(1.2); /* Enlarge the badge */
+.bronze { background-image: url('src/assets/crests/bronzecrest.svg');
+scale: 0.7}
+.silver { background-image: url('src/assets/crests/silvercrest.svg');
+scale: 0.7}
+
+.gold {
+  background-image: url('src/assets/crests/goldencrest.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* This will ensure the image is contained within the element, respecting padding */
+  width: 60px; /* Control the width of the badge */
+  height: 80px; /* Control the height of the badge */
+  padding: 10px; /* Adjust padding to create space around the badge */
+  box-sizing: border-box; /* Include padding in the width and height calculations */
+  display: flex; /* Use flexbox to center the content */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  transform: scale(1.3); /* Enlarge the badge */
   z-index: 10; /* Ensure it's above other elements if they overlap */
   transition: transform 0.3s ease; /* Smooth transition for scaling */
+  border-width: medium;
+  border-radius: 8px;
+  border-color: #a855f7;
+
 }
 .platinum { background-image: url('src/assets/crests/platinumcrest.svg');
   opacity: 0.5; /* Decrease opacity to give a "disabled" look */
-  filter: blur(1px); /* Optional: Add a blur effect to indicate it's locked */
-  pointer-events: none; /* Disable interactions */}
+  pointer-events: none; /* Disable interactions */
+  scale: 0.7;
+  opacity: 30%;
+}
 
 .active {
   /* Add some styling for the active league */
   transform: scale(1.1); /* Slightly increase size for emphasis */
 }
 
-.league-info {
-  text-align: center;
-  color: #333; /* Dark text color, adjust as needed */
-  margin-top: 20px; /* Spacing between crests and text */
-}
 
 /* Optional: Add a hover effect */
 .league-badge:hover {

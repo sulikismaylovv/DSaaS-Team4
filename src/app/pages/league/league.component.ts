@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 interface User {
   username: string;
   points: number;
-
   profilePictureUrl: string;
 }
 
