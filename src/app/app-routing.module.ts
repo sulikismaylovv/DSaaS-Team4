@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full'},
   { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
   { path: 'game', component:GameComponent, pathMatch: 'full'},
+  { path: 'game/:id', component:GameComponent, pathMatch: 'full'},
   { path: 'posts', component: PostsComponent},
   { path: 'games', component: MatchesComponent},
 ];
