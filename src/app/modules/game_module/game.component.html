@@ -17,7 +17,7 @@
           </div>
           <div class="flex items-start justify-between p-4">
             <div class="flex items-center">
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-16 h-16">
+              <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-16 h-16">
               <p class="ml-2 text-white"> {{fixture.teams.home.name}}  </p>
             </div>
             <div class="flex flex-col items-center">
@@ -25,8 +25,8 @@
               <p class="text-gray-400 font-semibold">Today</p>
             </div>
             <div class="flex items-center">
-              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-16 h-16">
+              <p class="truncate ml-2 text-white "> {{fixture.teams.away.name}}  </p>
+              <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-16 h-16">
             </div>
           </div>
         </div>
@@ -36,13 +36,13 @@
           <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
           <div class="flex items-center justify-center pb-3"><!--Teams-->
             <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
-              <p class="text-white"> Royal Antwerp Football Club </p>
+              <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
+              <p class="text-white"> {{fixture.teams.home.name}} </p>
               <p class="text-gray-400 font-semibold"> 45% </p>
             </div>
             <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
-              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
+              <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
+              <p class="truncate ml-2 text-white ">{{fixture.teams.away.name}}</p>
               <p class="text-gray-400 font-semibold"> 55% </p>
             </div>
           </div>
@@ -81,7 +81,7 @@
         <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-16 h-16">
+              <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-16 h-16">
               <div  class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
                 <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
               </div>
@@ -91,7 +91,7 @@
               <div  class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
                 <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
               </div>
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-16 h-16">
+              <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-16 h-16">
             </div>
           </div>
           <!--Football field-->
