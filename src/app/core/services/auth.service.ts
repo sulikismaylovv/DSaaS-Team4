@@ -63,12 +63,12 @@ export class AuthService {
       if (event === 'SIGNED_IN') {
         console.log('User signed in:', session?.user);
         // Handle successful sign in
-        await this.router.navigate(['/home']);
+        //await this.router.navigate(['/home']);
 
       } else if (event === 'SIGNED_OUT') {
         console.log('User signed out');
         // Handle sign out
-        await this.router.navigate(['/login']);
+        //await this.router.navigate(['/login']);
       }
     }
 
