@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
+import {Router} from "@angular/router";
 
 export interface Profile {
   id?: string;
@@ -27,7 +28,8 @@ export class AuthService {
 
     constructor(
         private readonly configService: ConfigService,
-        private supabase: SupabaseService
+        private supabase: SupabaseService,
+        private router : Router
     ) {
         // Call restoreSession within an async IIFE (Immediately Invoked Function Expression)
         (async () => {
@@ -56,15 +58,18 @@ export class AuthService {
     }
 
 
-    private handleAuthChange(event: AuthChangeEvent, session: Session | null) {
-        this._session = session;
-        if (event === 'SIGNED_IN') {
-            console.log('User signed in:', session?.user);
-            // Handle successful sign in
-        } else if (event === 'SIGNED_OUT') {
-            console.log('User signed out');
-            // Handle sign out
-        }
+    private async handleAuthChange(event: AuthChangeEvent, session: Session | null) {
+      this._session = session;
+      if (event === 'SIGNED_IN') {
+        console.log('User signed in:', session?.user);
+        // Handle successful sign in
+        await this.router.navigate(['/home']);
+
+      } else if (event === 'SIGNED_OUT') {
+        console.log('User signed out');
+        // Handle sign out
+        await this.router.navigate(['/login']);
+      }
     }
 
   isAuthenticated(): boolean {

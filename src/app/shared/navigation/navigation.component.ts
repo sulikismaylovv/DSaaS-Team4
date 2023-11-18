@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {NavbarService} from "../../core/services/navbar.service";
 import {ThemeService} from "../../core/services/theme.service";
+import {AuthService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-navigation',
@@ -11,7 +12,8 @@ export class NavigationComponent {
 
   constructor(
     public navbarService: NavbarService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    protected readonly authService: AuthService,
   ) { }
 
 }
