@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 
 import {AuthService, Profile} from '../../../core/services/auth.service';
+import {NavbarService} from "../../../core/services/navbar.service";
+import {Session} from "@supabase/supabase-js";
 
 @Component({
   selector: 'app-auth',
@@ -11,10 +13,16 @@ import {AuthService, Profile} from '../../../core/services/auth.service';
   styleUrls: ['./auth.component.css'],
 })
 
-export class AuthComponent {
+export class AuthComponent implements OnInit{
   registerForm!: FormGroup;
   loading = false;
+  private session: Session | null | undefined;
 
+  ngOnInit() {
+    // Subscribe to the auth state changes
+    this.navbarService.setShowNavbar(false);
+    this.authService.authChanges((_, session) => (this.session = session));
+  }
 
 
   matchingPasswords(group: FormGroup): { [key: string]: any } | null {
@@ -26,6 +34,7 @@ export class AuthComponent {
   constructor(
       protected readonly authService: AuthService,
       private router: Router,
+      public navbarService: NavbarService,
 
     private formBuilder: FormBuilder) {
       this.registerForm = this.formBuilder.group({

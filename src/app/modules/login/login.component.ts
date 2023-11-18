@@ -1,7 +1,9 @@
 import {AuthService} from "../../core/services/auth.service";
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {Session} from "@supabase/supabase-js";
+import {NavbarService} from "../../core/services/navbar.service";
 
 @Component({
   selector: 'app-login',
@@ -9,14 +11,23 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
+  private session: Session | null | undefined;
+
+  ngOnInit() {
+    // Subscribe to the auth state changes
+    this.navbarService.setShowNavbar(false);
+    this.authService.authChanges((_, session) => (this.session = session));
+  }
+
   signInForm!: FormGroup;
   loading = false;
 
   constructor(
     protected readonly authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public navbarService: NavbarService
   ) {
     this.signInForm = this.formBuilder.group({
       usernameOrEmail: '',

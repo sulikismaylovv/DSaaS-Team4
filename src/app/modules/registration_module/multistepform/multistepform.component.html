@@ -11,56 +11,56 @@
         <section *ngIf="currentStep === 1">
           <h1 class="text-2xl mb-2 font-bold xl:text-3xl">Update Profile</h1>
 
-            <div class="flex flex-col gap-1 text-xs">
-              <!-- First Name -->
-              <div class="flex justify-between mt-2 xl:mt-5">
-                <label class="xl:text-base">First Name</label>
-                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)">This field is required</p>
-              </div>
-              <input formControlName="first_name" type="text" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" placeholder="e.g. John" />
+          <div class="flex flex-col gap-1 text-xs">
+            <!-- First Name -->
+            <div class="flex justify-between mt-2 xl:mt-5">
+              <label class="xl:text-base">First Name</label>
+              <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)">This field is required</p>
+            </div>
+            <input formControlName="first_name" type="text" class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" placeholder="e.g. John" />
 
-              <!-- Last Name -->
-              <div class="flex justify-between mt-2 xl:mt-5">
-                <label class="xl:text-base">Last Name</label>
-                <p class="text-primary-strawberry-red font-semibold"
-                   *ngIf="updateProfileForm.controls['last_name'].invalid
+            <!-- Last Name -->
+            <div class="flex justify-between mt-2 xl:mt-5">
+              <label class="xl:text-base">Last Name</label>
+              <p class="text-primary-strawberry-red font-semibold"
+                 *ngIf="updateProfileForm.controls['last_name'].invalid
                    && (updateProfileForm.controls['last_name'].dirty
                    || updateProfileForm.controls['last_name'].touched)">
-                  This field is required</p>
-              </div>
-              <input formControlName="last_name"
-                     type="text"
-                     class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-                     placeholder="e.g. Doe"
-              />
+                This field is required</p>
+            </div>
+            <input formControlName="last_name"
+                   type="text"
+                   class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
+                   placeholder="e.g. Doe"
+            />
 
-              <!-- Username -->
-              <div class="flex justify-between mt-2 xl:mt-5">
-                <label class="xl:text-base">Username</label>
-                <p class="text-primary-strawberry-red font-semibold"
-                   *ngIf="updateProfileForm.controls['username'].invalid
+            <!-- Username -->
+            <div class="flex justify-between mt-2 xl:mt-5">
+              <label class="xl:text-base">Username</label>
+              <p class="text-primary-strawberry-red font-semibold"
+                 *ngIf="updateProfileForm.controls['username'].invalid
                    && (updateProfileForm.controls['username'].dirty
                    || updateProfileForm.controls['username'].touched)">
-                  This field is
-                </p>
-              </div>
-              <input formControlName="username"
-                     type="text"
-                     class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-                     placeholder="e.g. johndoe123" />
-
-              <!-- Birthdate -->
-              <div class="flex justify-between mt-2 xl:mt-5">
-                <label class="xl:text-base">Birthdate</label>
-                <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)">This field is required</p>
-              </div>
-              <input formControlName="birthdate"
-                     type="date"
-                     class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-              />
-
-
+                This field is
+              </p>
             </div>
+            <input formControlName="username"
+                   type="text"
+                   class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
+                   placeholder="e.g. johndoe123" />
+
+            <!-- Birthdate -->
+            <div class="flex justify-between mt-2 xl:mt-5">
+              <label class="xl:text-base">Birthdate</label>
+              <p class="text-primary-strawberry-red font-semibold" *ngIf="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)">This field is required</p>
+            </div>
+            <input formControlName="birthdate"
+                   type="date"
+                   class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
+            />
+
+
+          </div>
         </section>
 
 

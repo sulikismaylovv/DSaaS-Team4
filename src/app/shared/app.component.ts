@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 import {ThemeService} from '../core/services/theme.service';
 import {Router} from '@angular/router';
 import {GameComponent} from "../modules/game_module/game.component";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,12 +14,14 @@ import {GameComponent} from "../modules/game_module/game.component";
 export class AppComponent implements OnInit {
   title = environment.appTitle;
   session: any; // Adjust the type based on your session object
+  protected readonly GameComponent = GameComponent;
 
   constructor(
     private router: Router,
     protected readonly authService: AuthService,
     public themeService: ThemeService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     // Subscribe to the auth state changes
@@ -29,6 +32,4 @@ export class AppComponent implements OnInit {
   toggleTheme() {
     this.themeService.toggleTheme();
   }
-
-    protected readonly GameComponent = GameComponent;
 }

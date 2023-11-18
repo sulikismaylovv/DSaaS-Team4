@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {Preference, PreferencesService} from "../../../core/services/preference.service";
+import {NavbarService} from "../../../core/services/navbar.service";
 
 interface Team {
   id: number;
@@ -84,11 +85,14 @@ export class MultistepformComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private preferencesService: PreferencesService
+    private preferencesService: PreferencesService,
+    public navbarService: NavbarService
   ) {
   }
 
   async ngOnInit(): Promise<void> {
+    this.navbarService.setShowNavbar(false);
+    // Subscribe to the auth state changes
     this.updateProfileForm = this.formBuilder.group({
       username: ['', Validators.required],
       birthdate: [null, Validators.required],

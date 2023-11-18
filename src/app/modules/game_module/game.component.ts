@@ -5,6 +5,7 @@ import {compareAsc, endOfWeek, format, parseISO, startOfWeek} from 'date-fns';
 import {groupBy} from 'lodash';
 import {Fixture} from 'src/app/core/models/fixtures.model';
 import {DatePipe} from '@angular/common';
+import {NavbarService} from "../../core/services/navbar.service";
 
 @Component({
     selector: 'app-game',
@@ -24,7 +25,11 @@ export class GameComponent implements OnInit {
     stringDate: string;
     currentFixture: Fixture = {} as Fixture;
 
-    constructor(public themeService: ThemeService, public apiService: ApiService, private datePipe: DatePipe) {
+    constructor(
+      public themeService: ThemeService,
+      public apiService: ApiService,
+      private datePipe: DatePipe,
+      public navbarService: NavbarService) {
         this.currentDate = new Date("2023-11-12"); //use this for today's date
         this.stringDate = this.currentDate.toISOString().split('T')[0];
     }
@@ -32,6 +37,7 @@ export class GameComponent implements OnInit {
     ngOnInit(): void {
         // this.setWeek(new Date());
         // this.fetchFixturesForWeek();
+      this.navbarService.setShowNavbar(true);
         this.parseFixtures(144);
     }
 

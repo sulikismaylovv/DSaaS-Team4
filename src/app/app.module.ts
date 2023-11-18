@@ -12,22 +12,22 @@ import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {TeamComponent} from './modules/registration_module/team/team.component';
 import {MultistepformComponent} from './modules/registration_module/multistepform/multistepform.component';
 import {StepperComponent} from './modules/registration_module/stepper/stepper.component';
-import { VerifyEmailComponent } from './modules/registration_module/verify-email/verify-email.component';
-import { GameComponent } from './modules/game_module/game.component';
-import { HttpClientModule } from '@angular/common/http'
+import {VerifyEmailComponent} from './modules/registration_module/verify-email/verify-email.component';
+import {GameComponent} from './modules/game_module/game.component';
+import {HttpClientModule} from '@angular/common/http'
 import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
-
-
+import { FooterComponent } from './shared/footer/footer.component';
+import { NavigationComponent } from './shared/navigation/navigation.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule , NgOptimizedImage
+    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent],
