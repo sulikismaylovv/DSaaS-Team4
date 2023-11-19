@@ -49,8 +49,6 @@ export class CreatefriendsleagueService {
     }
   }
 
-
-
   async addUserToLeague(userId: string, leagueId: number): Promise<any> {
     const { data, error } = await this.supabase.supabaseClient
       .from('usersinfriendsleague')
