@@ -69,7 +69,8 @@ export class CreateleagueComponent implements OnInit {
         // Create a League object
         const league: League = {
           name: leagueName,
-          user_id: userId
+          user_id: userId,
+          created_at: new Date()
         };
 
         // Create league and get the ID

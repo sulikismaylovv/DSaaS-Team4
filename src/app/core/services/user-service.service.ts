@@ -14,6 +14,8 @@ export class UserServiceService {
       .select('id,username')
       .ilike('username', `%${username}%`);
 
+    console.log('data:', data);
+
     if (error) {
       console.error('Error searching for user:', error);
       throw error;
