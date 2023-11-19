@@ -35,7 +35,7 @@
       <ul class="list-disc bg-white text-black p-2 rounded mb-4">
         <li *ngFor="let user of userSearchResults"
             (click)="addAndClear(user.username, newFriendInput)"
-            class="cursor-pointer hover:bg-lighter-purple p-2">
+            class="cursor-pointer text-black hover:bg-lighter-purple p-2">
           {{ user.username }}
         </li>
       </ul>

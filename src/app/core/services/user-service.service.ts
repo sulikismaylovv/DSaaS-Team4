@@ -11,14 +11,13 @@ export class UserServiceService {
   async searchUserByUsername(username: string): Promise<any> {
     const { data, error } = await this.supabase.supabaseClient
       .from('users')
-      .select('id')
+      .select('id,username')
       .ilike('username', `%${username}%`);
 
     if (error) {
       console.error('Error searching for user:', error);
       throw error;
     }
-
     return data;
   }
 }
