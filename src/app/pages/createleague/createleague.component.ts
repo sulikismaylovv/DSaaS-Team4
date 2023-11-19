@@ -51,41 +51,45 @@ export class CreateleagueComponent implements OnInit {
     this.friends.removeAt(index);
   }
   async onSubmit(): Promise<void> {
+    console.log('onSubmit called'); // Initial log to indicate function is called
     if (this.leagueForm.valid) {
       const leagueName = this.leagueForm.value.leagueName;
-      const friendsUsernames = this.leagueForm.value.friends.map((f: Friend) => f.username);
+      console.log(`Form is valid, league name is: ${leagueName}`); // Log the league name
+      const friendsUsernames: string[] = this.leagueForm.value.friends.map((f: Friend) => f.username);
+      console.log(`Friends to add: ${friendsUsernames.join(', ')}`); // Log friends usernames
 
       try {
         // Create league and get the ID
+        console.log('Attempting to create league...');
         const leagueId = await this.leagueService.createLeague(leagueName);
+        console.log(`League created with ID: ${leagueId}`); // Log the league ID after creation
 
-        // Check if leagueId is a number before proceeding
-        if (typeof leagueId === 'number') {
-          // For each username, search for the user and get their ID, then add to league
+        if (leagueId) {
           for (const username of friendsUsernames) {
+            console.log(`Searching for user: ${username}`);
             const users = await this.userService.searchUserByUsername(username);
+            console.log(`Found users: ${JSON.stringify(users)}`); // Log found users
             if (users.length > 0) {
+              console.log(`Adding user ${users[0].id} to league ${leagueId}`);
               await this.leagueService.addUserToLeague(users[0].id, leagueId);
+              console.log(`User ${users[0].id} added to league`);
             }
           }
 
-          // Set submitted data for modal or success message
           this.submittedLeagueName = leagueName;
           this.submittedFriendsUsernames = friendsUsernames;
           this.showModal = true;
+          console.log('League and users processed successfully');
         } else {
-          // Handle the case where leagueId is undefined
-          console.error('Failed to create league.');
-          // Optionally, show an error message to the user
+          console.error('Failed to create league, leagueId is undefined.');
         }
       } catch (error) {
-        // Handle any errors
-        console.error('Error creating league with users:', error);
-        // Optionally, set an error message to display to the user
+        console.error('Error caught in onSubmit:', error);
       }
+    } else {
+      console.log('Form is not valid, submission aborted.');
     }
   }
-
   closeModal(): void {
     this.showModal = false;
   }
@@ -110,4 +114,5 @@ export class CreateleagueComponent implements OnInit {
       this.userSearchResults = [];
     }
   }
+
 }
