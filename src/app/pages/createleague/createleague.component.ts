@@ -1,9 +1,10 @@
 // src/app/pages/createleague/createleague.component.ts
 
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserServiceService} from "../../core/services/user-service.service";
-import {CreatefriendsleagueService} from "../../core/services/createfriendsleague.service";
+import {CreatefriendsleagueService, League} from "../../core/services/createfriendsleague.service";
+import {AuthService} from "../../core/services/auth.service";
 
 interface Friend {
   username: string;
@@ -23,6 +24,7 @@ export class CreateleagueComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,
+              private authService: AuthService,
               private userService: UserServiceService,
               private leagueService: CreatefriendsleagueService) {
     this.leagueForm = this.fb.group({
@@ -51,13 +53,28 @@ export class CreateleagueComponent implements OnInit {
     this.friends.removeAt(index);
   }
   async onSubmit(): Promise<void> {
+    let leagueId;
     if (this.leagueForm.valid) {
       const leagueName = this.leagueForm.value.leagueName;
       const friendsUsernames = this.leagueForm.value.friends.map((f: Friend) => f.username);
 
       try {
+        // Fetch the user ID of the league creator (assuming it's stored in the authService)
+        const userId = this.authService.session?.user?.id;
+        if (!userId) {
+          console.error('User ID is not available. User must be logged in.');
+          return;
+        }
+
+        // Create a League object
+        const league: League = {
+          name: leagueName,
+          user_id: userId
+        };
+
         // Create league and get the ID
-        const leagueId = await this.leagueService.createLeague(leagueName);
+        leagueId = await this.leagueService.createLeague(league);
+        console.log('leagueId:', leagueId);
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {
