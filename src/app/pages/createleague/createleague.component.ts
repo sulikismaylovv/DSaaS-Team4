@@ -79,6 +79,16 @@ export class CreateleagueComponent implements OnInit {
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {
+          const currentUserId = this.authService.session?.user?.id; // Get the current user's ID from the AuthService
+          if (!currentUserId) {
+            console.error('Current user ID is undefined.');
+            // Handle the error appropriately, maybe by showing a user-friendly message
+            return;
+          }
+
+          // Now that we have confirmed currentUserId is not undefined, we can call addUserToLeague
+          await this.leagueService.addUserToLeague(currentUserId, leagueId);
+
           // For each username, search for the user and get their ID, then add to league
           for (const username of friendsUsernames) {
             const users = await this.userService.searchUserByUsername(username);
