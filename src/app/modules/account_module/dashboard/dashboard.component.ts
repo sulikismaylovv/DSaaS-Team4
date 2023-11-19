@@ -89,8 +89,16 @@ export class DashboardComponent implements OnInit {
   }
 
   async handleAvatarUpload(newAvatarUrl: string): Promise<void> {
-    // Update the avatar URL in the DashboardComponent
-    this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(newAvatarUrl); // Update the sanitized URL
+    try {
+      const { data } = await this.authService.downLoadImage(newAvatarUrl);
+      if (data instanceof Blob) {
+        this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error downloading image: ', error.message)
+      }
+    }
   }
 
 
