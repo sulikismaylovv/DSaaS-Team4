@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PostsService} from "../../../core/services/posts.service";
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-create-post',
@@ -13,14 +14,32 @@ export class CreatePostComponent implements OnInit{
   loading = false;
   profile: Profile | undefined;
   selectedImage: File | null = null;
+  avatarSafeUrl: SafeResourceUrl | undefined;
+
 
   constructor(
     private postsService: PostsService,
     private readonly authService: AuthService,
+    private sanitizer: DomSanitizer,
   ) { }
 
   async ngOnInit() {
     await this.getProfile();
+
+    if (this.profile && this.profile.avatar_url ) {
+      try {
+        const { data } = await this.authService.downLoadImage(this.profile.avatar_url)
+        if (data instanceof Blob) {
+          this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Error downloading image: ', error.message)
+        }
+      }
+    }
+
+
   }
 
   async getProfile() {

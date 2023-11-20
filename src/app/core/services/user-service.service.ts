@@ -31,7 +31,7 @@ export class UserServiceService {
     return data;
   }
 
-  async getUserById(id: string): Promise<any> {
+  async getUsernameByID(id: string): Promise<any> {
     const { data, error } = await this.supabase.supabaseClient
       .from('users')
       .select('id,username')
@@ -45,4 +45,19 @@ export class UserServiceService {
     }
     return data?.at(0)?.username;
   }
+
+
+    async getUserByID(id: string): Promise<any> {
+      const data = await this.supabase.supabaseClient
+        .from('users')
+        .select('*')
+        .eq('id', id);
+
+      if (data.error) {
+        console.error('Error searching for user:', data.error);
+        throw data.error;
+      }
+      return data.data?.at(0);
+
+    }
 }
