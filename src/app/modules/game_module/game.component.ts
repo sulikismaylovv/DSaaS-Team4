@@ -20,6 +20,40 @@ export class GameComponent implements OnInit {
     clickedImage: string | null = null;
     fixture: Fixture = new FixtureModel();
     lineups: Lineup[] = [];
+    isLoading: boolean = true;
+    viewBox = '0 0 100 100';
+    scaleFactor = 10;
+
+    public gridToCoordinates(grid: string, formation: string): { x: number, y: number } {
+        const [x, y] = grid.split(':').map(Number);
+
+        // You need to determine the number of columns based on the formation
+        const columns = this.getColumnsFromFormation(formation);
+
+        // Centering adjustment: calculate the offset needed to center the formation
+        const xCenterOffset = (this.maxColumnsInFormation - columns) / 2;
+        const yBase = 10; // Base Y position to start plotting from the bottom of the field
+
+        // Assuming your SVG's width and height are 100 units
+        const svgCenterX = 50;
+        const svgCenterY = 50;
+
+        return {
+            x: (x + xCenterOffset) * (100 / this.maxColumnsInFormation) + svgCenterX - (columns / 2 * this.scaleFactor),
+            y: svgCenterY + (y - yBase) * this.scaleFactor
+        };
+    }
+
+    private get maxColumnsInFormation(): number {
+        // Get the largest number of columns from all the lineups
+        return Math.max(...this.lineups.map(l => this.getColumnsFromFormation(l.formation)));
+    }
+
+    private getColumnsFromFormation(formation: string): number {
+        // Split the formation by '-' and get the largest number as that will be the max columns
+        const parts = formation.split('-').map(Number);
+        return Math.max(...parts);
+    }
 
     constructor(
         public themeService: ThemeService,
@@ -37,33 +71,40 @@ export class GameComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const id = +params.get('id')!;
             this.fixtureTransferService.currentFixture.subscribe(fixture => {
-              if (fixture?.fixture.id === id) {
-                this.fixture = fixture;
-              }
+                if (fixture?.fixture.id === id) {
+                    this.fixture = fixture;
+                }
             });
-          });
+        });
         this.fetchLineup(this.fixture.fixture.id);
     }
     logData() {
-        console.log(this.lineups[0].coach.name);
+        console.log(this.lineups[0].startXI[2].player.number);
     }
 
-    getPlayerStyle(grid: string) {
-        const [x, y] = grid.split(':').map(Number);
-        // Convert grid positions to percentages (adjust based on your field image size)
-        return {
-          'left': `${(y / 5) * 100}%`, // Assuming 5 columns
-          'top': `${(x / 5) * 100}%` // Assuming 5 rows
-        };
-      }
+
+
+    // getPlayerStyle(grid: string) {
+    //     const [x, y] = grid.split(':').map(Number);
+    //     // Convert grid positions to percentages (adjust based on your field image size)
+    //     return {
+    //         'left': `${(y / 5) * 100}%`, // Assuming 5 columns
+    //         'top': `${(x / 5) * 100}%` // Assuming 5 rows
+    //     };
+    // }
 
     fetchLineup(fixtureID: number) {
-        this.ApiService.fetchLineups(fixtureID).subscribe(
-            (data: Lineup[]) => {
+        this.ApiService.fetchLineups(fixtureID).subscribe({
+
+            next: (data: Lineup[]) => {
                 this.lineups = data;
+                this.isLoading = false;
+            },
+            error: (error) => {
+                console.log(error);
             }
-        );
-    }
+        })
+    };
 
     //convert from type Date to type string YYYY-MM-DD
     getDateAsString(date: Date): string {

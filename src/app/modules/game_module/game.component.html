@@ -6,9 +6,12 @@
         <!--First_widget-->
         <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex items-start justify-between">
-            <button (click)="logData()" type="button" class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+            <button (click)="logData()" type="button"
+              class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 5H1m0 0 4 4M1 5l4-4" />
               </svg>
             </button>
             <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
@@ -18,14 +21,14 @@
           <div class="flex items-start justify-between p-4">
             <div class="flex items-center">
               <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-16 h-16">
-              <p class="ml-2 text-white"> {{fixture.teams.home.name}}  </p>
+              <p class="ml-2 text-white"> {{fixture.teams.home.name}} </p>
             </div>
             <div class="flex flex-col items-center">
               <p class="text-white font-bold">5:30PM</p>
               <p class="text-gray-400 font-semibold">Today</p>
             </div>
             <div class="flex items-center">
-              <p class="truncate ml-2 text-white "> {{fixture.teams.away.name}}  </p>
+              <p class="truncate ml-2 text-white "> {{fixture.teams.away.name}} </p>
               <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-16 h-16">
             </div>
           </div>
@@ -36,41 +39,58 @@
           <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
           <div class="flex items-center justify-center pb-3"><!--Teams-->
             <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
-              <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
+              <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-24 h-24"
+                [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
               <p class="text-white"> {{fixture.teams.home.name}} </p>
               <p class="text-gray-400 font-semibold"> 45% </p>
             </div>
             <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
-              <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
+              <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-24 h-24"
+                [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
               <p class="truncate ml-2 text-white ">{{fixture.teams.away.name}}</p>
               <p class="text-gray-400 font-semibold"> 55% </p>
             </div>
           </div>
-          <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent" [class.pointer-events-none]="!showContent">
+          <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
+            [class.pointer-events-none]="!showContent">
             <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
             <form class="flex items-start mt-2 ml-2 mb-4">
-              <input type="text" id="betPoints" class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="I'm hungry" required>
-              <button type="submit" data-modal-target= "popup-modal" data-modal-toggle="popup-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
+              <input type="text" id="betPoints"
+                class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="I'm hungry" required>
+              <button type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
             </form>
           </div>
-          <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div id="popup-modal" tabindex="-1"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
               <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                <button type="button"
+                  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-hide="popup-modal">
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                   </svg>
                   <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-4 md:p-5 text-center">
-                  <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                  <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M1 5.917 5.724 10.5 15 1.5" />
                   </svg>
-                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Congratulations! May the force be with you </h3>
-                  <button data-modal-hide="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Congratulations! May the force
+                    be with you </h3>
+                  <button data-modal-hide="popup-modal" type="button"
+                    class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                     Amen
                   </button>
-                  <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What have I done?</button>
+                  <button data-modal-hide="popup-modal" type="button"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What
+                    have I done?</button>
                 </div>
               </div>
             </div>
@@ -82,30 +102,62 @@
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
               <img src={{fixture.teams.home.logo}} alt="bla bla" class="w-16 h-16">
-              <div  class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
+              <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
                 <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
               </div>
             </div>
             <p class="text-white font-bold">Predicted lineup</p>
             <div class="flex items-center">
-              <div  class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
+              <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
                 <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
               </div>
               <img src={{fixture.teams.away.logo}} alt="bla bla" class="w-16 h-16">
             </div>
           </div>
           <!--Football field-->
-          <img class="h-96 w-96 scale-150" src="assets/images/football_field.svg" alt="image description">
+          <div *ngIf="lineups && lineups.length" >
+            <svg [attr.viewBox]="viewBox" class="football-field">
+              <image href="/assets/images/football_field.svg" width="100%" height="100%"/>
+              <!-- Iterate over the lineups array -->
+              <ng-container *ngFor="let teamLineup of lineups">
+                <!-- Now iterate over the startXI property of the current teamLineup -->
+                <g *ngFor="let player of teamLineup.startXI">
+                  <circle [attr.cx]="gridToCoordinates(player.player.grid, lineups[0].formation).x"
+                          [attr.cy]="gridToCoordinates(player.player.grid, lineups[0].formation).y"
+                          r="2"></circle>
+                  <text [attr.x]="gridToCoordinates(player.player.grid, lineups[0].formation).x"
+                        [attr.y]="gridToCoordinates(player.player.grid, lineups[0].formation).y"
+                        text-anchor="middle"
+                        alignment-baseline="central" 
+                        class="player-number">
+                    <!-- {{ player.player.number }} -->
+                  </text>
+                </g>
+              </ng-container>
+            </svg>
+            
+            
+            
+            
+            <!-- <div class="football-field">
+              <img class="h-96 w-96 scale-150" src="assets/images/football_field.svg" alt="FOotball Field">
+              <div *ngFor="let player of lineups[0].startXI" [ngStyle]="getPlayerStyle(player.player.grid)">
+                <span> {{ player.player.number}}</span>
+              </div>
+            </div> -->
+          </div>
           <!--Coaches-->
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg" alt="bla bla" class="rounded-full w-16 h-16">
+              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg"
+                alt="bla bla" class="rounded-full w-16 h-16">
               <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
             </div>
             <p class="text-white font-bold">Coaches</p>
             <div class="flex items-center">
               <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg" alt="bla bla" class="rounded-full w-16 h-16">
+              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg"
+                alt="bla bla" class="rounded-full w-16 h-16">
             </div>
           </div>
         </div>
@@ -127,7 +179,9 @@
           <p class="text-xl font-bold text-white ml-4">1.234 pts</p>
           <p class="text-center text-gray-400">Visit the store to explore more ways of spending points!</p>
           <div class="flex justify-center">
-            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To the shop</button>
+            <button type="button"
+              class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To
+              the shop</button>
           </div>
         </div>
         <!--League standing-->
@@ -135,7 +189,7 @@
           <div class="flex justify-center">
             <span class="text-white font-semibold mt-3 text-2xl">Remontada League</span>
           </div>
-          <div class ="flex items-center justify-center">
+          <div class="flex items-center justify-center">
             <img src="assets/images/cup.png" alt="Remontada League" class="w-32 h-32 rounded-full mt-2 mb-2 ">
           </div>
           <div class="mb-3 grid grid-cols-1 md:grid-cols-1 gap-4 mx-4">
@@ -177,10 +231,11 @@
               <p class="text-white text-2xl font-bold"> Belgian League</p>
               <p class="text-black text-xl font-semibold"> Belgium</p>
             </div>
-            <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa" class="ml-4 mr-4 mt-1 w-16 h-16"/>
+            <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
+              class="ml-4 mr-4 mt-1 w-16 h-16" />
           </div>
-            <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   #
@@ -198,8 +253,8 @@
                   PTS
                 </th>
               </tr>
-              </thead>
-              <tbody>
+            </thead>
+            <tbody>
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   1"
@@ -251,8 +306,8 @@
                   100
                 </td>
               </tr>
-              </tbody>
-            </table>
+            </tbody>
+          </table>
 
 
         </div>

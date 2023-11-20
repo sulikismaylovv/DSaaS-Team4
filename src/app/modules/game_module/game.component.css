@@ -1,0 +1,15 @@
+.football-field {
+    /* ... Your existing styles for the SVG ... */
+  }
+  
+  .football-field circle {
+    stroke: #fff; /* White border for the circle */
+    stroke-width: 0.5; /* Border width */
+  }
+  
+  .football-field .player-number {
+    fill: #fff; /* White text color */
+    font-size: 3px; /* Adjust the font size to fit inside the circle */
+    pointer-events: none; /* Prevents the text from interfering with mouse events */
+  }
+  
