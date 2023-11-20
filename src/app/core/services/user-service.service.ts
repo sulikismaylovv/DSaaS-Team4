@@ -30,4 +30,19 @@ export class UserServiceService {
     }
     return data;
   }
+
+  async getUserById(id: string): Promise<any> {
+    const { data, error } = await this.supabase.supabaseClient
+      .from('users')
+      .select('id,username')
+      .eq('id', id);
+
+    console.log('data:', data);
+
+    if (error) {
+      console.error('Error searching for user:', error);
+      throw error;
+    }
+    return data?.at(0)?.username;
+  }
 }

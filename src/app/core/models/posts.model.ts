@@ -1,9 +1,9 @@
 export interface Post {
   id?: number;
-  userId: string; // Use UUID if that's the type in your database
+  user_id: string; // Use UUID if that's the type in your database
   content: string;
-  imageUrl?: string; // Optional since not all posts have images
-  createdAt: Date;
+  image_url?: string; // Optional since not all posts have images
+  created_at: Date;
 }
 
 export interface Like {

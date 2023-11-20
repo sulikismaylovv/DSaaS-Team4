@@ -2,6 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
+import {UserServiceService} from "../../../core/services/user-service.service";
 
 @Component({
   selector: 'app-post-view',
@@ -12,14 +13,19 @@ export class PostViewComponent implements OnInit {
   @Input() post!: Post;
   loading = false;
   profile: Profile | undefined;
+  username: string | undefined;
+
 
   constructor(
     private readonly authService: AuthService,
+    private readonly userService: UserServiceService,
   ) {}
 
   async ngOnInit() {
-    console.log('Post:', this.post);
     await this.getProfile();
+    console.log('post:', this.post);
+    console.log("post.created_at:", this.post.created_at);
+    await this.getUsernameById(this.post.user_id);
   }
 
   async getProfile() {
@@ -46,4 +52,12 @@ export class PostViewComponent implements OnInit {
 
 
   //Create UserService to Retrieve Username from user_id
+  async getUsernameById(id: string): Promise<any> {
+    console.log('id:', id);
+    this.userService.getUserById(id).then(username => {
+      this.username = username;
+    }).catch(error => {
+      console.error('Could not fetch username', error);
+    });
+  }
 }

@@ -3,8 +3,8 @@
   <div class="flex items-center mb-4">
     <img class="inline-block h-10 w-10 rounded-full mr-4" src="{{ profile?.avatar_url }}" alt="User profile image" />
     <div>
-      <p class="font-bold text-md text-gray-800">{{ post.userId }}</p>
-      <p class="text-sm text-gray-600">{{ post.createdAt | date: 'medium' }}</p>
+      <p class="font-bold text-md text-gray-800">{{ username }}</p>
+      <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
     </div>
   </div>
   <!-- Post Content -->

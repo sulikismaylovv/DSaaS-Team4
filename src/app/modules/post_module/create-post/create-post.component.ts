@@ -60,7 +60,7 @@ export class CreatePostComponent implements OnInit{
 
 
       const post: Post = {
-        createdAt: new Date(), userId: user.id,
+        created_at: new Date(), user_id: user.id,
         // Assuming 'content' is a property of your Post model
         content: this.postContent
         // Other required properties for the Post model can be set here

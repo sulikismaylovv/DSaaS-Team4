@@ -29,7 +29,7 @@ export class PostsService {
     try {
       // If there's an image, handle the upload first
       if (file) {
-        post.imageUrl = await this.uploadImage(file);
+        post.image_url = await this.uploadImage(file);
       }
 
       const { data, error } = await this.supabase.supabaseClient
