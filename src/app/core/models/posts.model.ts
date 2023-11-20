@@ -1,5 +1,5 @@
 export interface Post {
-  id: number;
+  id?: number;
   userId: string; // Use UUID if that's the type in your database
   content: string;
   imageUrl?: string; // Optional since not all posts have images
@@ -7,14 +7,14 @@ export interface Post {
 }
 
 export interface Like {
-  id: number;
+  id?: number;
   userId: string;
   postId: number;
   createdAt: Date;
 }
 
 export interface Comment {
-  id: number;
+  id?: number;
   postId: number;
   userId: string;
   content: string;
@@ -22,7 +22,7 @@ export interface Comment {
 }
 
 export interface Retweet {
-  id: number;
+  id?: number;
   originalPostId: number;
   retweetUserId: string;
   createdAt: Date;

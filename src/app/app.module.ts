@@ -20,12 +20,14 @@ import {MatchesComponent} from "./modules/homepage_module/matches/matches.compon
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { AvatarComponent } from './modules/account_module/avatar/avatar.component';
+import { PostViewComponent } from './modules/post_module/post-view/post-view.component';
+import { CreatePostComponent } from './modules/post_module/create-post/create-post.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
