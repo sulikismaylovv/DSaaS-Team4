@@ -116,25 +116,7 @@
           </div>
           <!--Football field-->
           <div *ngIf="lineups && lineups.length" >
-            <svg [attr.viewBox]="viewBox" class="football-field">
-              <image href="/assets/images/football_field.svg" width="100%" height="100%"/>
-              <!-- Iterate over the lineups array -->
-              <ng-container *ngFor="let teamLineup of lineups">
-                <!-- Now iterate over the startXI property of the current teamLineup -->
-                <g *ngFor="let player of teamLineup.startXI">
-                  <circle [attr.cx]="gridToCoordinates(player.player.grid, lineups[0].formation).x"
-                          [attr.cy]="gridToCoordinates(player.player.grid, lineups[0].formation).y"
-                          r="2"></circle>
-                  <text [attr.x]="gridToCoordinates(player.player.grid, lineups[0].formation).x"
-                        [attr.y]="gridToCoordinates(player.player.grid, lineups[0].formation).y"
-                        text-anchor="middle"
-                        alignment-baseline="central" 
-                        class="player-number">
-                    <!-- {{ player.player.number }} -->
-                  </text>
-                </g>
-              </ng-container>
-            </svg>
+
             
             
             

@@ -8,6 +8,7 @@ import { FixtureTransferService } from '../../core/services/fixture-transfer.ser
 import { Lineup, LineupModel } from 'src/app/core/models/lineup.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { LineupComponent } from './lineup/lineup.component';
+import { groupBy } from 'lodash';
 
 @Component({
     selector: 'app-game',
@@ -20,40 +21,9 @@ export class GameComponent implements OnInit {
     clickedImage: string | null = null;
     fixture: Fixture = new FixtureModel();
     lineups: Lineup[] = [];
+    lineupHome: { [key: number]: { name: string, number: number }[] } = {};
+    lineupAway: { [key: number]: { name: string, number: number }[] } = {};
     isLoading: boolean = true;
-    viewBox = '0 0 100 100';
-    scaleFactor = 10;
-
-    public gridToCoordinates(grid: string, formation: string): { x: number, y: number } {
-        const [x, y] = grid.split(':').map(Number);
-
-        // You need to determine the number of columns based on the formation
-        const columns = this.getColumnsFromFormation(formation);
-
-        // Centering adjustment: calculate the offset needed to center the formation
-        const xCenterOffset = (this.maxColumnsInFormation - columns) / 2;
-        const yBase = 10; // Base Y position to start plotting from the bottom of the field
-
-        // Assuming your SVG's width and height are 100 units
-        const svgCenterX = 50;
-        const svgCenterY = 50;
-
-        return {
-            x: (x + xCenterOffset) * (100 / this.maxColumnsInFormation) + svgCenterX - (columns / 2 * this.scaleFactor),
-            y: svgCenterY + (y - yBase) * this.scaleFactor
-        };
-    }
-
-    private get maxColumnsInFormation(): number {
-        // Get the largest number of columns from all the lineups
-        return Math.max(...this.lineups.map(l => this.getColumnsFromFormation(l.formation)));
-    }
-
-    private getColumnsFromFormation(formation: string): number {
-        // Split the formation by '-' and get the largest number as that will be the max columns
-        const parts = formation.split('-').map(Number);
-        return Math.max(...parts);
-    }
 
     constructor(
         public themeService: ThemeService,
@@ -77,27 +47,62 @@ export class GameComponent implements OnInit {
             });
         });
         this.fetchLineup(this.fixture.fixture.id);
+        this.initializeLineups();
     }
+
+    private initializeLineups(): void {
+        // Initialize lineupHome and lineupAway with empty arrays for each position
+        for (let i = 0; i <= 5; i++) {
+            this.lineupHome[i] = [];
+            this.lineupAway[i] = [];
+        }
+    }
+    categorizePlayers(): void {
+        // Initialize lineups
+        this.initializeLineups();
+    
+        this.lineups.forEach((lineup, index) => {
+            // Determine if it's the home or away lineup
+            const currentLineup = index === 0 ? this.lineupHome : this.lineupAway;
+    
+            // Parse formation to get the count of players in each category
+            const formationParts = [1, ...lineup.formation.split('-').map(Number)]; // Prepend '1' for the goalkeeper
+            if (formationParts.length < 3 || formationParts.length > 6) {
+                throw new Error('Invalid formation. Formation should have 2 to 5 parts, plus the goalkeeper.');
+            }
+    
+            // Reset current lineup
+            Object.keys(currentLineup).forEach(key => currentLineup[Number(key)] = []);
+    
+            // Assign players to their positions based on formation
+            let positionIndex = 0;
+            lineup.startXI.forEach(player => {
+                if (currentLineup[positionIndex].length >= formationParts[positionIndex]) {
+                    positionIndex++;
+                }
+    
+                if (positionIndex < formationParts.length) {
+                    currentLineup[positionIndex].push({ name: player.player.name, number: player.player.number });
+                } else {
+                    console.warn(`Extra player in formation: ${player.player.name}`);
+                }
+            });
+        });
+    }
+    
+
     logData() {
-        console.log(this.lineups[0].startXI[2].player.number);
+        console.log(this.lineupHome);
     }
 
-
-
-    // getPlayerStyle(grid: string) {
-    //     const [x, y] = grid.split(':').map(Number);
-    //     // Convert grid positions to percentages (adjust based on your field image size)
-    //     return {
-    //         'left': `${(y / 5) * 100}%`, // Assuming 5 columns
-    //         'top': `${(x / 5) * 100}%` // Assuming 5 rows
-    //     };
-    // }
 
     fetchLineup(fixtureID: number) {
         this.ApiService.fetchLineups(fixtureID).subscribe({
 
             next: (data: Lineup[]) => {
                 this.lineups = data;
+                this.initializeLineups(); // Initialize lineups before categorizing players
+                this.categorizePlayers();   // Categorize players after lineups data is fetched
                 this.isLoading = false;
             },
             error: (error) => {
