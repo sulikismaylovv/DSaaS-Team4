@@ -69,7 +69,7 @@ export class AuthService {
       } else if (event === 'SIGNED_OUT') {
         console.log('User signed out');
         // Handle sign out
-        //await this.router.navigate(['/login']);
+        await this.router.navigate(['/login']);
       }
     }
 
