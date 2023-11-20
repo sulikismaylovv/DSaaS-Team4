@@ -9,6 +9,10 @@
   </div>
   <!-- Post Content -->
   <p class="text-gray-800 mt-3">{{ post.content }}</p>
+  <!-- Post Image -->
+  <div class="mt-4" *ngIf="post.image_url">
+    <img class="rounded-lg" [src]="this.postSafeUrl" alt="Post image" />
+  </div>
   <!-- Interaction buttons like, comment, etc. -->
   <div class="mt-4 flex justify-start space-x-4">
     <!-- Interaction buttons here -->

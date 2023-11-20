@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
 
     if (this.profile && this.profile.avatar_url) {
       try {
+        console.log('this.profile.avatar_url: ', this.profile.avatar_url);
         const { data } = await this.authService.downLoadImage(this.profile.avatar_url)
         if (data instanceof Blob) {
           this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))

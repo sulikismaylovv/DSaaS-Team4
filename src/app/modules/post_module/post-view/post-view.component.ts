@@ -4,6 +4,7 @@ import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {PostsService} from "../../../core/services/posts.service";
 
 @Component({
   selector: 'app-post-view',
@@ -16,12 +17,14 @@ export class PostViewComponent implements OnInit {
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  postSafeUrl: SafeResourceUrl | undefined;
 
 
 
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserServiceService,
+    private readonly postService: PostsService,
     private sanitizer: DomSanitizer,
 
   ) {}
@@ -32,12 +35,24 @@ export class PostViewComponent implements OnInit {
     console.log("post.created_at:", this.post.created_at);
     await this.getUsernameById(this.post.user_id);
 
-    if (this.post && this.post.user_id ) {
+    if (this.post && this.post.user_id) {
       try {
-        const { data } = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.post.user_id))
+        const {data} = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.post.user_id))
         if (data instanceof Blob) {
           this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
         }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Error downloading image: ', error.message)
+        }
+      }
+    }
+
+    if (this.post && this.post.image_url) {
+      try {
+        const data = await this.postService.downLoadImage(this.post.image_url);
+        if(data instanceof Blob){
+        this.postSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));}
       } catch (error) {
         if (error instanceof Error) {
           console.error('Error downloading image: ', error.message)

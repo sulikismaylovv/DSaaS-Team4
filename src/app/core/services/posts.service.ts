@@ -25,14 +25,16 @@ export class PostsService {
   }
 
   // Create a new post
-  async createPost(post: Post , file: File): Promise<Post> {
+  async createPost(post: Post , file: File , filePath: string): Promise<Post> {
+    let imageUrl;
     try {
       // If there's an image, handle the upload first
       if (file) {
-        post.image_url = await this.uploadImage(file);
+        imageUrl = await this.uploadImage(filePath, file);
+        post.image_url = filePath;
       }
 
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('posts')
         .upsert([post])
         .single();
@@ -46,12 +48,11 @@ export class PostsService {
   }
 
   // Upload an image and return the URL
-  async uploadImage(file: File): Promise<string> {
-    const path = `post-images/${Date.now()}-${file.name}`;
+  async uploadImage(filePath: string , file: File): Promise<{ publicUrl: string }> {
 
     const { error } = await this.supabase.supabaseClient.storage
       .from('post-images')
-      .upload(path, file);
+      .upload(filePath, file);
 
     if (error) {
       console.error('Error uploading image:', error);
@@ -61,14 +62,28 @@ export class PostsService {
     // Get the public URL for the newly uploaded file
     const { data } = this.supabase.supabaseClient.storage
       .from('post-images')
-      .getPublicUrl(path);
+      .getPublicUrl(filePath);
 
-    if (data) {
+    if (!data) {
       console.error('Error getting public URL:', data);
       throw data;
     }
 
 
+
+    return data;
+  }
+
+  // Download an image
+  async downLoadImage(filePath: string): Promise<Blob | null> {
+    const { data, error } = await this.supabase.supabaseClient.storage
+      .from('post-images')
+      .download(filePath);
+
+    if (error) {
+      console.error('Error downloading image:', error);
+      throw error;
+    }
 
     return data;
   }

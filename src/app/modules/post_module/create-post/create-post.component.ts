@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PostsService} from "../../../core/services/posts.service";
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
@@ -9,26 +9,31 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css']
 })
-export class CreatePostComponent implements OnInit{
+export class CreatePostComponent implements OnInit {
   postContent: string = '';
   loading = false;
   profile: Profile | undefined;
   selectedImage: File | null = null;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  public uploading: boolean | undefined;
+
+  @Output() upload = new EventEmitter<string>()
+
 
 
   constructor(
     private postsService: PostsService,
     private readonly authService: AuthService,
     private sanitizer: DomSanitizer,
-  ) { }
+  ) {
+  }
 
   async ngOnInit() {
     await this.getProfile();
 
-    if (this.profile && this.profile.avatar_url ) {
+    if (this.profile && this.profile.avatar_url) {
       try {
-        const { data } = await this.authService.downLoadImage(this.profile.avatar_url)
+        const {data} = await this.authService.downLoadImage(this.profile.avatar_url)
         if (data instanceof Blob) {
           this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
         }
@@ -47,7 +52,7 @@ export class CreatePostComponent implements OnInit{
       this.loading = true;
       const user = this.authService.session?.user;
       if (user) {
-        const { data: profile, error } = await this.authService.profile(user);
+        const {data: profile, error} = await this.authService.profile(user);
         if (error) {
           throw error;
         }
@@ -64,14 +69,8 @@ export class CreatePostComponent implements OnInit{
     }
   }
 
-  onImageSelected(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      this.selectedImage = target.files[0];
-    }
-  }
 
-  async onSubmit(): Promise<void> {
+  async onSubmit(event: any): Promise<void> {
 
     try {
       const user = this.authService.session?.user;
@@ -82,19 +81,36 @@ export class CreatePostComponent implements OnInit{
         created_at: new Date(), user_id: user.id,
         // Assuming 'content' is a property of your Post model
         content: this.postContent
-        // Other required properties for the Post model can be set here
       };
 
-      if (this.selectedImage) {
-        const createdPost = await this.postsService.createPost(post, this.selectedImage);
-        console.log('Post created:', createdPost);
-      }
+      try {
+        this.uploading = true
+        if (!event.target.files || event.target.files.length === 0) {
+          throw new Error('You must select an image to upload.')
+        }
 
+        const file = event.target.files[0]
+        const fileExt = file.name.split('.').pop()
+        const filePath = `${Math.random()}.${fileExt}`
+
+        const createdPost = await this.postsService.createPost(post, file, filePath);
+        console.log('Post created:', createdPost);
+
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+      } finally {
+        this.uploading = false
+      }
       // Clear the form
       this.postContent = '';
       this.selectedImage = null;
+
     } catch (error) {
       console.error('Error creating post:', error);
     }
   }
+
+
 }
