@@ -106,6 +106,7 @@ export class CreatePostComponent implements OnInit {
       // Clear the form
       this.postContent = '';
       this.selectedImage = null;
+      window.location.reload()
 
     } catch (error) {
       console.error('Error creating post:', error);
