@@ -5,6 +5,9 @@ import { DatePipe } from '@angular/common';
 import { NavbarService } from "../../core/services/navbar.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { FixtureTransferService } from '../../core/services/fixture-transfer.service';
+import { Lineup, LineupModel } from 'src/app/core/models/lineup.model';
+import { ApiService } from 'src/app/core/services/api.service';
+import { LineupComponent } from './lineup/lineup.component';
 
 @Component({
     selector: 'app-game',
@@ -16,13 +19,15 @@ export class GameComponent implements OnInit {
     showContent: boolean = false;
     clickedImage: string | null = null;
     fixture: Fixture = new FixtureModel();
+    lineups: Lineup[] = [];
 
     constructor(
         public themeService: ThemeService,
         public navbarService: NavbarService,
         private route: ActivatedRoute,
         private router: Router,
-        private fixtureTransferService: FixtureTransferService) {
+        private fixtureTransferService: FixtureTransferService,
+        private ApiService: ApiService) {
     }
 
     ngOnInit(): void {
@@ -37,9 +42,28 @@ export class GameComponent implements OnInit {
               }
             });
           });
+        this.fetchLineup(this.fixture.fixture.id);
+    }
+    logData() {
+        console.log(this.lineups[0].coach.name);
     }
 
+    getPlayerStyle(grid: string) {
+        const [x, y] = grid.split(':').map(Number);
+        // Convert grid positions to percentages (adjust based on your field image size)
+        return {
+          'left': `${(y / 5) * 100}%`, // Assuming 5 columns
+          'top': `${(x / 5) * 100}%` // Assuming 5 rows
+        };
+      }
 
+    fetchLineup(fixtureID: number) {
+        this.ApiService.fetchLineups(fixtureID).subscribe(
+            (data: Lineup[]) => {
+                this.lineups = data;
+            }
+        );
+    }
 
     //convert from type Date to type string YYYY-MM-DD
     getDateAsString(date: Date): string {

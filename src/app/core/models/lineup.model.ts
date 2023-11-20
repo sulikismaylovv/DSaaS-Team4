@@ -1,5 +1,5 @@
 
-export interface TeamLineup {
+export interface Lineup {
     team: Team;
     coach: Coach;
     formation: string;
@@ -29,10 +29,10 @@ export interface PlayerDetail {
     name: string;
     number: number;
     pos: string;
-    grid: string | null;
+    grid: string;
 }
 
-export class LineupModel implements TeamLineup {
+export class LineupModel implements Lineup {
     team: Team;
     coach: Coach;
     formation: string;
