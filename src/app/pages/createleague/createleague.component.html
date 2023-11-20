@@ -32,7 +32,7 @@
 
       <!-- Display search results -->
       <!-- Make sure the background and text color here are contrasting -->
-      <ul class="list-disc bg-white text-black p-2 rounded mb-4">
+      <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">
         <li *ngFor="let user of userSearchResults"
             (click)="addAndClear(user.username, newFriendInput)"
             class="cursor-pointer text-black hover:bg-lighter-purple p-2">
