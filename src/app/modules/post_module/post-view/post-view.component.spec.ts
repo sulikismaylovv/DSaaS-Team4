@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PostViewComponent } from './post-view.component';
+import {PostViewComponent} from './post-view.component';
 
 describe('PostViewComponent', () => {
-  let component: PostViewComponent;
-  let fixture: ComponentFixture<PostViewComponent>;
+    let component: PostViewComponent;
+    let fixture: ComponentFixture<PostViewComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [PostViewComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [PostViewComponent]
+        });
+        fixture = TestBed.createComponent(PostViewComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(PostViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

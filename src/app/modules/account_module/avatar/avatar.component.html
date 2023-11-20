@@ -1,17 +1,20 @@
 <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
-  <div class="space-y-4">
-    <!-- Avatar Image -->
-    <div class="mb-2">
-      <img *ngIf="_avatarUrl" [src]="_avatarUrl" alt="Avatar" class="avatar image rounded-lg" style="height: 150px; width: 150px"/>
-      <div *ngIf="!_avatarUrl" class="avatar no-image rounded-lg" style="height: 150px; width: 150px"></div>
-    </div>
+    <div class="space-y-4">
+        <!-- Avatar Image -->
+        <div class="mb-2">
+            <img *ngIf="_avatarUrl" [src]="_avatarUrl" alt="Avatar" class="avatar image rounded-lg"
+                 style="height: 150px; width: 150px"/>
+            <div *ngIf="!_avatarUrl" class="avatar no-image rounded-lg" style="height: 150px; width: 150px"></div>
+        </div>
 
-    <!-- Upload Button -->
-    <div>
-      <label class="button primary block w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" for="single">
-        {{ uploading ? 'Uploading ...' : 'Upload' }}
-      </label>
-      <input style="visibility: hidden; position: absolute" type="file" id="single" accept="image/*" (change)="uploadAvatar($event)" [disabled]="uploading"/>
+        <!-- Upload Button -->
+        <div>
+            <label class="button primary block w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                   for="single">
+                {{ uploading ? 'Uploading ...' : 'Upload' }}
+            </label>
+            <input (change)="uploadAvatar($event)" [disabled]="uploading" accept="image/*" id="single"
+                   style="visibility: hidden; position: absolute" type="file"/>
+        </div>
     </div>
-  </div>
 </div>

@@ -5,10 +5,11 @@ import {environment} from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
-  })
-  export class SupabaseService {
+})
+export class SupabaseService {
     public supabaseClient: SupabaseClient;
+
     constructor() {
-      this.supabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
+        this.supabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
-  }
+}

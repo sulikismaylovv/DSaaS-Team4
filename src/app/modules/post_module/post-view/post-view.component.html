@@ -1,21 +1,21 @@
 <div class="bg-white rounded-lg p-4 shadow-lg mb-4">
-  <!-- Post Header -->
-  <div class="flex items-center mb-4">
-    <img class="inline-block h-10 w-10 rounded-full mr-4" [src]="this.avatarSafeUrl" alt="User profile image" />
-    <div>
-      <p class="font-bold text-md text-gray-800">{{ username }}</p>
-      <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+    <!-- Post Header -->
+    <div class="flex items-center mb-4">
+        <img [src]="this.avatarSafeUrl" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+        <div>
+            <p class="font-bold text-md text-gray-800">{{ username }}</p>
+            <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+        </div>
     </div>
-  </div>
-  <!-- Post Content -->
-  <p class="text-gray-800 mt-3">{{ post.content }}</p>
-  <!-- Post Image -->
-  <div class="mt-4" *ngIf="post.image_url">
-    <img class="rounded-lg" [src]="this.postSafeUrl" alt="Post image" />
-  </div>
-  <!-- Interaction buttons like, comment, etc. -->
-  <div class="mt-4 flex justify-start space-x-4">
-    <!-- Interaction buttons here -->
-  </div>
+    <!-- Post Content -->
+    <p class="text-gray-800 mt-3">{{ post.content }}</p>
+    <!-- Post Image -->
+    <div *ngIf="post.image_url" class="mt-4">
+        <img [src]="this.postSafeUrl" alt="Post image" class="rounded-lg"/>
+    </div>
+    <!-- Interaction buttons like, comment, etc. -->
+    <div class="mt-4 flex justify-start space-x-4">
+        <!-- Interaction buttons here -->
+    </div>
 </div>
 

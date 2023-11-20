@@ -14,21 +14,22 @@ import {MatchesComponent} from "./modules/homepage_module/matches/matches.compon
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard] },
-  { path: 'register', component: AuthComponent, pathMatch: 'full' },
-  { path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
-  { path: '', redirectTo: '/login', pathMatch: 'full', },
-  { path: 'home', component: HomeComponent, pathMatch: 'full'},
-  { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
-  { path: 'game', component:GameComponent, pathMatch: 'full'},
-  { path: 'posts', component: PostsComponent},
-  { path: 'games', component: MatchesComponent},
+    {path: 'login', component: LoginComponent, pathMatch: 'full'},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard]},
+    {path: 'register', component: AuthComponent, pathMatch: 'full'},
+    {path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
+    {path: '', redirectTo: '/login', pathMatch: 'full',},
+    {path: 'home', component: HomeComponent, pathMatch: 'full'},
+    {path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
+    {path: 'game', component: GameComponent, pathMatch: 'full'},
+    {path: 'posts', component: PostsComponent},
+    {path: 'games', component: MatchesComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [ProfileGuard]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+    providers: [ProfileGuard]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

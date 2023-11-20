@@ -38,7 +38,7 @@ export interface away {
     winner: boolean;
 }
 
-export interface Teams{
+export interface Teams {
     home: home;
     away: away;
 }
@@ -54,6 +54,7 @@ export interface Score {
     extratime: Goals;
     penalty: Goals;
 }
+
 export class FixtureModel implements Fixture {
     fixture: fixtureInfo;
     league: league;
@@ -100,10 +101,10 @@ export class FixtureModel implements Fixture {
         };
 
         this.score = { // Initialize score with objects of type Goals
-            halftime: { home: null, away: null } ,
-            fulltime: { home: null, away: null },
-            extratime: { home: null, away: null }, // Assuming null is a valid value
-            penalty: { home: null, away: null } // Assuming null is a valid value
+            halftime: {home: null, away: null},
+            fulltime: {home: null, away: null},
+            extratime: {home: null, away: null}, // Assuming null is a valid value
+            penalty: {home: null, away: null} // Assuming null is a valid value
         };
     }
 }

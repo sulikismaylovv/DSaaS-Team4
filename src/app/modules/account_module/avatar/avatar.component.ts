@@ -1,61 +1,62 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser'
-import { AuthService} from "../../../core/services/auth.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core'
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser'
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
-  selector: 'app-avatar',
-  templateUrl: './avatar.component.html',
-  styleUrls: ['./avatar.component.css'],
+    selector: 'app-avatar',
+    templateUrl: './avatar.component.html',
+    styleUrls: ['./avatar.component.css'],
 })
 export class AvatarComponent {
-  _avatarUrl: SafeResourceUrl | undefined
-  uploading = false
+    uploading = false
+    @Output() upload = new EventEmitter<string>()
 
-  @Input()
-  set avatarUrl(url: string | null) {
-    if (url) {
-      this.downloadImage(url)
+    constructor(private readonly supabase: AuthService, private readonly dom: DomSanitizer) {
     }
-  }
 
-  @Output() upload = new EventEmitter<string>()
+    _avatarUrl: SafeResourceUrl | undefined
 
-  constructor(private readonly supabase: AuthService, private readonly dom: DomSanitizer) {}
-
-  async downloadImage(path: string) {
-    try {
-      const { data } = await this.supabase.downLoadImage(path)
-      if (data instanceof Blob) {
-        this._avatarUrl = this.dom.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error downloading image: ', error.message)
-      }
+    @Input()
+    set avatarUrl(url: string | null) {
+        if (url) {
+            this.downloadImage(url)
+        }
     }
-  }
 
-  async uploadAvatar(event: any) {
-    try {
-      this.uploading = true
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
-      }
-
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const filePath = `${Math.random()}.${fileExt}`
-
-      await this.supabase.uploadAvatar(filePath, file)
-      this.upload.emit(filePath)
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
-      }
-    } finally {
-      this.uploading = false
+    async downloadImage(path: string) {
+        try {
+            const {data} = await this.supabase.downLoadImage(path)
+            if (data instanceof Blob) {
+                this._avatarUrl = this.dom.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error('Error downloading image: ', error.message)
+            }
+        }
     }
-  }
+
+    async uploadAvatar(event: any) {
+        try {
+            this.uploading = true
+            if (!event.target.files || event.target.files.length === 0) {
+                throw new Error('You must select an image to upload.')
+            }
+
+            const file = event.target.files[0]
+            const fileExt = file.name.split('.').pop()
+            const filePath = `${Math.random()}.${fileExt}`
+
+            await this.supabase.uploadAvatar(filePath, file)
+            this.upload.emit(filePath)
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message)
+            }
+        } finally {
+            this.uploading = false
+        }
+    }
 
 
 }
