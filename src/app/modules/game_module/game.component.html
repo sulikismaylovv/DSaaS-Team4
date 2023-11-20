@@ -116,7 +116,34 @@
           </div>
           <!--Football field-->
           <div *ngIf="lineups && lineups.length" >
-
+            <div class="football-field">
+              <img src="assets/images/football_field.png" alt="Football Field">
+          
+              <!-- Home Team Players -->
+              <div class="team home-team">
+                  <ng-container *ngFor="let position of lineupHome | keyvalue">
+                      <div class="player-group" *ngFor="let player of position.value">
+                          <div class="player home-player">
+                              <div class="player-circle">{{player.number}}</div>
+                              <div class="player-name">{{player.name}}</div>
+                          </div>
+                      </div>
+                  </ng-container>
+              </div>
+          
+              <!-- Away Team Players -->
+              <div class="team away-team">
+                  <ng-container *ngFor="let position of lineupAway | keyvalue">
+                      <div class="player-group" *ngFor="let player of position.value">
+                          <div class="player away-player">
+                              <div class="player-circle">{{player.number}}</div>
+                              <div class="player-name">{{player.name}}</div>
+                          </div>
+                      </div>
+                  </ng-container>
+              </div>
+          </div>
+          
             
             
             

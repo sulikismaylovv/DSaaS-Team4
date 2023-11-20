@@ -1,15 +1,67 @@
-.football-field {
-    /* ... Your existing styles for the SVG ... */
+.football-field-container {
+    position: relative;
+    max-width: 1175px; /* Adapt to the size of your image */
+    margin: auto;
   }
   
-  .football-field circle {
-    stroke: #fff; /* White border for the circle */
-    stroke-width: 0.5; /* Border width */
+  .football-field {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   
-  .football-field .player-number {
-    fill: #fff; /* White text color */
-    font-size: 3px; /* Adjust the font size to fit inside the circle */
-    pointer-events: none; /* Prevents the text from interfering with mouse events */
+  .player {
+    position: absolute;
+    text-align: center;
+  }
+  
+  .home-players .player {
+    bottom: 50%; /* Adjust based on field image */
+  }
+  
+  /* Sample percentages for home players, adjust based on actual layout */
+  .home-players .player:nth-child(1) { left: 5%; }
+  .home-players .player:nth-child(2) { left: 10%; }
+  .home-players .player:nth-child(3) { left: 15%; }
+  .home-players .player:nth-child(4) { left: 20%; }
+  .home-players .player:nth-child(5) { left: 25%; }
+  /* Add more as needed, one for each player */
+  
+  
+  .away-players .player {
+    bottom: 50%; /* Adjust based on field image */
+  }
+  
+  /* Sample percentages for away players, adjust based on actual layout */
+  .away-players .player:nth-child(1) { right: 5%; }
+  .away-players .player:nth-child(2) { right: 10%; }
+  .away-players .player:nth-child(3) { right: 15%; }
+  .away-players .player:nth-child(4) { right: 20%; }
+  .away-players .player:nth-child(5) { right: 25%; }
+  /* Add more as needed, one for each player */
+  
+  .player-circle {
+    width: 30px; /* Adapt size as needed */
+    height: 30px;
+    border-radius: 50%;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px; /* Adapt as needed */
+  }
+  
+  .black-circle {
+    background-color: #000;
+  }
+  
+  .white-circle {
+    background-color: #FFF;
+    color: #000;
+  }
+  
+  .player-name {
+    margin-top: 4px;
+    font-size: 10px; /* Adapt as needed */
   }
   
