@@ -1,87 +1,16 @@
+<!-- posts.component.html -->
+<div class="bg-blue-900 min-h-screen">
+  <div class="container mx-auto flex flex-col">
+    <!-- Create Post Section -->
+    <div class="w-full px-4 py-6">
+      <app-create-post></app-create-post>
+    </div>
 
-<!-- Posts Container -->
-<div class="grid grid-cols-1 md:grid-cols-1 gap-4 overflow-y-auto h-full">
-  <!-- Post 1 -->
-  <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-    <div class="post-header flex-none">
-      <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body flex-1 bg-dark-mode rounded-lg p-4 text-white">
-      <p>rum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum</p>
-    </div>
-  </div>
-
-  <!-- Post 2 -->
-  <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-    <div class="post-header flex-none">
-      <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body flex-1">
-      <p>Man United won!</p>
-      <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-        <div class="flex items-center">
-          <img src="../../../../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-          <span class="font-semibold text-lg text-white">Team 1</span>
-        </div>
-        <span class="font-bold text-xl text-white">2 - 1</span>
-        <div class="flex items-center">
-          <span class="font-semibold text-lg text-white">Team 2</span>
-          <img src="../../../../assets/logo1.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-        </div>
+    <!-- Posts Feed -->
+    <div class="w-full px-4 py-6">
+      <div *ngFor="let post of posts" class="mb-4">
+        <app-post-view [post]="post"></app-post-view>
       </div>
-    </div>
-  </div>
-
-  <!-- Post 3 -->
-  <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4">
-    <div class="post-header flex items-center mb-4">
-      <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="profile-img rounded-full mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body">
-      <p>Go Rashford!!</p>
-      <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-center">
-        <img src="../assets/Football.png" alt="Football" class="w-10 h-10 rounded-full mr-4">
-        <span class="font-semibold text-lg text-white">Goal by Rashford</span>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Post 4 -->
-  <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-    <div class="post-header flex-none">
-      <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body flex-1">
-      <p>Appreciation post</p>
-      <img src="../assets/Rashford-MUFC.png" alt="Rashford">
-    </div>
-  </div>
-
-  <!-- Post 5 -->
-  <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-    <div class="post-header flex-none">
-      <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body flex-1">
-      <p>Some random posts<br><br><br><br><br><br><br><br></p>
-    </div>
-  </div>
-
-  <!-- Post 6 -->
-  <div class="post-card bg-light-mode-text dark:bg-dark-gray-900 rounded-lg shadow-md p-4 flex">
-    <div class="post-header flex-none">
-      <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-      <span class="text-xs text-white">Username</span>
-    </div>
-    <div class="post-body flex-1">
-      <p>Some random posts<br><br><br><br><br><br><br><br></p>
     </div>
   </div>
 </div>

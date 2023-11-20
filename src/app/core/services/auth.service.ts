@@ -12,6 +12,7 @@ export interface Profile {
   password?: string;
   first_name: string;
   last_name: string;
+  avatar_url?: string;
 }
 
 interface RegisterResponse {
@@ -73,7 +74,7 @@ export class AuthService {
     }
 
   isAuthenticated(): boolean {
-    return !!this._session?.user;
+      return  this.supabase.supabaseClient.auth.getSession() != null;
   }
 
 
@@ -147,7 +148,7 @@ export class AuthService {
 
   async updateProfile(profile: Profile) {
     // Extract only the fields you want to update
-    const { username, last_name, first_name, birthdate } = profile;
+    const { username, last_name, first_name, birthdate, avatar_url } = profile;
 
     const update = {
       id: this._session?.user?.id, // Ensure the correct user ID is used
@@ -156,7 +157,8 @@ export class AuthService {
       last_name,
       first_name,
       birthdate,
-      updated_at: new Date()
+      updated_at: new Date(),
+      avatar_url
     };
     console.log(update);
     return this.supabase.supabaseClient.from('users').upsert(update);
@@ -186,5 +188,13 @@ export class AuthService {
       .select(`*`)
       .eq('id', user.id)
       .single()
+  }
+
+  downLoadImage(path: string)  {
+    return this.supabase.supabaseClient.storage.from('avatars').download(path)
+  }
+
+  uploadAvatar(filePath: string, file: File) {
+    return this.supabase.supabaseClient.storage.from('avatars').upload(filePath, file)
   }
 }
