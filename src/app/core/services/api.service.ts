@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Fixture } from '../models/fixtures.model';
+import { TeamLineup } from '../models/lineup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,18 @@ export class ApiService {
     'X-RapidAPI-Key': 'a2373086ecmsh8b6e5f18c9f297ep1505f8jsn45915d047f0a',
     'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
   });
+
+  fetchLineups(fixtureID: number): Observable<TeamLineup[]> {
+    const options = {
+      params: {
+        fixture: fixtureID.toString()
+      },
+      headers: this.headers
+    };
+    return this.http.get<{ response: TeamLineup[] }>(this.apiUrl + "/lineups", options).pipe(
+      map(response => response.response)
+    );
+  }
 
 
   fetchSpecificFixture(fixtureID: number): Observable<Fixture[]> {
