@@ -106,6 +106,7 @@ export class CreatePostComponent implements OnInit {
           console.log('Post created:', createdPost);
           // Emit an event if needed, e.g., to inform a parent component
           this.upload.emit('Post created successfully.');
+          window.location.reload();
         })
         .catch(error => {
           console.error('Error creating post:', error);
@@ -124,6 +125,7 @@ export class CreatePostComponent implements OnInit {
           console.log('Post created:', createdPost);
           // Emit an event if needed, e.g., to inform a parent component
           this.upload.emit('Post created successfully.');
+          window.location.reload()
         })
         .catch(error => {
           console.error('Error creating post:', error);
