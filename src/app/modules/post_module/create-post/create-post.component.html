@@ -1,7 +1,7 @@
 <div class="bg-blue-900 p-4">
     <div class="container mx-auto">
         <div class="bg-white rounded-lg p-4 shadow-lg">
-            <form (ngSubmit)="onSubmit($event)">
+            <form (ngSubmit)="onSubmit()">
                 <div class="flex items-center border-b border-blue-500 py-2">
                     <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
                     <textarea [(ngModel)]="postContent" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -14,8 +14,12 @@
                            for="single">
                         {{ uploading ? 'Uploading ...' : 'Upload' }}
                     </label>
-                    <input (change)="onSubmit($event)" [disabled]="uploading" accept="image/*" id="single"
+                    <input (change)="onImageSelected($event)" [disabled]="uploading" accept="image/*" id="single"
                            style="visibility: hidden; position: absolute" type="file"/>
+                  <!-- Image preview section -->
+                  <div *ngIf="imagePreview" class="mt-4">
+                    <img [src]="imagePreview" alt="Image preview" class="rounded-lg max-w-full h-auto" />
+                  </div>
                 </div>
                 <div class="flex items-center justify-between">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">

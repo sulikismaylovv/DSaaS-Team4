@@ -26,7 +26,7 @@ export class PostsService {
     }
 
     // Create a new post
-    async createPost(post: Post, file: File, filePath: string): Promise<Post> {
+    async createPost(post: Post, file: File | null, filePath: string): Promise<Post> {
         let imageUrl;
         try {
             // If there's an image, handle the upload first
