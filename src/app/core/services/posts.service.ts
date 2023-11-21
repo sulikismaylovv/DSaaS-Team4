@@ -88,6 +88,21 @@ export class PostsService {
         return data;
     }
 
+    async getPostById(postId: number): Promise<Post> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('posts')
+                .select('*')
+                .match({id: postId});
+
+            if (error) throw error;
+            return data[0];
+        } catch (error) {
+            console.error('Error fetching post:', error);
+            throw error;
+        }
+    }
+
     // Like a post
     async likePost(like: Like): Promise<Like> {
         try {
@@ -164,6 +179,36 @@ export class PostsService {
             return data;
         } catch (error) {
             console.error('Error commenting on post:', error);
+            throw error;
+        }
+    }
+
+    async getNumberOfComments(postId: number): Promise<number> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('comments')
+                .select('id')
+                .match({post_id: postId});
+
+            if (error) throw error;
+            return data.length;
+        } catch (error) {
+            console.error('Error getting number of comments:', error);
+            throw error;
+        }
+    }
+
+    async getCommentsByPostId(postId: number): Promise<Comment[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('comments')
+                .select('*')
+                .match({post_id: postId});
+
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error fetching comments:', error);
             throw error;
         }
     }

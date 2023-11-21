@@ -5,6 +5,7 @@ import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {PostsService} from "../../../core/services/posts.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-post-view',
@@ -19,6 +20,7 @@ export class PostViewComponent implements OnInit {
   avatarSafeUrl: SafeResourceUrl | undefined;
   postSafeUrl: SafeResourceUrl | undefined;
   likeCounts: { [key: number]: number } = {}; // Object to hold the like counts for each post
+  commentCounts: { [key: number]: number } = {}; // Object to hold the comment counts for each post
   //liking a post
   likedPosts: Set<number> = new Set(); // Holds the IDs of liked posts
 
@@ -26,6 +28,7 @@ export class PostViewComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly userService: UserServiceService,
     private readonly postService: PostsService,
+    private readonly router: Router,
     private sanitizer: DomSanitizer,
   ) {
   }
@@ -64,6 +67,7 @@ export class PostViewComponent implements OnInit {
 
     await this.checkIfLiked(this.post.id);
     await this.loadLikeCount(this.post.id);
+    await this.loadCommentCount(this.post.id);
 
   }
 
@@ -89,6 +93,8 @@ export class PostViewComponent implements OnInit {
     }
   }
 
+
+  //Like Logic
   toggleLike(postId: number | undefined) {
     if (postId === undefined) throw new Error('Post ID is undefined');
 
@@ -197,6 +203,24 @@ export class PostViewComponent implements OnInit {
       return false;
     }
   }
+
+  //Comment Logic
+  getCommentCount(postId: number | undefined): number {
+    if (postId === undefined) throw new Error('Post ID is undefined');
+    return this.commentCounts[postId] || 0;
+  }
+
+  async loadCommentCount(postId: number | undefined) {
+    if (postId === undefined) throw new Error('Post ID is undefined');
+    this.commentCounts[postId] = await this.postService.getNumberOfComments(postId);
+  }
+
+  async commentPost(postId: number | undefined) {
+    if (postId === undefined) throw new Error('Post ID is undefined');
+    await this.router.navigate(['/post', postId]); // Assuming '/post/:id' is the route for the single post view
+  }
+
+
 
 
   //Create UserService to Retrieve Username from user_id
