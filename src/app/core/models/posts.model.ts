@@ -8,23 +8,23 @@ export interface Post {
 
 export interface Like {
     id?: number;
-    userId: string;
-    postId: number;
+    user_id: string;
+    post_id: number;
     createdAt: Date;
 }
 
 export interface Comment {
     id?: number;
-    postId: number;
-    userId: string;
+    post_id: number;
+    user_id: string;
     content: string;
     createdAt: Date;
 }
 
 export interface Retweet {
     id?: number;
-    originalPostId: number;
-    retweetUserId: string;
+    original_post_id: number;
+    retweet_user_id: string;
     createdAt: Date;
 }
 

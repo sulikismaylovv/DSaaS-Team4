@@ -1,6 +1,6 @@
 // posts-view.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {Post} from "../../../core/models/posts.model";
+import {Like, Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
@@ -84,7 +84,35 @@ export class PostViewComponent implements OnInit {
     }
 
 
-    //Create UserService to Retrieve Username from user_id
+    async likePost(postId: number | undefined) {
+      console.log('Liking post with ID:', postId);
+      try {
+        // Assuming you have a 'like' model and the 'likePost' method in your PostsService.
+        // You would also need to pass the user ID of the person liking the post.
+        const user = this.authService.session?.user;
+        if (!user || !user.id) throw new Error('User ID is undefined');
+
+        // The 'like' model might include fields like post_id and user_id
+        if(postId === undefined) throw new Error('Post ID is undefined');
+        const like: Like = {
+          post_id: postId,
+          user_id: user.id,
+          createdAt: new Date(),
+        };
+
+        const likedPost = await this.postService.likePost(like);
+        console.log('Post liked:', likedPost);
+
+        // Optionally, you can emit an event or call a method to update the UI accordingly.
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Error liking post:', error.message);
+        }
+      }
+    }
+
+
+  //Create UserService to Retrieve Username from user_id
     async getUsernameById(id: string): Promise<any> {
         console.log('id:', id);
         this.userService.getUsernameByID(id).then(username => {
