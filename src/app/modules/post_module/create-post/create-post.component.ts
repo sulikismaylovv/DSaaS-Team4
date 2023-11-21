@@ -3,6 +3,7 @@ import {PostsService} from "../../../core/services/posts.service";
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {delay} from "utils-decorators";
 
 @Component({
   selector: 'app-create-post',
@@ -28,7 +29,9 @@ export class CreatePostComponent implements OnInit {
   ) {
   }
 
+
   async ngOnInit() {
+    await this.cancelPost();
     await this.getProfile();
 
     if (this.profile && this.profile.avatar_url) {

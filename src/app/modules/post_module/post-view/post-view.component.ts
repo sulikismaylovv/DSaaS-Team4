@@ -78,7 +78,7 @@ export class PostViewComponent implements OnInit {
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
         if (error) {
-          throw error;
+          alert(error.message);
         }
         if (profile) {
           this.profile = profile;

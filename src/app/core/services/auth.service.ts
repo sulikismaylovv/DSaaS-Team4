@@ -34,7 +34,7 @@ export class AuthService {
             await this.restoreSession();
         })();
         this.supabase.supabaseClient.auth.onAuthStateChange((event, session) => {
-            this.handleAuthChange(event, session);
+            this.handleAuthChange(event, session).then(r => true);
         });
     }
 

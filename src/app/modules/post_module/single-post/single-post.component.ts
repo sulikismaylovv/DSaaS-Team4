@@ -13,11 +13,10 @@ import {ActivatedRoute} from "@angular/router";
 export class SinglePostComponent implements OnInit {
   @Input() post!: Post; // The post to which the comments belong
   comments: Comment[] = []; // Array to store comments
-  newCommentContent: string = ''; // The content of the new comment
   avatarSafeUrl: SafeResourceUrl | undefined;
   loading = false;
   profile: Profile | undefined;
-
+  commentContent: string = '';
   constructor(
     private route: ActivatedRoute,
     private readonly postsService: PostsService,
@@ -85,7 +84,7 @@ export class SinglePostComponent implements OnInit {
     if(this.post.id === undefined) throw new Error("post.id is undefined");
 
     const newComment: Comment = {
-      content: this.newCommentContent,
+      content: this.commentContent,
       post_id: this.post.id,
       user_id: user.id,
       created_at: new Date()
@@ -93,8 +92,10 @@ export class SinglePostComponent implements OnInit {
 
     try {
       const createdComment = await this.postsService.addComment(newComment);
+      console.log('Created comment:', createdComment);
       this.comments.push(createdComment);
-      this.newCommentContent = ''; // Clear the input after posting
+      this.commentContent = ''; // Clear the input after posting
+      window.location.reload();
     } catch (error) {
       console.error('Error posting comment:', error);
       alert('There was an error posting your comment.');
@@ -102,6 +103,6 @@ export class SinglePostComponent implements OnInit {
   }
 
   async cancelComment() {
-    this.newCommentContent = ''; // Clear the comment input
+    this.commentContent = ''; // Clear the comment input
   }
 }

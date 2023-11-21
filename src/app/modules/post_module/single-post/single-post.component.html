@@ -8,7 +8,8 @@
       <div class="editor mx-auto w-full md:w-10/12 flex flex-col text-gray-800 bg-white rounded-lg p-4 shadow-lg max-w-2xl mb-4">
         <div class="flex flex-row items-center border-b border-blue-500 py-2">
           <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
-          <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70"
+          <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70" name="commentContent"
+                    [(ngModel)]="commentContent"
                     placeholder="Share your football news with others"></textarea>
 
         </div>
@@ -26,7 +27,7 @@
         <div *ngFor="let comment of comments" class="comment bg-white rounded-lg p-4 shadow-lg mb-4">
           <!-- Display the comment content here -->
           <!-- For example, you might have a 'app-comment-view' component -->
-          <!---<app-comment-view [comment]="comment"></app-comment-view> -->
+          <app-comment-view [comment]="comment"></app-comment-view>
         </div>
       </div>
     </div>
