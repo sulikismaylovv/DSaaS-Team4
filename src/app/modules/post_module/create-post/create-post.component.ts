@@ -69,6 +69,13 @@ export class CreatePostComponent implements OnInit {
     }
   }
 
+  async cancelPost(): Promise<void> {
+    // Clear the form fields
+    this.postContent = '';
+    this.selectedImage = null;
+    this.imagePreview = null;
+  }
+
 
   // This method should be triggered only when the "Post" button is clicked
   async onSubmit(): Promise<void> {
