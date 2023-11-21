@@ -10,7 +10,7 @@ export interface Like {
     id?: number;
     user_id: string;
     post_id: number;
-    createdAt: Date;
+    created_at: Date;
 }
 
 export interface Comment {
@@ -18,14 +18,14 @@ export interface Comment {
     post_id: number;
     user_id: string;
     content: string;
-    createdAt: Date;
+    created_at: Date;
 }
 
 export interface Retweet {
     id?: number;
     original_post_id: number;
     retweet_user_id: string;
-    createdAt: Date;
+    created_at: Date;
 }
 
 export class Posts {

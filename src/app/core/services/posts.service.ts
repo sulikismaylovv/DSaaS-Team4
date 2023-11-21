@@ -105,12 +105,12 @@ export class PostsService {
     }
 
     // Unlike a post
-    async unlikePost(likeId: number): Promise<void> {
+    async unlikePost(like: Like): Promise<void> {
         try {
             const {error} = await this.supabase.supabaseClient
                 .from('likes')
                 .delete()
-                .match({id: likeId});
+                .match({post_id: like.post_id, user_id: like.user_id});
 
             if (error) throw error;
         } catch (error) {
@@ -118,6 +118,39 @@ export class PostsService {
             throw error;
         }
     }
+
+    async getNumberOfLikes(postId: number): Promise<number> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('likes')
+                .select('id')
+                .match({post_id: postId});
+
+            if (error) throw error;
+            return data.length;
+        } catch (error) {
+            console.error('Error getting number of likes:', error);
+            throw error;
+        }
+    }
+
+
+    async checkIfLiked(postId: number, userId: string): Promise<boolean> {
+      try{
+        const {data, error} = await this.supabase.supabaseClient
+          .from('likes')
+          .select('id')
+          .match({post_id: postId, user_id: userId});
+
+        if(error) throw error;
+        return data.length > 0;
+      }
+      catch(error) {
+        console.error('Error checking if liked:', error);
+        throw error;
+      }
+    }
+
 
     // Add a comment to a post
     async addComment(comment: Comment): Promise<Comment> {
