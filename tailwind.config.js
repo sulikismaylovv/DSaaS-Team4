@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'media',
+  darkMode: 'class',
   content: [
     "./src/**/*.{html,ts}",
     "./node_modules/flowbite/**/*.js"
@@ -12,7 +12,16 @@ module.exports = {
         'dark-mode': "#1c2632",
         'light-mode': "#fffff0",
         'light-mode-text':"#1c2632",
-        'gold': '#FFD700'
+        'gold': '#FFD700',
+        //'light-mode-text':"#422f97",
+        'pink':"#d154dd",
+        //'dark-gray':"rgba(41,51,65,0.43)",
+        'dark-gray':"#18202a",
+        'gray':"#4C5474",
+        'light-gray':"#848CA9",
+        'lighter-purple':'#6F44C8',
+        'very-light-purple':'#D2C7EE',
+        'search-bar':"rgba(28,38,50,0.59)"
       },
       scale:{
         '150': '1.5',
@@ -24,16 +33,6 @@ module.exports = {
         '500': '5',
         '600': '6',
         '700': '7',
-        'light-mode-text':"#422f97",
-        'pink':"#d154dd",
-         //'dark-gray':"rgba(41,51,65,0.43)",
-        'dark-gray':"#18202a",
-        'gray':"#4C5474",
-        'light-gray':"#848CA9",
-        'lighter-purple':'#6F44C8',
-        'very-light-purple':'#D2C7EE',
-        'search-bar':"rgba(28,38,50,0.59)"
-
       }
     },
     borderColor: theme => ({

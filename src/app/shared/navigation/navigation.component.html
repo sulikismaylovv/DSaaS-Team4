@@ -39,7 +39,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Search</span>
                 </a>
             </li>
-            <li>
+            <li *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -61,7 +61,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">League</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/dashboard">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -72,7 +72,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -83,7 +83,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Points shop</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async" >
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -101,8 +101,8 @@
             </li>
         </ul>
 
-        <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-amber-600 dark:border-amber-700">
-            <li>
+        <ul  class="pt-4 mt-4 space-y-2 font-medium border-t border-amber-600 dark:border-amber-700">
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <button (click)="authService.logout()"
                         class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -112,7 +112,12 @@
                     </svg>
                     <span class="ms-3">Sign out</span>
                 </button>
-
+            </li>
+            <li  *ngIf="!(authService.isAuthenticated$ | async)">
+              <button  class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2"
+                      type="button">
+                Log In
+              </button>
             </li>
             <li>
                 <a class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer">
@@ -127,13 +132,13 @@
             <li>
                 <a (click)="themeService.toggleTheme()"
                    class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer">
-                    <svg *ngIf="!themeService.isDarkModeEnabled()"
+                    <svg *ngIf="themeService.isDarkModeEnabled()"
                          aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 3V1m0 18v-2M5.05 5.05 3.636 3.636m12.728 12.728L14.95 14.95M3 10H1m18 0h-2M5.05 14.95l-1.414 1.414M16.364 3.636 14.95 5.05M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                               stroke-width="2"/>
                     </svg>
-                    <svg *ngIf="themeService.isDarkModeEnabled()"
+                    <svg *ngIf="!themeService.isDarkModeEnabled()"
                          aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.509 5.75c0-1.493.394-2.96 1.144-4.25h-.081a8.5 8.5 0 1 0 7.356 12.746A8.5 8.5 0 0 1 8.509 5.75Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
