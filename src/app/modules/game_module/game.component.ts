@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
     ngOnInit(): void {
         this.navbarService.setShowNavbar(true);
         // const navigation = this.router.getCurrentNavigation();
-        // this.fixture = navigation?.extras.state?.fixture;    
+        // this.fixture = navigation?.extras.state?.fixture;
         this.route.paramMap.subscribe(params => {
             const id = +params.get('id')!;
             this.fixtureTransferService.currentFixture.subscribe(fixture => {
@@ -60,27 +60,27 @@ export class GameComponent implements OnInit {
     categorizePlayers(): void {
         // Initialize lineups
         this.initializeLineups();
-    
+
         this.lineups.forEach((lineup, index) => {
             // Determine if it's the home or away lineup
             const currentLineup = index === 0 ? this.lineupHome : this.lineupAway;
-    
+
             // Parse formation to get the count of players in each category
             const formationParts = [1, ...lineup.formation.split('-').map(Number)]; // Prepend '1' for the goalkeeper
             if (formationParts.length < 3 || formationParts.length > 6) {
                 throw new Error('Invalid formation. Formation should have 2 to 5 parts, plus the goalkeeper.');
             }
-    
+
             // Reset current lineup
             Object.keys(currentLineup).forEach(key => currentLineup[Number(key)] = []);
-    
+
             // Assign players to their positions based on formation
             let positionIndex = 0;
             lineup.startXI.forEach(player => {
                 if (currentLineup[positionIndex].length >= formationParts[positionIndex]) {
                     positionIndex++;
                 }
-    
+
                 if (positionIndex < formationParts.length) {
                     currentLineup[positionIndex].push({ name: player.player.name, number: player.player.number });
                 } else {
@@ -89,7 +89,7 @@ export class GameComponent implements OnInit {
             });
         });
     }
-    
+
 
     logData() {
         console.log(this.lineupHome);

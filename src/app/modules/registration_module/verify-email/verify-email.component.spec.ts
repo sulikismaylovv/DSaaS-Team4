@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VerifyEmailComponent } from './verify-email.component';
+import {VerifyEmailComponent} from './verify-email.component';
 
 describe('VerifyEmailComponent', () => {
-  let component: VerifyEmailComponent;
-  let fixture: ComponentFixture<VerifyEmailComponent>;
+    let component: VerifyEmailComponent;
+    let fixture: ComponentFixture<VerifyEmailComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [VerifyEmailComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [VerifyEmailComponent]
+        });
+        fixture = TestBed.createComponent(VerifyEmailComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(VerifyEmailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

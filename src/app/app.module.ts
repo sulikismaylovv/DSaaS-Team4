@@ -17,21 +17,26 @@ import {GameComponent} from './modules/game_module/game.component';
 import {HttpClientModule} from '@angular/common/http'
 import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
-import { FooterComponent } from './shared/footer/footer.component';
-import { NavigationComponent } from './shared/navigation/navigation.component';
 import { LineupComponent } from './modules/game_module/lineup/lineup.component';
+import {FooterComponent} from './shared/footer/footer.component';
+import {NavigationComponent} from './shared/navigation/navigation.component';
+import {AvatarComponent} from './modules/account_module/avatar/avatar.component';
+import {PostViewComponent} from './modules/post_module/post-view/post-view.component';
+import {CreatePostComponent} from './modules/post_module/create-post/create-post.component';
+import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
+import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, LineupComponent
-  ],
-  imports: [
-    BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
+        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, LineupComponent
+    ],
+    imports: [
+        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
 export class AppModule {
 }

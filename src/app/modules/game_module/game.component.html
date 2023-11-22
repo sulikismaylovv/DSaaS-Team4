@@ -118,7 +118,7 @@
           <div *ngIf="lineups && lineups.length" >
             <div class="football-field">
               <img src="assets/images/football_field.png" alt="Football Field">
-          
+
               <!-- Home Team Players -->
               <div class="team home-team">
                   <ng-container *ngFor="let position of lineupHome | keyvalue">
@@ -130,7 +130,7 @@
                       </div>
                   </ng-container>
               </div>
-          
+
               <!-- Away Team Players -->
               <div class="team away-team">
                   <ng-container *ngFor="let position of lineupAway | keyvalue">
@@ -143,11 +143,11 @@
                   </ng-container>
               </div>
           </div>
-          
-            
-            
-            
-            
+
+
+
+
+
             <!-- <div class="football-field">
               <img class="h-96 w-96 scale-150" src="assets/images/football_field.svg" alt="FOotball Field">
               <div *ngFor="let player of lineups[0].startXI" [ngStyle]="getPlayerStyle(player.player.grid)">

@@ -1,88 +1,99 @@
 <head>
-  <link href="login.component.css" rel="stylesheet">
+    <link href="login.component.css" rel="stylesheet">
 </head>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
 <div class="relative min-h-screen flex ">
-  <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
-    <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative" style="background-image: url(assets/images/footballfield.jpg);">
-      <div class="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0"></div>
-      <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
-      <!--      <a href="https://codepen.io/uidesignhub" target="_blank" title="codepen aji" class="flex absolute top-5 text-center text-gray-100 focus:outline-none"><img src="/storage/avatars/njkIbPhyZCftc4g9XbMWwVsa7aGVPajYLRXhEeoo.jpg" alt="aji" class="object-cover mx-auto w-8 h-8 rounded-full w-10 h-10"><p class="text-xl ml-3">aji<strong>mon</strong></p> </a>-->
-      <div class="w-full  max-w-md z-10">
-        <div class="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">Remonatda</div>
-        <br>
-        <br>
-        <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Live.</div>
-        <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Interactive.</div>
-        <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Competition.</div>
-        <br>
+    <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
+        <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative"
+             style="background-image: url(assets/images/footballfield.jpg);">
+            <div class="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0"></div>
+            <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
+            <!--      <a href="https://codepen.io/uidesignhub" target="_blank" title="codepen aji" class="flex absolute top-5 text-center text-gray-100 focus:outline-none"><img src="/storage/avatars/njkIbPhyZCftc4g9XbMWwVsa7aGVPajYLRXhEeoo.jpg" alt="aji" class="object-cover mx-auto w-8 h-8 rounded-full w-10 h-10"><p class="text-xl ml-3">aji<strong>mon</strong></p> </a>-->
+            <div class="w-full  max-w-md z-10">
+                <div class="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">Remonatda</div>
+                <br>
+                <br>
+                <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Live.</div>
+                <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Interactive.</div>
+                <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> Competition.</div>
+                <br>
 
-        <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> In other words, your new favorite football website.</div>
+                <div class="sm:text-3xl xl:text-md text-gray-200 font-normal"> In other words, your new favorite
+                    football website.
+                </div>
 
 
+            </div>
+            <!---remove custom style-->
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-white ">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center">
+                    <h2 class="mt-6 text-3xl font-bold text-gray-900">
+                        Welcome Back!
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-500">Please sign in to your account</p>
+                </div>
+                <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
+                    <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                        <img alt="google logo" class="w-6 h-6" loading="lazy"
+                             src="https://www.svgrepo.com/show/475656/google-color.svg">
+                        <span>Login with Google</span>
+                    </button>
+                </div>
+                <div class="flex items-center justify-center space-x-2">
+                    <span class="h-px w-16 bg-gray-200"></span>
+                    <span class="text-gray-300 font-normal">or continue with email</span>
+                    <span class="h-px w-16 bg-gray-200"></span>
+                </div>
+                <form (ngSubmit)="onSignIn()" [formGroup]="signInForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="signInUsernameOrEmail">Username
+                            or Email:</label>
+                        <input class="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-700" formControlName="usernameOrEmail" id="signInUsernameOrEmail"
+                               placeholder="Username or name@example.com"
+                               type="text">
+                    </div>
 
-      </div>
-      <!---remove custom style-->
-      <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2"
+                               for="signInPassword">Password:</label>
+                        <input class="block w-full px-4 py-3 mb-3 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-700" formControlName="password" id="signInPassword"
+                               placeholder="Your password"
+                               type="password">
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button [disabled]="loading"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                type="submit">
+                            {{ loading ? 'Loading...' : 'Sign In' }}
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">Don't have an account? <a class="text-blue-600 hover:text-blue-700 font-medium"
+                                                                               routerLink="/register">Register</a>
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
     </div>
-    <div class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-white ">
-      <div class="max-w-md w-full space-y-8">
-        <div class="text-center">
-          <h2 class="mt-6 text-3xl font-bold text-gray-900">
-            Welcome Back!
-          </h2>
-          <p class="mt-2 text-sm text-gray-500">Please sign in to your account</p>
-        </div>
-        <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
-          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
-            <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
-            <span>Login with Google</span>
-          </button>
-        </div>
-        <div class="flex items-center justify-center space-x-2">
-          <span class="h-px w-16 bg-gray-200"></span>
-          <span class="text-gray-300 font-normal">or continue with email</span>
-          <span class="h-px w-16 bg-gray-200"></span>
-        </div>
-      <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="space-y-6">
-        <div>
-          <label for="signInUsernameOrEmail" class="block text-gray-700 text-sm font-medium mb-2">Username or Email:</label>
-          <input type="text" id="signInUsernameOrEmail" formControlName="usernameOrEmail" placeholder="Username or name@example.com"
-                 class="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-700">
-        </div>
-
-        <div>
-          <label for="signInPassword" class="block text-gray-700 text-sm font-medium mb-2">Password:</label>
-          <input type="password" id="signInPassword" formControlName="password" placeholder="Your password"
-                 class="block w-full px-4 py-3 mb-3 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-700">
-        </div>
-
-        <div class="flex items-center justify-between">
-          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" [disabled]="loading">
-            {{ loading ? 'Loading...' : 'Sign In' }}
-          </button>
-        </div>
-      </form>
-
-      <div class="mt-6 text-center">
-        <p class="text-sm text-gray-600">Don't have an account? <a routerLink="/register" class="text-blue-600 hover:text-blue-700 font-medium">Register</a></p>
-      </div>
-
-
-    </div>
-  </div>
-</div>
 
 </div>
