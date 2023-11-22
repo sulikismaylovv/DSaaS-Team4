@@ -13,6 +13,7 @@ export interface FriendsLeagueInterface {
 export interface EnhancedUserInFriendsLeague extends UserInFriendsLeague
 {
   username: String;
+
 }
 export interface UserInFriendsLeague {
   id?: number;
