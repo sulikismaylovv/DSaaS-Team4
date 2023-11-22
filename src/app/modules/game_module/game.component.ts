@@ -115,12 +115,17 @@ export class GameComponent implements OnInit {
             }
 
         } else {
+            this.handleBetAlreadyExists();
             throw new Error('Bet already exists');
+
         }
     }
 
+    handleBetAlreadyExists(){
+        //something needs to be done here
+    }
+
     categorizePlayers(): void {
-        // Initialize lineups
         this.initializeLineups();
 
         this.lineups.forEach((lineup, index) => {
