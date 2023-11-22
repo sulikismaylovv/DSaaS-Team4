@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent {
+  showSecondRowBadges = false;
+  toggleSecondRowBadges() {
+    this.showSecondRowBadges = !this.showSecondRowBadges;
+  }
 
 }
