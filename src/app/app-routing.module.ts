@@ -20,7 +20,7 @@ const routes: Routes = [
     {path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard]},
     {path: 'register', component: AuthComponent, pathMatch: 'full'},
     {path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
-    {path: '', redirectTo: '/shop', pathMatch: 'full',},
+    {path: '', redirectTo: '/login', pathMatch: 'full',},
     {path: 'home', component: HomeComponent, pathMatch: 'full'},
     {path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
     {path: 'game', component: GameComponent, pathMatch: 'full'},
