@@ -55,7 +55,7 @@
             [class.pointer-events-none]="!showContent">
             <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
             <form class="flex items-start mt-2 ml-2 mb-4">
-              <input type="text" id="betPoints"
+              <input [(ngModel)]="credits" type="text" id="betPoints"
                 class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="I'm hungry" required>
               <button type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"

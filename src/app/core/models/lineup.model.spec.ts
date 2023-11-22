@@ -1,7 +1,7 @@
-import { Lineup } from './lineup.model';
+import { LineupModel } from './lineup.model';
 
 describe('Lineup', () => {
   it('should create an instance', () => {
-    expect(new Lineup()).toBeTruthy();
+    expect(new LineupModel()).toBeTruthy();
   });
 });

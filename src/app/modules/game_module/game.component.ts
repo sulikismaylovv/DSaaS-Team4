@@ -9,6 +9,8 @@ import { Lineup, LineupModel } from 'src/app/core/models/lineup.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { LineupComponent } from './lineup/lineup.component';
 import { groupBy } from 'lodash';
+import { BetModel } from 'src/app/core/models/bets.model';
+import { BetsService } from 'src/app/core/services/bets.service';
 
 @Component({
     selector: 'app-game',
@@ -24,6 +26,8 @@ export class GameComponent implements OnInit {
     lineupHome: { [key: number]: { name: string, number: number }[] } = {};
     lineupAway: { [key: number]: { name: string, number: number }[] } = {};
     isLoading: boolean = true;
+    bet: BetModel = null!;
+    credits: number = 0;
 
     constructor(
         public themeService: ThemeService,
@@ -31,7 +35,8 @@ export class GameComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private fixtureTransferService: FixtureTransferService,
-        private ApiService: ApiService) {
+        private ApiService: ApiService,
+        private BetsService: BetsService) {
     }
 
     ngOnInit(): void {
