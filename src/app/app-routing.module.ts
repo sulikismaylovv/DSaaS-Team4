@@ -11,6 +11,8 @@ import {VerifyEmailComponent} from "./modules/registration_module/verify-email/v
 import {GameComponent} from "./modules/game_module/game.component";
 import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
+import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
+import {UserComponent} from "./modules/profile_module/user/user.component";
 
 
 const routes: Routes = [
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'game', component:GameComponent, pathMatch: 'full'},
   { path: 'posts', component: PostsComponent},
   { path: 'games', component: MatchesComponent},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'user', component: UserComponent},
 ];
 
 @NgModule({

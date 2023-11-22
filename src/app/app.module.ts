@@ -19,12 +19,15 @@ import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
+import { ProfileComponent } from './modules/profile_module/profile_page/profile.component';
+import { CommonComponent } from './modules/profile_module/common/common.component';
+import { UserComponent } from './modules/profile_module/user/user.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, ProfileComponent, CommonComponent, UserComponent,
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
