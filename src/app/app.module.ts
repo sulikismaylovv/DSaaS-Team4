@@ -15,12 +15,13 @@ import {StepperComponent} from './pages/registration/stepper/stepper.component';
 import { LeagueComponent } from './pages/league/league.component';
 import { CreateleagueComponent } from './pages/createleague/createleague.component';
 import { GloballeagueComponent } from './pages/globalleague/globalleague.component';
+import { FriendsleagueComponent } from './pages/friendsleague/friendsleague.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-    , TeamComponent, MultistepformComponent, StepperComponent, LeagueComponent, CreateleagueComponent, GloballeagueComponent
+    , TeamComponent, MultistepformComponent, StepperComponent, LeagueComponent, CreateleagueComponent, GloballeagueComponent, FriendsleagueComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule

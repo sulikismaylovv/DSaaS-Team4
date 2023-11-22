@@ -1,0 +1,8 @@
+<ng-container *ngFor="let league of leagues">
+  <h2>{{ league.name }}</h2>
+  <ul *ngIf="league.id as leagueId">
+    <li *ngFor="let member of leagueMembers[leagueId]">
+      {{ member.username }} - {{ member.xp }} XP
+    </li>
+  </ul>
+</ng-container>
