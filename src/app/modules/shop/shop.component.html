@@ -89,8 +89,8 @@
     <div class="flex items-start justify-between">
       <p class="text-white font-semibold text-2xl mb-4">Badges</p>
       <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
-              (click)="toggleSecondRowBadges()">
-        {{ showSecondRowBadges ? 'Show Less' : 'Show More' }}</button>
+              (click)="toggleMoreBadges()">
+        {{ showMoreBadges ? 'Show Less' : 'Show More' }}</button>
     </div>
     <div class="grid grid-cols-4 gap-4 mb-4">
       <!--1st row-First badge-->
@@ -167,7 +167,7 @@
       </div>
     </div>
     <!--4 grid column containing 2nd row of badges-->
-    <div *ngIf="showSecondRowBadges"  class="grid grid-cols-4 gap-4 mb-4">
+    <div *ngIf="showMoreBadges" class="grid grid-cols-4 gap-4 mb-4">
       <!--2nd row-First badge-->
       <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
