@@ -30,6 +30,7 @@ export class GameComponent implements OnInit {
     isLoading: boolean = true;
     // bet: BetModel = null!;
     credits: number = 0;
+    teamToWin: boolean | null = null;
 
     constructor(
         public themeService: ThemeService,
@@ -44,8 +45,6 @@ export class GameComponent implements OnInit {
 
     ngOnInit(): void {
         this.navbarService.setShowNavbar(true);
-        // const navigation = this.router.getCurrentNavigation();
-        // this.fixture = navigation?.extras.state?.fixture;
         this.route.paramMap.subscribe(params => {
             const id = +params.get('id')!;
             this.fixtureTransferService.currentFixture.subscribe(fixture => {
@@ -75,10 +74,8 @@ export class GameComponent implements OnInit {
         if (user) {
             const isRegistered = await this.betsService.checkIfUserIsRegistered(user.id);
             if (isRegistered) {
-                console.log("true");
                 return this.betsService.getBetterID(user.id);
             } else {
-                console.log("False");
                 await this.betsService.createBetter(user.id);
                 return this.betsService.getBetterID(user.id);
             }
@@ -88,7 +85,12 @@ export class GameComponent implements OnInit {
 
     async testInput() {
         const betterID = await this.getBetterID();
-        console.log(betterID);
+        console.log(this.teamToWin);
+        if (this.teamToWin) {
+            console.log("team2");
+        } else {
+            console.log("team1");
+        }
     }
 
 
@@ -103,7 +105,18 @@ export class GameComponent implements OnInit {
             team_chosen: true,
             credits: this.credits
         }
+        const checkIfBetExists = await this.betsService.checkIfBetExists(bet.betterID, this.fixture.fixture.id);
+        if (!checkIfBetExists) {
+            const betCreated = await this.betsService.createBet(bet, user.id);
+            if (betCreated) {
+                console.log("Bet created");
+            } else {
+                throw new Error('Error creating bet');
+            }
 
+        } else {
+            throw new Error('Bet already exists');
+        }
     }
 
     categorizePlayers(): void {
@@ -180,14 +193,22 @@ export class GameComponent implements OnInit {
     }
 
     toggleContent(team: string) {
+
         if (this.clickedImage === team) {
             // If the same team is clicked again, reset everything
             this.showContent = false;
             this.clickedImage = null;
+            this.teamToWin = null; // Reset teamToWin as well
         } else {
             // Otherwise, show content and set the clicked team
             this.showContent = true;
             this.clickedImage = team;
+
+            if (team === 'team1') {
+                this.teamToWin = true;
+            } else if (team === 'team2') {
+                this.teamToWin = false;
+            }
         }
     }
 }

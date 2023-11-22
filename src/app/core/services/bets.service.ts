@@ -192,7 +192,20 @@ export class BetsService {
     }
   }
   
-  
+  async checkIfUserAlreadyBetted(userID: string, fixtureID: number): Promise<boolean> {
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('bettingrecord')
+        .select('betterID')
+        .eq('fixtureID', fixtureID)
+        .eq('betterID', userID);
+      if (error) throw error;
+      return data.length > 0;
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  }
   
 
 
