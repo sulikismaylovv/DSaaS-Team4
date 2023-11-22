@@ -10,10 +10,9 @@ export class FooterService {
     // You can directly use this observable in your template with the async pipe
     public showFooter$ = this.showFooterSubject.asObservable();
 
-    constructor() {
-    }
+    constructor() {}
 
     public setShowFooter(show: boolean): void {
-        this.showFooterSubject.next(show);
+      this.showFooterSubject.next(show);
     }
 }

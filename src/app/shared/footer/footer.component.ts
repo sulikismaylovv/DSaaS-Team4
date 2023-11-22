@@ -9,9 +9,7 @@ import {FooterService} from "../../core/services/footer.service";
 })
 export class FooterComponent {
     title = environment.appTitle;
-
     constructor(public footerService: FooterService) {
     }
-
 
 }
