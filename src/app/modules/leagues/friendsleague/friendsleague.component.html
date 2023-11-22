@@ -1,33 +1,78 @@
-<div class="rankings-section bg-dark-mode rounded-lg w-full max-w-4xl text-white flex justify-center items-center">
-  <div class="flex flex-col text-lg items-center gap-4">
-    <!-- Loop over each league -->
+<!--<div class="rankings-section bg-dark-mode rounded-lg w-full max-w-4xl text-white flex justify-center items-center">-->
+<!--  <div class="flex flex-col text-lg items-center gap-4">-->
+<!--    &lt;!&ndash; Loop over each league &ndash;&gt;-->
 
-    <!-- Start ng-container for league -->
-    <ng-container *ngFor="let league of leagues">
-      <!-- Only render this section if 'league.id' is defined -->
-      <ng-container *ngIf="league.id as leagueId">
-      <h2 class="text-2xl font-bold">{{ league.name }}</h2>
-      <div *ngFor="let member of leagueMembers[leagueId]; let i = index" class="user-card bg-lighter-purple rounded-lg p-4 w-full max-w-sm flex items-center justify-between shadow-lg relative">
-      <!-- Use a similar indicator logic for members based on their index -->
-        <div *ngIf="i < 3" class="indicator-bar bg-green-500 absolute left-0 top-0 bottom-0 w-2"></div>
-        <div *ngIf="leagueMembers[league.id].length - i <= 3" class="indicator-bar bg-red-500 absolute left-0 top-0 bottom-0 w-2"></div>
-        <span class="font-bold ml-4">
-          <span class="user-details">
-            <!-- Ranking number based on their index within the league -->
-            <span *ngIf="i>=0" class="rank-number">{{ i + 1 }}</span>
-            <!-- Display member details here -->
-            <span class="username">{{ member.username }}</span>
+<!--    &lt;!&ndash; Start ng-container for league &ndash;&gt;-->
+<!--    <ng-container *ngFor="let league of leagues">-->
+<!--      &lt;!&ndash; Only render this section if 'league.id' is defined &ndash;&gt;-->
+<!--      <ng-container *ngIf="league.id as leagueId">-->
+<!--      <h2 class="text-2xl font-bold">{{ league.name }}</h2>-->
+<!--      <div *ngFor="let member of leagueMembers[leagueId]; let i = index" class="user-card bg-lighter-purple rounded-lg p-4 w-full max-w-sm flex items-center justify-between shadow-lg relative">-->
+<!--      &lt;!&ndash; Use a similar indicator logic for members based on their index &ndash;&gt;-->
+<!--        <div *ngIf="i < 3" class="indicator-bar bg-green-500 absolute left-0 top-0 bottom-0 w-2"></div>-->
+<!--        <div *ngIf="leagueMembers[league.id].length - i <= 3" class="indicator-bar bg-red-500 absolute left-0 top-0 bottom-0 w-2"></div>-->
+<!--        <span class="font-bold ml-4">-->
+<!--          <span class="user-details">-->
+<!--            &lt;!&ndash; Ranking number based on their index within the league &ndash;&gt;-->
+<!--            <span *ngIf="i>=0" class="rank-number">{{ i + 1 }}</span>-->
+<!--            &lt;!&ndash; Display member details here &ndash;&gt;-->
+<!--            <span class="username">{{ member.username }}</span>-->
+<!--          </span>-->
+<!--        </span>-->
+<!--        <div class="flex items-center">-->
+<!--          &lt;!&ndash; Use a similar logic for arrows based on their index &ndash;&gt;-->
+<!--          <span *ngIf="i < 3" class="text-green-500 ml-2">&#9650;</span>-->
+<!--          <span *ngIf="i > 3" class="text-red-500 ml-2">&#9660;</span>-->
+<!--          &lt;!&ndash; Display the member's XP &ndash;&gt;-->
+<!--          <span class="text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--    </ng-container>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="rankings-section bg-dark-mode rounded-lg w-full max-w-md mx-auto text-white">
+  <!-- Carousel Navigation Controls -->
+  <div class="flex justify-between w-full px-4 py-2">
+    <button (click)="moveToPreviousLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+      &#8592; Previous
+    </button>
+    <button (click)="moveToNextLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+      Next &#8594;
+    </button>
+  </div>
+
+  <!-- Carousel Content -->
+  <div class="flex flex-col items-center gap-4">
+    <!-- Check if current league is defined and has an id -->
+    <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId">
+      <h2 class="text-2xl font-bold">{{ leagues[currentLeagueIndex].name }}</h2>
+
+      <!-- Ensure league members are defined for the current league -->
+      <ng-container *ngIf="leagueMembers[currentLeagueId]">
+        <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index" class="user-card bg-lighter-purple rounded-lg p-4 w-full max-w-sm flex items-center justify-between shadow-lg relative">
+          <!-- Indicator bars based on member ranking -->
+          <div *ngIf="i < 3" class="indicator-bar bg-green-500 absolute left-0 top-0 bottom-0 w-2"></div>
+          <div *ngIf="i >= leagueMembers[currentLeagueId].length - 3" class="indicator-bar bg-red-500 absolute left-0 top-0 bottom-0 w-2"></div>
+
+          <!-- Member Details -->
+          <span class="font-bold ml-4">
+            <span class="user-details">
+              <span class="rank-number">{{ i + 1 }}</span>
+              <span class="username">{{ member.username }}</span>
+            </span>
           </span>
-        </span>
-        <div class="flex items-center">
-          <!-- Use a similar logic for arrows based on their index -->
-          <span *ngIf="i < 3" class="text-green-500 ml-2">&#9650;</span>
-          <span *ngIf="i > 3" class="text-red-500 ml-2">&#9660;</span>
-          <!-- Display the member's XP -->
-          <span class="text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>
+
+          <!-- Member XP -->
+          <div class="flex items-center">
+            <span *ngIf="i < 3" class="text-green-500 ml-2">&#9650;</span>
+            <span *ngIf="i >2 " class="text-red-500 ml-2">&#9660;</span>
+            <span class="text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>
+          </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
     </ng-container>
   </div>
 </div>

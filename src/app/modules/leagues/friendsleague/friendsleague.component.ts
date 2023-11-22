@@ -15,7 +15,9 @@ import {Session} from "@supabase/supabase-js";
   styleUrls: ['./friendsleague.component.css']
 })
 export class FriendsleagueComponent implements OnInit{
+
   leagueIds: number[] = [];
+
   leagues: FriendsLeagueInterface[] = [];
   // username: string = '';
   leagueMembers: { [key: number]: EnhancedUserInFriendsLeague[] } = {};
@@ -47,5 +49,13 @@ export class FriendsleagueComponent implements OnInit{
     } catch (error) {
       console.error('There was an error loading the leagues and their members:', error);
     }
+  }
+  currentLeagueIndex = 0;
+  moveToNextLeague() {
+    this.currentLeagueIndex = (this.currentLeagueIndex + 1) % this.leagues.length;
+  }
+
+  moveToPreviousLeague() {
+    this.currentLeagueIndex = (this.currentLeagueIndex - 1 + this.leagues.length) % this.leagues.length;
   }
 }
