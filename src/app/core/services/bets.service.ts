@@ -134,10 +134,26 @@ export class BetsService {
         .select('userID')
         .eq('userID', userID);
       if (error) throw error;
-      if (data.length > 0){
-        return true;
-      } else{
-        return false;
+      return data.length > 0;
+      
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  }
+
+  async getBetterID(userID: string): Promise<number> {
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('betterID')
+        .eq('userID', userID)
+        .single();
+      if (error) throw error;
+      if (data) {
+        return data.betterID;
+      } else {
+        return 0;
       }
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -145,7 +161,26 @@ export class BetsService {
     }
   }
 
-  async createUser(userID: string){
+  async getUserCredits(userID: string): Promise<number> {
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('credits')
+        .eq('userID', userID)
+        .single();
+      if (error) throw error;
+      if (data) {
+        return data.credits;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  }
+
+  async createBetter(userID: string){
     try {
       const { data, error } = await this.supabase.supabaseClient
         .from('usersinbetting')

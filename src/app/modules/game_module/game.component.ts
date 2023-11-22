@@ -10,7 +10,9 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { LineupComponent } from './lineup/lineup.component';
 import { groupBy } from 'lodash';
 import { BetModel } from 'src/app/core/models/bets.model';
+import { Bet } from 'src/app/core/models/bets.model';
 import { BetsService } from 'src/app/core/services/bets.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-game',
@@ -26,7 +28,7 @@ export class GameComponent implements OnInit {
     lineupHome: { [key: number]: { name: string, number: number }[] } = {};
     lineupAway: { [key: number]: { name: string, number: number }[] } = {};
     isLoading: boolean = true;
-    bet: BetModel = null!;
+    // bet: BetModel = null!;
     credits: number = 0;
 
     constructor(
@@ -35,8 +37,9 @@ export class GameComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private fixtureTransferService: FixtureTransferService,
-        private ApiService: ApiService,
-        private BetsService: BetsService) {
+        private authService: AuthService,
+        private apiService: ApiService,
+        private betsService: BetsService) {
     }
 
     ngOnInit(): void {
@@ -62,6 +65,47 @@ export class GameComponent implements OnInit {
             this.lineupAway[i] = [];
         }
     }
+
+    // getBetterID(): number {
+    //     const user = this.authService.session?.user;
+    //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
+    // }
+    async getBetterID(): Promise<number> {
+        const user = this.authService.session?.user;
+        if (user) {
+            const isRegistered = await this.betsService.checkIfUserIsRegistered(user.id);
+            if (isRegistered) {
+                console.log("true");
+                return this.betsService.getBetterID(user.id);
+            } else {
+                console.log("False");
+                await this.betsService.createBetter(user.id);
+                return this.betsService.getBetterID(user.id);
+            }
+        }
+        throw new Error('User is not registered or session is not available');
+    }
+
+    async testInput() {
+        const betterID = await this.getBetterID();
+        console.log(betterID);
+    }
+
+
+    async placeBet() {
+        const user = this.authService.session?.user;
+        const betterID = await this.getBetterID();
+        if (!user || !user.id) throw new Error('User ID is undefined');
+        const bet: Bet = {
+            betterID: betterID,
+            fixtureID: this.fixture.fixture.id,
+            time_placed: new Date(),
+            team_chosen: true,
+            credits: this.credits
+        }
+
+    }
+
     categorizePlayers(): void {
         // Initialize lineups
         this.initializeLineups();
@@ -102,7 +146,7 @@ export class GameComponent implements OnInit {
 
 
     fetchLineup(fixtureID: number) {
-        this.ApiService.fetchLineups(fixtureID).subscribe({
+        this.apiService.fetchLineups(fixtureID).subscribe({
 
             next: (data: Lineup[]) => {
                 this.lineups = data;
