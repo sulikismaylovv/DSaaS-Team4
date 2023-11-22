@@ -35,8 +35,6 @@ export class PostViewComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProfile();
-    console.log('post:', this.post);
-    console.log("post.created_at:", this.post.created_at);
     await this.getUsernameById(this.post.user_id);
 
     if (this.post && this.post.user_id) {
@@ -128,7 +126,6 @@ export class PostViewComponent implements OnInit {
   }
 
   async likePost(postId: number | undefined) {
-    console.log('Liking post with ID:', postId);
     try {
       // Assuming you have a 'like' model and the 'likePost' method in your PostsService.
       // You would also need to pass the user ID of the person liking the post.
@@ -144,7 +141,6 @@ export class PostViewComponent implements OnInit {
       };
 
       const likedPost = await this.postService.likePost(like);
-      console.log('Post liked:', likedPost);
 
       // Optionally, you can emit an event or call a method to update the UI accordingly.
     } catch (error) {
@@ -157,7 +153,6 @@ export class PostViewComponent implements OnInit {
   }
 
   async unlikePost(postId: number | undefined) {
-    console.log('Unliking post with ID:', postId);
     try {
       // Assuming you have a 'like' model and the 'likePost' method in your PostsService.
       // You would also need to pass the user ID of the person liking the post.
@@ -173,7 +168,6 @@ export class PostViewComponent implements OnInit {
       };
 
       const likedPost = await this.postService.unlikePost(like);
-      console.log('Post liked:', likedPost);
 
       // Optionally, you can emit an event or call a method to update the UI accordingly.
     } catch (error) {
@@ -225,7 +219,6 @@ export class PostViewComponent implements OnInit {
 
   //Create UserService to Retrieve Username from user_id
   async getUsernameById(id: string): Promise<any> {
-    console.log('id:', id);
     this.userService.getUsernameByID(id).then(username => {
       this.username = username;
     }).catch(error => {

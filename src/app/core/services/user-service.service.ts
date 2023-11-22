@@ -21,9 +21,6 @@ export class UserServiceService {
             .ilike('username', `%${username}%`)
             .not('id', 'eq', currentUserId); // Exclude the current user from the results
 
-
-        console.log('data:', data);
-
         if (error) {
             console.error('Error searching for user:', error);
             throw error;
@@ -36,8 +33,6 @@ export class UserServiceService {
             .from('users')
             .select('id,username')
             .eq('id', id);
-
-        console.log('data:', data);
 
         if (error) {
             console.error('Error searching for user:', error);

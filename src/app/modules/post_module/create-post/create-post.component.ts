@@ -53,6 +53,7 @@ export class CreatePostComponent implements OnInit {
   async getProfile() {
     try {
       this.loading = true;
+      await this.authService.restoreSession();
       const user = this.authService.session?.user;
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
@@ -106,7 +107,7 @@ export class CreatePostComponent implements OnInit {
       // Call createPost with the image file and path
       this.postsService.createPost(post, this.selectedImage, filePath)
         .then(createdPost => {
-          console.log('Post created:', createdPost);
+          //console.log('Post created:', createdPost);
           // Emit an event if needed, e.g., to inform a parent component
           this.upload.emit('Post created successfully.');
           window.location.reload();
@@ -125,7 +126,7 @@ export class CreatePostComponent implements OnInit {
       // Call createPost without image file and path
       this.postsService.createPost(post, null, '')
         .then(createdPost => {
-          console.log('Post created:', createdPost);
+          //console.log('Post created:', createdPost);
           // Emit an event if needed, e.g., to inform a parent component
           this.upload.emit('Post created successfully.');
           window.location.reload()

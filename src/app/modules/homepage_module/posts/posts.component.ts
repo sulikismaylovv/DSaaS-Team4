@@ -21,7 +21,7 @@ export class PostsComponent implements OnInit {
     loadPosts() {
         this.postsService.getPosts().then(data => {
             this.posts = data;
-            console.log('Posts:', this.posts);
+            //console.log('Posts:', this.posts);
         }).catch(error => {
             console.error('Error loading posts:', error);
         });

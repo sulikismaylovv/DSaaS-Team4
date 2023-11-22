@@ -162,7 +162,7 @@ export class AuthService {
         return this.supabase.supabaseClient.storage.from('avatars').upload(filePath, file)
     }
 
-    private async restoreSession() {
+    async restoreSession() {
         try {
             const {data: sessionData, error} = await this.supabase.supabaseClient.auth.getSession();
             if (error) {
@@ -171,7 +171,7 @@ export class AuthService {
             }
             this._session = sessionData.session;
             if (this._session) {
-                console.log('Session restored:', this._session);
+                //console.log('Session restored:', this._session);
                 // You may want to perform additional logic here if a session is restored
             }
         } catch (error) {
@@ -182,12 +182,12 @@ export class AuthService {
     private async handleAuthChange(event: AuthChangeEvent, session: Session | null) {
         this._session = session;
         if (event === 'SIGNED_IN') {
-            console.log('User signed in:', session?.user);
+            //console.log('User signed in:', session?.user);
             // Handle successful sign in
             //await this.router.navigate(['/home']);
 
         } else if (event === 'SIGNED_OUT') {
-            console.log('User signed out');
+            //console.log('User signed out');
             // Handle sign out
             await this.router.navigate(['/login']);
         }

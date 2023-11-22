@@ -3,16 +3,18 @@
     <div class="editor mx-auto w-full md:w-10/12 flex flex-col text-gray-800 bg-white rounded-lg p-4 shadow-lg max-w-2xl">
       <form (ngSubmit)="onSubmit()">
         <div class="flex flex-col items-center border-b border-blue-500 py-2">
-          <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
-          <textarea [(ngModel)]="postContent" name="postContent" class="resize description bg-gray-100 sec p-3 h-30 w-128 border border-gray-300 outline-none w-full"
-                    placeholder="Share your football news with others" required></textarea>
+          <div class="flex flex-row">
+            <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
+            <textarea [(ngModel)]="postContent" name="postContent" class="resize description bg-gray-100 sec p-3 h-30 w-128 border border-gray-300 outline-none w-full"
+                      placeholder="Share your football news with others" required></textarea>
+          </div>
           <!-- Image preview inside textarea, visible when an image is uploaded -->
           <div *ngIf="imagePreview" class="relative">
             <img [src]="imagePreview" alt="Image preview" class="rounded-lg max-w-full h-auto my-4 shadow"/>
           </div>
           <!-- Upload image and emoji icons -->
-          <div class="flex justify-items-center justify-between py-2">
-            <div class="flex items-center">
+          <div class="flex justify-items-start justify-between py-2">
+            <div class="flex items-start">
               <!-- Image upload icon -->
               <label for="single" class="cursor-pointer hover:text-gray-700">
                 <svg class="border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
