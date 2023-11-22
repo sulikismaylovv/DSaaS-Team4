@@ -24,12 +24,13 @@ import {PostViewComponent} from './modules/post_module/post-view/post-view.compo
 import {CreatePostComponent} from './modules/post_module/create-post/create-post.component';
 import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
 import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
+import { ShopComponent } from './modules/shop/shop.component';
 
 
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent
+        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
