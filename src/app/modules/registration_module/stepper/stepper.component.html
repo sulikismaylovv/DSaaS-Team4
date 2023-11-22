@@ -1,0 +1,32 @@
+<section class="pt-7 flex justify-center gap-4 flex-wrap">
+    <div *ngFor="let step of steps" class="flex items-center gap-4">
+        <div
+                [ngClass]="{
+        'bg-purple-500 border-none': currentStep === step
+      }"
+                class="border font-semibold text-sm text-primary-purple rounded-full w-8 h-8 flex justify-center items-center"
+        >
+            <p
+                    [ngClass]="{
+          'text-primary-marine': currentStep === step
+        }"
+            >
+                {{ step }}
+            </p>
+        </div>
+        <div>
+            <p class="text-sm text-neutral-cool-gray -mb-[0.25rem]">STEP {{ step }}</p>
+            <p class="font-medium text-neutral-magnolia">
+                {{
+                step === 1
+                    ? "YOUR INFO"
+                    : step === 2
+                        ? "CHOOSE FAVOURITE CLUB"
+                        : step === 3
+                            ? "CHOOSE CLUBS YOU WANT TO FOLLOW"
+                            : "SUMMARY"
+                }}
+            </p>
+        </div>
+    </div>
+</section>

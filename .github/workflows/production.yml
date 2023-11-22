@@ -37,10 +37,15 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      # Install dependencies.
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm install
 
       #Build
       - name: Build
         run: npm run ng build --configuration=development
+
 
 
 

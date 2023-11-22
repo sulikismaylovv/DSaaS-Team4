@@ -1,0 +1,137 @@
+<section class="bg-dark-mode text-white flex flex-col min-h-screen " xmlns="http://www.w3.org/1999/html">
+    <div class="flex flex-1 flex-wrap md:flex-nowrap">
+        <!-- Logo at the top-left -->
+        <!-- Add absolute positioning, and set z-index to 10 -->
+
+        <!-- Login -->
+        <aside class="bg-dark-mode text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
+            <!-- Remove z-index to keep it in front -->
+        </aside>
+
+
+        <!-- Main Content and Posts/Matches -->
+        <div class="w-full mx-auto my-0 max-w-screen-xl light-mode-text pl-32 pr-20 h-full">
+            <!-- Main Content -->
+            <div class="h-1/6 pt-7 px-4">
+                <!-- Search Bar -->
+                <div class="flex bg-dark-gray rounded-full p-1">
+                    <form class="flex items-center flex-1 ">
+                        <img class="mx-2 w-5 h-5" src="./assets/search-137.png">
+                        <input class="block w-full border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-400 focus:ring-0 sm:text-xl sm:leading-6" name="searchbar"
+                               placeholder="search"
+                               type="text">
+                    </form>
+                </div>
+                <!-- Links for posts/matches -->
+                <nav class="flex justify-center py-4 space-x-4">
+                    <a (click)="showPostsContent()"
+                       class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">Posts</a>
+                    <a (click)="showMatchesContent()"
+                       class="light-mode-text hover:light-mode-text focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Games</a>
+                </nav>
+                <!-- Add the rest of your main content here -->
+            </div>
+            <!-- Posts and Matches come here -->
+            <div class="w-full mx-auto max-w-screen-xl h-5/6 pt-8">
+                <div *ngIf="showPosts">
+                    <app-posts></app-posts> <!-- Display only if showPosts is true -->
+                </div>
+                <div *ngIf="showMatches">
+                    <app-matches></app-matches> <!-- Display only if showMatches is true -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <aside class="w-96"> <!-- Adjust the width to 1/6 and remove padding classes -->
+            <div class="mb-4">
+                <!--        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>-->
+                <!--        <ul>-->
+                <!--          <li>Setting 1</li>-->
+                <!--        </ul>-->
+
+                <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2"
+                        type="button">
+                    Log In
+                </button>
+                <!-- Next Match -->
+            </div>
+            <div class="bg-dark-gray rounded-lg shadow-md mt-4 p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+                <div class="flex justify-center">
+                    <span class="text-white content-center  text-xl">Next Match</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <img alt="Team 1" class="w-20 h-20 rounded-full mt-2" src="../assets/team1-icon.png">
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <span class="text-white mt-3 text-l">KV Kortrijk</span>
+                    <span class="text-white text-l">Tue, 26 oct 21:00</span>
+                </div>
+            </div>
+            <div class="bg-dark-gray rounded-lg shadow-md mt-5 mb-8 p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+                <div class="flex justify-center">
+                    <span class="text-white content-center text-xl">Remontada League</span>
+                </div>
+                <div class="flex items-center justify-center">
+                    <img alt="Raymontada League" class="w-32 h-32 rounded-full mt-2" src="../assets/img.png">
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <span class="text-white mb-3 mx-4 text-sm">Login Required</span>
+                </div>
+                <div class=" grid grid-cols-1 md:grid-cols-1 gap-1 mx-2">
+                    <!-- Rankings -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                 src="../assets/User-Profile-PNG-Image.png">
+                            <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#1</span>
+                        </div>
+                        <div class="flex-1 items-center ml-3">
+                            <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player One</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                 src="../assets/User-Profile-PNG-Image.png">
+                            <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#2</span>
+                        </div>
+                        <div class="flex-1 items-center ml-3">
+                            <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Two</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                 src="../assets/User-Profile-PNG-Image.png">
+                            <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#3</span>
+                        </div>
+                        <div class="flex-1 items-center ml-3">
+                            <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three</div>
+                        </div>
+                    </div>
+                    <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<style>
+    /* Reset margin and padding for Login and Settings sections */
+    aside {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* CSS for a larger logo at the top */
+    .top-logo {
+        width: 250px; /* Adjust the width as needed for a larger logo */
+        height: 250px; /* Adjust the height as needed for a larger logo */
+        left: 6%; /* Horizontally centered */
+        transform: translateX(-50%); /* Horizontally centered */
+        z-index: 0; /* Behind other content */
+    }
+
+</style>
