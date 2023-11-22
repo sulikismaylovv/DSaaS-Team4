@@ -39,7 +39,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Search</span>
                 </a>
             </li>
-            <li>
+            <li *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -61,7 +61,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">League</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/dashboard">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -72,7 +72,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -83,7 +83,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Points shop</span>
                 </a>
             </li>
-            <li>
+            <li  *ngIf="authService.isAuthenticated$ | async" >
                 <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
@@ -101,8 +101,8 @@
             </li>
         </ul>
 
-        <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-amber-600 dark:border-amber-700">
-            <li>
+        <ul  class="pt-4 mt-4 space-y-2 font-medium border-t border-amber-600 dark:border-amber-700">
+            <li  *ngIf="authService.isAuthenticated$ | async">
                 <button (click)="authService.logout()"
                         class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
