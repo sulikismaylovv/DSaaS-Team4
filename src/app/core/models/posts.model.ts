@@ -28,6 +28,12 @@ export interface Retweet {
     created_at: Date;
 }
 
+export interface PostWithRetweet extends Post {
+  isRetweet?: boolean;
+  retweet_user_id?: string;
+  original_post_id?: number;
+}
+
 export class Posts {
 
 }

@@ -194,12 +194,12 @@ export class AuthService {
         this.isAuthenticatedSubject.next(session !== null);
         this._session = session;
         if (event === 'SIGNED_IN') {
-            //console.log('User signed in:', session?.user);
+            console.log('User signed in:', session?.user);
             // Handle successful sign in
             //await this.router.navigate(['/home']);
 
         } else if (event === 'SIGNED_OUT') {
-            //console.log('User signed out');
+            console.log('User signed out');
             // Handle sign out
             await this.router.navigate(['/login']);
         }
