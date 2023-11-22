@@ -27,24 +27,35 @@
 
       const retweetPromises = (await this.postsService.getRetweets()).map(async r => {
         // Await the asynchronous call to get the retweet content
-        const content = await this.postsService.getRetweetContentByPostId(r.original_post_id);
+        const original = await this.postsService.getRetweetContentByPostId(r.original_post_id);
         return {
           ...r,
           isRetweet: true,
           retweet_user_id: r.retweet_user_id,
           original_post_id: r.original_post_id,
-          content: content, // Now this is a string as expected
+          retweet_content: r.retweet_content,
+          retweet_created_at: r.created_at,
+          content: original.content, // Now this is a string as expected
           // Ensure you provide all necessary properties to match the PostWithRetweet type
-          user_id: r.retweet_user_id, // Assuming the retweet_user_id can be used as the user_id
-          // Other properties as necessary...
+          user_id: original.user_id,
+          created_at: original.created_at,
+          image_url: original.image_url
         };
       });
 
       // Resolve all promises from the map to get the complete array of retweets
       const retweets = await Promise.all(retweetPromises);
-      // Combine them into one array and sort by created_at or any other criteria
-      this.posts = [...posts, ...retweets].sort((a, b) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-      );
+        // Combine posts and retweets into one array
+        this.posts = [...posts, ...retweets];
+
+        // Sort the combined array
+        this.posts.sort((a, b) => {
+            // Ensure the dates are defined, otherwise default to the current date
+            let dateA = a.isRetweet && a.retweet_created_at ? new Date(a.retweet_created_at) : new Date(a.created_at ?? new Date());
+            let dateB = b.isRetweet && b.retweet_created_at ? new Date(b.retweet_created_at) : new Date(b.created_at ?? new Date());
+
+            return dateB.getTime() - dateA.getTime(); // Sort in descending order
+        });
+
     }
   }

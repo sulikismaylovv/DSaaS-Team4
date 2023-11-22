@@ -1,24 +1,40 @@
 <div class="bg-white rounded-lg p-4 shadow-lg mb-4">
-  <div *ngIf="post.isRetweet; else normalPost" class="retweet-indicator">
-    <!-- Retweet-specific content -->
-    <p>This is a retweet by {{ post.retweet_user_id }} of post {{ post.original_post_id }}</p>
-  </div>
-
-  <ng-template #normalPost>
-    <!-- Post Header -->
-    <div class="flex items-center mb-4">
-        <img [src]="this.avatarSafeUrl" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+  <!-- Check if it's a retweet and display retweet info -->
+  <div *ngIf="post.isRetweet" class="retweet-indicator mb-4">
+    <div class="retweet-info">
+      <div class="flex items-center mb-4">
+        <!-- Display retweeter's avatar -->
+        <img [src]="retweetSafeUrl" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
         <div>
-            <p class="font-bold text-md text-gray-800">{{ username }}</p>
-            <p class="text-sm text-black-600">{{ post.created_at | date: 'medium' }}</p>
+          <!-- Display retweeter's username -->
+          <p class="font-bold text-md text-gray-800">{{ usernameRetweet }}</p>
+          <!-- Display retweet date -->
+          <p class="text-sm text-gray-600">{{ post.retweet_created_at | date: 'medium' }}</p>
         </div>
+      </div>
+      <!-- Display retweet content -->
+      <p>{{ post.retweet_content }}</p>
     </div>
-    <!-- Post Content -->
+  </div>
+  <!-- Normal Post Content -->
+  <div class="post-header">
+    <div class="flex items-center mb-4">
+      <!-- Display poster's avatar -->
+      <img [src]="avatarSafeUrl" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <div>
+        <!-- Display poster's username -->
+        <p class="font-bold text-md text-gray-800">{{ username }}</p>
+        <!-- Display post date -->
+        <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+      </div>
+    </div>
+    <!-- Display post content -->
     <p class="text-gray-800 mt-3">{{ post.content }}</p>
-    <!-- Post Image -->
+    <!-- Display post image if exists -->
     <div *ngIf="post.image_url" class="mt-4">
-        <img [src]="this.postSafeUrl" alt="Post image" class="rounded-lg"/>
+      <img [src]="postSafeUrl" alt="Post image" class="rounded-lg"/>
     </div>
+  </div>
     <!-- Interaction buttons like, comment, etc. -->
   <div class="flex items-center space-x-2">
     <!-- Like Button -->
@@ -53,6 +69,5 @@
     </button>
 
   </div>
-  </ng-template>
 </div>
 

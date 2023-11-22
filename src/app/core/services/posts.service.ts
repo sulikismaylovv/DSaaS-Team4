@@ -90,6 +90,19 @@ export class PostsService {
         return data;
     }
 
+    async downLoadImageRetweet(filePath: string): Promise<Blob | null> {
+        const {data, error} = await this.supabase.supabaseClient.storage
+            .from('avatars')
+            .download(filePath);
+
+        if (error) {
+            console.error('Error downloading image:', error);
+            throw error;
+        }
+
+        return data;
+    }
+
     async getPostById(postId: number): Promise<Post> {
         try {
             const {data, error} = await this.supabase.supabaseClient
@@ -245,18 +258,18 @@ export class PostsService {
         }
     }
 
-    async getRetweetContentByPostId(original_post_id: number): Promise<string> {
+    async getRetweetContentByPostId(original_post_id: number): Promise<Post> {
       try{
         const { data: postData, error: postError } = await this.supabase.supabaseClient
           .from('posts')
-          .select('content')
+          .select('*')
           .eq('id', original_post_id)
           .single();
 
         if (postError) throw postError;
         if (!postData) throw new Error('Original post not found');
 
-        return postData.content;
+        return postData;
       }
       catch(error) {
         console.error('Error fetching retweet content:', error);
