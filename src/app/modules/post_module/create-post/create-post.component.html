@@ -26,14 +26,14 @@
           </div>
         </div>
 
-        <div *ngIf="data.originalPost" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg">
+        <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg">
           <p class="text-sm text-gray-600 mb-2">Retweeting:</p>
           <div class="flex items-center">
             <!-- Optionally display the original poster's avatar -->
             <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
             <div>
               <p class="font-semibold">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
-              <p>{{ data.originalPost.content }}</p>
+              <p>{{ data.originalPost?.content }}</p>
             </div>
           </div>
           <!-- Optionally display the original post's image -->

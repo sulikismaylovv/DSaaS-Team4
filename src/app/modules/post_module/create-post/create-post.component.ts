@@ -22,6 +22,7 @@ export class CreatePostComponent implements OnInit {
   originalPostImage?: SafeResourceUrl | undefined; // URL of the original post's image
 
   public uploading: boolean | undefined;
+  public retweet: boolean = false;
 
   @Output() postCreated = new EventEmitter<boolean>(); // Emit a boolean for simplicity
   imagePreview: string | ArrayBuffer | null | undefined;
@@ -39,7 +40,6 @@ export class CreatePostComponent implements OnInit {
 
 
   async ngOnInit() {
-    console.log(this.data.originalPost);
     await this.getProfile();
 
     if (this.profile && this.profile.avatar_url) {
@@ -55,7 +55,9 @@ export class CreatePostComponent implements OnInit {
       }
     }
 
+
     if (this.data.originalPost) {
+      this.retweet= true;
       await this.getUsernameRetweetedById(this.data.originalPost.user_id)
       // Load the avatar of the user who made the original post
       // Assuming you have a method to get a user's avatar by their user_id
@@ -131,6 +133,7 @@ export class CreatePostComponent implements OnInit {
       user_id: user.id,
     };
 
+    // Set the original_post_id if this is a retweet
     if (this.data.originalPost) {
       post.original_post_id = this.data.originalPost.id; // Set the ID of the original post
     }

@@ -27,6 +27,7 @@ import { CommentViewComponent } from './modules/post_module/comment-view/comment
 import { ShopComponent } from './modules/shop/shop.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { inject } from '@vercel/analytics';
 
 
 @NgModule({
