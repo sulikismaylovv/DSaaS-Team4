@@ -16,3 +16,8 @@
   margin-right: 10px; /* Adds space between the profile picture and the username */
 }
 
+.bg-your-color {
+  border-color: #a855f7;
+  border-width: thick;
+}
+

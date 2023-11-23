@@ -16,6 +16,9 @@ import {Session} from "@supabase/supabase-js";
 })
 export class FriendsleagueComponent implements OnInit{
 
+
+  currentUserID: string | undefined; // Add a property to store the current user's ID
+
   leagueIds: number[] = [];
 
   leagues: FriendsLeagueInterface[] = [];
@@ -30,6 +33,10 @@ export class FriendsleagueComponent implements OnInit{
     console.log("Friends League Component");
     this.authService.authChanges((_, session) => (this.session = session));
     try {
+      const user = this.authService.session?.user;
+      this.currentUserID = user?.id;
+      console.log("current user id : ", this.currentUserID);
+
       // Get the league IDs for the current user
       this.leagueIds = await this.friendsLeague.getLeaguesIDForCurrentUser();
 
@@ -57,5 +64,9 @@ export class FriendsleagueComponent implements OnInit{
 
   moveToPreviousLeague() {
     this.currentLeagueIndex = (this.currentLeagueIndex - 1 + this.leagues.length) % this.leagues.length;
+  }
+
+  isCurrentUser(memberUserID: string): boolean {
+    return this.currentUserID === memberUserID;
   }
 }

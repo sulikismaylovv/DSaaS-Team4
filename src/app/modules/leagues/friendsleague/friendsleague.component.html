@@ -11,19 +11,21 @@
   <!-- Carousel Content -->
   <div class="flex flex-col items-center gap-4">
     <!-- Check if current league is defined and has an id -->
-    <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId" >
+    <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId">
       <h2 class="text-2xl font-bold">{{ leagues[currentLeagueIndex].name }}</h2>
       <!-- Ensure league members are defined for the current league -->
       <ng-container *ngIf="leagueMembers[currentLeagueId]">
-        <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index" class="user-card bg-lighter-purple rounded-lg p-4 flex-grow mx-auto max-w-md flex items-center justify-between shadow-lg relative">
-          <!-- Member Details -->
+        <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index"
+             [ngClass]="{'bg-your-color': isCurrentUser(member.userid), 'bg-lighter-purple': !isCurrentUser(member.userid)}"
+             class="user-card rounded-lg p-4 flex-grow mx-auto max-w-md flex items-center justify-between shadow-lg relative">
+        <!-- Member Details -->
           <span class="font-bold ml-4">
-               <span class="user-details">
-                 <span class="rank-number">{{ i + 1 }}</span>
-                 <img src="assets\images\user_profile_img.png"  alt="Profile Picture" class="profile-picture">
-                 <span class="username">{{ member.username }}</span>
-               </span>
+          <span class="user-details">
+            <span class="rank-number">{{ i + 1 }}</span>
+            <img src="assets/images/user_profile_img.png" alt="Profile Picture" class="profile-picture">
+            <span class="username">{{ member.username }}</span>
           </span>
+        </span>
           <!-- Member XP -->
           <div class="flex items-center">
             <span class="xp text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>
@@ -32,4 +34,3 @@
       </ng-container>
     </ng-container>
   </div>
-</div>
