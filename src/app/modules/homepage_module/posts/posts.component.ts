@@ -21,17 +21,9 @@ export class PostsComponent implements OnInit {
         try {
             let posts = await this.postsService.getPosts();
 
-            // Enhance posts with a sortDate field
-            for (let post of posts) {
-                if (post.original_post_id) {
-                    post.created_at = await this.getOriginalPostDate(post.original_post_id);
-                } else {
-                    post.created_at = new Date(post.created_at);
-                }
-            }
-
             // Sort posts based on sortDate
-            this.posts = posts.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+            this.posts = posts.sort((a, b) =>
+                new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         } catch (error) {
             console.error('Error loading posts:', error);
         }
