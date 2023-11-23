@@ -1,22 +1,23 @@
 <div class="bg-dark-mode min-h-screen p-6">
   <!-- Tabbed Navigation -->
   <div class="tabs bg-dark-mode text-center p-4">
-    <button (click)="currentView = 'global'" [ngClass]="{'active': currentView === 'global'}" class="tab text-2xl px-6 py-3 m-2">
-      Global League
-    </button>
     <button (click)="currentView = 'friends'" [ngClass]="{'active': currentView === 'friends'}" class="tab text-2xl px-6 py-3 m-2">
       Friends League
+    </button>
+    <button (click)="currentView = 'regional'" [ngClass]="{'active': currentView === 'regional'}" class="tab text-2xl px-6 py-3 m-2">
+      Regional League
     </button>
   </div>
 
   <!-- Content for Global League -->
-  <div *ngIf="currentView === 'global'">
-    <app-league></app-league>
+  <div *ngIf="currentView === 'friends'">
+    <app-friendsleague></app-friendsleague>
   </div>
 
   <!-- Content for Friends League -->
-  <div *ngIf="currentView === 'friends'">
+  <div *ngIf="currentView === 'regional'">
 <!--    <app-createleague></app-createleague> &lt;!&ndash; Component for Friends League &ndash;&gt;-->
-    <app-friendsleague></app-friendsleague>
+    <app-league></app-league>
+
   </div>
 </div>

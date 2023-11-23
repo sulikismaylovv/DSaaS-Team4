@@ -8,7 +8,7 @@ import {Session} from "@supabase/supabase-js";
   styleUrls: ['./globalleague.component.css']
 })
 export class GloballeagueComponent implements OnInit {
-  currentView: 'global' | 'friends' = 'global';
+  currentView: 'regional' | 'friends' = 'friends';
   private session: Session | null | undefined;
 
   constructor(
