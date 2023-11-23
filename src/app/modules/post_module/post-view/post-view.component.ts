@@ -1,6 +1,6 @@
 // posts-view.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {Like, PostWithRetweet} from "../../../core/models/posts.model";
+import {Like, Post  } from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
@@ -13,13 +13,15 @@ import {Router} from "@angular/router";
     styleUrls: ['./post-view.component.css']
 })
 export class PostViewComponent implements OnInit {
-    @Input() post!: PostWithRetweet;
+    @Input() post!: Post
+    originalPost?: Post;
+    originalPostImageUrl?: SafeResourceUrl;
     loading = false;
     profile: Profile | undefined;
-    usernameRetweet: string | undefined;
     username: string | undefined;
+    usernameRetweeted: string | undefined;
     avatarSafeUrl: SafeResourceUrl | undefined;
-    retweetSafeUrl: SafeResourceUrl | undefined;
+    retweetAvatarSafeUrl: SafeResourceUrl | undefined;
     postSafeUrl: SafeResourceUrl | undefined;
     likeCounts: { [key: number]: number } = {}; // Object to hold the like counts for each post
     commentCounts: { [key: number]: number } = {}; // Object to hold the comment counts for each post
@@ -39,55 +41,72 @@ export class PostViewComponent implements OnInit {
         await this.getProfile();
         await this.getUsernameById(this.post.user_id);
 
-
-        if (this.post && this.post.retweet_user_id) {
-            await this.getRetweetUsernameById(this.post.retweet_user_id);
-            console.log(this.post);
-            console.log('Retweet Avatar URL:', await this.getAvatarUrlByID(this.post.retweet_user_id));
-
-
-            try {
-                const data = await this.postService.downLoadImageRetweet(await this.getAvatarUrlByID(this.post.retweet_user_id));
-                if (data instanceof Blob) {
-                    this.retweetSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-                }
-            } catch (error) {
-                console.error('Error fetching retweet avatar image:', error);
-            }
-
+        // Load avatar image
+        if (this.post.user_id) {
+            await this.loadAvatarImage(this.post.user_id);
         }
 
-        if (this.post && this.post.user_id) {
-            try {
-                const {data} = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.post.user_id))
-                if (data instanceof Blob) {
-                    this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error('Error downloading image: ', error.message)
-                }
-            }
+        // Load post image
+        if (this.post.image_url) {
+            await this.loadPostImage(this.post.image_url);
         }
 
-        if (this.post && this.post.user_id && this.post.image_url) {
-            try {
-                const data = await this.postService.downLoadImage(this.post.image_url);
-                if (data instanceof Blob) {
-                    this.postSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error('Error downloading image: ', error.message)
-                }
-            }
+        if (this.post.original_post_id) {
+            console.log('Original post ID:', this.post.original_post_id);
+            await this.loadOriginalPost(this.post.original_post_id);
         }
 
-
+        // Load interactions
         await this.checkIfLiked(this.post.id);
         await this.loadLikeCount(this.post.id);
         await this.loadCommentCount(this.post.id);
+    }
 
+    private async loadOriginalPost(originalPostId: number) {
+        try {
+            this.originalPost = await this.postService.getOriginalPost(originalPostId)
+            console.log('Original post:', this.originalPost);
+            if (this.originalPost.image_url) {
+                const data = await this.postService.downLoadImage(this.originalPost.image_url);
+                if (data instanceof Blob) {
+                    this.originalPostImageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                }
+            }
+
+
+            if(this.originalPost.user_id){
+                await this.getUsernameRetweetedById(this.originalPost.user_id)
+                const { data } = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.originalPost.user_id));
+                if (data instanceof Blob) {
+                    this.retweetAvatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                }
+            }
+        } catch (error) {
+            console.error('Error loading original post:', error);
+        }
+    }
+
+
+    private async loadAvatarImage(userId: string) {
+        try {
+            const { data } = await this.authService.downLoadImage(await this.getAvatarUrlByID(userId));
+            if (data instanceof Blob) {
+                this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+            }
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    }
+
+    private async loadPostImage(imageUrl: string) {
+        try {
+            const data = await this.postService.downLoadImage(imageUrl);
+            if (data instanceof Blob) {
+                this.postSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+            }
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
     }
 
     async getProfile() {
@@ -245,14 +264,14 @@ export class PostViewComponent implements OnInit {
         });
     }
 
-    async getRetweetUsernameById(id: string | undefined): Promise<any> {
-        if (id === undefined) throw new Error('Post ID is undefined');
+    async getUsernameRetweetedById(id: string): Promise<any> {
         this.userService.getUsernameByID(id).then(username => {
-            this.usernameRetweet = username;
+            this.usernameRetweeted = username;
         }).catch(error => {
             console.error('Could not fetch username', error);
         });
     }
+
 
     async getAvatarUrlByID(id: string) {
         return this.userService.getUserByID(id).then(user => {

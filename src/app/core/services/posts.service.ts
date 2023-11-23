@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Comment, Like, Post, Retweet} from "../models/posts.model";
+import {Comment, Like, Post} from "../models/posts.model";
 import {SupabaseService} from "./supabase.service";
 
 @Injectable({
@@ -228,54 +228,22 @@ export class PostsService {
         }
     }
 
-    // Retweet a post
-    async retweetPost(retweet: Retweet): Promise<Retweet> {
+    async getOriginalPost(original_post_id: number): Promise<Post> {
         try {
             const {data, error} = await this.supabase.supabaseClient
-                .from('retweets')
-                .upsert([retweet])
-                .single();
+                .from('posts')
+                .select('*')
+                .match({id: original_post_id});
 
             if (error) throw error;
-            return data;
+            return data[0];
         } catch (error) {
-            console.error('Error retweeting post:', error);
+            console.error('Error fetching original post:', error);
             throw error;
         }
     }
 
-    async getRetweets(): Promise<Retweet[]> {
-        try {
-            const {data, error} = await this.supabase.supabaseClient
-                .from('retweets')
-                .select('*');
 
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error('Error fetching retweets:', error);
-            throw error;
-        }
-    }
-
-    async getRetweetContentByPostId(original_post_id: number): Promise<Post> {
-      try{
-        const { data: postData, error: postError } = await this.supabase.supabaseClient
-          .from('posts')
-          .select('*')
-          .eq('id', original_post_id)
-          .single();
-
-        if (postError) throw postError;
-        if (!postData) throw new Error('Original post not found');
-
-        return postData;
-      }
-      catch(error) {
-        console.error('Error fetching retweet content:', error);
-        throw error;
-      }
-    }
 
     // Additional methods can be implemented as needed to handle other post interactions.
 }
