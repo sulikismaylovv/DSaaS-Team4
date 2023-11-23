@@ -25,6 +25,8 @@ import {CreatePostComponent} from './modules/post_module/create-post/create-post
 import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
 import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
 import { ShopComponent } from './modules/shop/shop.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { ShopComponent } from './modules/shop/shop.component';
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent
     ],
     imports: [
-        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
+        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage, MatDialogModule, BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent],

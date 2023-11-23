@@ -243,6 +243,22 @@ export class PostsService {
         }
     }
 
+    async getNumberOfRetweets(postId: number): Promise<number> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('posts')
+                .select('id', { count: 'exact' }) // Use the count parameter for exact counts
+                .match({original_post_id: postId});
+
+            if (error) throw error;
+            // The count property on the result will have the number of matched records
+            return data.length; // Or use data.count if you've enabled count in select
+        } catch (error) {
+            console.error('Error getting number of retweets:', error);
+            throw error;
+        }
+    }
+
 
 
     // Additional methods can be implemented as needed to handle other post interactions.

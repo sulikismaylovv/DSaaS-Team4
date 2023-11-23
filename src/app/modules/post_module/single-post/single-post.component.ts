@@ -4,6 +4,7 @@ import { PostsService } from "../../../core/services/posts.service";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
+import {SupabaseService} from "../../../core/services/supabase.service";
 
 @Component({
   selector: 'app-single-post',
@@ -22,7 +23,23 @@ export class SinglePostComponent implements OnInit {
     private readonly postsService: PostsService,
     private readonly authService: AuthService,
     private readonly sanitizer: DomSanitizer,
-  ) {}
+    private readonly supabase: SupabaseService
+  ) {
+    this.supabase.supabaseClient
+      .channel('realtime-comments')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'comments',
+        },
+        (payload) => {
+          this.loadComments();
+        }
+      )
+      .subscribe();
+  }
 
   async ngOnInit(): Promise<void> {
     const postId = this.route.snapshot.params['id'];
@@ -95,7 +112,6 @@ export class SinglePostComponent implements OnInit {
       console.log('Created comment:', createdComment);
       this.comments.push(createdComment);
       this.commentContent = ''; // Clear the input after posting
-      window.location.reload();
     } catch (error) {
       console.error('Error posting comment:', error);
       alert('There was an error posting your comment.');

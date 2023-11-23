@@ -26,8 +26,22 @@
           </div>
         </div>
 
+        <div *ngIf="data.originalPost" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg">
+          <p class="text-sm text-gray-600 mb-2">Retweeting:</p>
+          <div class="flex items-center">
+            <!-- Optionally display the original poster's avatar -->
+            <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
+            <div>
+              <p class="font-semibold">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
+              <p>{{ data.originalPost.content }}</p>
+            </div>
+          </div>
+          <!-- Optionally display the original post's image -->
+          <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
+        </div>
+
         <div class="buttons flex justify-end mt-4">
-          <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="cancelPost()">Cancel</div>
+          <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="resetForm()">Cancel</div>
           <button class="btn border border-blue-500 p-1 px-4 font-semibold cursor-pointer text-white bg-blue-500 hover:bg-blue-700 ml-2" type="submit">
             Post
           </button>

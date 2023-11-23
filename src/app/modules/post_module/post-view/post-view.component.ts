@@ -6,6 +6,8 @@ import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {PostsService} from "../../../core/services/posts.service";
 import {Router} from "@angular/router";
+import {CreatePostComponent} from "../create-post/create-post.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-post-view',
@@ -25,6 +27,7 @@ export class PostViewComponent implements OnInit {
     postSafeUrl: SafeResourceUrl | undefined;
     likeCounts: { [key: number]: number } = {}; // Object to hold the like counts for each post
     commentCounts: { [key: number]: number } = {}; // Object to hold the comment counts for each post
+    retweetCounts: { [key: number]: number } = {}; // Object to hold the retweet counts for each post
     //liking a post
     likedPosts: Set<number> = new Set(); // Holds the IDs of liked posts
 
@@ -34,6 +37,8 @@ export class PostViewComponent implements OnInit {
         private readonly postService: PostsService,
         private readonly router: Router,
         private sanitizer: DomSanitizer,
+        public dialog: MatDialog
+
     ) {
     }
 
@@ -60,6 +65,7 @@ export class PostViewComponent implements OnInit {
         await this.checkIfLiked(this.post.id);
         await this.loadLikeCount(this.post.id);
         await this.loadCommentCount(this.post.id);
+        await this.loadRetweetCount(this.post.id);
     }
 
     private async loadOriginalPost(originalPostId: number) {
@@ -179,10 +185,8 @@ export class PostViewComponent implements OnInit {
                 user_id: user.id,
                 created_at: new Date(),
             };
-
-            const likedPost = await this.postService.likePost(like);
-
-            // Optionally, you can emit an event or call a method to update the UI accordingly.
+            await this.postService.likePost(like);
+// Optionally, you can emit an event or call a method to update the UI accordingly.
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error liking post:', error.message);
@@ -206,10 +210,8 @@ export class PostViewComponent implements OnInit {
                 user_id: user.id,
                 created_at: new Date(),
             };
-
-            const likedPost = await this.postService.unlikePost(like);
-
-            // Optionally, you can emit an event or call a method to update the UI accordingly.
+            await this.postService.unlikePost(like);
+// Optionally, you can emit an event or call a method to update the UI accordingly.
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error liking post:', error.message);
@@ -252,6 +254,28 @@ export class PostViewComponent implements OnInit {
     async commentPost(postId: number | undefined) {
         if (postId === undefined) throw new Error('Post ID is undefined');
         await this.router.navigate(['/post', postId]); // Assuming '/post/:id' is the route for the single post view
+    }
+
+    //Retweet Logic
+    async loadRetweetCount(postId: number | undefined) {
+        if (postId === undefined) throw new Error('Post ID is undefined');
+        this.retweetCounts[postId] = await this.postService.getNumberOfRetweets(postId);
+    }
+
+    getRetweetCount(postId: number | undefined): number {
+        if (postId === undefined) throw new Error('Post ID is undefined');
+        return this.retweetCounts[postId] || 0;
+    }
+
+    openCreatePostModal(): void {
+        const dialogRef = this.dialog.open(CreatePostComponent, {
+            width: '600px',
+            data: {originalPost: this.post}
+        });
+
+        dialogRef.afterClosed().subscribe(() => {
+            console.log('The dialog was closed');
+        });
     }
 
 
