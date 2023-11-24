@@ -28,7 +28,7 @@ import { ShopComponent } from './modules/shop/shop.component';
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
 import {FriendsleagueComponent} from "./modules/leagues/friendsleague/friendsleague.component";
 import {LeagueComponent} from "./modules/leagues/league/league.component";
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -38,7 +38,7 @@ import {LeagueComponent} from "./modules/leagues/league/league.component";
       LeagueComponent
     ],
     imports: [
-        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
+        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule
     ],
     providers: [],
     bootstrap: [AppComponent],
