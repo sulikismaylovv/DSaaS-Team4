@@ -1,0 +1,16 @@
+.tab {
+  display: inline-block;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: white;
+  outline: none;
+  margin-right: 10px; /* Add some space between the tabs */
+}
+
+.active {
+  border-bottom: 2px solid white;
+}
+
+/* Add more styles here for active/inactive tabs as needed */

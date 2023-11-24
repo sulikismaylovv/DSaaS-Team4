@@ -44,6 +44,10 @@ export class HomeComponent implements OnInit {
         return this.authService.isAuthenticated();
     }
 
+  async navigateToLogin() {
+    await this.router.navigateByUrl('/login'); // Adjust the path as necessary for your app's route configuration
+  }
+
     showPostsContent() {
         this.showPosts = true;
         this.showMatches = false;

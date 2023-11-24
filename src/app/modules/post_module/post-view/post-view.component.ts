@@ -15,8 +15,10 @@ import {MatDialog} from "@angular/material/dialog";
     styleUrls: ['./post-view.component.css']
 })
 export class PostViewComponent implements OnInit {
-    @Input() post!: Post
-    originalPost?: Post;
+    @Input() post!: Post;
+    @Input() originalPost?: Post;
+    @Input() clickable: boolean = true; // New input property
+
     originalPostImageUrl?: SafeResourceUrl;
     loading = false;
     profile: Profile | undefined;
@@ -43,6 +45,7 @@ export class PostViewComponent implements OnInit {
     }
 
     async ngOnInit() {
+        // Load profile
         await this.getProfile();
         await this.getUsernameById(this.post.user_id);
 

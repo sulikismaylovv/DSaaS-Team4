@@ -6,6 +6,7 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-posts',
@@ -20,8 +21,9 @@ export class PostsComponent implements OnInit {
     constructor(
         private readonly postsService: PostsService,
         private readonly supabase: SupabaseService,
-        private readonly authService: AuthService,
+        protected readonly authService: AuthService,
         private readonly sanitizer: DomSanitizer,
+        protected readonly router: Router,
         public dialog: MatDialog
 
     ) {
@@ -102,6 +104,18 @@ export class PostsComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
         });
+    }
+
+  // Function to handle post click
+  async onPostClick() {
+    // Check if the user is authenticated
+    this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
+        if (!isAuthenticated) {
+            // If not authenticated, redirect to login
+            await this.router.navigate(['/login']);
+        }
+        // If authenticated, you can perform other actions, such as opening the post details
+    });
     }
 
 

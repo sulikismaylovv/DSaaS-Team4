@@ -1,0 +1,23 @@
+.user-details {
+  display: flex;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.rank-number {
+  margin-right: 10px; /* Adds space between the rank number and the profile picture */
+}
+
+.profile-picture {
+  width: 40px; /* Adjust as needed */
+  height: 40px; /* Adjust as needed */
+  border-radius: 50%; /* Makes the picture round */
+  object-fit: cover; /* Ensures the image covers the area properly */
+  margin-right: 10px; /* Adds space between the profile picture and the username */
+}
+
+.bg-your-color {
+  border-color: #a855f7;
+  border-width: thick;
+}
+

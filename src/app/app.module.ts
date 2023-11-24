@@ -17,6 +17,7 @@ import {GameComponent} from './modules/game_module/game.component';
 import {HttpClientModule} from '@angular/common/http'
 import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
+import { LineupComponent } from './modules/game_module/lineup/lineup.component';
 import {FooterComponent} from './shared/footer/footer.component';
 import {NavigationComponent} from './shared/navigation/navigation.component';
 import {AvatarComponent} from './modules/account_module/avatar/avatar.component';
@@ -25,20 +26,24 @@ import {CreatePostComponent} from './modules/post_module/create-post/create-post
 import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
 import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
 import { ShopComponent } from './modules/shop/shop.component';
+import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
+import {FriendsleagueComponent} from "./modules/leagues/friendsleague/friendsleague.component";
+import {LeagueComponent} from "./modules/leagues/league/league.component";
 import { MatDialogModule } from '@angular/material/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { inject } from '@vercel/analytics';
-import {SettingsComponent} from "./modules/settings/settings.component";
+import { ProfileComponent } from './modules/profile_module/profile_page/profile.component';
+import { CommonComponent } from './modules/profile_module/common/common.component';
+import { UserComponent } from './modules/profile_module/user/user.component';
 
 
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,
-      SettingsComponent
+        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
+      PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
+      LeagueComponent, LineupComponent,  ProfileComponent, CommonComponent, UserComponent
     ],
     imports: [
-        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage, MatDialogModule, BrowserAnimationsModule
+        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule
     ],
     providers: [],
     bootstrap: [AppComponent],

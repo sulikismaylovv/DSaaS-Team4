@@ -1,0 +1,9 @@
+.post-card {
+  background: linear-gradient(135deg, #ce0fd5, #3f25a2); /* Pinkish-purple gradient for card background */
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;}
+
+.post-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
