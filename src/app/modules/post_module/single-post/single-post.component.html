@@ -1,8 +1,15 @@
+<div *ngIf="loading; else loadedContent">
+  Loading...
+</div>
+<ng-template #loadedContent>
+
+
+
 <div class="min-h-screen bg-gray-100">
   <div class="container mx-auto flex flex-col items-center py-6">
     <!-- Display the post content -->
     <div class="w-full max-w-2xl px-4 mb-4">
-      <app-post-view [post]="post"></app-post-view>
+      <app-post-view [post]="post" [originalPost]="originalPost"></app-post-view>
     </div>
 
     <!-- Comment Field -->
@@ -32,3 +39,4 @@
     </div>
   </div>
 </div>
+</ng-template>
