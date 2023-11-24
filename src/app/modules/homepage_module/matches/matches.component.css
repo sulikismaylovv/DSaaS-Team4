@@ -1,0 +1,127 @@
+/* Hide the vertical scroll bar */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* Optionally, you can change the scroll bar background color to match your background */
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Optionally, you can change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* For Firefox */
+.overflow-y-auto.scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* For Firefox, change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto.scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+/* Hide the vertical scroll bar */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* Optionally, you can change the scroll bar background color to match your background */
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Optionally, you can change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* For Firefox */
+.overflow-y-auto.scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* For Firefox, change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto.scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+/* Hide the vertical scroll bar */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* Optionally, you can change the scroll bar background color to match your background */
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Optionally, you can change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* For Firefox */
+.overflow-y-auto.scrollbar {
+    width: 0.25rem; /* Adjust the width to make it narrower */
+}
+
+/* For Firefox, change the scroll bar thumb (the draggable part) color to match your background */
+.overflow-y-auto.scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+
+/* Card Style */
+.match-card {
+    background: linear-gradient(135deg, #ce0fd5, #3f25a2); /* Pinkish-purple gradient for card background */
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}

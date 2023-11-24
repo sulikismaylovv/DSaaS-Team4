@@ -1,0 +1,47 @@
+<head>
+</head>
+
+<body>
+
+<div class="rankings-section bg-dark-mode rounded-lg w-full max-w-md mx-auto text-white">
+  <!-- Carousel Navigation Controls -->
+  <div class="flex justify-between w-full px-4 py-2">
+    <button (click)="moveToPreviousLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+      &#8592; Previous
+    </button>
+    <button (click)="moveToNextLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+      Next &#8594;
+    </button>
+  </div>
+  <!-- Carousel Content -->
+  <div class="flex flex-col items-center gap-4">
+    <!-- Check if current league is defined and has an id -->
+    <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId">
+      <h2 class="text-2xl font-bold">{{ leagues[currentLeagueIndex].name }}</h2>
+      <!-- Ensure league members are defined for the current league -->
+      <ng-container *ngIf="leagueMembers[currentLeagueId]">
+        <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index"
+             [ngClass]="{'bg-your-color': isCurrentUser(member.userid), 'bg-lighter-purple': !isCurrentUser(member.userid)}" class="user-card rounded-lg p-4 flex-grow mx-auto max-w-md flex items-center justify-between shadow-lg relative">
+          <!-- Member Details -->
+          <span class="text-white rounded px-4 py-2 flex-grow">
+            <span class="user-details"><span *ngIf="i > 2" class="rank-number">{{ i + 1 }}</span>
+            <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
+            <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
+            <span *ngIf="i === 2" class="text-bronze mr-2">🥉</span>
+            <img src="assets/images/user_profile_img.png" alt="Profile Picture" class="profile-picture">
+            <span class="username">{{ member.username }}</span>
+            </span>
+          </span>
+          <!-- Member XP -->
+          <div class="flex items-center">
+            <span class="xp text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    </div>
+  </div>
+<script src="https://cdn.counter.dev/script.js" data-id="64984b1c-9e8e-4110-9984-9708267b5d2d" data-utcoffset="1"></script>
+
+</body>
+
