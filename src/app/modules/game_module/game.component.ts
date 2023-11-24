@@ -26,10 +26,10 @@ export class GameComponent implements OnInit {
     currentFixture: Fixture = {} as Fixture;
 
     constructor(
-      public themeService: ThemeService,
-      public apiService: ApiService,
-      private datePipe: DatePipe,
-      public navbarService: NavbarService) {
+        public themeService: ThemeService,
+        public apiService: ApiService,
+        private datePipe: DatePipe,
+        public navbarService: NavbarService) {
         this.currentDate = new Date("2023-11-12"); //use this for today's date
         this.stringDate = this.currentDate.toISOString().split('T')[0];
     }
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
     ngOnInit(): void {
         // this.setWeek(new Date());
         // this.fetchFixturesForWeek();
-      this.navbarService.setShowNavbar(true);
+        this.navbarService.setShowNavbar(true);
         this.parseFixtures(144);
     }
 

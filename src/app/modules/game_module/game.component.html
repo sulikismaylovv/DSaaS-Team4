@@ -1,262 +1,308 @@
 <section class="bg-light-mode dark:bg-dark-mode">
 
-  <div class="flex p-4 sm:ml-64">
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[950px] ">
-      <div class="grid grid-rows-[auto_1fr_auto_auto] gap-4">
-        <!--First_widget-->
-        <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <div class="flex items-start justify-between">
-            <button type="button" class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-              </svg>
-            </button>
-            <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
-              <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
-            </div>
-          </div>
-          <div class="flex items-start justify-between p-4">
-            <div class="flex items-center">
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-16 h-16">
-              <p class="ml-2 text-white"> Royal Antwerp Football Club  </p>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="text-white font-bold">5:30PM</p>
-              <p class="text-gray-400 font-semibold">Today</p>
-            </div>
-            <div class="flex items-center">
-              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-16 h-16">
-            </div>
-          </div>
-        </div>
-        <!--Second widget-->
-        <div class="h-full rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <p class="text-2xl mt-2 ml-2 text-white font-bold">Place your bets!</p>
-          <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
-          <div class="flex items-center justify-center pb-3"><!--Teams-->
-            <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
-              <p class="text-white"> Royal Antwerp Football Club </p>
-              <p class="text-gray-400 font-semibold"> 45% </p>
-            </div>
-            <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-24 h-24" [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
-              <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club  </p>
-              <p class="text-gray-400 font-semibold"> 55% </p>
-            </div>
-          </div>
-          <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent" [class.pointer-events-none]="!showContent">
-            <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
-            <form class="flex items-start mt-2 ml-2 mb-4">
-              <input type="text" id="betPoints" class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="I'm hungry" required>
-              <button type="submit" data-modal-target= "popup-modal" data-modal-toggle="popup-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
-            </form>
-          </div>
-          <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                  </svg>
-                  <span class="sr-only">Close modal</span>
-                </button>
-                <div class="p-4 md:p-5 text-center">
-                  <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                  </svg>
-                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Congratulations! May the force be with you </h3>
-                  <button data-modal-hide="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                    Amen
-                  </button>
-                  <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What have I done?</button>
+    <div class="flex p-4 sm:ml-64">
+        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[950px] ">
+            <div class="grid grid-rows-[auto_1fr_auto_auto] gap-4">
+                <!--First_widget-->
+                <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <div class="flex items-start justify-between">
+                        <button class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                type="button">
+                            <svg aria-hidden="true" class="w-[10px] h-[10px] text-white"
+                                 fill="none" viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 5H1m0 0 4 4M1 5l4-4" stroke="currentColor" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
+                            <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start justify-between p-4">
+                        <div class="flex items-center">
+                            <img alt="bla bla" class="w-16 h-16"
+                                 src="assets/logos/Royal_Antwerp_Football_Club_logo.svg">
+                            <p class="ml-2 text-white"> Royal Antwerp Football Club </p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <p class="text-white font-bold">5:30PM</p>
+                            <p class="text-gray-400 font-semibold">Today</p>
+                        </div>
+                        <div class="flex items-center">
+                            <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club </p>
+                            <img alt="bla bla" class="w-16 h-16"
+                                 src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg">
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <!--Second widget-->
+                <div class="h-full rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <p class="text-2xl mt-2 ml-2 text-white font-bold">Place your bets!</p>
+                    <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
+                    <div class="flex items-center justify-center pb-3"><!--Teams-->
+                        <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
+                            <img (click)="toggleContent('team1')" [class.opacity-50]="clickedImage && clickedImage!=='team1'" alt="bla bla"
+                                 class="w-24 h-24"
+                                 src="assets/logos/Royal_Antwerp_Football_Club_logo.svg">
+                            <p class="text-white"> Royal Antwerp Football Club </p>
+                            <p class="text-gray-400 font-semibold"> 45% </p>
+                        </div>
+                        <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
+                            <img (click)="toggleContent('team2')" [class.opacity-50]="clickedImage && clickedImage!=='team2'"
+                                 alt="bla bla" class="w-24 h-24"
+                                 src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg">
+                            <p class="truncate ml-2 text-white "> Royal Charleroi Sproting Club </p>
+                            <p class="text-gray-400 font-semibold"> 55% </p>
+                        </div>
+                    </div>
+                    <div [class.opacity-100]="showContent" [class.opacity-50]="!showContent"
+                         [class.pointer-events-none]="!showContent">
+                        <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
+                        <form class="flex items-start mt-2 ml-2 mb-4">
+                            <input class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="betPoints"
+                                   placeholder="I'm hungry"
+                                   required type="text">
+                            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                                    type="submit">
+                                Bet
+                            </button>
+                        </form>
+                    </div>
+                    <div class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" id="popup-modal"
+                         tabindex="-1">
+                        <div class="relative p-4 w-full max-w-md max-h-full">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <button class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-hide="popup-modal"
+                                        type="button">
+                                    <svg aria-hidden="true" class="w-3 h-3" fill="none"
+                                         viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" stroke="currentColor" stroke-linecap="round"
+                                              stroke-linejoin="round" stroke-width="2"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-4 md:p-5 text-center">
+                                    <svg aria-hidden="true"
+                                         class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" fill="none" viewBox="0 0 20 20"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 5.917 5.724 10.5 15 1.5" stroke="currentColor" stroke-linecap="round"
+                                              stroke-linejoin="round" stroke-width="2"/>
+                                    </svg>
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                        Congratulations! May the force be with you </h3>
+                                    <button class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2" data-modal-hide="popup-modal"
+                                            type="button">
+                                        Amen
+                                    </button>
+                                    <button class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" data-modal-hide="popup-modal"
+                                            type="button">
+                                        What have I done?
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Third widget-->
+                <!--lineup top-->
+                <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <div class="flex items-center justify-between p-4">
+                        <div class="flex items-center">
+                            <img alt="bla bla" class="w-16 h-16"
+                                 src="assets/logos/Royal_Antwerp_Football_Club_logo.svg">
+                            <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
+                                <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+                            </div>
+                        </div>
+                        <p class="text-white font-bold">Predicted lineup</p>
+                        <div class="flex items-center">
+                            <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
+                                <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+                            </div>
+                            <img alt="bla bla" class="w-16 h-16"
+                                 src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg">
+                        </div>
+                    </div>
+                    <!--Football field-->
+                    <img alt="image description" class="h-96 w-96 scale-150" src="assets/images/football_field.svg">
+                    <!--Coaches-->
+                    <div class="flex items-center justify-between p-4">
+                        <div class="flex items-center">
+                            <img alt="bla bla"
+                                 class="rounded-full w-16 h-16" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg">
+                            <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
+                        </div>
+                        <p class="text-white font-bold">Coaches</p>
+                        <div class="flex items-center">
+                            <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
+                            <img alt="bla bla"
+                                 class="rounded-full w-16 h-16" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="h-48 rounded bg-light-mode dark:bg-light-mode-text flex flex-col justify-between">
+                    <div class="ml-2 mt-2">
+                        <p class="text-white font-bold">Live-chat</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center">
+                        <p class="text-center text-white font-bold text-5xl">Coming soon</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <!--Third widget-->
-        <!--lineup top-->
-        <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <div class="flex items-center justify-between p-4">
-            <div class="flex items-center">
-              <img src="assets/logos/Royal_Antwerp_Football_Club_logo.svg" alt="bla bla" class="w-16 h-16">
-              <div  class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
-                <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
-              </div>
-            </div>
-            <p class="text-white font-bold">Predicted lineup</p>
-            <div class="flex items-center">
-              <div  class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
-                <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
-              </div>
-              <img src="assets/logos/Royal_Charleroi_Sporting_Club_logo.svg" alt="bla bla" class="w-16 h-16">
-            </div>
-          </div>
-          <!--Football field-->
-          <img class="h-96 w-96 scale-150" src="assets/images/football_field.svg" alt="image description">
-          <!--Coaches-->
-          <div class="flex items-center justify-between p-4">
-            <div class="flex items-center">
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg" alt="bla bla" class="rounded-full w-16 h-16">
-              <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
-            </div>
-            <p class="text-white font-bold">Coaches</p>
-            <div class="flex items-center">
-              <p class="ml-2 mr-2 rounded font-semibold text-white">Bob</p>
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg" alt="bla bla" class="rounded-full w-16 h-16">
-            </div>
-          </div>
-        </div>
-        <div class="h-48 rounded bg-light-mode dark:bg-light-mode-text flex flex-col justify-between">
-          <div class="ml-2 mt-2">
-            <p class="text-white font-bold">Live-chat</p>
-          </div>
-          <div class="flex-grow flex items-center justify-center">
-            <p class="text-center text-white font-bold text-5xl">Coming soon</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
-      <div class="pt-4 grid grid-cols-1 gap-4">
-        <!--Points widgets-->
-        <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <p class="text-3xl font-bold text-white ml-2">Your Points</p>
-          <p class="text-xl font-bold text-white ml-4">1.234 pts</p>
-          <p class="text-center text-gray-400">Visit the store to explore more ways of spending points!</p>
-          <div class="flex justify-center">
-            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To the shop</button>
-          </div>
-        </div>
-        <!--League standing-->
-        <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <div class="flex justify-center">
-            <span class="text-white font-semibold mt-3 text-2xl">Remontada League</span>
-          </div>
-          <div class ="flex items-center justify-center">
-            <img src="assets/images/cup.png" alt="Remontada League" class="w-32 h-32 rounded-full mt-2 mb-2 ">
-          </div>
-          <div class="mb-3 grid grid-cols-1 md:grid-cols-1 gap-4 mx-4">
-            <!-- Rankings -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
-              <div class="flex items-center">
-                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#1</span>
-                <img src="assets/images/user_profile_img.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
-              </div>
-              <div class="flex-1 items-center ml-2">
-                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player One</div>
-              </div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
-              <div class="flex items-center">
-                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#2</span>
-                <img src="assets/images/user_profile_img.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
-              </div>
-              <div class="flex-1 items-center ml-2">
-                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Two</div>
-              </div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
-              <div class="flex items-center">
-                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#3</span>
-                <img src="assets/images/user_profile_img.png" alt="Team 1" class="w-6 h-6 rounded-full object-cover">
-              </div>
-              <div class="flex-1 items-center ml-2">
-                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three</div>
-              </div>
-            </div>
-            <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
-          </div>
-        </div>
-        <!--Belgian league-->
-        <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
-          <div class="flex items-center justify-between">
-            <div class="flex flex-col items-start ml-4">
-              <p class="text-white text-2xl font-bold"> Belgian League</p>
-              <p class="text-black text-xl font-semibold"> Belgium</p>
-            </div>
-            <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa" class="ml-4 mr-4 mt-1 w-16 h-16"/>
-          </div>
-            <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="px-6 py-3">
-                  #
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Team
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  PL
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  GD
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  PTS
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  1"
-                </th>
-                <td class="px-6 py-4">
-                  A.S OOST...
-                </td>
-                <td class="px-6 py-4">
-                  10
-                </td>
-                <td class="px-6 py-4">
-                  20
-                </td>
-                <td class="px-6 py-4">
-                  100
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  1"
-                </th>
-                <td class="px-6 py-4">
-                  A.S OOST...
-                </td>
-                <td class="px-6 py-4">
-                  10
-                </td>
-                <td class="px-6 py-4">
-                  20
-                </td>
-                <td class="px-6 py-4">
-                  100
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  1"
-                </th>
-                <td class="px-6 py-4">
-                  A.S OOST...
-                </td>
-                <td class="px-6 py-4">
-                  10
-                </td>
-                <td class="px-6 py-4">
-                  20
-                </td>
-                <td class="px-6 py-4">
-                  100
-                </td>
-              </tr>
-              </tbody>
-            </table>
+        <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
+            <div class="pt-4 grid grid-cols-1 gap-4">
+                <!--Points widgets-->
+                <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <p class="text-3xl font-bold text-white ml-2">Your Points</p>
+                    <p class="text-xl font-bold text-white ml-4">1.234 pts</p>
+                    <p class="text-center text-gray-400">Visit the store to explore more ways of spending points!</p>
+                    <div class="flex justify-center">
+                        <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                                type="button">
+                            To the shop
+                        </button>
+                    </div>
+                </div>
+                <!--League standing-->
+                <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <div class="flex justify-center">
+                        <span class="text-white font-semibold mt-3 text-2xl">Remontada League</span>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <img alt="Remontada League" class="w-32 h-32 rounded-full mt-2 mb-2 "
+                             src="assets/images/cup.png">
+                    </div>
+                    <div class="mb-3 grid grid-cols-1 md:grid-cols-1 gap-4 mx-4">
+                        <!-- Rankings -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#1</span>
+                                <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                     src="assets/images/user_profile_img.png">
+                            </div>
+                            <div class="flex-1 items-center ml-2">
+                                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player One
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#2</span>
+                                <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                     src="assets/images/user_profile_img.png">
+                            </div>
+                            <div class="flex-1 items-center ml-2">
+                                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Two
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#3</span>
+                                <img alt="Team 1" class="w-6 h-6 rounded-full object-cover"
+                                     src="assets/images/user_profile_img.png">
+                            </div>
+                            <div class="flex-1 items-center ml-2">
+                                <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
+                    </div>
+                </div>
+                <!--Belgian league-->
+                <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col items-start ml-4">
+                            <p class="text-white text-2xl font-bold"> Belgian League</p>
+                            <p class="text-black text-xl font-semibold"> Belgium</p>
+                        </div>
+                        <img alt="Royal belgian fa" class="ml-4 mr-4 mt-1 w-16 h-16"
+                             src="assets/logos/Royal_Belgian_FA_logo_2019.svg"/>
+                    </div>
+                    <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th class="px-6 py-3" scope="col">
+                                #
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                Team
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                PL
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                GD
+                            </th>
+                            <th class="px-6 py-3" scope="col">
+                                PTS
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                scope="row">
+                                1"
+                            </th>
+                            <td class="px-6 py-4">
+                                A.S OOST...
+                            </td>
+                            <td class="px-6 py-4">
+                                10
+                            </td>
+                            <td class="px-6 py-4">
+                                20
+                            </td>
+                            <td class="px-6 py-4">
+                                100
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                scope="row">
+                                1"
+                            </th>
+                            <td class="px-6 py-4">
+                                A.S OOST...
+                            </td>
+                            <td class="px-6 py-4">
+                                10
+                            </td>
+                            <td class="px-6 py-4">
+                                20
+                            </td>
+                            <td class="px-6 py-4">
+                                100
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                scope="row">
+                                1"
+                            </th>
+                            <td class="px-6 py-4">
+                                A.S OOST...
+                            </td>
+                            <td class="px-6 py-4">
+                                10
+                            </td>
+                            <td class="px-6 py-4">
+                                20
+                            </td>
+                            <td class="px-6 py-4">
+                                100
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
 
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>

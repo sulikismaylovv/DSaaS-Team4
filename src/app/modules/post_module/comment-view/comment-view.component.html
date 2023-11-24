@@ -1,0 +1,13 @@
+<div class="comment-item flex space-x-3">
+  <img [src]="avatarSafeUrl" alt="User's avatar" class="h-10 w-10 rounded-full"/>
+  <div class="flex-1">
+    <div class="flex items-center justify-between">
+      <h3 class="font-semibold">{{ username }}</h3>
+      <span class="text-gray-500 text-sm">{{ comment.created_at | date: 'short' }}</span>
+    </div>
+    <p class="text-gray-800 mt-4">
+      {{ comment.content }}
+    </p>
+    <!-- You can add icons here later if needed -->
+  </div>
+</div>

@@ -6,51 +6,51 @@ import {initFlowbite} from "flowbite";
 import {NavbarService} from "../../../core/services/navbar.service";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
-  session: any; // Adjust the type based on your session object
+export class HomeComponent implements OnInit {
+    session: any; // Adjust the type based on your session object
+    hideForm = false;
+    showPosts: boolean = true;
+    showMatches: boolean = false;
 
-  constructor(
-    private router: Router,
-    protected readonly authService: AuthService,
-    public themeService: ThemeService,
-    public navbarService: NavbarService
-  ) {}
+    constructor(
+        private router: Router,
+        protected readonly authService: AuthService,
+        public themeService: ThemeService,
+        public navbarService: NavbarService
+    ) {
+    }
 
-  ngOnInit() {
-    // Subscribe to the auth state changes
-    this.authService.authChanges((_, session) => (this.session = session));
-    this.navbarService.setShowNavbar(true);
-    initFlowbite();
-  }
+    ngOnInit() {
+        // Subscribe to the auth state changes
+        this.authService.authChanges((_, session) => (this.session = session));
+        this.navbarService.setShowNavbar(true);
+        initFlowbite();
+    }
 
-  hideForm = false;
-  toggle() {
-    this.hideForm = !this.hideForm;
-  }
+    toggle() {
+        this.hideForm = !this.hideForm;
+    }
 
-  toggleTheme() {
-    this.themeService.toggleTheme();
-  }
+    toggleTheme() {
+        this.themeService.toggleTheme();
+    }
 
-  isAuthenticated(): boolean {
-    // Use the isAuthenticated method from AuthService
-    return this.authService.isAuthenticated();
-  }
+    isAuthenticated(): boolean {
+        // Use the isAuthenticated method from AuthService
+        return this.authService.isAuthenticated();
+    }
 
-  showPosts: boolean = true;
-  showMatches: boolean = false;
+    showPostsContent() {
+        this.showPosts = true;
+        this.showMatches = false;
+    }
 
-  showPostsContent() {
-    this.showPosts = true;
-    this.showMatches = false;
-  }
-
-  showMatchesContent() {
-    this.showPosts = false;
-    this.showMatches = true;
-  }
+    showMatchesContent() {
+        this.showPosts = false;
+        this.showMatches = true;
+    }
 }
