@@ -1,0 +1,188 @@
+.user-details {
+  display: flex;
+  align-items: center;
+}
+
+.rank-number {
+  margin-right: 10px; /* Adds space between the rank number and the profile picture */
+}
+
+.profile-picture {
+  width: 40px; /* Adjust as needed */
+  height: 40px; /* Adjust as needed */
+  border-radius: 50%; /* Makes the picture round */
+  object-fit: cover; /* Ensures the image covers the area properly */
+  margin-right: 10px; /* Adds space between the profile picture and the username */
+}
+
+.username {
+  /* Any additional styling for the username */
+}
+
+.league-container {
+  display: flex;
+  justify-content: space-around; /* This will space out the crests evenly */
+  align-items: flex-end; /* Aligns the badges at the bottom */
+  flex-wrap: wrap; /* Allows the badges to wrap onto the next line if necessary */
+  gap: 5px; /* Adjust the gap between crests as needed */
+}
+
+.crest {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the badges and text in a column */
+  width: 80px;
+  height: auto;
+  margin-bottom: 1rem; /* Adds space below each crest */
+
+
+}
+.league-info {
+  text-align: center;
+  margin-top: 8px; /* Spacing between crests and text, adjust as needed */
+  padding: 5px;
+}
+
+
+.league-badge {
+  width: 60px; /* Example size, adjust as needed */
+  height: 80px; /* Example size, adjust as needed */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  padding: 5px;
+  margin-bottom: 0.5rem; /* Adds space below the badge */
+
+}
+
+/* Replace the background-color with actual images for crests */
+.bronze { background-image: url('src/assets/crests/bronzecrest.svg');}
+.silver { background-image: url('src/assets/crests/silvercrest.svg');}
+.gold {background-image: url('src/assets/crests/goldencrest.svg');}
+.platinum { background-image: url('src/assets/crests/platinumcrest.svg');}
+
+/* Optional: Add a hover effect */
+.league-badge:hover {
+  transform: scale(1.1);
+}
+
+.coming-soon-overlay {
+  position: relative;
+  text-align: center;
+  background: #1c2632;
+  padding: 5px 5px;
+  border-radius: 15px;
+  margin-top: 50px;
+}
+
+.coming-soon-title {
+  font-size: 2.5rem;
+  color: #a855f7; /* Golden color */
+  margin-bottom: 30px;
+  text-shadow: 0px 0px 10px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+  animation: beep 1s linear infinite; /* Blink every second */
+
+}
+
+.countdown {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  background: #333;
+  display: inline-block;
+  padding: 20px;
+  border: 3px solid #a855f7; /* Golden border */
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+}
+
+.countdown span {
+  font-weight: bold;
+  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7); /* White text glow for readability */
+}
+
+/* Animation for the countdown to mimic alarm beeping */
+@keyframes beep {
+  0%, 100% {
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    color: #FFFFFF;
+  }
+  50% {
+    text-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+    color: #a855f7; /* Alarm red color */
+  }
+}
+
+/* Apply the beep animation to each countdown segment */
+.countdown span {
+  display: inline-block;
+  min-width: 30px; /* Ensure consistent width */
+  margin: 0 5px;
+  animation: beep 1s infinite;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center; /* Centers cards in the container */
+  gap: 20px; /* Space between cards */
+  background-color: #18202a; /* Dark gray background */
+  padding: 20px; /* Padding around the cards container */
+  max-width: 100%; /* Full width of the container */
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Stack icon and text vertically */
+  flex: 0 0 calc(33.33% - 40px); /* Assign width to each card, subtracting the gap */
+  background-color: #4C5474; /* Gray background for cards */
+  border-radius: 8px; /* Rounded corners for card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  color: #ecf0f1; /* Light text for contrast */
+  align-items: center; /* Center-align items horizontally */
+}
+
+.icon-container {
+  text-align: center; /* Center the icon */
+  background-color: #848CA9; /* Light gray background for the icon area */
+  padding: 20px; /* Space around the icon */
+  width: 100%; /* Ensure icon container fills card width */
+}
+
+.icon {
+  width: 50px; /* Size of the icon */
+  height: 50px; /* Maintain aspect ratio */
+}
+
+.card-content {
+  padding: 15px; /* Padding inside the card content */
+  width: 100%; /* Ensure text container fills card width */
+}
+
+/* Card content styling */
+.card-content p {
+  font-size: 0.9rem; /* Adjust font size as needed */
+  line-height: 1.4; /* Line height for better readability */
+  text-align: center; /* Center the text */
+  margin: 0; /* Adjust margin as needed */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    padding: 20px 0; /* Top and bottom padding only */
+  }
+
+  .card {
+    flex: 0 0 auto; /* Cards take up space based on content */
+    width: 80%; /* Slightly smaller cards on mobile */
+    margin: 10px auto; /* Center cards with margin */
+  }
+}
+
+
+
+
+
+

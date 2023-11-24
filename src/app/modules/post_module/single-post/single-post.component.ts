@@ -4,6 +4,7 @@ import { PostsService } from "../../../core/services/posts.service";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
+import {SupabaseService} from "../../../core/services/supabase.service";
 
 @Component({
   selector: 'app-single-post',
@@ -12,9 +13,10 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class SinglePostComponent implements OnInit {
   @Input() post!: Post; // The post to which the comments belong
+  @Input() originalPost?: Post; // The original post
   comments: Comment[] = []; // Array to store comments
   avatarSafeUrl: SafeResourceUrl | undefined;
-  loading = false;
+  loading = true;
   profile: Profile | undefined;
   commentContent: string = '';
   constructor(
@@ -22,13 +24,38 @@ export class SinglePostComponent implements OnInit {
     private readonly postsService: PostsService,
     private readonly authService: AuthService,
     private readonly sanitizer: DomSanitizer,
-  ) {}
+    private readonly supabase: SupabaseService
+  ) {
+    this.supabase.supabaseClient
+      .channel('realtime-comments')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'comments',
+        },
+        (payload) => {
+          this.loadComments();
+        }
+      )
+      .subscribe();
+  }
 
   async ngOnInit(): Promise<void> {
-    const postId = this.route.snapshot.params['id'];
+    this.loading = true;
+    const postId = +this.route.snapshot.params['id'];
     if (postId) {
       this.post = await this.postsService.getPostById(postId);
+
+      if (this.post.original_post_id != undefined) {
+        this.originalPost = await this.postsService.getPostById(this.post.original_post_id);
+      }
     }
+    console.log('Post:', this.post);
+    console.log('Original post:', this.originalPost);
+
+
     await this.getProfile();
 
     if (this.profile && this.profile.avatar_url) {
@@ -44,11 +71,11 @@ export class SinglePostComponent implements OnInit {
       }
     }
     this.loadComments().then(r => console.log("loadComments() finished"));
+    this.loading = false;
   }
 
   async getProfile() {
     try {
-      this.loading = true;
       const user = this.authService.session?.user;
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
@@ -64,8 +91,7 @@ export class SinglePostComponent implements OnInit {
         alert(error.message);
       }
     } finally {
-      this.loading = false;
-    }
+      this.loading = false;}
   }
 
   async loadComments() {
@@ -95,7 +121,6 @@ export class SinglePostComponent implements OnInit {
       console.log('Created comment:', createdComment);
       this.comments.push(createdComment);
       this.commentContent = ''; // Clear the input after posting
-      window.location.reload();
     } catch (error) {
       console.error('Error posting comment:', error);
       alert('There was an error posting your comment.');
