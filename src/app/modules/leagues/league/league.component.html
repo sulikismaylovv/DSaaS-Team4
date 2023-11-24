@@ -1,52 +1,80 @@
-<div class="rankings-section bg-dark-mode rounded-lg p-6 w-full max-w-md mx-auto text-white">
-  <div class="league-container p-4">
-    <div class="crest">
-      <div class="league-badge bronze"></div>
-      <div class="league-info">Bronze League</div>
-    </div>
-    <!-- Silver League -->
-    <div class="crest">
-      <div class="league-badge silver"></div>
-      <div class="league-info">Silver League</div>
-    </div>
-    <!-- Gold League -->
-    <div class="crest">
-      <div class="league-badge gold"></div>
-      <div class="league-info">Gold League</div>
-    </div>
-    <!-- Platinum League -->
-    <div class="crest">
-      <div class="league-badge platinum"></div>
-      <div class="league-info">Platinum League</div>
-    </div>
-  </div>
-  <div class="big-ranking-section max-w-lg bg-dark-mode p-6">
-    <h2 class="text-xl justify-center items-center font-semibold mb-2 text-center">Remontada Gold League</h2>
-    <h3 class="text-lg justify-center items-center font-semibold mb-2 text-center">Top 3 advance to the Platinum league</h3>
-    <div class="rankings-section bg-dark-mode rounded-lg w-full max-w-4xl text-white flex justify-center items-center">
-      <div class="flex flex-col text-lg items-center gap-4">
-        <div *ngFor="let user of usersSortedByPoints; let i = index" class="user-card bg-lighter-purple  rounded-lg p-4 w-full max-w-sm flex items-center justify-between shadow-lg relative">
-          <div *ngIf="i < 3" class="indicator-bar bg-green-500 absolute left-0 top-0 bottom-0 w-2"></div>
-          <div *ngIf="usersSortedByPoints.length - i <= 3" class="indicator-bar bg-red-500 absolute left-0 top-0 bottom-0 w-2"></div>
-          <span class="font-bold ml-4">
-               <span class="user-details">
-               <span *ngIf="i>=0" class="rank-number">{{ i +1 }}</span>
-               <img src="{{ user.profilePictureUrl }}" alt="Profile Picture" class="profile-picture">
-               <span class="username">{{ user.username }}</span>
-               </span>
-               </span>
-          <div class="flex items-center">
-            <span *ngIf="i < 3" class="text-green-500 ml-2">&#9650;</span>
-            <span *ngIf="usersSortedByPoints.length - i <= 3" class="text-red-500 ml-2">&#9660;</span>
-            <span class="text-sm bg-primary-700 px-3 py-1 rounded-full">{{ user.points }} XP</span>
-          </div>
+
+  <div class="coming-soon-container bg-dark-mode rounded-lg p-6 w-full max-w-md mx-auto text-white">
+    <h1 class="coming-soon-title text-center">Coming Soon</h1>
+    <h1 class="text-3xl font-bold text-center mb-4">Regional League</h1>
+<!--    <p class="text-center text-lg mb-6">-->
+<!--      Prepare to compete in the all-new regional leagues.-->
+<!--    </p>-->
+<!--    <p class="text-center text-lg mb-6">Rise through the ranks from Bronze to Platinum and experience competition across Belgium like never before!</p>-->
+    <div class="cards-container">
+      <!-- Competition Card -->
+      <div class="card">
+        <div class="icon-container">
+          <img src="assets/Belgium_provinces_EN.png" alt="Competition" class="icon">
+        </div>
+        <div class="card-content">
+          <p>Prepare to compete in the all-new regional leagues.</p>
+        </div>
+      </div>
+
+      <!-- Rising through Ranks Card -->
+      <div class="card">
+        <div class="icon-container">
+          <!-- Leagues Preview -->
+          <div class="leagues-preview flex justify-center items-center my-4">
+            <!-- Bronze League -->
+            <div class="crest animate-pulse" style="animation-delay: 0s;">
+              <div class="league-badge bronze"></div>
+              <div class="league-info">Bronze League</div>
+            </div>
+            <!-- Silver League -->
+            <div class="crest animate-pulse" style="animation-delay: 0.3s;">
+              <div class="league-badge silver"></div>
+              <div class="league-info">Silver League</div>
+            </div>
+            <!-- Gold League -->
+            <div class="crest animate-pulse" style="animation-delay: 0.6s;">
+              <div class="league-badge gold"></div>
+              <div class="league-info">Gold League</div>
+            </div>
+            <!-- Platinum League -->
+            <div class="crest animate-pulse" style="animation-delay: 0.9s;">
+              <div class="league-badge platinum"></div>
+              <div class="league-info">Platinum League</div>
+            </div>
+          </div>        </div>
+        <div class="card-content">
+          <p>Rise through the ranks from Bronze to Platinum and experience competition across Belgium like never before!</p>
+        </div>
+      </div>
+
+      <!-- Credits Card -->
+      <div class="card">
+        <div class="icon-container">
+          <img src="path-to-credits-icon.png" alt="Credits" class="icon">
+        </div>
+        <div class="card-content">
+          <p>Earn more credits as you progress from one league to another</p>
         </div>
       </div>
     </div>
+
+
+    <div class="countdown-section text-center mt-6">
+      <!-- Countdown Timer Goes Here -->
+      <div *ngIf="countdown" class="coming-soon-overlay">
+        <div class="countdown">
+          <span>{{ countdown.days }}</span> days,
+          <span>{{ countdown.hours }}</span> hours,
+          <span>{{ countdown.minutes }}</span> minutes,
+          <span>{{ countdown.seconds }}</span> seconds
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <span class="text-sm">Stay tuned for more updates and get ready to play your way to the top!</span>
+    </div>
   </div>
-  <!-- Legend -->
-  <div class="legend text-sm mt-4 flex justify-center gap-8">
-    <div><span class="inline-block w-3 h-3 bg-green-500 mr-2"></span> Promotion to higher league</div>
-    <div><span class="inline-block w-3 h-3 bg-red-500 mr-2"></span> Relegation to lower league</div>
-  </div>
-</div>
+
+

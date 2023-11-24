@@ -57,46 +57,132 @@
 }
 
 /* Replace the background-color with actual images for crests */
-.bronze { background-image: url('src/assets/crests/bronzecrest.svg');
-scale: 0.7}
-.silver { background-image: url('src/assets/crests/silvercrest.svg');
-scale: 0.7}
-
-.gold {
-  background-image: url('src/assets/crests/goldencrest.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; /* This will ensure the image is contained within the element, respecting padding */
-  width: 60px; /* Control the width of the badge */
-  height: 80px; /* Control the height of the badge */
-  padding: 10px; /* Adjust padding to create space around the badge */
-  box-sizing: border-box; /* Include padding in the width and height calculations */
-  display: flex; /* Use flexbox to center the content */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  transform: scale(1.3); /* Enlarge the badge */
-  z-index: 10; /* Ensure it's above other elements if they overlap */
-  transition: transform 0.3s ease; /* Smooth transition for scaling */
-  border-width: medium;
-  border-radius: 8px;
-  border-color: #a855f7;
-
-}
-.platinum { background-image: url('src/assets/crests/platinumcrest.svg');
-  opacity: 0.5; /* Decrease opacity to give a "disabled" look */
-  pointer-events: none; /* Disable interactions */
-  scale: 0.7;
-  opacity: 30%;
-}
-
-.active {
-  /* Add some styling for the active league */
-  transform: scale(1.1); /* Slightly increase size for emphasis */
-}
-
+.bronze { background-image: url('src/assets/crests/bronzecrest.svg');}
+.silver { background-image: url('src/assets/crests/silvercrest.svg');}
+.gold {background-image: url('src/assets/crests/goldencrest.svg');}
+.platinum { background-image: url('src/assets/crests/platinumcrest.svg');}
 
 /* Optional: Add a hover effect */
 .league-badge:hover {
-  transform: scale(1.05);
-  cursor: pointer;
+  transform: scale(1.1);
 }
+
+.coming-soon-overlay {
+  position: relative;
+  text-align: center;
+  background: #1c2632;
+  padding: 5px 5px;
+  border-radius: 15px;
+  margin-top: 50px;
+}
+
+.coming-soon-title {
+  font-size: 2.5rem;
+  color: #a855f7; /* Golden color */
+  margin-bottom: 30px;
+  text-shadow: 0px 0px 10px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+  animation: beep 1s linear infinite; /* Blink every second */
+
+}
+
+.countdown {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  background: #333;
+  display: inline-block;
+  padding: 20px;
+  border: 3px solid #a855f7; /* Golden border */
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+}
+
+.countdown span {
+  font-weight: bold;
+  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7); /* White text glow for readability */
+}
+
+/* Animation for the countdown to mimic alarm beeping */
+@keyframes beep {
+  0%, 100% {
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    color: #FFFFFF;
+  }
+  50% {
+    text-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+    color: #a855f7; /* Alarm red color */
+  }
+}
+
+/* Apply the beep animation to each countdown segment */
+.countdown span {
+  display: inline-block;
+  min-width: 30px; /* Ensure consistent width */
+  margin: 0 5px;
+  animation: beep 1s infinite;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center; /* Centers cards in the container */
+  gap: 20px; /* Space between cards */
+  background-color: #18202a; /* Dark gray background */
+  padding: 20px; /* Padding around the cards container */
+  max-width: 100%; /* Full width of the container */
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Stack icon and text vertically */
+  flex: 0 0 calc(33.33% - 40px); /* Assign width to each card, subtracting the gap */
+  background-color: #4C5474; /* Gray background for cards */
+  border-radius: 8px; /* Rounded corners for card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  color: #ecf0f1; /* Light text for contrast */
+  align-items: center; /* Center-align items horizontally */
+}
+
+.icon-container {
+  text-align: center; /* Center the icon */
+  background-color: #848CA9; /* Light gray background for the icon area */
+  padding: 20px; /* Space around the icon */
+  width: 100%; /* Ensure icon container fills card width */
+}
+
+.icon {
+  width: 50px; /* Size of the icon */
+  height: 50px; /* Maintain aspect ratio */
+}
+
+.card-content {
+  padding: 15px; /* Padding inside the card content */
+  width: 100%; /* Ensure text container fills card width */
+}
+
+/* Card content styling */
+.card-content p {
+  font-size: 0.9rem; /* Adjust font size as needed */
+  line-height: 1.4; /* Line height for better readability */
+  text-align: center; /* Center the text */
+  margin: 0; /* Adjust margin as needed */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    padding: 20px 0; /* Top and bottom padding only */
+  }
+
+  .card {
+    flex: 0 0 auto; /* Cards take up space based on content */
+    width: 80%; /* Slightly smaller cards on mobile */
+    margin: 10px auto; /* Center cards with margin */
+  }
+}
+
+
+
+
+
+
