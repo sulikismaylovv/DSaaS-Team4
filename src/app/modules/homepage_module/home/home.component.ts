@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
         private router: Router,
         protected readonly authService: AuthService,
         public themeService: ThemeService,
-        public navbarService: NavbarService
+        public navbarService: NavbarService,
     ) {
     }
 

@@ -3,10 +3,7 @@
         <!-- Logo at the top-left -->
         <!-- Add absolute positioning, and set z-index to 10 -->
 
-        <!-- Login -->
-        <aside class="text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-            <!-- Remove z-index to keep it in front -->
-        </aside>
+
 
 
         <!-- Main Content and Posts/Matches -->
@@ -44,13 +41,8 @@
         </div>
 
         <!-- Settings -->
-        <aside class="w-96 pr-6"> <!-- Adjust the width to 1/6 and remove padding classes -->
-            <div class="mb-4">
-                <!--        <h4 class="text-lg font-semibold text-light-mode-text dark:text-light-mode">Settings</h4>-->
-                <!--        <ul>-->
-                <!--          <li>Setting 1</li>-->
-                <!--        </ul>-->
-
+        <aside class="w-96 pr-6 pt-6"> <!-- Adjust the width to 1/6 and remove padding classes -->
+            <div *ngIf="!(authService.isAuthenticated$ | async)" class="mb-4">
                 <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2"
                         type="button"
                         (click)="navigateToLogin()">
