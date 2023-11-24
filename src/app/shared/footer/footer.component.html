@@ -1,24 +1,25 @@
-<footer  *ngIf="footerService.showFooter$" class="rounded-lg shadow m-4 bg-gray-100 dark:bg-gray-800 p-4 fixed bottom-0 inset-x-0">
-  <div class="w-full mx-auto max-w-screen-xl flex flex-col md:flex-row justify-between items-center">
+<footer *ngIf="footerService.showFooter$ | async"
+        class="rounded-lg shadow m-4 bg-gray-100 dark:bg-gray-800 p-4  bottom-0 inset-x-0">
+    <div class="w-full mx-auto max-w-screen-xl flex flex-col md:flex-row justify-between items-center">
       <span class="text-sm text-gray-700 dark:text-gray-300 text-center mb-4 md:mb-0">
-        © 2023 <a href="https://flowbite.com/" class="hover:underline">Remontada™</a>. All Rights Reserved.
+        © 2023 <a class="hover:underline" href="https://flowbite.com/">Remontada™</a>. All Rights Reserved.
       </span>
-    <span>
+        <span>
         <p *ngIf="title"> {{ title }}</p>
       </span>
-    <ul class="flex flex-wrap items-center text-sm font-medium text-gray-700 dark:text-gray-300">
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
-      </li>
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-      </li>
-      <li>
-        <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline">Contact</a>
-      </li>
-    </ul>
-  </div>
+        <ul class="flex flex-wrap items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+            <li>
+                <a class="mr-4 hover:underline md:mr-6" href="#">About</a>
+            </li>
+            <li>
+                <a class="mr-4 hover:underline md:mr-6" href="#">Privacy Policy</a>
+            </li>
+            <li>
+                <a class="mr-4 hover:underline md:mr-6" href="#">Licensing</a>
+            </li>
+            <li>
+                <a class="hover:underline" href="#">Contact</a>
+            </li>
+        </ul>
+    </div>
 </footer>

@@ -1,0 +1,97 @@
+<div class="bg-white rounded-lg p-4 shadow-lg mb-4 w-full">
+
+  <!-- Check if it's a retweet and display retweet info -->
+  <div *ngIf="post.original_post_id" class="retweet-indicator mb-4">
+    <!-- Retweeter's Info -->
+    <div class="flex items-center mb-4">
+      <!-- Retweeter's Avatar -->
+      <img [src]="avatarSafeUrl" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <div>
+        <!-- Retweeter's Username -->
+        <p class="font-bold text-md text-gray-800">{{ usernameRetweeted }}</p>
+        <!-- Retweet Date -->
+        <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+      </div>
+    </div>
+    <!-- Retweeter's Comment (if any) -->
+    <p *ngIf="post.content" class="text-gray-800 mt-3">{{ post.content }}</p>
+  </div>
+
+  <!-- Original Post Content -->
+  <div *ngIf="originalPost else originalContent" class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
+    <div class="flex items-center mb-4">
+      <!-- Original Poster's Avatar -->
+      <img [src]="retweetAvatarSafeUrl" alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <div>
+        <!-- Original Poster's Username -->
+        <p class="font-bold text-md text-gray-800">{{ username }}</p>
+        <!-- Original Post Date -->
+        <p class="text-sm text-gray-600">{{ originalPost.created_at | date: 'medium' }}</p>
+      </div>
+    </div>
+    <!-- Original Post Content -->
+    <p class="text-gray-800 mt-3">{{ originalPost.content }}</p>
+    <!-- Original Post Image if exists -->
+    <div *ngIf="originalPost.image_url" class="mt-4">
+      <img [src]="originalPostImageUrl" alt="Original post image" class="rounded-lg"/>
+    </div>
+  </div>
+
+  <!-- Normal Post Content -->
+  <ng-template #originalContent>
+      <div class="flex items-center mb-4">
+        <!-- Display poster's avatar -->
+        <img [src]="avatarSafeUrl" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+        <div>
+          <!-- Display poster's username -->
+          <p class="font-bold text-md text-gray-800">{{ username }}</p>
+          <!-- Display post date -->
+          <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+        </div>
+      </div>
+      <!-- Display post content -->
+      <p class="text-gray-800 mt-3">{{ post.content }}</p>
+      <!-- Display post image if exists -->
+      <div *ngIf="post.image_url" class="mt-4">
+        <img [src]="postSafeUrl" alt="Post image" class="rounded-lg"/>
+      </div>
+  </ng-template>
+
+
+
+    <!-- Interaction buttons like, comment, etc. -->
+  <div class="flex items-center space-x-2">
+    <!-- Like Button -->
+    <button (click)="toggleLike(this.post.id)" class="flex items-center space-x-2">
+      <svg [ngClass]="{'text-red-500': isLiked(this.post.id), 'text-gray-400': !isLiked(this.post.id)}"
+           class="h-6 w-6 cursor-pointer hover:text-red-600 transition duration-300 ease-in-out"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+      <span class="text-gray-800">{{ getLikeCount(this.post.id) | number }}</span>
+    </button>
+
+    <!-- Comment Button  -->
+    <button (click)="commentPost(this.post.id)" class="flex items-center space-x-2">
+      <svg class="h-6 w-6 cursor-pointer text-gray-400 hover:text-blue-600 transition duration-300 ease-in-out"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+      </svg>
+      <span class="text-gray-800">{{ getCommentCount(this.post.id) | number }}</span>
+    </button>
+
+    <!-- Retweet Button  -->
+    <button (click)="openCreatePostModal()" class="flex items-center space-x-2">
+      <svg class="h-6 w-6 cursor-pointer text-gray-400 hover:text-blue-600 transition duration-300 ease-in-out"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+      </svg>
+      <span class="text-gray-800">{{ getRetweetCount(this.post.id) | number }}</span>
+    </button>
+
+  </div>
+</div>
+

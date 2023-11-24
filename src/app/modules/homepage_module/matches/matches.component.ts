@@ -5,6 +5,8 @@ import { format, parseISO, compareAsc , startOfWeek, endOfWeek, addDays, subDays
 import { groupBy } from 'lodash';
 import {Fixture} from "../../../core/models/fixtures.model";
 import {ApiService} from "../../../core/services/api.service";
+import {Router} from "@angular/router";
+import { FixtureTransferService } from '../../../core/services/fixture-transfer.service';
 
 @Component({
   selector: 'app-matches',
@@ -22,16 +24,29 @@ export class MatchesComponent implements OnInit {
   endDate: Date = new Date();
   stringDate: string;
 
-  constructor(private apiService: ApiService, private datePipe: DatePipe) {
+  constructor(private apiService: ApiService, private datePipe: DatePipe, private router: Router, private fixtureTransferService: FixtureTransferService) {
     this.currentDate = new Date(); //use this for today's date
     // this.currentDate = new Date('2023-11-12'); //use this for specific date
     this.stringDate = this.currentDate.toISOString().split('T')[0];
   }
 
+  onGameSelect(fixture: Fixture) {
+    this.fixtureTransferService.changeFixture(fixture);
+    this.router.navigateByUrl('/game/' + fixture.fixture.id, { state: { fixture: fixture } });
+
+  }
   ngOnInit() {
     this.setWeek(new Date());
     this.fetchFixturesForWeek();
   }
+
+  goToGamePage(fixture: Fixture) {
+    this.router.navigateByUrl('/game/' + fixture.fixture.id, { state: { fixture: fixture } });
+  }
+
+
+
+
 
   // Set the start of the week to Friday and end to next Thursday
   setWeek(date: Date) {
@@ -54,24 +69,10 @@ export class MatchesComponent implements OnInit {
     );
   }
 
-  // logList(){
-  //   this.groupFixturesByDate()
-  //   console.log("grouping fixtures by date");
-  //   console.log(this.groupedFixtures);
-  // }
-
   getGroupedFixtureKeys(): string[] {
     return Object.keys(this.groupedFixtures);
   }
 
-  // groupFixturesByDate() {
-  //   this.groupedFixtures = groupBy(this.fixtures, (fixture) => fixture.fixture.date);
-  //   this.groupedFixtureKeys = Object.keys(this.groupedFixtures); // Update the keys after grouping
-  // }
-
-  // groupFixturesByDate() {
-  //   this.groupedFixtures = groupBy(this.fixtures, (fixture) => fixture.fixture.date);
-  // }
   groupFixturesByDate() {
     // Group the fixtures by date
     this.groupedFixtures = groupBy(this.fixtures, (fixture) => {
@@ -86,10 +87,6 @@ export class MatchesComponent implements OnInit {
       this.groupedFixtures[date].sort((a, b) => compareAsc(parseISO(a.fixture.date), parseISO(b.fixture.date)));
     });
   }
-
-  // getGroupedFixtureDates(): string[] {
-  //   return Object.keys(this.groupedFixtures);
-  // }
 
   goToNextWeek() {
     this.setWeek(addDays(this.startDate, 7));
