@@ -46,3 +46,6 @@ export class BetterModel implements Better{
     this.activeCredits = activeCredits;
   }
 }
+
+export class Bets {
+}
