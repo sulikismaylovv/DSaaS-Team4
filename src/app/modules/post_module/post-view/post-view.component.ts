@@ -17,6 +17,8 @@ import {MatDialog} from "@angular/material/dialog";
 export class PostViewComponent implements OnInit {
     @Input() post!: Post;
     @Input() originalPost?: Post;
+    @Input() clickable: boolean = true; // New input property
+
     originalPostImageUrl?: SafeResourceUrl;
     loading = false;
     profile: Profile | undefined;

@@ -2,7 +2,7 @@
 <div class="min-h-screen">
     <div class="container mx-auto flex flex-col items-center px-4">
         <!-- Create Post Section -->
-        <div class="flex w-full max-w-2xl justify-center px-4 pt-3">
+        <div *ngIf="authService.isAuthenticated$ | async" class="flex w-full max-w-2xl justify-center px-4 pt-3">
             <div class="flex items-center border-2 border-gray-600 rounded-full pl-4 pr-2 py-2 bg-white shadow-sm ">
                 <img [src]="avataUrl" alt="Your profile" class="h-8 w-8 rounded-full"/>
                 <input type="text" placeholder="Start a post" class="flex-1 max-w-full border-none focus:ring-0 pl-4 rounded-full" readonly (click)="openCreatePostModal()"/>
@@ -12,7 +12,9 @@
         <!-- Posts Feed -->
         <div class="w-full max-w-2xl px-4 py-6">
             <div *ngFor="let post of posts" class="mb-4">
-                <app-post-view [post]="post"></app-post-view>
+              <div (click)="onPostClick()">
+                <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false"></app-post-view>
+              </div>
             </div>
         </div>
     </div>
