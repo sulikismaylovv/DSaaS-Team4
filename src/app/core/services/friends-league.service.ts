@@ -89,3 +89,6 @@ export class FriendsLeague {
     return leagueMembers;
   }
 }
+
+export class FriendsLeagueServiceService {
+}

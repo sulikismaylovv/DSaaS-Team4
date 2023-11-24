@@ -13,9 +13,10 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 })
 export class SinglePostComponent implements OnInit {
   @Input() post!: Post; // The post to which the comments belong
+  @Input() originalPost?: Post; // The original post
   comments: Comment[] = []; // Array to store comments
   avatarSafeUrl: SafeResourceUrl | undefined;
-  loading = false;
+  loading = true;
   profile: Profile | undefined;
   commentContent: string = '';
   constructor(
@@ -42,10 +43,19 @@ export class SinglePostComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const postId = this.route.snapshot.params['id'];
+    this.loading = true;
+    const postId = +this.route.snapshot.params['id'];
     if (postId) {
       this.post = await this.postsService.getPostById(postId);
+
+      if (this.post.original_post_id != undefined) {
+        this.originalPost = await this.postsService.getPostById(this.post.original_post_id);
+      }
     }
+    console.log('Post:', this.post);
+    console.log('Original post:', this.originalPost);
+
+
     await this.getProfile();
 
     if (this.profile && this.profile.avatar_url) {
@@ -61,11 +71,11 @@ export class SinglePostComponent implements OnInit {
       }
     }
     this.loadComments().then(r => console.log("loadComments() finished"));
+    this.loading = false;
   }
 
   async getProfile() {
     try {
-      this.loading = true;
       const user = this.authService.session?.user;
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
@@ -81,8 +91,7 @@ export class SinglePostComponent implements OnInit {
         alert(error.message);
       }
     } finally {
-      this.loading = false;
-    }
+      this.loading = false;}
   }
 
   async loadComments() {

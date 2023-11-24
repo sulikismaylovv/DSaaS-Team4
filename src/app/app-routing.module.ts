@@ -14,7 +14,6 @@ import {MatchesComponent} from "./modules/homepage_module/matches/matches.compon
 import {SinglePostComponent} from "./modules/post_module/single-post/single-post.component";
 import {ShopComponent} from "./modules/shop/shop.component";
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
-import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
 
 
 const routes: Routes = [
@@ -28,11 +27,9 @@ const routes: Routes = [
     {path: 'game', component: GameComponent, pathMatch: 'full'},
     {path: 'posts', component: PostsComponent},
     {path: 'games', component: MatchesComponent},
-    {path: 'post/:id', component: SinglePostComponent },
-    {path: 'shop', component: ShopComponent },
-    {path: 'league',component: GloballeagueComponent},
-    {path: 'create-league', component: CreateleagueComponent },
-
+    { path: 'post/:id', component: SinglePostComponent },
+    { path: 'shop', component: ShopComponent },
+    {path: 'league',component: GloballeagueComponent}
 ];
 
 @NgModule({
