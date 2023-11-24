@@ -13,6 +13,7 @@ import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
 import {SinglePostComponent} from "./modules/post_module/single-post/single-post.component";
 import {ShopComponent} from "./modules/shop/shop.component";
+import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
     {path: 'games', component: MatchesComponent},
     { path: 'post/:id', component: SinglePostComponent },
     { path: 'shop', component: ShopComponent },
+    {path: 'league',component: GloballeagueComponent}
 ];
 
 @NgModule({

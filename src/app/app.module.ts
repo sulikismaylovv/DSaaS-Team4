@@ -25,12 +25,17 @@ import {CreatePostComponent} from './modules/post_module/create-post/create-post
 import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
 import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
 import { ShopComponent } from './modules/shop/shop.component';
+import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
+import {FriendsleagueComponent} from "./modules/leagues/friendsleague/friendsleague.component";
+import {LeagueComponent} from "./modules/leagues/league/league.component";
 
 
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
-        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent, PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent
+        , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
+      PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
+      LeagueComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage
