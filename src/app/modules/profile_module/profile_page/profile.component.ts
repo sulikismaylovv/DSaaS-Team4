@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonComponent} from "../common/common.component";
 
 @Component({
   selector: 'app-profile',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-
+  commonInstance= new CommonComponent();
+  userName: string= this.commonInstance.userName;
+  actionString: string[]= ['Something', 'Edit'];
 }

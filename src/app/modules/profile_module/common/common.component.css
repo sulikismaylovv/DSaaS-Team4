@@ -1,0 +1,29 @@
+.post-card {
+  background: linear-gradient(135deg, #ce0fd5, #3f25a2); /* Pinkish-purple gradient for card background */
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;}
+
+.selected {
+  color: #1c2632;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom-color: #6F44C8;
+  border-bottom-width: 2px;
+  border-bottom: solid;
+  margin-left: 3rem; /* Adjust the left margin based on your design */
+  margin-right: 3rem;
+  /* Add any other styling for the selected button */
+  @media (prefers-color-scheme: dark) {
+    color: #f3e8ff;
+    /* Add other dark mode styles here */
+  }
+}
+
+#friendListModal {
+  display: none;
+}
+
+#friendListModal.active {
+  display: flex;
+}
