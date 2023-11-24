@@ -1,34 +1,33 @@
-<div class="bg-blue-900 min-h-screen">
-  <div class="editor mx-auto w-full md:w-10/12 max-w-2xl bg-white rounded-lg p-4 shadow-lg">
-    <div *ngIf="post" class="container mx-auto flex flex-col items-center py-6">
-      <!-- Display the post content -->
-      <app-post-view [post]="post" class="w-full max-w-2xl"></app-post-view>
+<div class="min-h-screen bg-gray-100">
+  <div class="container mx-auto flex flex-col items-center py-6">
+    <!-- Display the post content -->
+    <div class="w-full max-w-2xl px-4 mb-4">
+      <app-post-view [post]="post"></app-post-view>
+    </div>
 
-      <!-- Comment Field -->
-      <div class="editor mx-auto w-full md:w-10/12 flex flex-col text-gray-800 bg-white rounded-lg p-4 shadow-lg max-w-2xl mb-4">
-        <div class="flex flex-row items-center border-b border-blue-500 py-2">
-          <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
-          <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70" name="commentContent"
-                    [(ngModel)]="commentContent"
-                    placeholder="Share your football news with others"></textarea>
-
-        </div>
-        <!-- Buttons for posting or canceling the comment -->
-        <div class="buttons flex justify-end mt-4">
-          <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="cancelComment()">Cancel</div>
-          <button class="btn border border-blue-500 p-1 px-4 font-semibold cursor-pointer text-white bg-blue-500 hover:bg-blue-700 ml-2" (click)="postComment()">
-            Reply
-          </button>
-        </div>
+    <!-- Comment Field -->
+    <div class="w-full max-w-2xl px-4 mb-4 bg-white">
+      <div class="flex flex-row items-center border-b border-blue-500 py-2 bg-white shadow-lg rounded-lg">
+        <img [src]="avatarSafeUrl" alt="User Image" class="h-12 w-12 rounded-full mr-4"/>
+        <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70" name="commentContent"
+                  [(ngModel)]="commentContent"
+                  placeholder="Share your football news with others"></textarea>
       </div>
+      <!-- Buttons for posting or canceling the comment -->
+      <div class="flex justify-end mt-4">
+        <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="cancelComment()">Cancel</div>
+        <button class="btn border border-blue-500 p-1 px-4 font-semibold cursor-pointer text-white bg-blue-500 hover:bg-blue-700 ml-2" (click)="postComment()">
+          Reply
+        </button>
+      </div>
+    </div>
 
-      <!-- Comments Section -->
-      <div class="comments-container w-full max-w-2xl px-4 py-6">
-        <div *ngFor="let comment of comments" class="comment bg-white rounded-lg p-4 shadow-lg mb-4">
-          <!-- Display the comment content here -->
-          <!-- For example, you might have a 'app-comment-view' component -->
-          <app-comment-view [comment]="comment"></app-comment-view>
-        </div>
+    <!-- Comments Section -->
+    <div class="w-full max-w-2xl px-4 py-6">
+      <div *ngFor="let comment of comments" class="comment bg-white rounded-lg p-4 shadow-lg mb-4">
+        <!-- Display the comment content here -->
+        <!-- For example, you might have a 'app-comment-view' component -->
+        <app-comment-view [comment]="comment"></app-comment-view>
       </div>
     </div>
   </div>
