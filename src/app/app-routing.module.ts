@@ -32,7 +32,7 @@ const routes: Routes = [
     { path: 'post/:id', component: SinglePostComponent },
     { path: 'shop', component: ShopComponent },
     {path: 'league',component: GloballeagueComponent},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard]},
   { path: 'user', component: UserComponent},
 ];
 
