@@ -10,6 +10,8 @@ export class PostsService {
     constructor(private supabase: SupabaseService) {
     }
 
+
+
     // Fetch all posts
     async getPosts(): Promise<Post[]> {
         try {
@@ -227,6 +229,39 @@ export class PostsService {
             console.error('Error retweeting post:', error);
             throw error;
         }
+    }
+
+    async getRetweets(): Promise<Retweet[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('retweets')
+                .select('*');
+
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error fetching retweets:', error);
+            throw error;
+        }
+    }
+
+    async getRetweetContentByPostId(original_post_id: number): Promise<string> {
+      try{
+        const { data: postData, error: postError } = await this.supabase.supabaseClient
+          .from('posts')
+          .select('content')
+          .eq('id', original_post_id)
+          .single();
+
+        if (postError) throw postError;
+        if (!postData) throw new Error('Original post not found');
+
+        return postData.content;
+      }
+      catch(error) {
+        console.error('Error fetching retweet content:', error);
+        throw error;
+      }
     }
 
     // Additional methods can be implemented as needed to handle other post interactions.

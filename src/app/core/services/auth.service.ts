@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
+import {BehaviorSubject, Observable} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
 import {Router} from "@angular/router";
@@ -24,7 +25,10 @@ interface RegisterResponse {
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+  constructor(
         private readonly configService: ConfigService,
         private supabase: SupabaseService,
         private router: Router
@@ -37,6 +41,7 @@ export class AuthService {
             this.handleAuthChange(event, session).then(r => true);
         });
     }
+
 
     private _session: AuthSession | null = null;
 
@@ -59,6 +64,10 @@ export class AuthService {
             }
         });
     }
+  private updateLoginStatus() {
+    const session = this.supabase.supabaseClient.auth.getSession();
+    this.isAuthenticatedSubject.next(session !== null);
+  }
 
     async signIn(credentials: { usernameOrEmail: string; password: string }): Promise<void> {
         const {usernameOrEmail, password} = credentials;
@@ -88,6 +97,7 @@ export class AuthService {
         if (error) {
             throw new Error('Invalid email/password combination');
         }
+      this.updateLoginStatus();
     }
 
     async register(email: string, password: string): Promise<void> {
@@ -140,6 +150,7 @@ export class AuthService {
         try {
             await this.supabase.supabaseClient.auth.signOut();
             console.log('User logged out successfully');
+            this.updateLoginStatus();
         } catch (error) {
             console.error('Logout Error:', error);
             // Handle logout error appropriately
@@ -180,14 +191,15 @@ export class AuthService {
     }
 
     private async handleAuthChange(event: AuthChangeEvent, session: Session | null) {
+        this.isAuthenticatedSubject.next(session !== null);
         this._session = session;
         if (event === 'SIGNED_IN') {
-            //console.log('User signed in:', session?.user);
+            console.log('User signed in:', session?.user);
             // Handle successful sign in
             //await this.router.navigate(['/home']);
 
         } else if (event === 'SIGNED_OUT') {
-            //console.log('User signed out');
+            console.log('User signed out');
             // Handle sign out
             await this.router.navigate(['/login']);
         }

@@ -1,6 +1,6 @@
 // posts-view.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {Like, Post} from "../../../core/models/posts.model";
+import {Like, Post, PostWithRetweet} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./post-view.component.css']
 })
 export class PostViewComponent implements OnInit {
-  @Input() post!: Post;
+  @Input() post!: PostWithRetweet;
   loading = false;
   profile: Profile | undefined;
   username: string | undefined;
