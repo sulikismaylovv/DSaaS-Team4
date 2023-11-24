@@ -29,13 +29,14 @@ import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague
 import {FriendsleagueComponent} from "./modules/leagues/friendsleague/friendsleague.component";
 import {LeagueComponent} from "./modules/leagues/league/league.component";
 import { MatDialogModule } from '@angular/material/dialog';
+import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
 
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
-      LeagueComponent
+      LeagueComponent,CreateleagueComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule
