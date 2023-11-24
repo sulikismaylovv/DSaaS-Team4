@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Comment, Like, Post, Retweet} from "../models/posts.model";
+import {Comment, Like, Post} from "../models/posts.model";
 import {SupabaseService} from "./supabase.service";
 
 @Injectable({
@@ -80,6 +80,19 @@ export class PostsService {
     async downLoadImage(filePath: string): Promise<Blob | null> {
         const {data, error} = await this.supabase.supabaseClient.storage
             .from('post-images')
+            .download(filePath);
+
+        if (error) {
+            console.error('Error downloading image:', error);
+            throw error;
+        }
+
+        return data;
+    }
+
+    async downLoadImageRetweet(filePath: string): Promise<Blob | null> {
+        const {data, error} = await this.supabase.supabaseClient.storage
+            .from('avatars')
             .download(filePath);
 
         if (error) {
@@ -215,54 +228,38 @@ export class PostsService {
         }
     }
 
-    // Retweet a post
-    async retweetPost(retweet: Retweet): Promise<Retweet> {
+    async getOriginalPost(original_post_id: number): Promise<Post> {
         try {
             const {data, error} = await this.supabase.supabaseClient
-                .from('retweets')
-                .upsert([retweet])
-                .single();
+                .from('posts')
+                .select('*')
+                .match({id: original_post_id});
 
             if (error) throw error;
-            return data;
+            return data[0];
         } catch (error) {
-            console.error('Error retweeting post:', error);
+            console.error('Error fetching original post:', error);
             throw error;
         }
     }
 
-    async getRetweets(): Promise<Retweet[]> {
+    async getNumberOfRetweets(postId: number): Promise<number> {
         try {
             const {data, error} = await this.supabase.supabaseClient
-                .from('retweets')
-                .select('*');
+                .from('posts')
+                .select('id', { count: 'exact' }) // Use the count parameter for exact counts
+                .match({original_post_id: postId});
 
             if (error) throw error;
-            return data;
+            // The count property on the result will have the number of matched records
+            return data.length; // Or use data.count if you've enabled count in select
         } catch (error) {
-            console.error('Error fetching retweets:', error);
+            console.error('Error getting number of retweets:', error);
             throw error;
         }
     }
 
-    async getRetweetContentByPostId(original_post_id: number): Promise<string> {
-      try{
-        const { data: postData, error: postError } = await this.supabase.supabaseClient
-          .from('posts')
-          .select('content')
-          .eq('id', original_post_id)
-          .single();
 
-        if (postError) throw postError;
-        if (!postData) throw new Error('Original post not found');
-
-        return postData.content;
-      }
-      catch(error) {
-        console.error('Error fetching retweet content:', error);
-        throw error;
-      }
-    }
 
     // Additional methods can be implemented as needed to handle other post interactions.
 }

@@ -4,6 +4,7 @@ export interface Post {
     content: string;
     image_url?: string; // Optional since not all posts have images
     created_at: Date;
+    original_post_id?: number;
 }
 
 export interface Like {
@@ -19,19 +20,6 @@ export interface Comment {
     user_id: string;
     content: string;
     created_at: Date;
-}
-
-export interface Retweet {
-    id?: number;
-    original_post_id: number;
-    retweet_user_id: string;
-    created_at: Date;
-}
-
-export interface PostWithRetweet extends Post {
-  isRetweet?: boolean;
-  retweet_user_id?: string;
-  original_post_id?: number;
 }
 
 export class Posts {

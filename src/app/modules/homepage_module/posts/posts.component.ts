@@ -1,50 +1,113 @@
-  // posts.component.ts
-  import {Component, OnInit} from '@angular/core';
-  import {PostsService} from 'src/app/core/services/posts.service';
-  import {Post , PostWithRetweet} from "../../../core/models/posts.model";
+import {Component, OnInit} from '@angular/core';
+import {PostsService} from 'src/app/core/services/posts.service';
+import {Post} from "../../../core/models/posts.model";
+import {AuthService, Profile} from "../../../core/services/auth.service";
+import {SupabaseService} from "../../../core/services/supabase.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+
+@Component({
+    selector: 'app-posts',
+    templateUrl: './posts.component.html',
+    styleUrls: ['./posts.component.css']
+})
+export class PostsComponent implements OnInit {
+    posts: Post[] = [];
+    avataUrl: SafeResourceUrl | undefined;
+    profile: Profile | undefined;
+
+    constructor(
+        private readonly postsService: PostsService,
+        private readonly supabase: SupabaseService,
+        private readonly authService: AuthService,
+        private readonly sanitizer: DomSanitizer,
+        public dialog: MatDialog
+
+    ) {
+        this.supabase.supabaseClient
+            .channel('realtime-posts')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'posts',
+                },
+                (payload) => {
+                    this.loadPosts();
+                }
+            )
+            .subscribe();
+    }
+
+    async ngOnInit() {
+        await this.getProfile();
+
+        if (this.profile && this.profile.avatar_url) {
+            try {
+                const {data} = await this.authService.downLoadImage(this.profile.avatar_url)
+                if (data instanceof Blob) {
+                    this.avataUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error('Error downloading image: ', error.message)
+                }
+            }
+        }
+        await this.loadPosts();
+    }
 
 
-  @Component({
-      selector: 'app-posts',
-      templateUrl: './posts.component.html',
-      styleUrls: ['./posts.component.css']
-  })
-  export class PostsComponent implements OnInit {
-      posts: PostWithRetweet[] = [];
 
-      constructor(private postsService: PostsService) {
-      }
-
-      ngOnInit() {
-          this.loadPosts();
-      }
+    async getProfile() {
+        try {
+            await this.authService.restoreSession();
+            const user = this.authService.session?.user;
+            if (user) {
+                const {data: profile, error} = await this.authService.profile(user);
+                if (error) {
+                    throw error;
+                }
+                if (profile) {
+                    this.profile = profile;
+                }
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message);
+            }
+        }
+    }
 
     async loadPosts() {
-      // Fetch normal posts
-      const posts = await this.postsService.getPosts();
+        try {
+            let posts = await this.postsService.getPosts();
 
-      // Fetch retweets and await the resolution of asynchronous operations within the map
-
-      const retweetPromises = (await this.postsService.getRetweets()).map(async r => {
-        // Await the asynchronous call to get the retweet content
-        const content = await this.postsService.getRetweetContentByPostId(r.original_post_id);
-        return {
-          ...r,
-          isRetweet: true,
-          retweet_user_id: r.retweet_user_id,
-          original_post_id: r.original_post_id,
-          content: content, // Now this is a string as expected
-          // Ensure you provide all necessary properties to match the PostWithRetweet type
-          user_id: r.retweet_user_id, // Assuming the retweet_user_id can be used as the user_id
-          // Other properties as necessary...
-        };
-      });
-
-      // Resolve all promises from the map to get the complete array of retweets
-      const retweets = await Promise.all(retweetPromises);
-      // Combine them into one array and sort by created_at or any other criteria
-      this.posts = [...posts, ...retweets].sort((a, b) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-      );
+            // Sort posts based on sortDate
+            this.posts = posts.sort((a, b) =>
+                new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        } catch (error) {
+            console.error('Error loading posts:', error);
+        }
     }
-  }
+
+    openCreatePostModal(): void {
+        const dialogRef = this.dialog.open(CreatePostComponent, {
+            width: '700px',
+            data: 0
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
+    }
+
+
+
+    async getOriginalPostDate(original_post_id: number): Promise<Date> {
+        const originalPost = await this.postsService.getOriginalPost(original_post_id);
+        return new Date(originalPost.created_at);
+    }
+}
