@@ -17,6 +17,7 @@ export class AuthComponent implements OnInit {
     registerForm!: FormGroup;
     loading = false;
     private session: Session | null | undefined;
+    termsAccepted = false;
 
     constructor(
         protected readonly authService: AuthService,
@@ -33,6 +34,9 @@ export class AuthComponent implements OnInit {
             confirmPassword: ['', Validators.required]
         }, {validator: this.matchingPasswords});
 
+    }
+    termsAcceptedChange() {
+        this.termsAccepted = !this.termsAccepted;
     }
 
     ngOnInit() {
