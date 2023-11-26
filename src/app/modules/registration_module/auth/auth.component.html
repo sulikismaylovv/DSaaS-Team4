@@ -20,7 +20,7 @@
                   <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                 </svg>
               </div>
-              <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
+              <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
             </div>
             <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
                  class="text-red-600 text-sm mt-1 w-fit">
@@ -38,10 +38,10 @@
                   <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
                 </svg>
               </div>
-              <input type="password" name="password" formControlName="password" id="registerPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <input type="password" name="password" formControlName="password" id="registerPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
-                 class="text-red-600 text-sm mt-1 w-fit">
+                 class="text-red-600 text-sm mt-1 ">
               <span *ngIf="registerForm.controls['password'].errors?.['required']">Password is required. </span>
               <span *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 8 characters long. </span>
               <span *ngIf="registerForm.controls['password'].errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number. </span>
@@ -59,7 +59,7 @@
                   </g>
                 </svg>
               </div>
-              <input type="text" name="confirm-password" formControlName="confirmPassword" id="registerConfirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <input type="text" name="confirm-password" formControlName="confirmPassword" id="registerConfirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div *ngIf="registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched"
                  class="text-red-600 text-sm mt-1">
@@ -88,6 +88,4 @@
     </div>
   </div>
 </section>
-
-
 
