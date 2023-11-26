@@ -11,7 +11,7 @@
         </h1>
         <form (ngSubmit)="onRegister()" [formGroup]="registerForm" class="space-y-4 md:space-y-6" action="#">
           <!--Email field-->
-          <div>
+          <div class="flex flex-col">
             <label for="registerEmail" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
             <div class="relative">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -20,17 +20,22 @@
                   <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                 </svg>
               </div>
-              <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
-            </div>
-            <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
-                 class="text-red-600 text-sm mt-1 w-fit">
-              <span *ngIf="registerForm.controls['email'].errors?.['required']">Email is required. </span>
-              <span *ngIf="registerForm.controls['email'].errors?.['email']">Please enter a valid email. </span>
-              <span *ngIf="registerForm.controls['email'].errors?.['minlength']">Email must be at least 5 characters long. </span>
+              <div class="flex">
+                <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
+                <button [class.bg-green-700]="registerForm.controls['email'].valid && registerForm.controls['email'].touched"
+                        [class.bg-red-700]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
+                        data-tooltip-target="tooltip-email" data-tooltip-placement="right"
+                        type="button"
+                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
           <!--Password field-->
-          <div>
+          <div class="flex flex-col">
             <label for="registerPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
             <div class="relative">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -38,17 +43,22 @@
                   <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
                 </svg>
               </div>
-              <input type="password" name="password" formControlName="password" id="registerPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
-            <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
-                 class="text-red-600 text-sm mt-1 ">
-              <span *ngIf="registerForm.controls['password'].errors?.['required']">Password is required. </span>
-              <span *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 8 characters long. </span>
-              <span *ngIf="registerForm.controls['password'].errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number. </span>
+              <div class="flex">
+                <input type="password" name="password" formControlName="password" id="registerPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <button [class.bg-green-700]="registerForm.controls['password'].valid && registerForm.controls['password'].touched"
+                        [class.bg-red-700]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
+                        data-tooltip-target="tooltip-password" data-tooltip-placement="right"
+                        type="button"
+                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
           <!--Confrim password-->
-          <div>
+          <div class="flex flex-col">
             <label for="registerConfirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
             <div class="relative">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -59,12 +69,21 @@
                   </g>
                 </svg>
               </div>
-              <input type="text" name="confirm-password" formControlName="confirmPassword" id="registerConfirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <div class="flex">
+                <input type="password" name="confirm-password" formControlName="confirmPassword" id="registerConfirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <button [class.bg-green-700]="registerForm.controls['confirmPassword'].valid && !registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched"
+                        [class.bg-red-700]="registerForm.controls['confirmPassword'].invalid || registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched"
+                        data-tooltip-target="tooltip-confirm-password" data-tooltip-placement="right"
+                        type="button"
+                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
+                  <!-- Icon SVG -->
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div *ngIf="registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched"
-                 class="text-red-600 text-sm mt-1">
-              Passwords do not match.
-            </div>
+
           </div>
           <div class="flex items-start">
             <div class="flex items-center h-5">
@@ -89,3 +108,40 @@
   </div>
 </section>
 
+<!-- Tooltip for email field-->
+<div id="tooltip-email" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <div *ngIf="registerForm.controls['email'].untouched">
+    Enter your email address.
+  </div>
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
+    <div *ngIf="registerForm.controls['email'].errors?.['required']">Email is required.</div>
+    <div *ngIf="registerForm.controls['email'].errors?.['email']">Please enter a valid email.</div>
+    <div *ngIf="registerForm.controls['email'].errors?.['minlength']">Email must be at least 5 characters long.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-password" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <div *ngIf="registerForm.controls['password'].untouched">Enter your password.</div>
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+    <div *ngIf="registerForm.controls['password'].errors?.['required']">Password is required.</div>
+    <div *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 8 characters long.</div>
+    <div *ngIf="registerForm.controls['password'].errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<!--Confirm password-->
+<div id="tooltip-confirm-password" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <div *ngIf="registerForm.controls['confirmPassword'].untouched">Enter your password again.</div>
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched">
+    <div *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">Password confirmation is required.</div>
+  </div>
+  <div *ngIf="registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched">Passwords do not match.</div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<app-custom-alert [message]="alertMessage" [show]="showAlert"></app-custom-alert>
