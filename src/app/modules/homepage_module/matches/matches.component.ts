@@ -7,6 +7,7 @@ import {Fixture} from "../../../core/models/fixtures.model";
 import {ApiService} from "../../../core/services/api.service";
 import {Router} from "@angular/router";
 import { FixtureTransferService } from '../../../core/services/fixture-transfer.service';
+import { SupabaseFixture } from '../../../core/models/supabase-fixtures.model';
 
 @Component({
   selector: 'app-matches',
@@ -23,6 +24,8 @@ export class MatchesComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
   stringDate: string;
+  supabaseFixtures: SupabaseFixture[] = [];
+  groupSupabaseFixtures: {[key: string]: Fixture[]} = {};  //grouped by date
 
   constructor(private apiService: ApiService, private datePipe: DatePipe, private router: Router, private fixtureTransferService: FixtureTransferService) {
     this.currentDate = new Date(); //use this for today's date
@@ -54,19 +57,30 @@ export class MatchesComponent implements OnInit {
     this.endDate = endOfWeek(date, { weekStartsOn: 5 });
   }
 
-  fetchFixturesForWeek() {
+  // fetchFixturesForWeek() {
+  //   let startDateString = this.getDateAsString(this.startDate);
+  //   let endDateString = this.getDateAsString(this.endDate);
+
+  //   // Fetch fixtures for the week range
+  //   this.apiService.fetchFixturesDateRange(144, startDateString, endDateString).subscribe(
+  //     (data: Fixture[]) => {
+  //       this.fixtures = data;
+  //       console.log(this.fixtures);
+  //       this.groupFixturesByDate();
+
+  //     }
+  //   );
+  // }
+  async fetchFixturesForWeek() {
     let startDateString = this.getDateAsString(this.startDate);
     let endDateString = this.getDateAsString(this.endDate);
-
-    // Fetch fixtures for the week range
-    this.apiService.fetchFixturesDateRange(144, startDateString, endDateString).subscribe(
-      (data: Fixture[]) => {
-        this.fixtures = data;
-        console.log(this.fixtures);
-        this.groupFixturesByDate();
-
-      }
-    );
+    try{
+      let fixtures = await this.apiService.fetchSupabaseFixturesDateRange(startDateString, endDateString);
+      this.supabaseFixtures = fixtures;
+      console.log(this.supabaseFixtures);
+    }catch(error){
+      console.log(error);
+    }
   }
 
   getGroupedFixtureKeys(): string[] {
