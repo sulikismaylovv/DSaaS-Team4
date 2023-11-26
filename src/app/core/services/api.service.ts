@@ -4,13 +4,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Fixture } from '../models/fixtures.model';
 import { Lineup } from '../models/lineup.model';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private supabase: SupabaseService) { }
+
+  
 
 
   private apiUrl = 'https://api-football-v1.p.rapidapi.com/v3';
