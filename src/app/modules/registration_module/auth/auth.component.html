@@ -26,8 +26,8 @@
                         [class.bg-red-700]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
                         data-tooltip-target="tooltip-email" data-tooltip-placement="right"
                         type="button"
-                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        class="rounded-full ms-4 focus:outline-none p-2.5">
+                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                 </button>
@@ -49,8 +49,8 @@
                         [class.bg-red-700]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched"
                         data-tooltip-target="tooltip-password" data-tooltip-placement="right"
                         type="button"
-                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        class="rounded-full ms-4 focus:outline-none p-2.5">
+                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                 </button>
@@ -75,9 +75,9 @@
                         [class.bg-red-700]="registerForm.controls['confirmPassword'].invalid || registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched"
                         data-tooltip-target="tooltip-confirm-password" data-tooltip-placement="right"
                         type="button"
-                        class="rounded-full ms-4 text-white focus:outline-none font-medium text-sm p-2.5 text-center">
+                        class="rounded-full ms-4 focus:outline-none p-2.5">
                   <!-- Icon SVG -->
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <svg class="w-6 h-6 text-gray-800 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                 </button>
@@ -108,6 +108,7 @@
   </div>
 </section>
 
+<!--Tooltips-->
 <!-- Tooltip for email field-->
 <div id="tooltip-email" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
   <div *ngIf="registerForm.controls['email'].untouched">
@@ -119,6 +120,7 @@
     <div *ngIf="registerForm.controls['email'].errors?.['email']">Please enter a valid email.</div>
     <div *ngIf="registerForm.controls['email'].errors?.['minlength']">Email must be at least 5 characters long.</div>
   </div>
+  <div *ngIf="registerForm.controls['email'].valid">Email is valid.</div>
   <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
 
@@ -130,6 +132,7 @@
     <div *ngIf="registerForm.controls['password'].errors?.['minlength']">Password must be at least 8 characters long.</div>
     <div *ngIf="registerForm.controls['password'].errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.</div>
   </div>
+  <div *ngIf="registerForm.controls['password'].valid ">Password is valid.</div>
   <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
 
@@ -141,6 +144,7 @@
     <div *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">Password confirmation is required.</div>
   </div>
   <div *ngIf="registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched">Passwords do not match.</div>
+  <div *ngIf="registerForm.controls['confirmPassword'].valid && !registerForm.errors?.['mismatchedPasswords'] && registerForm.controls['confirmPassword'].touched">Passwords match.</div>
   <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
 

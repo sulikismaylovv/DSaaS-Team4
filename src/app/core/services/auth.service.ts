@@ -110,8 +110,6 @@ export class AuthService {
         });
 
         if (signUpResponse.error) throw signUpResponse.error;
-
-        alert('Registration successful! Please check your email to verify your account.');
     }
 
     async completeProfileSetup(userId: string, additionalDetails: Profile): Promise<Profile> {
