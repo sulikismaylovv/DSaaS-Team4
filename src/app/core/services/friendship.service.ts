@@ -38,7 +38,7 @@ export class FriendshipService {
     const { data, error } = await this.supabase.supabaseClient
       .from('friendships')
       .insert([
-        { user1_id: requesterId, user2_id: addresseeId, status: 'accepted' }
+        { user1_id: requesterId, user2_id: addresseeId, status: 'pending' }
       ]);
 
     if (error) throw error;

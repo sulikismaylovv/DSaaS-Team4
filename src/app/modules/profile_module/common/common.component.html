@@ -56,7 +56,7 @@
             <div class="bg-light-mode-acc dark:bg-dark-mode shadow px-4 py-2 rounded-2xl">
               <ul class="grid grid-cols-3">
                 <ng-container>
-                  <li *ngFor="let friend of friendsList" class="mb-2">
+                  <li *ngFor="let friend of friendsList" class="mb-2 mx-2">
                     <div (click)="onFriendClick(friend.profile.id)"
                          class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
                       <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'"

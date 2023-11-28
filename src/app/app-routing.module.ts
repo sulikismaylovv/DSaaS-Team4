@@ -17,6 +17,7 @@ import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague
 import {SettingsComponent} from "./modules/settings/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {CommonComponent} from "./modules/profile_module/common/common.component";
+import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
     {path: 'settings', component: SettingsComponent, canActivate: [ProfileGuard], pathMatch: 'full'},
     { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard]},
     { path: 'profile/:userId', component: ProfileComponent},
+    { path: 'notifications', component: NotificationComponent, canActivate: [ProfileGuard]},
 
 ];
 
