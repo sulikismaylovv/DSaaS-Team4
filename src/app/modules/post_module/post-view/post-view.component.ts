@@ -308,4 +308,25 @@ export class PostViewComponent implements OnInit {
             console.error('Could not fetch avatar_url', error);
         });
     }
+
+    async onPostClick(postId: number | undefined): Promise<void> {
+        // Check if the user is authenticated
+        this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
+            if (!isAuthenticated) {
+                // If not authenticated, redirect to login
+                await this.router.navigate(['/login']);
+            }
+            else{
+                if (postId === undefined) throw new Error('Post ID is undefined');
+                await this.router.navigate(['/post', postId]);
+                window.location.reload();
+            }
+        }
+        )
+    }
+
+    async onAvatarClick(userId: string | undefined): Promise<void> {
+      if (userId === undefined) throw new Error('User ID is undefined');
+      await this.router.navigate(['/profile', userId]);
+    }
 }

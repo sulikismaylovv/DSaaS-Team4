@@ -5,12 +5,12 @@
     <!-- Retweeter's Info -->
     <div class="flex items-center mb-4">
       <!-- Retweeter's Avatar -->
-      <img [src]="avatarSafeUrl" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Retweeter's Username -->
-        <p class="font-bold text-md text-gray-800">{{ usernameRetweeted }}</p>
+        <p class="font-bold text-md text-gray-800" (click)="onAvatarClick(post.user_id)">{{ usernameRetweeted }}</p>
         <!-- Retweet Date -->
-        <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+        <p class="text-sm text-gray-600" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
     </div>
     <!-- Retweeter's Comment (if any) -->
@@ -18,15 +18,16 @@
   </div>
 
   <!-- Original Post Content -->
-  <div *ngIf="originalPost else originalContent" class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
+  <div *ngIf="originalPost else originalContent" (click)="onPostClick(originalPost.id)"
+       class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
     <div class="flex items-center mb-4">
       <!-- Original Poster's Avatar -->
-      <img [src]="retweetAvatarSafeUrl" alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Original Poster's Username -->
-        <p class="font-bold text-md text-gray-800">{{ username }}</p>
+        <p class="font-bold text-md text-gray-800" >{{ username }}</p>
         <!-- Original Post Date -->
-        <p class="text-sm text-gray-600">{{ originalPost.created_at | date: 'medium' }}</p>
+        <p class="text-sm text-gray-600"  >{{ originalPost.created_at | date: 'medium' }}</p>
       </div>
     </div>
     <!-- Original Post Content -->
@@ -41,12 +42,12 @@
   <ng-template #originalContent>
       <div class="flex items-center mb-4">
         <!-- Display poster's avatar -->
-        <img [src]="avatarSafeUrl" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+        <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
         <div>
           <!-- Display poster's username -->
-          <p class="font-bold text-md text-gray-800">{{ username }}</p>
+          <p class="font-bold text-md text-gray-800 " (click)="onAvatarClick(post.user_id)">{{ username }}</p>
           <!-- Display post date -->
-          <p class="text-sm text-gray-600">{{ post.created_at | date: 'medium' }}</p>
+          <p class="text-sm text-gray-600" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
         </div>
       </div>
       <!-- Display post content -->
