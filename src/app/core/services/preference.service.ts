@@ -10,7 +10,7 @@ export interface Preference {
 }
 
 export interface Club {
-    id?: bigint;
+    id?: number;
     name: string;
     code: string;
     country: string;
@@ -109,7 +109,7 @@ export class PreferencesService {
         }
     }
 
-    async getClubByClubId(clubId: bigint): Promise<Club> {
+    async getClubByClubId(clubId: number): Promise<Club> {
         try {
             const {data, error} = await this.supabase.supabaseClient
                 .from('clubs')
@@ -120,12 +120,10 @@ export class PreferencesService {
                 console.error('Error fetching club:', error);
                 throw error;
             }
-
             return data[0];
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
-                alert(error.message); // Alert the user with the error message
             }
             throw error; // Re-throw the error to be handled by the caller
         }

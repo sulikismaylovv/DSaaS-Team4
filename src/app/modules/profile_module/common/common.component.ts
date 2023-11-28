@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PreferencesService} from "../../../core/services/preference.service";
-import {AvatarService} from "../../../core/services/avatar.service";
+import {Club, Preference, PreferencesService} from "../../../core/services/preference.service";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
@@ -22,6 +22,12 @@ export class CommonComponent implements OnInit{
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
   posts: Post[] = [];
+  preference: Preference[] = [];
+  favClub: Club | undefined;
+  followingClub: Club[] = [];
+  favoriteClub: string | undefined;
+  followiedClubs: string[] | undefined;
+
   infoString: string[]= ['Friends', 'Leagues', 'About'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   friendsList: string[]= ['Username 1', 'Username 2', 'Username 3', 'Username 4', 'Username 5', 'Username 6', 'Username 7', 'Username 8', 'Username 9', 'Username 10' ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username' ];
@@ -37,7 +43,7 @@ export class CommonComponent implements OnInit{
     private readonly preferenceService: PreferencesService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly avatarService: AvatarService,
+    private readonly imageService: ImageDownloadService,
     protected dialog: MatDialog
 
   ) {
@@ -79,19 +85,40 @@ export class CommonComponent implements OnInit{
     if(this.userRefId != null){
       this.getProfileById(this.userRefId).then(async () => {
         this.username = this.profile?.username;
-        this.avatarSafeUrl = await this.avatarService.loadAvatarImage(this.profile?.id);
+        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
         await this.loadPosts(this.profile?.id || '');
+        this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
+        for (let i = 0; i < this.preference.length; i++) {
+          await this.sortPreference(this.preference[i]);    }
       });
 
     }
     else{
     this.getProfile().then(async () => {
       this.username = this.profile?.username;
-      this.avatarSafeUrl = await this.avatarService.loadAvatarImage(this.profile?.id);
+      this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
       await this.loadPosts(this.profile?.id || '');
-    });
+      this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
+      for (let i = 0; i < this.preference.length; i++) {
+        await this.sortPreference(this.preference[i]);    }
+      });
+    }
+
+
   }
 
+  async sortPreference(preference: Preference): Promise<void> {
+    if (preference.favorite_club) {
+      this.favClub = await this.preferenceService.getClubByClubId(parseInt(preference.club_id));
+      this.favoriteClub = this.favClub.name;
+    } else if (preference.followed_club) {
+      this.followingClub.push(await this.preferenceService.getClubByClubId(parseInt(preference.club_id)));
+      this.followiedClubs?.push(this.followingClub[this.followingClub.length - 1].name);
+    }
+  }
+
+  getFollowingTeams(): string {
+    return this.followingClub.map(club => club.name).join(', ');
   }
 
 

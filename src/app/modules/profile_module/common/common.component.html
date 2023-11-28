@@ -139,10 +139,11 @@
                 <a class="">About</a>
               </h2>
               <ul>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Favorite Teams</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Full name: {{profile?.first_name}} {{profile?.last_name}}</p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Birthdate: {{profile?.birthdate}}</p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Favorite Team: {{favoriteClub}} </p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">
+                  Following Teams: {{getFollowingTeams()}}</p></li>
               </ul>
             </div>
           </div>
