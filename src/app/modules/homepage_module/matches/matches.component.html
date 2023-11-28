@@ -25,22 +25,23 @@
       <!-- Inner loop for fixtures on a particular date -->
       <div *ngFor="let fixture of groupedFixtures[date]"
         class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4 flex items-center justify-between">
-        <button (click)="onGameSelect(fixture)" class="text-white underline">
-          <!-- Team 1 -->
+        <!-- <button (click)="onGameSelect(fixture)" class="text-white underline"> -->
+          <button  class="text-white underline">
+            <!-- Team 1 -->
           <div class="flex-1 flex items-center justify-start">
-            <img [src]="fixture.teams.home.logo" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-            <span class="font-semibold text-lg truncate">{{ fixture.teams.home.name }}</span>
+            <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
+            <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
           </div>
 
           <!-- Score -->
           <div class="font-bold text-xl flex-none w-16 text-center">
-            {{ fixture.score.fulltime.home }} - {{ fixture.score.fulltime.away }}
+            {{ fixture.home_goals }} - {{ fixture.away_goals }}
           </div>
 
           <!-- Team 2 -->
           <div class="flex-1 flex items-center justify-end">
-            <span class="font-semibold text-lg truncate">{{ fixture.teams.away.name }}</span>
-            <img [src]="fixture.teams.away.logo" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
+            <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+            <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
           </div>
         </button>
       </div>

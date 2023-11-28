@@ -14,7 +14,14 @@ export interface SupabaseFixture {
     odds_away?: number;
     odds_draw?: number;
     referee?: string;
+    club0?: club;
+    club1?: club;
 }
 
+interface club {
+    id: number;
+    name: string;
+    logo: string;
+}
 export class SupabaseFixtures {
 }
