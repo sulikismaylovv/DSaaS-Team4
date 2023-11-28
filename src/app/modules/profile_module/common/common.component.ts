@@ -7,7 +7,6 @@ import {AvatarService} from "../../../core/services/avatar.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {SharedService} from "../../../core/services/shared.service";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -39,7 +38,6 @@ export class CommonComponent implements OnInit{
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly avatarService: AvatarService,
-    private sharedService: SharedService,
     protected dialog: MatDialog
 
   ) {
@@ -109,7 +107,6 @@ export class CommonComponent implements OnInit{
         }
         if (profile) {
           this.profile = profile;
-          this.sharedService.sharedProfile = profile;
         }
       }
     } catch (error) {
@@ -130,7 +127,6 @@ export class CommonComponent implements OnInit{
       }
       if (profile) {
         this.profile = profile;
-        this.sharedService.sharedProfile = profile;
       }
     } catch (error) {
       if (error instanceof Error) {
