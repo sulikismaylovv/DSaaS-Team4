@@ -32,16 +32,14 @@ h2 {
     padding: 0;
 }
 
-.team-grid {
+/*.team-grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(160px, 1fr));
-    gap: 8px; /* Adjust the gap between grid items */
+    gap: 8px; !* Adjust the gap between grid items *!
     justify-content: center;
-    margin: 0; /* Remove margin to ensure the grid is centered */
-    margin-bottom: 16px; /* Reducing space below the heading */
-
-
-}
+    margin: 0; !* Remove margin to ensure the grid is centered *!
+    margin-bottom: 16px; !* Reducing space below the heading *!
+}*/
 
 .team-card {
     display: flex;
@@ -49,9 +47,7 @@ h2 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
-    padding: 16px; /* Adjust as needed */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    padding: 20px; /* Adjust as needed */
 }
 
 .team-card.favorite {
@@ -63,20 +59,19 @@ h2 {
     border-color: mediumpurple;
     border-width: thick; /* Gold border for selected team */
     border-radius: 12px;
-
 }
 
-.team-card img {
-    width: 100px; /* Fixed width */
-    height: 100px; /* Fixed height */
-    object-fit: contain; /* Keep aspect ratio */
-    margin-bottom: auto; /* Push everything else to the bottom */
-}
+/*.team-card img {
+    width: 100px; !* Fixed width *!
+    height: 100px; !* Fixed height *!
+    object-fit: contain; !* Keep aspect ratio *!
+    margin-bottom: auto; !* Push everything else to the bottom *!
+}*/
 
-.team-card p {
-    margin-top: auto; /* Push text to the bottom */
-    width: 100%; /* Full width of the card */
-}
+/*.team-card p {
+    margin-top: auto; !* Push text to the bottom *!
+    width: 100%; !* Full width of the card *!
+}*/
 
 .team-card.selected, .team-card.favorite {
     border-color: gold; /* Consistent gold border for selected/favorite team */
@@ -84,7 +79,6 @@ h2 {
     border-style: solid; /* Make sure to specify the border style */
     border-radius: 12px; /* Consistent border-radius */
 }
-
 
 .team-card.favorite .star {
     position: absolute;
