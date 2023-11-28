@@ -33,8 +33,4 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
-    toggleTheme() {
-        this.themeService.toggleTheme();
-    }
 }
