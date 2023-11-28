@@ -1,203 +1,208 @@
-<div class="bg-purple-100 min-h-screen flex flex-col justify-center items-center px-5 bg-amber-500">
-    <div class="bg-white rounded-lg shadow-lg p-8 w-full">
-        <div class="mb-5">
-            <app-stepper [currentStep]="currentStep"></app-stepper>
-        </div>
-        <form (ngSubmit)="onSubmit()" [formGroup]="updateProfileForm">
-            <div
-                    class="xl:flex xl:flex-col xl:justify-between xl:mx-auto xl:mt-10 xl:max-w-[28.125rem]"
-            >
-                <!-- Step 1 - User Profile Update -->
-                <section *ngIf="currentStep === 1">
-                    <h1 class="text-2xl mb-2 font-bold xl:text-3xl">Update Profile</h1>
-
-                    <div class="flex flex-col gap-1 text-xs">
-                        <!-- First Name -->
-                        <div class="flex justify-between mt-2 xl:mt-5">
-                            <label class="xl:text-base">First Name</label>
-                            <p *ngIf="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
-                               class="text-primary-strawberry-red font-semibold">
-                                This field is required</p>
-                        </div>
-                        <input class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal" formControlName="first_name"
-                               placeholder="e.g. John"
-                               type="text"/>
-
-                        <!-- Last Name -->
-                        <div class="flex justify-between mt-2 xl:mt-5">
-                            <label class="xl:text-base">Last Name</label>
-                            <p *ngIf="updateProfileForm.controls['last_name'].invalid
-                   && (updateProfileForm.controls['last_name'].dirty
-                   || updateProfileForm.controls['last_name'].touched)"
-                               class="text-primary-strawberry-red font-semibold">
-                                This field is required</p>
-                        </div>
-                        <input class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-                               formControlName="last_name"
-                               placeholder="e.g. Doe"
-                               type="text"
-                        />
-
-                        <!-- Username -->
-                        <div class="flex justify-between mt-2 xl:mt-5">
-                            <label class="xl:text-base">Username</label>
-                            <p *ngIf="updateProfileForm.controls['username'].invalid
-                   && (updateProfileForm.controls['username'].dirty
-                   || updateProfileForm.controls['username'].touched)"
-                               class="text-primary-strawberry-red font-semibold">
-                                This field is
-                            </p>
-                        </div>
-                        <input class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-                               formControlName="username"
-                               placeholder="e.g. johndoe123"
-                               type="text"/>
-
-                        <!-- Birthdate -->
-                        <div class="flex justify-between mt-2 xl:mt-5">
-                            <label class="xl:text-base">Birthdate</label>
-                            <p *ngIf="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
-                               class="text-primary-strawberry-red font-semibold">
-                                This field is required</p>
-                        </div>
-                        <input class="border border-neutral-light-gray text-primary-marine focus:outline-none focus:border-primary-purplish-blue p-[0.625rem] rounded-md placeholder:font-medium xl:py-4 xl:placeholder:text-lg xl:placeholder:font-normal"
-                               formControlName="birthdate"
-                               type="date"
-                        />
-
-
-                    </div>
-                </section>
-
-
-                <!-- Step 2 -->
-
-                <section *ngIf="currentStep === 2">
-                    <h2 class="text-2xl font-bold mb-2 xl:text-3xl">Select your favorite team</h2>
-                    <div class="grid-container">
-                        <div class="team-grid">
-                            <div (click)="selectFavorite(team)" *ngFor="let team of teams" [class.selected]="team.favorite"
-                                 class="team-card">
-                                <img alt="{{ team.name }}" src="{{ team.logoPath }}">
-                                <p>{{ team.name }}</p>
-                                <div *ngIf="team.favorite" class="star">&#9733;</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-
-                <!-- Step 3 -->
-                <section *ngIf="currentStep === 3">
-                    <h2 class="text-2xl font-bold mb-2 xl:text-3xl">Choose clubs you want to follow</h2>
-                    <div class="grid-container">
-                        <div class="team-grid">
-                            <div (click)="toggleTeamFollow(team)"
-                                 *ngFor="let team of teams"
-                                 [class.favorite]="team === favoriteTeam"
-                                 [class.followed]="selectedFollowedTeams.has(team)"
-                                 class="team-card">
-                                <img alt="{{ team.name }}" class="team-logo" src="{{ team.logoPath }}">
-                                <p>{{ team.name }}</p>
-                                <div *ngIf="team.favorite" class="star">&#9733;</div>
-                                <div *ngIf="selectedFollowedTeams.has(team) && team !== favoriteTeam" class="plus-sign">
-                                    +
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Summary -->
-                <!-- Step 4 - Summary -->
-                <section *ngIf="currentStep === 4">
-                    <h2 class="text-2xl font-bold mb-2 xl:text-3xl">Summary</h2>
-                    <div class="bg-neutral-alabaster py-5 px-4 text-sm rounded-lg xl:text-base">
-                        <div class="mb-3">
-                            <h3 class="text-primary-marine font-medium">Your Information</h3>
-                            <p>Name:
-                                <span class="text-primary-marine">{{ updateProfileForm.get('first_name')?.value }}</span>
-                                <span class="text-primary-marine">{{ ' ' }}</span>
-                                <span class="text-primary-marine">{{ updateProfileForm.get('last_name')?.value }}</span>
-                            </p>
-                            <p>Username:
-                                <span class="text-primary-marine">{{ updateProfileForm.get('username')?.value }}</span>
-                            </p>
-                            <p>Email:
-                                <span class="text-primary-marine">{{ profile?.email }}</span>
-                            </p>
-                        </div>
-                        <hr class="text-neutral-cool-gray my-4">
-                        <div class="mb-3">
-                            <h3 class="text-primary-marine font-medium">Favorite Team</h3>
-                            <p *ngIf="favoriteTeam">{{ favoriteTeam.name }}</p>
-                            <p *ngIf="!favoriteTeam">Not selected</p>
-                        </div>
-                        <hr class="text-neutral-cool-gray my-4">
-                        <div class="mb-3">
-                            <h3 class="text-primary-marine font-medium">Clubs You Want to Follow</h3>
-                            <ul>
-                                <li *ngFor="let team of selectedFollowedTeams">{{ team.name }}</li>
-                                <li *ngIf="selectedFollowedTeams.size === 0">No clubs selected</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </section>
-
-
-                <!-- Thank you -->
-                <section
-                        *ngIf="lastPage"
-                        class="flex flex-col py-14 items-center text-center xl:mt-16"
-                >
-                    <img
-                            alt=""
-                            class="w-14 mb-6 xl:w-[5.25rem] xl:mb-8"
-                            src="assets/images/icon-thank-you.svg"
-                    />
-                    <h2 class="text-2xl font-bold mb-2 xl:text-4xl">Thank you!</h2>
-                    <p class="text-neutral-cool-gray mb-3">
-                        Thanks for confirming your subscription! We hope you have fun using
-                        our platform. If you ever need support, please feel free to email us
-                        at support@loremgaming.com.
-                    </p>
-                </section>
-
-                <!-- Nav -->
-                <nav
-                        *ngIf="!lastPage"
-                        [ngClass]="{ 'flex-row-reverse': currentStep === 1 }"
-                        class="fixed bottom-0 w-screen left-0 p-5 text-base flex justify-between bg-neutral-white xl:relative xl:p-0 xl:mb-5 xl:min-w-[28.125rem] xl:max-w-[28.125rem]"
-                >
-                    <button
-                            (click)="changePage(false)"
-                            *ngIf="currentStep >= 2"
-                            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4"
-                            type="button"
-                    >
-                        Go Back
-                    </button>
-                    <button
-                            (click)="changePage(true)"
-                            *ngIf="currentStep !== 4"
-                            [disabled]="updateProfileForm.invalid"
-                            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4"
-                            type="button"
-                    >
-                        Next Step
-                    </button>
-                    <button
-                            *ngIf="currentStep === 4"
-                            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4"
-                            type="submit"
-                    >
-                        Confirm
-                    </button>
-                </nav>
-            </div>
-        </form>
+<div class="bg-light-mode dark:bg-dark-mode min-h-screen flex flex-col justify-center items-center px-5">
+  <div class="bg-white dark:bg-dark-gray rounded-lg shadow-lg p-8 w-full">
+    <div class="mb-5">
+      <app-stepper [currentStep]="currentStep"></app-stepper>
     </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="updateProfileForm">
+      <div class="xl:flex xl:flex-col xl:justify-between xl:mx-auto xl:mt-10 xl:max-w-[28.125rem]">
+        <!-- Step 1 - User Profile Update -->
+        <section *ngIf="currentStep === 1">
+          <h1 class="text-2xl mb-2 font-bold xl:text-3xl text-black dark:text-white">Complete profile</h1>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <!-- First Name -->
+            <label class="xl:text-base text-black dark:text-white">First Name</label>
+            <div class="flex">
+              <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md  xl:py-4" formControlName="first_name" placeholder="e.g. John" type="text"/>
+              <button [class.bg-green-700]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched" [class.bg-red-700]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
+                    data-tooltip-target="tooltip-firstname" data-tooltip-placement="right"
+                    type="button"
+                    class="rounded-full ms-4 focus:outline-none p-2.5">
+                <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Last Name -->
+            <label class="xl:text-base text-black dark:text-white">Last Name</label>
+            <div class="flex">
+              <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-primary-blue-500 rounded-md xl:py-4" formControlName="last_name" placeholder="e.g. Doe" type="text"/>
+              <button [class.bg-green-700]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched" [class.bg-red-700]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
+                      data-tooltip-target="tooltip-lastname" data-tooltip-placement="right"
+                      type="button"
+                      class="rounded-full ms-4 focus:outline-none p-2.5">
+                <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Username -->
+            <label class="xl:text-base text-black dark:text-white">Username</label>
+            <div class="flex">
+              <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="username" placeholder="e.g. johndoe123" type="text"/>
+              <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched" [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                      data-tooltip-target="tooltip-username" data-tooltip-placement="right"
+                      type="button"
+                      class="rounded-full ms-4 focus:outline-none p-2.5">
+                <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Birthdate -->
+            <label class="xl:text-base text-black dark:text-white">Birthdate</label>
+            <div class="flex">
+              <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="birthdate" type="date"/>
+              <button [class.bg-green-700]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched" [class.bg-red-700]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
+                      data-tooltip-target="tooltip-birthday" data-tooltip-placement="right"
+                      type="button"
+                      class="rounded-full ms-4 focus:outline-none p-2.5">
+                <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+        <!-- Step 2 -->
+        <section *ngIf="currentStep === 2">
+          <h2 class="text-2xl text-center font-bold mb-2 xl:text-3xl text-black dark:text-white">Select your favorite team</h2>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
+            <div (click)="selectFavorite(team)" *ngFor="let team of teams" [class.selected]="team.favorite" class="team-card">
+              <img alt="{{ team.name }}" src="{{ team.logoPath }}" class="w-fit h-fit">
+              <p class="text-gray dark:text-white font-bold pt-4">{{ team.name }}</p>
+              <div *ngIf="team.favorite" class="star">&#9733;</div>
+            </div>
+          </div>
+        </section>
+        <!-- Step 3 -->
+        <section *ngIf="currentStep === 3">
+          <h2 class="text-2xl font-bold mb-2 xl:text-3xl text-black dark:text-white">Choose clubs you want to follow</h2>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
+            <div (click)="toggleTeamFollow(team)" *ngFor="let team of teams" [class.favorite]="team === favoriteTeam" [class.followed]="selectedFollowedTeams.has(team)" class="team-card">
+              <img alt="{{ team.name }}" class="team-logo" src="{{ team.logoPath }}">
+              <p class="text-gray dark:text-white font-bold pt-4">{{ team.name }}</p>
+              <div *ngIf="team.favorite" class="star">&#9733;</div>
+              <div *ngIf="selectedFollowedTeams.has(team) && team !== favoriteTeam" class="plus-sign">
+                +
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Step 4 - Summary -->
+        <section *ngIf="currentStep === 4 && showSummary">
+          <h2 class="text-3xl font-bold text-center mb-4 text-black dark:text-white">Registration Summary</h2>
+          <div class="bg-neutral-alabaster py-5 px-4 text-sm rounded-lg xl:text-base text-black dark:text-white">
+            <div class="mb-3">
+              <h3 class="text-2xl font-semibold">Your Information</h3>
+              <p><strong>Name:</strong>
+                <span class="text-gray-300 ml-3">{{ updateProfileForm.get('first_name')?.value }}</span>
+                <span class="text-gray-300">{{ ' ' }}</span>
+                <span class="text-gray-300">{{ updateProfileForm.get('last_name')?.value }}</span>
+              </p>
+              <p><strong>Email:</strong>
+                <span class="text-gray-300 ml-3">{{ profile?.email }}</span>
+              </p>
+              <p><strong>Username:</strong>
+                <span class="text-gray-300 ml-3">{{ updateProfileForm.get('username')?.value }}</span>
+              </p>
+            </div>
+            <hr class="text-neutral-cool-gray my-4">
+            <div class="mb-3">
+              <h3 class="text-2xl font-semibold">Account Details</h3>
+              <p class="text-xl"> <strong> Favorite Team</strong></p>
+              <p class="text-gray-300" *ngIf="favoriteTeam">{{ favoriteTeam.name }}</p>
+              <p class="text-gray-300" *ngIf="!favoriteTeam">Not selected</p>
+            </div>
+            <div class="mb-3">
+              <h3 class="text-xl font-semibold">Clubs You Want to Follow</h3>
+              <ul>
+                <li class="text-gray-300" *ngFor="let team of selectedFollowedTeams">{{ team.name }}</li>
+                <li class="text-gray-300" *ngIf="selectedFollowedTeams.size === 0">No clubs selected</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- Thank you -->
+        <section *ngIf="lastPage" class="flex flex-col py-14 items-center text-center xl:mt-16 text-black dark:text-white">
+          <img alt="" class="w-fit h-fit mb-4 xl:w-[5.25rem] xl:mb-8" src="assets/success.gif"/>
+          <h2 class="text-2xl font-bold mb-2 xl:text-4xl">Thank you!</h2>
+          <p class="text-neutral-cool-gray text-gray-300 font-medium mb-3">
+            Thanks for confirming your subscription! We hope you have fun using
+            our platform. If you ever need support, please feel free to email us
+            at support@loremgaming.com.
+          </p>
+        </section>
+        <!-- Nav -->
+        <nav *ngIf="!lastPage" [ngClass]="{ 'flex-row': currentStep === 1 }" class="flex items-end justify-end bottom-0 w-screen left-0 p-5 text-base bg-neutral-white xl:relative xl:p-0 xl:mb-5 xl:min-w-[28.125rem] xl:max-w-[28.125rem]">
+          <button (click)="changePage(false)" *ngIf="currentStep >= 2" class="bg-purple-500 text-white px-5 py-2  mr-4 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="button">
+            Go Back
+          </button>
+          <button (click)="changePage(true)" *ngIf="currentStep !== 4" [disabled]="updateProfileForm.invalid" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="button">
+            Next step
+          </button>
+          <button *ngIf="currentStep === 4" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="submit">
+            {{isSubmitting ? 'loading...': 'Confirm'}}
+          </button>
+        </nav>
+      </div>
+    </form>
+  </div>
 </div>
 
+<!--Tooltips-->
+<div id="tooltip-firstname" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="updateProfileForm.controls['first_name'].invalid && updateProfileForm.controls['first_name'].touched">
+    <div *ngIf="updateProfileForm.controls['first_name'].errors?.['required']">First name is required.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched">
+    <div>First name is valid.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['first_name'].untouched">
+    <div>Enter your first name.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-lastname" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="updateProfileForm.controls['last_name'].invalid && updateProfileForm.controls['last_name'].touched">
+    <div *ngIf="updateProfileForm.controls['last_name'].errors?.['required']">Last name is required.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched">
+    <div>Last name is valid.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['last_name'].untouched">
+    <div>Enter your last name.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-username" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="updateProfileForm.controls['username'].invalid && updateProfileForm.controls['username'].touched">
+    <div *ngIf="updateProfileForm.controls['username'].errors?.['required']">Username is required.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched">
+    <div>Username is valid.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['username'].untouched">
+    <div>Enter your username.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-birthday" role="tooltip" class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark-gray rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark-gray">
+  <!-- Dynamic Tooltip Content Based on Specific Error -->
+  <div *ngIf="updateProfileForm.controls['birthdate'].invalid && updateProfileForm.controls['birthdate'].touched">
+    <div *ngIf="updateProfileForm.controls['birthdate'].errors?.['required']">Birthdate is required.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched">
+    <div>Birthdate is valid.</div>
+  </div>
+  <div *ngIf="updateProfileForm.controls['birthdate'].untouched">
+    <div>Enter your birthdate.</div>
+  </div>
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
 

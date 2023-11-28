@@ -30,6 +30,8 @@ export class MultistepformComponent implements OnInit {
     storage = 2;
     customProfile = 2;
     total = 9;
+    showSummary = true;
+    isSubmitting = false;
 
     teams = [
         {id: 260, name: 'OH Leuven', logoPath: 'assets/logos/oud-heverlee-leuven-seeklogo.com-3.svg', favorite: false},
@@ -104,20 +106,23 @@ export class MultistepformComponent implements OnInit {
 
 
     async onSubmit() {
+        this.isSubmitting = true;
         try {
             await this.completeProfile();
             await this.updatePreferences();
+            this.showSummary = false;
             this.lastPage = true;
             this.updateProfileForm.reset();
-
-            await this.router.navigate(['/home']);
+            //await this.router.navigate(['/home']);
         } catch (error) {
             if (error instanceof Error) {
                 // Show an error message and allow the user to try again
                 alert('An error occurred: ' + error.message + ' Please try again.');
                 // Optionally, reset part of your form or state here if needed
             }
+            this.isSubmitting = false;
         }
+        this.isSubmitting = false;
     }
 
     async updatePreferences(): Promise<void> {
