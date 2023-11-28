@@ -1,10 +1,8 @@
 <ol class="text-black dark:text-white items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse">
-  <li *ngFor="let step of steps" class="flex items-center space-x-2.5 rtl:space-x-reverse"
-      [ngClass]="{'text-blue-600 dark:text-blue-500': currentStep === step, 'text-gray-500 dark:text-gray-400': currentStep !== step}">
-        <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
-              [ngClass]="{'border border-blue-600 dark:border-blue-500': currentStep === step, 'border border-gray-500 dark:border-gray-400': currentStep !== step}">
-            {{ step }}
-        </span>
+  <li *ngFor="let step of steps" class="flex items-center space-x-2.5 rtl:space-x-reverse" [ngClass]="{'text-blue-600 dark:text-blue-500': currentStep === step, 'text-gray-500 dark:text-gray-400': currentStep !== step}">
+    <span class="flex items-center justify-center w-8 h-8 rounded-full shrink-0" [ngClass]="{'border border-blue-600 dark:border-blue-500': currentStep === step, 'border border-gray-500 dark:border-gray-400': currentStep !== step}">
+      {{ step }}
+    </span>
     <span>
       <p class="text-sm text-neutral-cool-gray -mb-[0.25rem]">STEP {{ step }}</p>
       <h3 class="font-medium leading-tight">
@@ -17,4 +15,3 @@
     </span>
   </li>
 </ol>
-
