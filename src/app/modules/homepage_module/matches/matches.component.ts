@@ -41,9 +41,9 @@ export class MatchesComponent implements OnInit {
     this.stringDate = this.currentDate.toISOString().split("T")[0];
   }
 
-  onGameSelect(fixture: Fixture) {
+  onGameSelect(fixture: SupabaseFixture) {
     this.fixtureTransferService.changeFixture(fixture);
-    this.router.navigateByUrl("/game/" + fixture.fixture.id, {
+    this.router.navigateByUrl("/game/" + fixture.fixtureID, {
       state: { fixture: fixture },
     });
   }

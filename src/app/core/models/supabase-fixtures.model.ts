@@ -23,5 +23,19 @@ interface club {
     name: string;
     logo: string;
 }
-export class SupabaseFixtures {
+export class SupabaseFixtureModel implements SupabaseFixture{
+    fixtureID: number;
+    team0: number;
+    team1: number;
+    time: Date;
+    venue: string;
+    is_finished: boolean;
+    constructor() {
+        this.fixtureID = 0;
+        this.team0 = 0;
+        this.team1 = 0;
+        this.time = new Date();
+        this.venue = "";
+        this.is_finished = false;
+    }
 }
