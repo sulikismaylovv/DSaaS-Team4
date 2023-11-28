@@ -16,6 +16,7 @@ import {ShopComponent} from "./modules/shop/shop.component";
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
 import {SettingsComponent} from "./modules/settings/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
+import {CommonComponent} from "./modules/profile_module/common/common.component";
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     {path: 'league',component: GloballeagueComponent, pathMatch: 'full'},
     {path: 'settings', component: SettingsComponent, canActivate: [ProfileGuard], pathMatch: 'full'},
     { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard]},
+    { path: 'profile/:userId', component: ProfileComponent},
 
 ];
 

@@ -12,11 +12,11 @@
       <div class="flex justify-between">
         <div class="flex p-4 z-10">
           <div class=" flex items-center h-44 w-44 -mt-16 bg-white dark:bg-test rounded-t-full overflow-hidden">
-            <img src="assets/User-Profile-PNG-Image.png" class="h-full w-full object-cover border-primary">
+            <img [src]="avatarSafeUrl" class="h-full w-full object-cover border-primary" alt="Avatar">
           </div>
 
           <div class="flex-col justify-center">
-            <p class="dark:text-primary-100 text-2xl">{{userName}}</p>
+            <p class="dark:text-primary-100 text-2xl">{{username}}</p>
             <div class="flex justify-start">
               <img src="assets/logos/KV_Kortrijk_logo.svg" class=" my-1 w-16 h-16">
             </div>
@@ -96,12 +96,12 @@
 
               <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
                 <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
                 <span class="text-light-mode-text dark:text-primary-100">#1</span>
               </div>
               <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
                 <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
                 <span class="text-light-mode-text dark:text-primary-100">#2</span>
               </div>
               <div class="flex items-center justify-center">
@@ -109,7 +109,7 @@
               </div>
               <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
                 <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
                 <span class="text-light-mode-text dark:text-primary-100">#1054</span>
               </div>
             </div>
@@ -163,8 +163,10 @@
     </div>
 
     <!-- Start: Own profile only -->
-    <div>
-      <ng-content select=".second-code"></ng-content>
+    <div *ngIf="isOwnProfile">
+      <ng-content select=".second-code">
+
+      </ng-content>
     </div>
     <!-- End: Own profile only-->
 
@@ -175,8 +177,6 @@
       <div class="px-4 bg-white dark:bg-test rounded-t-lg">
         <ul class="flex justify-around">
           <li class="bg-very-light-purple dark:bg-lighter-purple px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[0]}}</a></li>
-          <li class="bg-very-light-purple dark:bg-lighter-purple px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[1]}}</a></li>
-          <li class="bg-light-mode-acc dark:bg-search-bar px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[2]}}</a></li>
         </ul>
       </div>
 
@@ -185,89 +185,9 @@
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
         <!-- Post 1 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w-10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1 bg-dark-mode rounded-lg p-4 text-white">
-              <p>rum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum
-                ipsum lorum ipsum</p>
-            </div>
-          </div>
-
-          <!-- Post 2 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Man United won!</p>
-              <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-                <div class="flex items-center">
-                  <img src="../../../../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-                  <span class="font-semibold text-lg text-white">Team 1</span>
-                </div>
-                <span class="font-bold text-xl text-white">2 - 1</span>
-                <div class="flex items-center">
-                  <span class="font-semibold text-lg text-white">Team 2</span>
-                  <img src="../../../../assets/logo1.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Post 3 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4">
-            <div class="post-header items-center mb-4">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w-10 h-10 rounded-full  mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body">
-              <p>Go Rashford!!</p>
-              <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-center">
-                <img src="../assets/Football.png" alt="Football" class="w-10 h-10 rounded-full mr-4">
-                <span class="font-semibold text-lg text-white">Goal by Rashford</span>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- Post 4 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Appreciation post</p>
-              <img src="../assets/Rashford-MUFC.png" alt="Rashford">
-            </div>
-          </div>
-
-          <!-- Post 5 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Some random posts<br><br><br><br><br><br><br><br></p>
-            </div>
-          </div>
-
-          <!-- Post 6 -->
-          <div class="post-card bg-light-mode-text dark:bg-dark-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Some random posts<br><br><br><br><br><br><br><br></p>
+          <div *ngFor="let post of posts" class="mb-4">
+            <div (click)="onPostClick(post.id)">
+              <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false"></app-post-view>
             </div>
           </div>
         </div>

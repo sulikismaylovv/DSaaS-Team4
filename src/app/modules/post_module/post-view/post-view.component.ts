@@ -8,6 +8,7 @@ import {PostsService} from "../../../core/services/posts.service";
 import {Router} from "@angular/router";
 import {CreatePostComponent} from "../create-post/create-post.component";
 import {MatDialog} from "@angular/material/dialog";
+import {AvatarService} from "../../../core/services/avatar.service";
 
 @Component({
     selector: 'app-post-view',
@@ -39,7 +40,8 @@ export class PostViewComponent implements OnInit {
         private readonly postService: PostsService,
         private readonly router: Router,
         private sanitizer: DomSanitizer,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private avatarService: AvatarService
 
     ) {
     }
@@ -60,7 +62,6 @@ export class PostViewComponent implements OnInit {
         }
 
         if (this.post.original_post_id) {
-            console.log('Original post ID:', this.post.original_post_id);
             await this.loadOriginalPost(this.post.original_post_id);
         }
 
@@ -74,7 +75,6 @@ export class PostViewComponent implements OnInit {
     private async loadOriginalPost(originalPostId: number) {
         try {
             this.originalPost = await this.postService.getOriginalPost(originalPostId)
-            console.log('Original post:', this.originalPost);
             if (this.originalPost.image_url) {
                 const data = await this.postService.downLoadImage(this.originalPost.image_url);
                 if (data instanceof Blob) {

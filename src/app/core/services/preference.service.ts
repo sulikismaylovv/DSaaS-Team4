@@ -9,6 +9,17 @@ export interface Preference {
     updated_at?: Date; // Optional Date type for updated_at
 }
 
+export interface Club {
+    id?: bigint;
+    name: string;
+    code: string;
+    country: string;
+    founded: number;
+    national: boolean;
+    logo: string;
+    leagueID: number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -73,6 +84,50 @@ export class PreferencesService {
             if (favoritePreference) {
                 await this.upsertPreference({...favoritePreference, favorite_club: false});
             }
+        }
+    }
+
+    async getPreferences(userId: string): Promise<Preference[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('*')
+                .eq('user_id', userId);
+
+            if (error) {
+                console.error('Error fetching preferences:', error);
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async getClubByClubId(clubId: bigint): Promise<Club> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('clubs')
+                .select('*')
+                .eq('id', clubId);
+
+            if (error) {
+                console.error('Error fetching club:', error);
+                throw error;
+            }
+
+            return data[0];
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
         }
     }
 }

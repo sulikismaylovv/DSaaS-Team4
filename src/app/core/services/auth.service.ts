@@ -202,4 +202,13 @@ export class AuthService {
             await this.router.navigate(['/login']);
         }
     }
+
+  async profileById(userId: string) {
+    return this.supabase.supabaseClient
+      .from('users')
+      .select(`*`)
+      .eq('id', userId)
+      .single()
+
+  }
 }

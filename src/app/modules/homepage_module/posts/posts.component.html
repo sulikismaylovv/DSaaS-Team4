@@ -12,7 +12,7 @@
         <!-- Posts Feed -->
         <div class="w-full max-w-2xl px-4 py-6">
             <div *ngFor="let post of posts" class="mb-4">
-              <div (click)="onPostClick()">
+              <div (click)="onPostClick(post.id)">
                 <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false"></app-post-view>
               </div>
             </div>

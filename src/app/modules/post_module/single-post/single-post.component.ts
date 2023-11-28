@@ -3,7 +3,7 @@ import { Post, Comment } from "../../../core/models/posts.model";
 import { PostsService } from "../../../core/services/posts.service";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SupabaseService} from "../../../core/services/supabase.service";
 
 @Component({
@@ -24,7 +24,8 @@ export class SinglePostComponent implements OnInit {
     private readonly postsService: PostsService,
     private readonly authService: AuthService,
     private readonly sanitizer: DomSanitizer,
-    private readonly supabase: SupabaseService
+    private readonly supabase: SupabaseService,
+    private readonly router: Router,
   ) {
     this.supabase.supabaseClient
       .channel('realtime-comments')
@@ -129,5 +130,10 @@ export class SinglePostComponent implements OnInit {
 
   async cancelComment() {
     this.commentContent = ''; // Clear the comment input
+  }
+
+  async onAvatarClick(userId: string | undefined) {
+    if (userId === undefined) throw new Error('User ID is undefined');
+    await this.router.navigate(['/profile', userId]);
   }
 }

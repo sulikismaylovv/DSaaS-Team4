@@ -15,7 +15,8 @@
     <!-- Comment Field -->
     <div class="w-full max-w-2xl px-4 mb-4 bg-white">
       <div class="flex flex-row items-center border-b border-blue-500 py-2 bg-white shadow-lg rounded-lg">
-        <img [src]="avatarSafeUrl" alt="User Image" class="h-12 w-12 rounded-full mr-4"/>
+        <img [src]="avatarSafeUrl" (click)="onAvatarClick(profile?.id)"
+             alt="User Image" class="h-12 w-12 rounded-full mr-4"/>
         <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70" name="commentContent"
                   [(ngModel)]="commentContent"
                   placeholder="Share your football news with others"></textarea>
