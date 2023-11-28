@@ -2,11 +2,16 @@
 <app-common>
   <div class="first-code">
     <div class="flex items-start" *ngIf="!isOwnProfile">
-      <a href="/settings" class="flex items-center bg-very-light-purple dark:bg-lighter-purple m-2 p-1 rounded-2xl">
-        <span class="text-white text-3xl">Add Friend</span>
-      </a>
+      <button (click)="friendRequestStatus === 'friends' ? removeFriend() : addFriend()"
+              class="flex items-center bg-very-light-purple dark:bg-lighter-purple m-2 p-1 rounded-2xl focus:outline-none">
+    <span class="text-white text-3xl">
+        {{ friendRequestStatus === 'none' ? 'Add Friend' :
+      (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}
+    </span>
+      </button>
     </div>
-    <div class="flex items-start">
+
+    <div class="flex items-start"  *ngIf="isOwnProfile">
       <a href="/settings" class="flex items-center bg-very-light-purple dark:bg-lighter-purple m-2 p-1 rounded-2xl">
         <span class="text-white text-3xl">Settings</span>
       </a>

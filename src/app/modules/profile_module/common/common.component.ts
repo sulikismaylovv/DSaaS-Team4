@@ -8,6 +8,18 @@ import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
+import {FriendshipService} from "../../../core/services/friendship.service";
+
+export enum FriendRequestStatus {
+  None = 'none',
+  Requested = 'requested',
+  Friends = 'friends'
+}
+
+interface FriendInfo {
+  profile: Profile;
+  avatarSafeUrl: SafeResourceUrl;
+}
 
 @Component({
   selector: 'app-common',
@@ -27,10 +39,14 @@ export class CommonComponent implements OnInit{
   followingClub: Club[] = [];
   favoriteClub: string | undefined;
   followiedClubs: string[] | undefined;
+  friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
+  friendsList: FriendInfo[] = []; // Array to store friends' info
+
+
+
 
   infoString: string[]= ['Friends', 'Leagues', 'About'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
-  friendsList: string[]= ['Username 1', 'Username 2', 'Username 3', 'Username 4', 'Username 5', 'Username 6', 'Username 7', 'Username 8', 'Username 9', 'Username 10' ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username'  ,'Username' ];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
   imageList: string[]= ['KV-Kortrijk-wallpaper.jpg','unnamed.jpg','v2_large_8717893f85b4c67b835c8b9984d0115fbdb37ecf.jpg','vieren-KV-Kortrijk-21-10-2023.jpg'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
@@ -44,7 +60,8 @@ export class CommonComponent implements OnInit{
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly imageService: ImageDownloadService,
-    protected dialog: MatDialog
+    protected dialog: MatDialog,
+    protected readonly friendshipService: FriendshipService
 
   ) {
     this.supabase.supabaseClient
@@ -84,6 +101,8 @@ export class CommonComponent implements OnInit{
 
     if(this.userRefId != null){
       this.getProfileById(this.userRefId).then(async () => {
+        await this.checkFriendStatus();
+        await this.fetchFriends(this.profile?.id);
         this.username = this.profile?.username;
         this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
         await this.loadPosts(this.profile?.id || '');
@@ -96,6 +115,7 @@ export class CommonComponent implements OnInit{
     else{
     this.getProfile().then(async () => {
       this.username = this.profile?.username;
+      await this.fetchFriends(this.profile?.id);
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
       await this.loadPosts(this.profile?.id || '');
       this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
@@ -208,6 +228,91 @@ export class CommonComponent implements OnInit{
     if (modal) {
       modal.classList.remove('active');
     }
+  }
+
+  addFriend(): void {
+    // Assuming you have the target user's ID and the current user's ID available
+    if(this.userRefId == null) throw new Error('User ID is undefined');
+    const targetUserId = this.userRefId;
+    const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
+
+    if (currentUserId) {
+      this.friendshipService.addFriend(currentUserId, targetUserId)
+        .then(() => {
+          console.log('Friend request sent');
+          this.friendRequestStatus = FriendRequestStatus.Requested;
+          // You can update the UI accordingly
+        })
+        .catch(error => {
+          console.error('Error sending friend request:', error);
+          // Handle errors, perhaps show a message to the user
+        });
+    } else {
+      console.error('User is not logged in');
+      // Handle the case where the user is not logged in
+    }
+  }
+
+  async checkFriendStatus(): Promise<void> {
+    // Call the service to check the friend status
+    if(this.userRefId == null) throw new Error('User ID is undefined');
+    const targetUserId = this.userRefId;
+    const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
+    // This is a hypothetical method that you would need to implement
+    const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
+    if(status === 'accepted') {
+      this.friendRequestStatus = FriendRequestStatus.Friends;
+    } else if (status === 'pending') {
+      this.friendRequestStatus = FriendRequestStatus.Requested;
+    }
+  }
+
+  removeFriend(): void {
+    // Assuming you have the target user's ID and the current user's ID available
+    if(this.userRefId == null) throw new Error('User ID is undefined');
+    const targetUserId = this.userRefId;
+    const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
+
+    if (currentUserId) {
+      this.friendshipService.removeFriend(currentUserId, targetUserId)
+        .then(() => {
+          console.log('Friend removed');
+          this.friendRequestStatus = FriendRequestStatus.None;
+          // You can update the UI accordingly
+        })
+        .catch(error => {
+          console.error('Error removing friend:', error);
+          // Handle errors, perhaps show a message to the user
+        });
+    } else {
+      console.error('User is not logged in');
+      // Handle the case where the user is not logged in
+    }
+  }
+
+
+  async fetchFriends(userId: string | undefined): Promise<void> {
+    if(userId === undefined) throw new Error('User ID is undefined');
+    if (userId) {
+      const friendIds = await this.friendshipService.getFriends(userId);
+      for (const friendId of friendIds) {
+        const friendProfile = await this.authService.profileById(friendId);
+        if (friendProfile.data) {
+          const avatarSafeUrl = await this.imageService.loadAvatarImage(friendProfile.data.id);
+          this.friendsList.push({
+            profile: friendProfile.data,
+            avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png' // Fallback to default image
+          });
+        }
+      }
+    }
+  }
+
+  async onFriendClick(friendId: string | undefined): Promise<void> {
+    if (friendId === undefined) throw new Error('Friend ID is undefined');
+    await this.router.navigate(['/profile', friendId]).then(() => {
+      window.location.reload();
+    });
   }
 
 
