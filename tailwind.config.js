@@ -52,6 +52,8 @@ module.exports = {
         '224': '56rem',
         '226': '56.5rem',
         '240': '60rem',
+        '256': '64rem',
+        '272': '68rem',
       },
       borderColor: theme => ({
         ...theme('colors'), // This ensures you keep all existing colors
