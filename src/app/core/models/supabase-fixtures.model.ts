@@ -39,3 +39,6 @@ export class SupabaseFixtureModel implements SupabaseFixture{
         this.is_finished = false;
     }
 }
+
+export class SupabaseFixtures {
+}
