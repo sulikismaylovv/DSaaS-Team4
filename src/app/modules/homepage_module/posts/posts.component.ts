@@ -116,7 +116,7 @@ export class PostsComponent implements OnInit {
         }
         else{
           if (postId === undefined) throw new Error('Post ID is undefined');
-          await this.router.navigate(['/post', postId]);
+          //await this.router.navigate(['/post', postId]);
         }
         // If authenticated, you can perform other actions, such as opening the post details
     });
