@@ -65,25 +65,31 @@ interface SimpleFixture {
   time: string;
   referee?: string;
 }
+
+interface ClubData {
+  id: number;
+  points: number;
+  goalsDiff: number;
+}
+
 import f from "https://cdn.jsdelivr.net/npm/@supabase/node-fetch@2.6.14/+esm";
 import {
   createClient,
   SupabaseClient,
 } from "https://esm.sh/@supabase/supabase-js@2.7.1";
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "a2373086ecmsh8b6e5f18c9f297ep1505f8jsn45915d047f0a",
+    "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
+  },
+};
 
 async function getTodayFixtures(): Promise<Fixture[]> {
   const today = new Date();
   const date = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-
   const url =
     `https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}&league=144&season=2023`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "a2373086ecmsh8b6e5f18c9f297ep1505f8jsn45915d047f0a",
-      "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
-    },
-  };
 
   try {
     const response = await fetch(url, options);
@@ -94,6 +100,23 @@ async function getTodayFixtures(): Promise<Fixture[]> {
     return data.response; // Assuming that the fixtures are in the 'response' field of the JSON
   } catch (error) {
     console.error("Error fetching fixtures:", error);
+    return [];
+  }
+}
+
+async function getClubPoints(): Promise<ClubData[]> {
+  try {
+    const url = 'https://api-football-v1.p.rapidapi.com/v3/standings?season=2023&league=144';
+    const response = await fetch(url, options);
+    const data = await response.json();
+    const standings = data.response[0].league.standings[0];
+    return standings.map((team: any) => ({
+      id: team.team.id,
+      points: team.points,
+      goalsDiff: team.goalsDiff,
+    }));
+  } catch (error) {
+    console.error("Error fetching club data:", error);
     return [];
   }
 }
@@ -118,24 +141,27 @@ async function updateScore(supabaseClient: SupabaseClient, fixture: Fixture) {
   });
 }
 
-async function isMatchDay(supabaseClient: SupabaseClient): Promise<boolean> {
-  const today = new Date();
-  const startOfDay = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-  );
-  const endOfDay = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + 1,
-  );
+async function updateClubData(supabaseClient: SupabaseClient) {
+  const clubsData = await getClubPoints();
+  for (const club of clubsData) {
+    const { data, error } = await supabaseClient
+      .from("clubs")
+      .update({ points: club.points, goal_difference: club.goalsDiff })
+      .eq("id", club.id);
+    if (error) throw error;
+  }
+}
+
+async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
+  const now = new Date();
+  const oneHourBefore = new Date(now.getTime() - 60 * 60 * 1000); // 1 hour before now
+  const twoHoursFifteenAfter = new Date(now.getTime() + (2 * 60 + 15) * 60 * 1000); // 2 hours and 15 minutes after now
 
   const { data, error } = await supabaseClient
     .from("fixtures")
     .select("time")
-    .gte("time", startOfDay.toISOString())
-    .lt("time", endOfDay.toISOString());
+    .gte("time", oneHourBefore.toISOString())
+    .lte("time", twoHoursFifteenAfter.toISOString());
 
   if (error) {
     throw error;
@@ -143,6 +169,7 @@ async function isMatchDay(supabaseClient: SupabaseClient): Promise<boolean> {
 
   return data.length > 0;
 }
+
 
 Deno.serve(async (req) => {
   const { url, method } = req;
@@ -162,8 +189,9 @@ Deno.serve(async (req) => {
   }
 
   let fixtures: any[] = [];
-  if (await isMatchDay(supabaseClient)) {
+  if (await isThereMatch(supabaseClient)) {
     fixtures = await getTodayFixtures();
+    updateClubData(supabaseClient);
   }
   for (const fixture of fixtures) {
     await updateScore(supabaseClient, fixture);
