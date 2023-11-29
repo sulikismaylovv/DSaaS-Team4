@@ -4,8 +4,9 @@
     <!--Contains the available points-->
     <div class="flex items-center justify-between h-fit mb-4 rounded bg-gray-50 dark:bg-gray-800">
       <div class="flex flex-col items-start ml-4">
-        <p class="text-xl font-semibold text-gray-400 dark:text-white"> Your balance:</p>
-        <p class="text-xl font-medium text-gray-400 dark:text-white"> 9999 pts</p>
+        <p class="text-xl font-semibold text-gray-400 dark:text-white"> Your Credits:</p>
+        <p class="text-xl font-medium text-gray-400 dark:text-white"> {{ userCredits }} pts</p>
+
       </div>
       <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 mr-4" type="submit">Buy more</button>
     </div>
@@ -25,7 +26,7 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">50 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
+              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
             </div>
           </div>
         </div>
@@ -43,7 +44,7 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">150 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
+              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
             </div>
           </div>
         </div>
@@ -61,7 +62,7 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">200 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
+              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
             </div>
           </div>
         </div>
@@ -79,19 +80,38 @@
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">200000 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
+              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!--4 grid column containing badges-->
-    <div class="flex items-start justify-between">
-      <p class="text-white font-semibold text-2xl mb-4">Badges</p>
-      <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
-              (click)="toggleMoreBadges()">
-        {{ showMoreBadges ? 'Show Less' : 'Show More' }}</button>
+    <!-- Players grid -->
+    <p class="text-white font-semibold text-2xl mb-4">Players from your favorite club</p>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <!-- Player cards -->
+      <ng-container *ngFor="let player of players | slice:0:4"> <!-- Only display the first 4 players -->
+        <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">
+          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />
+            <div class="px-5 pb-5">
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ player.name }}</h5>
+              <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
+                <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
+    <!--4 grid column containing badges-->
+<!--    <div class="flex items-start justify-between">-->
+<!--      <p class="text-white font-semibold text-2xl mb-4">Add to your Player Collection</p>-->
+<!--      <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"-->
+<!--              (click)="toggleMoreBadges()">-->
+<!--        {{ showMoreBadges ? 'Show Less' : 'Show More' }}</button>-->
+<!--    </div>-->
     <div class="grid grid-cols-4 gap-4 mb-4">
       <!--1st row-First badge-->
       <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
