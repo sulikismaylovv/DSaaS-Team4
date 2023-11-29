@@ -13,6 +13,7 @@ module.exports = {
         'test': "#2c3642",
         'dark-mode-text': "#b5a8ee",
         'light-mode': "#fffff0",
+        'navbar-hover-light':"#f5f5dd",
         'light-mode-acc': "#f5f5dd",
         'light-mode-text':"#1c2632",
         'gold': '#FFD700',

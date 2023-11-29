@@ -18,7 +18,7 @@
         </a>
         <ul class="space-y-2 font-medium">
             <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li *ngIf="authService.isAuthenticated$ | async">
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/notifications">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/league">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li  *ngIf="authService.isAuthenticated$ | async">
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/profile">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                 </a>
             </li>
             <li  *ngIf="authService.isAuthenticated$ | async">
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/shop">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +84,7 @@
                 </a>
             </li>
             <li  *ngIf="authService.isAuthenticated$ | async" >
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group"
                    href="/settings">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="currentColor" viewBox="0 0 16 3" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@
         <ul  class="pt-4 mt-4 space-y-2 font-medium border-t border-amber-600 dark:border-amber-700">
             <li  *ngIf="authService.isAuthenticated$ | async">
                 <button (click)="authService.logout()"
-                        class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                        class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 18 15" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 7.5h11m0 0L8 3.786M12 7.5l-4 3.714M12 1h3c.53 0 1.04.196 1.414.544.375.348.586.82.586 1.313v9.286c0 .492-.21.965-.586 1.313A2.081 2.081 0 0 1 15 14h-3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -124,7 +124,7 @@
               </button>
             </li>
             <li>
-                <a class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer"
+                <a class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer"
                    href="/home">
                     <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
@@ -136,7 +136,7 @@
             </li>
             <li>
                 <a (click)="themeService.toggleTheme()"
-                   class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group cursor-pointer">
+                   class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer">
                     <svg *ngIf="themeService.isDarkModeEnabled()"
                          aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white"
                          fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
