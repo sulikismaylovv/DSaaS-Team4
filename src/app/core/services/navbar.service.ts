@@ -5,15 +5,12 @@ import {BehaviorSubject} from 'rxjs';
     providedIn: 'root'
 })
 export class NavbarService {
-    private showNavbarSubject = new BehaviorSubject<boolean>(true);
-
-    // Observable to be used with the async pipe
-    public showNavbar$ = this.showNavbarSubject.asObservable();
-
-    constructor() {
-    }
-
-    public setShowNavbar(show: boolean): void {
-        this.showNavbarSubject.next(show);
-    }
+  // Observable navItem source
+  private showNavbarSubject = new BehaviorSubject<boolean>(true);
+  // Observable to be used with the async pipe
+  public showNavbar$ = this.showNavbarSubject.asObservable();
+  constructor() {}
+  public setShowNavbar(show: boolean): void {
+    this.showNavbarSubject.next(show);
+  }
 }

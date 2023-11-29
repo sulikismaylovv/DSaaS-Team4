@@ -17,18 +17,16 @@ export class HomeComponent implements OnInit {
     showMatches: boolean = false;
 
     constructor(
-        private router: Router,
-        protected readonly authService: AuthService,
-        public themeService: ThemeService,
-        public navbarService: NavbarService,
-    ) {
+      public themeService: ThemeService,
+      public navbarService: NavbarService,
+      private router: Router,
+      protected readonly authService: AuthService,) {
     }
 
     ngOnInit() {
-        // Subscribe to the auth state changes
-        this.authService.authChanges((_, session) => (this.session = session));
-        this.navbarService.setShowNavbar(true);
-        initFlowbite();
+      this.navbarService.setShowNavbar(true);
+      // Subscribe to the auth state changes
+      this.authService.authChanges((_, session) => (this.session = session));
     }
 
     toggle() {
