@@ -112,7 +112,6 @@ export class PostViewComponent implements OnInit {
         }
     }
 
-
     //Like Logic
     toggleLike(postId: number | undefined) {
         if (postId === undefined) throw new Error('Post ID is undefined');

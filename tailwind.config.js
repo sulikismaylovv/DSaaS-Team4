@@ -61,6 +61,9 @@ module.exports = {
       '176': '44rem',
       '192': '48rem',
       '208': '52rem',
+      '224': '56rem',
+      '226': '56.5rem',
+      '240': '60rem',
     },
     fontFamily: {
       'body': [

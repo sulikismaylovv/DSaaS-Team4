@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
       // Subscribe to the auth state changes
       this.authService.authChanges((_, session) => (this.session = session));
     }
+  // Method to close the sidebar
+
 
     toggle() {
         this.hideForm = !this.hideForm;
@@ -55,4 +57,5 @@ export class HomeComponent implements OnInit {
         this.showPosts = false;
         this.showMatches = true;
     }
+
 }

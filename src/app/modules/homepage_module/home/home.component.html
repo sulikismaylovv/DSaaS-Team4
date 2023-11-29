@@ -1,104 +1,104 @@
-<div class="p-4 sm:ml-64">
+<aside class="fixed top-0 right-0 w-96 pr-6 pt-6">
+  <div *ngIf="!(authService.isAuthenticated$ | async)" class="mb-4">
+    <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2" type="button" (click)="navigateToLogin()">
+      Log In
+    </button>
+  </div>
+  <div class=" rounded-lg shadow-md mt-4 p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+    <div class="flex justify-center">
+      <span class=" content-center  text-xl">Next Match</span>
+    </div>
+    <div class="flex items-center justify-center">
+      <img alt="Team 1" class="w-20 h-20 rounded-full mt-2" src="../assets/team1-icon.png">
+    </div>
+    <div class="flex flex-col items-center justify-center">
+      <span class=" mt-3 text-l">KV Kortrijk</span>
+      <span class="text-l">Tue, 26 oct 21:00</span>
+    </div>
+  </div>
+  <div class=" rounded-lg shadow-md mt-5 mb-8 p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+    <div class="flex justify-center">
+      <span class=" content-center text-xl">Remontada League</span>
+    </div>
+    <div class="flex items-center justify-center">
+      <img alt="Raymontada League" class="w-32 h-32 rounded-full mt-2" src="../assets/img.png">
+    </div>
+    <div class="flex flex-col items-center justify-center">
+      <span class=" mb-3 mx-4 text-sm">Login Required</span>
+    </div>
+    <div class=" grid grid-cols-1 md:grid-cols-1 gap-1 mx-2">
+      <div class="dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+        <div class="flex items-center">
+          <img alt="Team 1" class="w-6 h-6 rounded-full object-cover" src="../assets/User-Profile-PNG-Image.png">
+          <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#1</span>
+        </div>
+        <div class="flex-1 items-center ml-3">
+          <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player One</div>
+        </div>
+      </div>
+      <div class=" dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+        <div class="flex items-center">
+          <img alt="Team 1" class="w-6 h-6 rounded-full object-cover" src="../assets/User-Profile-PNG-Image.png">
+          <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#2</span>
+        </div>
+        <div class="flex-1 items-center ml-3">
+          <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Two</div>
+        </div>
+      </div>
+      <div class=" dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
+        <div class="flex items-center">
+          <img alt="Team 1" class="w-6 h-6 rounded-full object-cover" src="../assets/User-Profile-PNG-Image.png">
+          <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1">#3</span>
+        </div>
+        <div class="flex-1 items-center ml-3">
+          <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="p-4 lg:ml-64 lg:mr-64">
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-    <div class="grid grid-cols-3 gap-4 mb-4">
-      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
+    <!--Search bar-->
+    <div class="flex items-start justify-start mb-4 rounded">
+      <form class="w-full">
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+          <input type="search" id="default-search" class="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-20" placeholder="Search..." required>
+          <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </div>
+      </form>
     </div>
-    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-        </svg>
-      </p>
+    <!--Links for posts/matches-->
+    <div class="flex items-center justify-center h-fit mb-4 rounded">
+      <nav class="flex justify-center py-4 space-x-4">
+        <a (click)="showPostsContent()" class="light-mode-text hover:bg-navbar-hover-light focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer">
+          Posts
+        </a>
+        <a (click)="showMatchesContent()" class="light-mode-text hover:bg-navbar-hover-light focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer">
+          Games
+        </a>
+      </nav>
     </div>
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
+    <!--Posts and Matches come here-->
+    <div class="flex items-center justify-center h-fit mb-4 rounded bg-gray dark:bg-gray-800">
+      <div *ngIf="showPosts">
+        <app-posts></app-posts> <!--&lt;!&ndash; Display only if showPosts is true &ndash;&gt;-->
       </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-    </div>
-    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-        </svg>
-      </p>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
-      </div>
-      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-          </svg>
-        </p>
+      <div *ngIf="showMatches">
+        <app-matches></app-matches> &<!--lt;!&ndash; Display only if showMatches is true &ndash;&gt;-->
       </div>
     </div>
   </div>
 </div>
+
+
 <!--
 
 <section class=" flex flex-col min-h-screen " xmlns="http://www.w3.org/1999/html">
@@ -201,7 +201,8 @@
     </aside>
   </div>
 </section>
-
+-->
+<!--
 <style>
     /* CSS for a larger logo at the top */
     .top-logo {
@@ -214,3 +215,7 @@
 
 </style>
 -->
+
+
+
+
