@@ -50,7 +50,7 @@
         </div>
       </div>
       <!-- Display post content -->
-      <p class="text-gray-800 mt-3 dark:text-white">{{ post.content }}</p>
+      <p class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)" >{{ post.content }}</p>
       <!-- Display post image if exists -->
       <div *ngIf="post.image_url" class="mt-4"  (click)="onPostClick(post.id)">
         <img [src]="postSafeUrl" alt="Post image" class="rounded-lg h-auto max-w-md mx-auto"/>

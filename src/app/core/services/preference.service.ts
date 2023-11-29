@@ -56,6 +56,74 @@ export class PreferencesService {
         }
     }
 
+    async deletePreference(preference: Preference) {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .delete()
+                .match({user_id: preference.user_id, club_id: preference.club_id});
+
+            if (error) {
+                console.error('Error deleting preference:', error);
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async getFavoritePreferences(userId: string): Promise<Preference> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('*')
+                .eq('user_id', userId)
+                .eq('favorite_club', true);
+
+            if (error) {
+                console.error('Error fetching favorite preferences:', error);
+                throw error;
+            }
+
+            return data[0];
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async getFollowedPreferences(userId: string): Promise<Preference[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('*')
+                .eq('user_id', userId)
+                .eq('followed_club', true);
+
+            if (error) {
+                console.error('Error fetching followed preferences:', error);
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
     private async checkAndUpdatePreferences(userId: string, clubId: bigint, isFavorite: boolean, isFollowed: boolean): Promise<void> {
         // Fetch existing preferences
         const {data: existingPreferences, error} = await this.supabase.supabaseClient
@@ -121,6 +189,25 @@ export class PreferencesService {
                 throw error;
             }
             return data[0];
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async fetchAllClubs(): Promise<Club[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('clubs')
+                .select('*');
+
+            if (error) {
+                console.error('Error fetching clubs:', error);
+                throw error;
+            }
+            return data;
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);

@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Session} from "@supabase/supabase-js";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AvatarComponent} from "../account_module/avatar/avatar.component";
+import {Club, PreferencesService} from "../../core/services/preference.service";
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +15,7 @@ import {AvatarComponent} from "../account_module/avatar/avatar.component";
 export class SettingsComponent implements OnInit{
   showContent: boolean = false;
   profile: Profile | undefined;
+  clubs: Club[] = [];
 
   clickedImage: string | null = null;
   @Input() team: any;
@@ -23,6 +25,7 @@ export class SettingsComponent implements OnInit{
   hover: boolean = false;
   updateSettingsForm!: FormGroup;
   private session: Session | null | undefined;
+  private favoriteClubId: number | null = null;
 
 
   constructor(
@@ -30,6 +33,7 @@ export class SettingsComponent implements OnInit{
     private readonly router: Router,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
+    private preferencesService: PreferencesService
   ) {
   }
 
@@ -67,6 +71,10 @@ export class SettingsComponent implements OnInit{
         }
       }
     }
+
+    this.clubs = await this.fetchAllClubs();
+    this.favoriteClubId = await this.fetchFavoriteClubId();
+    console.log('this.clubs: ', this.clubs);
   }
 
   async updateAvatar(event: string): Promise<void> {
@@ -131,27 +139,37 @@ export class SettingsComponent implements OnInit{
     }
   }
 
-  toggleSelection() {
-    // If you want to prevent changing the selection of the favorite team,
-    // you can add a condition here:
-    if (!this.favorite) {
-      this.selectTeam.emit(this.team);
+  private async fetchFavoriteClubId(): Promise<number | null> {
+    const userId = this.authService.session?.user?.id;
+    if (!userId) return null;
+    const preference = await this.preferencesService.getFavoritePreferences(userId);
+    console.log('preference: ', preference);
+    return preference ? parseInt(preference.club_id) : null;
+  }
+
+  private async fetchAllClubs(): Promise<Club[]>{
+      return await this.preferencesService.fetchAllClubs();
+  }
+
+  async selectFavoriteClub(clubId: number): Promise<void> {
+    const userId = this.authService.session?.user?.id;
+    if (!userId) {
+      alert('User not authenticated');
+      return;
+    }
+
+    try {
+      await this.preferencesService.deletePreference({
+        updated_at: new Date(), followed_club: false,
+        favorite_club: true, user_id: userId, club_id: this.favoriteClubId?.toString() || '' });
+      await this.preferencesService.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: true, followed_club: false });
+      this.favoriteClubId = clubId;
+      alert('Favorite club updated successfully');
+    } catch (error) {
+      alert('Error updating favorite club');
     }
   }
 
-  toggleContent(team: string) {
-    if (this.clickedImage === team) {
-      // If the same team is clicked again, reset everything
-      this.showContent = false;
-      this.clickedImage = null;
-    } else {
-      // Otherwise, show content and set the clicked team
-      this.showContent = true;
-      this.clickedImage = team;
-
-
-    }
-  }
 
 
 
