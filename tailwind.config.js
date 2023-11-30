@@ -55,6 +55,23 @@ module.exports = {
         '256': '64rem',
         '272': '68rem',
       },
+      height: {
+        '40' : '10rem',
+        '44' : '11rem',
+        '100': '25rem',
+        '112': '28rem',
+        '128': '32rem',
+        '144': '36rem',
+        '160': '40rem',
+        '176': '44rem',
+        '192': '48rem',
+        '208': '52rem',
+        '224': '56rem',
+        '226': '56.5rem',
+        '240': '60rem',
+        '256': '64rem',
+        '272': '68rem',
+      },
       borderColor: theme => ({
         ...theme('colors'), // This ensures you keep all existing colors
         'gold': '#FFD700', // This adds 'gold' to the borderColor palette
