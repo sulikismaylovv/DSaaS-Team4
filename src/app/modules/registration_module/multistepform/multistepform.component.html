@@ -1,5 +1,5 @@
 <div class="bg-light-mode dark:bg-dark-mode min-h-screen flex flex-col justify-center items-center px-5">
-  <div class="bg-white dark:bg-dark-gray rounded-lg shadow-lg p-8 w-full">
+  <div class="bg-white dark:bg-[#394151] rounded-lg shadow-lg p-8 w-fit">
     <div class="mb-5">
       <app-stepper [currentStep]="currentStep"></app-stepper>
     </div>
@@ -133,14 +133,14 @@
           </p>
         </section>
         <!-- Nav -->
-        <nav *ngIf="!lastPage" [ngClass]="{ 'flex-row': currentStep === 1 }" class="flex items-end justify-end bottom-0 w-screen left-0 p-5 text-base bg-neutral-white xl:relative xl:p-0 xl:mb-5 xl:min-w-[28.125rem] xl:max-w-[28.125rem]">
-          <button (click)="changePage(false)" *ngIf="currentStep >= 2" class="bg-purple-500 text-white px-5 py-2  mr-4 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="button">
+        <nav *ngIf="!lastPage" [ngClass]="{ 'flex-row': currentStep === 1 }" class="mt-4 flex items-center justify-end bottom-0 w-screen left-0 p-5 text-base bg-neutral-white xl:relative xl:p-0 xl:mb-5 xl:min-w-[28.125rem] xl:max-w-[28.125rem]">
+          <button (click)="changePage(false)" *ngIf="currentStep >= 2" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"  type="button">
             Go Back
           </button>
-          <button (click)="changePage(true)" *ngIf="currentStep !== 4" [disabled]="updateProfileForm.invalid" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="button">
+          <button (click)="changePage(true)" *ngIf="currentStep !== 4" [disabled]="updateProfileForm.invalid" class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button">
             Next step
           </button>
-          <button *ngIf="currentStep === 4" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 min-w-[120px] min-l-[120px]disabled:bg-neutral-cool-gray disabled:opacity-80 disabled:cursor-not-allowed mt-4" type="submit">
+          <button *ngIf="currentStep === 4" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="submit">
             {{isSubmitting ? 'loading...': 'Confirm'}}
           </button>
         </nav>
