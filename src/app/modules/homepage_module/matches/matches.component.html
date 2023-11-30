@@ -1,13 +1,13 @@
 <div class="w-full">
   <div class="flex justify-center py-4 h-full">
-    <div class="flex rounded-full shadow-lg" role="group">
+    <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
-              class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none dark:text-white dark:hover:bg-dark-gray">Previous</button>
+              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Previous</button>
       <button
-        class="bg-gray-500 text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none ">{{formatShortDate(startDate)}}
+        class="text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
         - {{formatShortDate(endDate)}}</button>
       <button (click)="goToNextWeek()"
-              class="bg-gray-300 dark:hover:bg-dark-gray text-gray-800 font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none dark:text-white">Next</button>
+              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Next</button>
     </div>
   </div>
 
