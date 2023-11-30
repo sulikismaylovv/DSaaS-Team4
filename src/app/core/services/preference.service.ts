@@ -153,6 +153,11 @@ export class PreferencesService {
                 await this.upsertPreference({...favoritePreference, favorite_club: false});
             }
         }
+
+      // Additional Check: If a team is set as favorite, it should also be followed
+      if (isFavorite && !existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
+        await this.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
+      }
     }
 
     async getPreferences(userId: string): Promise<Preference[]> {
@@ -214,5 +219,18 @@ export class PreferencesService {
             }
             throw error; // Re-throw the error to be handled by the caller
         }
+    }
+
+    async downLoadImage(imageUrl: string): Promise<Blob | undefined> {
+      const {data, error} = await this.supabase.supabaseClient.storage
+        .from('Club_logos')
+        .download(imageUrl);
+
+      if (error) {
+        console.error('Error downloading image:', error);
+        throw error;
+      }
+
+      return data;
     }
 }

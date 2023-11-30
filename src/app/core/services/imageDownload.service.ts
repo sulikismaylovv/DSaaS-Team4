@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserServiceService } from './user-service.service';
 import {PostsService} from "./posts.service";
+import {PreferencesService} from "./preference.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ImageDownloadService {
     private authService: AuthService,
     private sanitizer: DomSanitizer,
     private userService: UserServiceService,
-    private postService: PostsService
+    private postService: PostsService,
+    private preferenceService: PreferencesService
   ) {}
 
   async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl | undefined> {
@@ -47,6 +49,19 @@ export class ImageDownloadService {
       const data = await this.postService.downLoadImage(imageUrl);
       if (data instanceof Blob) {
        return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+      }
+      return undefined;
+    } catch (error) {
+      console.error('Error downloading image:', error);
+      return undefined;
+    }
+  }
+
+  async loadClubImage(imageUrl: string): Promise<SafeResourceUrl | undefined> {
+    try {
+      const data = await this.preferenceService.downLoadImage(imageUrl);
+      if (data instanceof Blob) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
       }
       return undefined;
     } catch (error) {
