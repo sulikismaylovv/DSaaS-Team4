@@ -99,6 +99,7 @@ export class PostsComponent implements OnInit {
         const dialogRef = this.dialog.open(CreatePostComponent, {
             width: '700px',
             data: 0
+
         });
 
         dialogRef.afterClosed().subscribe(result => {
