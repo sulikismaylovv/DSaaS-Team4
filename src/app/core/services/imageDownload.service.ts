@@ -19,18 +19,31 @@ export class ImageDownloadService {
     private preferenceService: PreferencesService
   ) {}
 
-  async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl | undefined> {
-    if (userId === undefined) throw new Error('User ID is undefined');
+  async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl> {
+    // Define the path to the standard user logo
+    const defaultAvatarPath = '../../assets/icons/user-alt-3profile.png'; // Adjust the path as necessary
+
+    if (userId === undefined) {
+      // If userId is undefined, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
+    }
+
     try {
       const avatarUrl = await this.getAvatarUrlByID(userId);
-      const { data } = await this.authService.downLoadImage(avatarUrl);
-      if (data instanceof Blob) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+      if (avatarUrl) {
+        const {data} = await this.authService.downLoadImage(avatarUrl);
+
+        if (data instanceof Blob) {
+          // If an avatar image is downloaded, use it
+          return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));}
       }
-      return undefined;
+      // If no avatar image is downloaded, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
+
     } catch (error) {
       console.error('Error downloading avatar:', error);
-      return undefined;
+      // In case of any error, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
     }
   }
 

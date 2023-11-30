@@ -29,12 +29,13 @@ interface FriendInfo {
 export class CommonComponent implements OnInit{
   @Input() userRefId: string | null | undefined;
   isOwnProfile: boolean = false;
-  loading = false;
+  loading = true;
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
   posts: Post[] = [];
   preference: Preference[] = [];
+  favClubImage: SafeResourceUrl | undefined;
   favClub: Club | undefined;
   followingClub: Club[] = [];
   favoriteClub: string | undefined;
@@ -82,60 +83,61 @@ export class CommonComponent implements OnInit{
   }
 
   async ngOnInit(): Promise<void> {
+    this.loading = true; // Start with loading set to true
     // Get the userId from the URL
     const urlUserId = this.route.snapshot.paramMap.get('userId');
     const authenticatedUserId = this.authService.session?.user?.id;
 
-    if(urlUserId == null){
-      this.isOwnProfile = true;
-    }
-    else if (urlUserId && authenticatedUserId && urlUserId === authenticatedUserId) {
-      // If the userId from URL is the same as the authenticated user's ID, set userRefId to null
-      this.userRefId = null;
-      this.isOwnProfile = true;
-    } else {
-      // Otherwise, use the userId from the URL
-      this.userRefId = urlUserId;
-      this.isOwnProfile = false;
-    }
+    this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
+    this.userRefId = this.isOwnProfile ? null : urlUserId;
 
-    if(this.userRefId != null){
-      this.getProfileById(this.userRefId).then(async () => {
-        await this.checkFriendStatus();
-        await this.fetchFriends(this.profile?.id);
-        this.username = this.profile?.username;
-        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-        await this.loadPosts(this.profile?.id || '');
-        this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
-        for (let i = 0; i < this.preference.length; i++) {
-          await this.sortPreference(this.preference[i]);    }
-      });
+    try {
+      const profilePromise = this.userRefId
+        ? this.getProfileById(this.userRefId)
+        : this.getProfile();
 
-    }
-    else{
-    this.getProfile().then(async () => {
+      const profileData = await profilePromise;
+
+      // Assuming `getProfile` and `getProfileById` set `this.profile`
+      const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
+      const friendsPromise = this.fetchFriends(this.profile?.id);
+      const postsPromise = this.loadPosts(this.profile?.id || '');
+
+      // Wait for all promises to resolve
+      const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
+      this.preference = preferences;
+
+      for (const preference of this.preference) {
+        await this.sortPreference(preference);
+      }
+
+      // Set additional properties based on the profile
       this.username = this.profile?.username;
-      await this.fetchFriends(this.profile?.id);
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-      await this.loadPosts(this.profile?.id || '');
-      this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
-      for (let i = 0; i < this.preference.length; i++) {
-        await this.sortPreference(this.preference[i]);    }
-      });
+
+      if (this.userRefId) {
+        await this.checkFriendStatus();
+      }
+    } catch (error) {
+      console.error('An error occurred during initialization:', error);
+      // Handle the error properly
+    } finally {
+      this.loading = false; // Ensure loading is set to false after operations complete
     }
-
-
   }
 
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
       this.favClub = await this.preferenceService.getClubByClubId(parseInt(preference.club_id));
       this.favoriteClub = this.favClub.name;
+      this.favClubImage = await this.imageService.loadClubImage(this.favClub.logo);
     } else if (preference.followed_club) {
       this.followingClub.push(await this.preferenceService.getClubByClubId(parseInt(preference.club_id)));
       this.followiedClubs?.push(this.followingClub[this.followingClub.length - 1].name);
     }
   }
+
+
 
   getFollowingTeams(): string {
     return this.followingClub.map(club => club.name).join(', ');
@@ -145,7 +147,6 @@ export class CommonComponent implements OnInit{
 
   async getProfile() {
     try {
-      this.loading = true;
       const user = this.authService.session?.user;
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
@@ -161,13 +162,11 @@ export class CommonComponent implements OnInit{
         alert(error.message);
       }
     } finally {
-      this.loading = false;
     }
   }
 
   async getProfileById(userId: string) {
     try {
-      this.loading = true;
       const {data: profile, error} = await this.authService.profileById(userId);
       if (error) {
         alert(error.message);
@@ -180,7 +179,6 @@ export class CommonComponent implements OnInit{
         alert(error.message);
       }
     } finally {
-      this.loading = false;
     }
   }
 
