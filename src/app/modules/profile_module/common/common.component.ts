@@ -92,11 +92,9 @@ export class CommonComponent implements OnInit{
     this.userRefId = this.isOwnProfile ? null : urlUserId;
 
     try {
-      const profilePromise = this.userRefId
-        ? this.getProfileById(this.userRefId)
-        : this.getProfile();
-
-      const profileData = await profilePromise;
+      const profileData = this.userRefId
+        ? await this.getProfileById(this.userRefId)
+        : await this.getProfile();
 
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
