@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AuthService, Profile} from '../../core/services/auth.service';
 import {Router} from '@angular/router';
-import {Session} from "@supabase/supabase-js";
+import {Session, SupabaseClient} from "@supabase/supabase-js";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AvatarComponent} from "../account_module/avatar/avatar.component";
-import {Club, PreferencesService} from "../../core/services/preference.service";
+import {Club, Preference, PreferencesService} from "../../core/services/preference.service";
+import {SupabaseService} from "../../core/services/supabase.service";
 
 @Component({
   selector: 'app-settings',
@@ -25,7 +26,29 @@ export class SettingsComponent implements OnInit{
   hover: boolean = false;
   updateSettingsForm!: FormGroup;
   private session: Session | null | undefined;
-  private favoriteClubId: number | null = null;
+  favoriteClub: Club | undefined;
+  selectedFavoriteClubId: number | undefined;  // Temporary state for selected favorite club
+  logoPath: string | undefined;
+
+
+  teams = [
+    {id: 260, logoPath: 'assets/logos/oud-heverlee-leuven-seeklogo.com-3.svg'},
+    {id: 261, logoPath: 'assets/logos/kvc-westerlo.svg' },
+    {id: 266, logoPath: 'assets/logos/KV_Mechelen_logo.svg'},
+    {id: 554,  logoPath: 'assets/logos/RSC_Anderlecht_logo.svg'},
+    {id: 569, logoPath: 'assets/logos/Club_Brugge_KV_logo.svg'},
+    {id: 631, logoPath: 'assets/logos/KAA_Gent_logo.svg'},
+    {id: 733, logoPath: 'assets/logos/Royal_Standard_de_Liege.svg'},
+    {id: 734,  logoPath: 'assets/logos/KV_Kortrijk_logo.svg'},
+    {id: 735, logoPath: 'assets/logos/VV_St._Truiden_Logo.svg'},
+    {id: 736,  logoPath: 'assets/logos/Royal_Charleroi_Sporting_Club_logo.svg'},
+    {id: 739, logoPath: 'assets/logos/Kas_Eupen_Logo.svg'},
+    {id: 740,  logoPath: 'assets/logos/Royal_Antwerp_Football_Club_logo.svg'},
+    {id: 741,  logoPath: 'assets/logos/Logo_Cercle_Bruges_KSV_-_2022.svg'},
+    {id: 742, logoPath: 'assets/logos/KRC_Genk_Logo_2016.svg'},
+    {id: 1393, logoPath: 'assets/logos/union-saint-gilloise.svg'},
+    {id: 6224, logoPath: 'assets/logos/Logo_RWDMolenbeek.svg'},
+  ];
 
 
   constructor(
@@ -33,8 +56,28 @@ export class SettingsComponent implements OnInit{
     private readonly router: Router,
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
-    private preferencesService: PreferencesService
+    private preferencesService: PreferencesService,
+    private readonly supabase: SupabaseService,
   ) {
+    this.supabase.supabaseClient
+      .channel('realtime-posts')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'preferences',
+        },
+        async (payload) => {
+          this.favoriteClub = await this.fetchFavoriteClubId();
+          this.logoPath = this.teams.find(team => team.id === this.favoriteClub?.id)?.logoPath;
+          if (this.favoriteClub !== undefined) {
+            this.selectedFavoriteClubId = this.favoriteClub.id;
+          }
+        }
+      )
+      .subscribe();
+
   }
 
   avatarSafeUrl: SafeResourceUrl | undefined;
@@ -73,7 +116,9 @@ export class SettingsComponent implements OnInit{
     }
 
     this.clubs = await this.fetchAllClubs();
-    this.favoriteClubId = await this.fetchFavoriteClubId();
+    this.favoriteClub = await this.fetchFavoriteClubId();
+    if( this.favoriteClub !== undefined){ this.selectedFavoriteClubId = this.favoriteClub.id; }
+
     console.log('this.clubs: ', this.clubs);
   }
 
@@ -121,6 +166,9 @@ export class SettingsComponent implements OnInit{
 
   async updateProfile(): Promise<void> {
     try {
+      if(this.selectedFavoriteClubId !== undefined){
+        await this.selectFavoriteClub(this.selectedFavoriteClubId);
+      }
       const formValues = this.updateSettingsForm.value;
       const updatedProfile = {
         username: formValues.username,
@@ -139,19 +187,31 @@ export class SettingsComponent implements OnInit{
     }
   }
 
-  private async fetchFavoriteClubId(): Promise<number | null> {
+  private async fetchFavoriteClubId(): Promise<Club | undefined> {
     const userId = this.authService.session?.user?.id;
-    if (!userId) return null;
+    if (!userId) throw new Error('User not authenticated');
     const preference = await this.preferencesService.getFavoritePreferences(userId);
     console.log('preference: ', preference);
-    return preference ? parseInt(preference.club_id) : null;
+    if( preference !== undefined && preference.club_id !== undefined){
+    const favClub = await this.preferencesService.getClubByClubId(parseInt(preference.club_id));
+    console.log('favClub: ', favClub);
+    return favClub;}
+    return undefined;
   }
 
   private async fetchAllClubs(): Promise<Club[]>{
       return await this.preferencesService.fetchAllClubs();
   }
 
-  async selectFavoriteClub(clubId: number): Promise<void> {
+  selectFavoriteClubLocally(clubId: number | undefined): void {
+    if(clubId === undefined) return;
+    this.selectedFavoriteClubId = clubId;
+  }
+
+
+  async selectFavoriteClub(clubId: number | undefined): Promise<void>{
+    if (clubId === undefined) {return;}
+
     const userId = this.authService.session?.user?.id;
     if (!userId) {
       alert('User not authenticated');
@@ -159,14 +219,19 @@ export class SettingsComponent implements OnInit{
     }
 
     try {
-      await this.preferencesService.deletePreference({
-        updated_at: new Date(), followed_club: false,
-        favorite_club: true, user_id: userId, club_id: this.favoriteClubId?.toString() || '' });
+      if( this.favoriteClub !== undefined){
+        if( this.favoriteClub.id === undefined) throw new Error('favoriteClub.id is undefined');
+        console.log('this.favoriteClub: ', this.favoriteClub);
+        await this.preferencesService.deletePreference({
+          club_id: this.favoriteClub?.id.toString(),
+          favorite_club: true, followed_club: false, user_id: userId
+        });
+      }
       await this.preferencesService.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: true, followed_club: false });
-      this.favoriteClubId = clubId;
-      alert('Favorite club updated successfully');
+      this.favoriteClub = await this.fetchFavoriteClubId();
+      //alert('Favorite club updated successfully');
     } catch (error) {
-      alert('Error updating favorite club');
+      alert('Error updating favorite club: ' + error);
     }
   }
 

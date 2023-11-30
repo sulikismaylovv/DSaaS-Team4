@@ -61,51 +61,36 @@
             <div class="sm:col-span-2">
               <label class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Favourite club</label>
               <button id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" class="flex items-center w-full rounded-md border-0 px-3.5 py-1.5 mt-2.5 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <span id="selectedClubText" class="mr-3">Select a club</span>
+                <ng-container *ngIf="selectedFavoriteClubId; else selectClubText">
+                  <img [src]="favoriteClub?.logo" alt="{{favoriteClub?.name}}" class="inline-block h-6 w-6 rounded-full mr-2">
+                  <span id="selectedClubTextX" class="mr-3">{{favoriteClub?.name}}</span>
+                </ng-container>
+                <ng-template #selectClubText>
+                  <span id="selectedClubText" class="mr-3">Select a club</span>
+                </ng-template>
                 <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-
-<!--                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">-->
                   <!-- Your SVG content -->
                 </svg>
               </button>
 
 
+
               <!-- Dropdown menu -->
-            <div id="dropdownUsers" class="z-10 hidden bg-white dark:text-white dark:bg-dark-mode rounded-lg shadow w-144 ">
-              <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600  dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KAA_Gent_logo.svg" alt="KAA_GENT">
-                    Jese Leos
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/kvc-westerlo.svg" alt="Jese image">
-                    Robert Gough
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KV_Mechelen_logo.svg" alt="Jese image">
-                    Bonnie Green
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KV_Mechelen_logo.svg" alt="Jese image">
-                    Bonnie Green
-                  </a>
-                </li>
-
-              </ul>
-
-            </div>
+              <div id="dropdownUsers" class="z-10 hidden bg-white dark:text-white dark:bg-dark-mode rounded-lg shadow w-144 ">
+                <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
+                  <li *ngFor="let club of clubs" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      (click)="selectFavoriteClubLocally(club.id)">
+                    <img [src]="logoPath" alt="Club Logo" class="inline-block h-6 w-6 rounded-full mr-2">
+                    <span [class.font-bold]="club.id === selectedFavoriteClubId">{{ club.name }}</span>
+                    <span *ngIf="club.id === selectedFavoriteClubId" class="ml-auto text-green-500">✓</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
 
 
-            <div class="sm:col-span-2">
+              <div class="sm:col-span-2">
               <label for="user" class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Change following</label>
               <div class="mt-2.5">
                 <select name="user" id="user" class="block w-full rounded-md border-0 px-3.5 py-2 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
