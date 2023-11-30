@@ -1,13 +1,13 @@
-<div class="w-[1071.14px]">
+<div class="w-full">
   <div class="flex justify-center py-4 h-full">
-    <div class="flex rounded-full shadow-lg" role="group">
+    <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
-              class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none dark:text-white dark:hover:bg-dark-gray">Previous</button>
+              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Previous</button>
       <button
-        class="bg-gray-500 text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none ">{{formatShortDate(startDate)}}
+        class="text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
         - {{formatShortDate(endDate)}}</button>
       <button (click)="goToNextWeek()"
-              class="bg-gray-300 dark:hover:bg-dark-gray text-gray-800 font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none dark:text-white">Next</button>
+              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Next</button>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
         </div>
         <!-- Inner loop for fixtures on a particular date -->
         <div *ngFor="let fixture of groupedFixtures[date]"
-             class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4 flex  justify-between">
+             class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4">
           <button (click)="onGameSelect(fixture)" class="text-white underline w-full">
             <div class="flex justify-between w-full">
               <!-- Team 1 -->
@@ -45,4 +45,10 @@
     </div>
   </div>
 </div>
+<a class="opacity-0 cursor-default flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+  <div class="flex flex-col justify-between p-4 leading-normal">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+  </div>
+</a>
 
