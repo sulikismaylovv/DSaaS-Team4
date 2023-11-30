@@ -61,7 +61,7 @@ export class PreferencesService {
             const {data, error} = await this.supabase.supabaseClient
                 .from('preferences')
                 .delete()
-                .match({user_id: preference.user_id, club_id: preference.club_id});
+                .match({user_id: preference.user_id, club_id: preference.club_id, favorite_club: preference.favorite_club, followed_club: preference.followed_club});
 
             if (error) {
                 console.error('Error deleting preference:', error);
@@ -150,7 +150,7 @@ export class PreferencesService {
         if (isFavorite) {
             const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
             if (favoritePreference) {
-                await this.upsertPreference({...favoritePreference, favorite_club: false});
+                await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
             }
         }
 

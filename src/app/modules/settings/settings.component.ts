@@ -231,7 +231,27 @@ export class SettingsComponent implements OnInit{
 
   // Method to toggle club follow status
   async toggleFollowClub(clubId: number | undefined): Promise<void> {
+
     if (clubId === undefined) return;
+    const userId = this.authService.session?.user?.id;
+    if (!userId) {
+      alert('User not authenticated');
+      return;
+    }
+
+    // Fetch current preferences for the user
+    const existingPreferences = await this.preferencesService.getPreferences(userId);
+
+    // Check if the club is the favorite club
+    console.log('existingPreferences: ', existingPreferences);
+    const isFavorite = existingPreferences.some(pref => pref.favorite_club && pref.club_id === clubId.toString());
+
+    if (isFavorite) {
+      alert('Cannot unfollow your favorite club.');
+      return;
+    }
+
+
     const isFollowed = this.followedClubs.some(c => c.club.id === clubId);
 
     if (isFollowed) {
