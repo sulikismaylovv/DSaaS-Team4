@@ -214,11 +214,16 @@ export class SettingsComponent implements OnInit{
     try {
       if( this.favoriteClub !== undefined){
         if( this.favoriteClub.club.id === undefined) throw new Error('favoriteClub.id is undefined');
-        console.log('this.favoriteClub: ', this.favoriteClub);
-        await this.preferencesService.deletePreference({
-          club_id: this.favoriteClub?.club.id.toString(),
-          favorite_club: true, followed_club: false, user_id: userId
-        });
+        if( this.favoriteClub.club.id !== clubId){
+          console.log('this.favoriteClub: ', this.favoriteClub);
+          await this.preferencesService.deletePreference({
+            club_id: this.favoriteClub?.club.id.toString(),
+            favorite_club: true, followed_club: false, user_id: userId
+          });
+        }
+        else{
+          return;
+        }
       }
       await this.preferencesService.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: true, followed_club: false });
       this.favoriteClub = await this.fetchFavoriteClubId();
