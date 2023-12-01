@@ -33,6 +33,7 @@ export class CommonComponent implements OnInit{
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  bgSafeUrl: string | ArrayBuffer | null = 'assets/images/default-background.jpg';
   posts: Post[] = [];
   preference: Preference[] = [];
   favClub: Club | undefined;
@@ -80,7 +81,6 @@ export class CommonComponent implements OnInit{
         }
       )
       .subscribe();
-
   }
 
   async ngOnInit(): Promise<void> {
@@ -113,7 +113,6 @@ export class CommonComponent implements OnInit{
       // Set additional properties based on the profile
       this.username = this.profile?.username;
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-
       if (this.userRefId) {
         await this.checkFriendStatus();
       }
@@ -124,6 +123,8 @@ export class CommonComponent implements OnInit{
       this.loading = false; // Ensure loading is set to false after operations complete
     }
   }
+
+
 
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
