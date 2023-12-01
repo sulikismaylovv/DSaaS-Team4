@@ -142,12 +142,12 @@ export class PreferencesService {
         }
 
         // Check 2 and 4: If the team is already followed, it cannot be added again
-        if (isFollowed && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
+        else if (isFollowed && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
             throw new Error('This team is already followed. Try again.');
         }
 
         // Check 3: If user wants to change the preferred team, the old favorite team will be updated
-        if (isFavorite) {
+        else if (isFavorite) {
             const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
             if (favoritePreference) {
                 await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
@@ -155,9 +155,13 @@ export class PreferencesService {
         }
 
       // Additional Check: If a team is set as favorite, it should also be followed
-      if (isFavorite && !existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
+      else if (isFavorite && !existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
         await this.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
       }
+
+      else if(!isFavorite && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)){
+          await this.deletePreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
+        }
     }
 
     async getPreferences(userId: string): Promise<Preference[]> {
