@@ -87,180 +87,125 @@
       </div>
     </div>
     <!-- Players grid -->
-    <p class="text-white font-semibold text-2xl mb-4">Players from your favorite club</p>
+<!--    <p class="text-white font-semibold text-2xl mb-4">Players from your favorite club</p>-->
+<!--    <div class="grid grid-cols-4 gap-4 mb-4">-->
+<!--      &lt;!&ndash; Player cards &ndash;&gt;-->
+<!--      <ng-container *ngFor="let player of players | slice:0:4"> &lt;!&ndash; Only display the first 4 players &ndash;&gt;-->
+<!--        <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">-->
+<!--          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
+<!--            <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />-->
+<!--            <div class="px-5 pb-5">-->
+<!--              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.name }}</h5>-->
+<!--              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.club }}</h5>-->
+<!--              <div class="flex items-center justify-between">-->
+<!--                <span class="text-3xl font-bold text-gray-900 dark:text-black">100 pts</span>-->
+<!--                <button (click)="makePurchase(currentUserID, player.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+
+<!--    <p class="text-white font-semibold text-2xl mb-4">Players from followed clubs</p>-->
+
+<!--    &lt;!&ndash;Followed Clubs Players Grid&ndash;&gt;-->
+<!--    <div *ngFor="let clubId of getClubIds()" class="mb-8">-->
+<!--&lt;!&ndash;      <p class="text-white font-semibold text-2xl mb-4">Players from club {{ clubs[clubId]?.name }}</p>&ndash;&gt;-->
+<!--      <div class="grid grid-cols-4 gap-4">-->
+<!--        <ng-container *ngFor="let player of playersByClub[clubId] | slice:0:4">-->
+<!--          <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">-->
+<!--            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
+<!--              <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />-->
+<!--              <div class="px-5 pb-5">-->
+<!--                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.name }}</h5>-->
+<!--                <div class="flex items-center justify-between">-->
+<!--                  <span class="text-3xl font-bold text-gray-900 dark:text-black">100 pts</span>-->
+<!--                  <button (click)="makePurchase(currentUserID, player.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </ng-container>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <!-- Favorite Club Player Display -->
+    <p class="text-white font-semibold text-2xl mb-4">Featured Player from Your Favorite Club</p>
     <div class="grid grid-cols-4 gap-4 mb-4">
-      <!-- Player cards -->
-      <ng-container *ngFor="let player of players | slice:0:4"> <!-- Only display the first 4 players -->
-        <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">
+      <ng-container *ngIf="players.length > 0">
+        <div class="player-card-container">
+          <!-- Display the first player from the favorite club -->
           <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />
+            <img class="p-8 rounded-t-lg mx-auto" [src]="players[0].photo" alt="player image" />
             <div class="px-5 pb-5">
-              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ player.name }}</h5>
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ players[0].name }}</h5>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
-                <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
+                <button (click)="makePurchase(currentUserID, players[0].id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
               </div>
             </div>
           </div>
         </div>
       </ng-container>
     </div>
-    <!--4 grid column containing badges-->
-<!--    <div class="flex items-start justify-between">-->
-<!--      <p class="text-white font-semibold text-2xl mb-4">Add to your Player Collection</p>-->
-<!--      <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"-->
-<!--              (click)="toggleMoreBadges()">-->
-<!--        {{ showMoreBadges ? 'Show Less' : 'Show More' }}</button>-->
-<!--    </div>-->
+
+    <!-- Random Players Display -->
+    <p class="text-white font-semibold text-2xl mb-4">Randomly Selected Players</p>
     <div class="grid grid-cols-4 gap-4 mb-4">
-      <!--1st row-First badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto w-64 h-64" src="assets/logos/Club_Brugge_KV_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Club Brugge badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the Club Brugge badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
+      <!-- Display randomPlayer1 -->
+      <ng-container *ngIf="randomPlayer1">
+        <div class="player-card-container">
+          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer1.photo" alt="player image" />
+            <div class="px-5 pb-5">
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer1.name }}</h5>
+              <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
+                <button (click)="makePurchase(currentUserID, randomPlayer1.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
               </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
             </div>
           </div>
         </div>
-      </div>
-      <!--1st row-Second badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/KAA_Gent_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">KAA Gent badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the KAA Gent badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
+      </ng-container>
+
+      <!-- Display randomPlayer2 -->
+      <ng-container *ngIf="randomPlayer2">
+        <div class="player-card-container">
+          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer2.photo" alt="player image" />
+            <div class="px-5 pb-5">
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer2.name }}</h5>
+              <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
+                <button (click)="makePurchase(currentUserID, randomPlayer2.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
               </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
             </div>
           </div>
         </div>
-      </div>
-      <!--1st row-Third badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/Kas_Eupen_Logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Kas Eupen badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the Kas Eupen badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--1st row-Fourth badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/KRC_Genk_Logo_2016.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">KRC Genk badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the KRC Genk badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </ng-container>
     </div>
-    <!--4 grid column containing 2nd row of badges-->
-    <div *ngIf="showMoreBadges" class="grid grid-cols-4 gap-4 mb-4">
-      <!--2nd row-First badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/KV_Kortrijk_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">KV Kortrijk badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the KV Kortrijk badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
+
+    <!-- Surprise Player Display -->
+    <p class="text-white font-semibold text-2xl mb-4">Mystery Player Offer</p>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <ng-container *ngIf="surprisePlayer">
+        <div class="player-card-container">
+          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <!-- Image and details for surprise player can be hidden until a button is clicked if you want to make it a surprise -->
+            <img class="p-8 rounded-t-lg mx-auto" [src]="surprisePlayer.photo" alt="player image" />
+            <div class="px-5 pb-5">
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ surprisePlayer.name }}</h5>
+              <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white">50 pts</span> <!-- Surprise discount -->
+                <button (click)="makePurchase(currentUserID, surprisePlayer.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
               </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
             </div>
           </div>
         </div>
-      </div>
-      <!--2nd row-Second badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/KV_Mechelen_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">KV Mechelen badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the KV Mechelen badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--2nd row-Third badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/kvc-westerlo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">KVC Westerlo badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the KVC Westerlo badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--2nd row-Fourth badge-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/Logo_Cercle_Bruges_KSV_-_2022.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Cercle Bruges badge</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Show your colors with the Cercle Bruges badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">10 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </ng-container>
     </div>
+
 
 
     <!--4 grid column containing Badge collections-->

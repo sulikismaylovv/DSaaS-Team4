@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 
 export interface Player {
-  id?: number;        // Assuming 'id' is an auto-incremented primary key
+  id: number;        // Assuming 'id' is an auto-incremented primary key
   name: string;      // Player's name
   club: number;      // Club's ID, which is a foreign key reference to a club table
   age: number;       // Player's age
@@ -38,7 +38,6 @@ export class PlayerService {
       throw error;
     }
   }
-
 
 
 }
