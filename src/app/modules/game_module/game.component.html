@@ -132,27 +132,144 @@
       <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
       <!--Add the team images to the left and right-->
       <div class="flex justify-between">
-        <img src={{fixture.club0?.logo}} alt="bla bla" class="ml-10 w-16 h-16">
-        <img src={{fixture.club1?.logo}} alt="bla bla" class="mr-10 w-16 h-16">
-      </div>
-      <!--Try to add the lineup here-->
-      
-
-
-      <!-- <div class="flex items-center">
-         <img src={{fixture.club0?.logo}} alt="bla bla" class="w-16 h-16">
-         <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
-           <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
-         </div>
-       </div>-->
-      <!--<div class="flex items-center">
-        <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
-          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+        <div class="flex items-center">
+          <img src={{fixture.club0?.logo}} alt="bla bla" class="ml-10 w-16 h-16">
+          <p class="ml-4 text-black dark:text-white"> {{fixture.club0?.name}} </p>
         </div>
-        <img src={{fixture.club1?.logo}} alt="bla bla" class="w-16 h-16">
-      </div>-->
+        <div class="flex items-center">
+          <p class="mr-2 text-black dark:text-white"> {{fixture.club1?.name}} </p>
+          <img src={{fixture.club1?.logo}} alt="bla bla" class="mr-10 w-16 h-16">
+        </div>
+      </div>
+      <!--Lineup teams-->
+      <div class="grid grid-cols-2 gap-4">
+        <!--team left lineup-->
+        <div class="flex flex-row ml-10 mt-5">
+          <!--List idk really-->
+          <ul class="max-w-md divide-gray-200 dark:divide-gray-700">
+            <li class="pb-2 sm:pb-3">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/158425.png" alt="Neil image">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+              </div>
+            </li>
+            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
+            <li class="py-1 sm:py-2">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/20994.png" alt="Neil image">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+              </div>
+            </li>
+            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
+            <li class="py-1 sm:py-2">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/154870.png" alt="Neil image">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!--Team right-->
+        <div class="flex flex-row mr-10 mt-5">
+          <ul class="max-w-md divide-gray-200 dark:divide-gray-700">
+            <li class="pb-2 sm:pb-3">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/158425.png" alt="Neil image">
+                </div>
+              </div>
+            </li>
+            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
+            <li class="py-1 sm:py-2">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/20994.png" alt="Neil image">
+                </div>
+              </div>
+            </li>
+            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
+            <li class="py-1 sm:py-2">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                  Enter player position
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
+                    Enter player name
+                  </p>
+                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+                    Enter player number
+                  </p>
+                </div>
+                <div class="flex-shrink-0">
+                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/154870.png" alt="Neil image">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <!--TBA-->
+
   </div>
 </div>
 
