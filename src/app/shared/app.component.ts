@@ -6,6 +6,8 @@ import {ThemeService} from '../core/services/theme.service';
 import {Router, NavigationEnd} from '@angular/router';
 import {GameComponent} from "../modules/game_module/game.component";
 import {FooterService} from "../core/services/footer.service";
+import { filter } from 'rxjs/operators';
+declare let gtag: Function;
 
 @Component({
     selector: 'app-root',
