@@ -18,6 +18,7 @@ import {SettingsComponent} from "./modules/settings/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {CommonComponent} from "./modules/profile_module/common/common.component";
 import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
+import {FirstSignGuard} from "./core/guards/first-sign.guard";
 
 
 const routes: Routes = [
@@ -26,7 +27,7 @@ const routes: Routes = [
     {path: 'register', component: AuthComponent, pathMatch: 'full'},
     {path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
     {path: '', redirectTo: '/home', pathMatch: 'full',},
-    {path: 'home', component: HomeComponent, pathMatch: 'full'},
+    {path: 'home', component: HomeComponent, canActivate: [FirstSignGuard], pathMatch: 'full'},
     {path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
     {path: 'game/:id', component: GameComponent, pathMatch: 'full'},
     {path: 'posts', component: PostsComponent, pathMatch: 'full'},
