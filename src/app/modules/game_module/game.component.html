@@ -50,6 +50,9 @@
               <p class="truncate ml-2 text-white ">{{fixture.club1?.name}}</p>
               <p class="text-gray-400 font-semibold"> 55% </p>
             </div>
+            <input type="text" [(ngModel)] = "teamChosen">
+            <input type="text" [(ngModel)] = "betAmount">
+            <button (click)="placeBet()"> PLACE BET</button>
           </div>
           <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
             [class.pointer-events-none]="!showContent">

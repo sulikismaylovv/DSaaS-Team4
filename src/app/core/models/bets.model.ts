@@ -3,7 +3,7 @@ export interface Bet {
     betterID: number;
     fixtureID: number;
     time_placed: Date;
-    team_chosen: boolean;
+    team_chosen: string;
     credits: number;
     outcome?: boolean;
     time_settled?: Date;
@@ -20,12 +20,12 @@ export class BetModel implements Bet{
   betterID: number;
   fixtureID: number;
   time_placed: Date;
-  team_chosen: boolean;
+  team_chosen: string;
   credits: number;
   outcome?: boolean;
   time_settled?: Date;
 
-  constructor(betterID: number, fixtureID: number, time_placed: Date, team_chosen: boolean, credits: number) {
+  constructor(betterID: number, fixtureID: number, time_placed: Date, team_chosen: string, credits: number) {
     this.betterID = betterID;
     this.fixtureID = fixtureID;
     this.time_placed = time_placed;
