@@ -1,5 +1,13 @@
 
 <app-common>
+  <div class="edit-bg">
+    <div class="absolute top-0 right-0 p-4">
+      <button class="px-4 py-2 rounded">
+        <img src="assets/icons/edit-pencil.svg" class="w-12 h-12">
+      </button>
+    </div>
+  </div>
+
   <div class="first-code">
     <div class="flex items-start" *ngIf="!isOwnProfile">
       <button (click)="friendRequestStatus === 'friends' ? removeFriend() : addFriend()"
