@@ -13,7 +13,6 @@ module.exports = {
         'test': "#2c3642",
         'dark-mode-text': "#b5a8ee",
         'light-mode': "#fffff0",
-        'navbar-hover-light':"#f5f5dd",
         'light-mode-acc': "#f5f5dd",
         'light-mode-text':"#1c2632",
         'gold': '#FFD700',
@@ -37,6 +36,41 @@ module.exports = {
         '500': '5',
         '600': '6',
         '700': '7',
+      },
+
+      borderColor: theme => ({
+        ...theme('colors'), // This ensures you keep all existing colors
+        'gold': '#FFD700', // This adds 'gold' to the borderColor palette
+      }),
+      borderWidth: {
+        '1': '1px',
+        '2': '2px',
+        '4': '4px',
+        '5': '5px',
+        '6': '6px',// In case you don't have this already
+      },
+      width: {
+        '22': '5rem',
+        '26': '6rem',
+        '28': '7rem',
+        '32': '8rem',
+        '36': '9rem',
+        '40': '10rem',
+        '44': '11rem',
+        '48': '12rem',
+        '52': '13rem',
+        '100': '25rem',
+        '112': '28rem',
+        '128': '32rem',
+        '144': '36rem',
+        '160': '40rem',
+        '176': '44rem',
+        '192': '48rem',
+        '208': '52rem',
+      },
+      height: {
+        '88': '22rem',
+        '92': '23rem',
       },
       width: {
         '40' : '10rem',

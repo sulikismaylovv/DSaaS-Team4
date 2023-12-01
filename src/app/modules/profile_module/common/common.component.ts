@@ -45,13 +45,15 @@ export class CommonComponent implements OnInit{
 
 
 
-
-  infoString: string[]= ['Friends', 'Leagues', 'About'];
+  testfriendsList: string[]= ['Username', 'Username',  'Username', 'Username','Username', 'Username', 'Username',  'Username',  'Username', 'Username',  'Username', 'Username',  'Username', 'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  ];
+  infoString: string[]= ['Friends', 'Leagues', 'About','Badges'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
   imageList: string[]= ['KV-Kortrijk-wallpaper.jpg','unnamed.jpg','v2_large_8717893f85b4c67b835c8b9984d0115fbdb37ecf.jpg','vieren-KV-Kortrijk-21-10-2023.jpg'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
   selectedLink: string = 'link1';
+  selectedBadge: string= 'KV_Kortrijk_logo.svg';
+  badgeList: string[]= ['Belgian_Pro_League_logo.svg', 'Club_Brugge_KV_logo.svg', 'KAA_Gent_logo.svg', 'Kas_Eupen_Logo.svg','KRC_Genk_Logo_2016.svg','KV_Kortrijk_logo.svg','KV_Mechelen_logo.svg','kvc-westerlo.svg','OHL.svg','Logo_RWDMolenbeek.svg','oud-heverlee-leuven-seeklogo.com-3.svg','R-Logo-04.svg','Royal_Antwerp_Football_Club_logo.svg','Royal_Belgian_FA_logo_2019.svg','Royal_Charleroi_Sporting_Club_logo.svg','Royal_Standard_de_Liege.svg','RSC_Anderlecht_logo.svg','union-saint-gilloise.svg','VV_St._Truiden_Logo.svg','Logo_Cercle_Bruges_KSV_-_2022.svg' ];
 
   constructor(
     protected readonly authService: AuthService,
@@ -206,7 +208,9 @@ export class CommonComponent implements OnInit{
     });
   }
 
-
+  badgeDisplayed(badge:string): void {
+    this.selectedBadge = badge;
+  }
   changeContent(link: string): void {
     this.selectedLink = link;
   }

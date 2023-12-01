@@ -4,7 +4,7 @@
     <div class="flex items-start" *ngIf="!isOwnProfile">
       <button (click)="friendRequestStatus === 'friends' ? removeFriend() : addFriend()"
               class="flex items-center bg-very-light-purple dark:bg-lighter-purple m-2 p-1 rounded-2xl focus:outline-none">
-    <span class="text-white text-3xl">
+    <span class="text-light-mode-text dark:text-primary-100 text-lg md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">
         {{ friendRequestStatus === 'none' ? 'Add Friend' :
       (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}
     </span>
@@ -12,19 +12,19 @@
     </div>
 
     <div class="flex items-start"  *ngIf="isOwnProfile">
-      <a href="/settings" class="flex items-center bg-very-light-purple dark:bg-lighter-purple m-2 p-1 rounded-2xl">
-        <span class="text-white text-3xl">Settings</span>
+      <a href="/settings" class="flex items-center m-2 p-1 rounded-2xl">
+        <span class="text-light-mode-text dark:text-primary-100 text-lg md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">Settings</span>
       </a>
     </div>
   </div>
 
   <div class="second-code">
     <div class="bg-white dark:bg-test rounded-lg">
-      <div class=" bg-white dark:bg-test border-dark-mode-text rounded-lg shadow-md p-4 mb-4 flex">
-        <div class=" flex-none">
-          <img [src]="avatarSafeUrl" alt="Profile picture" class="w10 h-10 rounded mr-4">
+      <div class="flex bg-white dark:bg-test border-dark-mode-text rounded-lg shadow-sm p-2 mb-4">
+        <div class="flex-none">
+          <img [src]="avatarSafeUrl" alt="Profile picture" class="w-6 h-6 lg:w-10 lg:h-10 rounded mr-4">
         </div>
-        <div class="flex-1 bg-light-mode-acc dark:bg-dark-mode rounded-lg p-4 text-white">
+        <div class="flex-1 bg-light-mode-acc dark:bg-dark-mode rounded-lg  text-white">
           <form class="w-full border-0">
             <input type="text" name="postForm" class="min-w-full bg-transparent text-gray-200 border-transparent placeholder:text-gray-400" placeholder="Start a Post"
                    readonly (click)="openCreatePostModal()">
