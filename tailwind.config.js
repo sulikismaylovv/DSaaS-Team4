@@ -55,8 +55,8 @@ module.exports = {
         '28': '7rem',
         '32': '8rem',
         '36': '9rem',
-        '40': '10rem',
-        '44': '11rem',
+        '40' : '10rem',
+        '44' : '11rem',
         '48': '12rem',
         '52': '13rem',
         '100': '25rem',
@@ -67,14 +67,17 @@ module.exports = {
         '176': '44rem',
         '192': '48rem',
         '208': '52rem',
+        '224': '56rem',
+        '226': '56.5rem',
+        '240': '60rem',
+        '256': '64rem',
+        '272': '68rem',
       },
       height: {
+        '40' : '10rem',
+        '44' : '11rem',
         '88': '22rem',
         '92': '23rem',
-      },
-      width: {
-        '40' : '10rem',
-        '44' : '11rem',
         '100': '25rem',
         '112': '28rem',
         '128': '32rem',
@@ -89,34 +92,7 @@ module.exports = {
         '256': '64rem',
         '272': '68rem',
       },
-      height: {
-        '40' : '10rem',
-        '44' : '11rem',
-        '100': '25rem',
-        '112': '28rem',
-        '128': '32rem',
-        '144': '36rem',
-        '160': '40rem',
-        '176': '44rem',
-        '192': '48rem',
-        '208': '52rem',
-        '224': '56rem',
-        '226': '56.5rem',
-        '240': '60rem',
-        '256': '64rem',
-        '272': '68rem',
-      },
-      borderColor: theme => ({
-        ...theme('colors'), // This ensures you keep all existing colors
-        'gold': '#FFD700', // This adds 'gold' to the borderColor palette
-      }),
-      borderWidth: {
-        '1': '1px',
-        '2': '2px',
-        '4': '4px',
-        '5': '5px',
-        '6': '6px',// In case you don't have this already
-      },
+
     },
     fontFamily: {
       'body': [
