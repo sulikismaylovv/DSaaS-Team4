@@ -1,6 +1,164 @@
-<section class="bg-light-mode dark:bg-dark-mode">
+<div class="p-4 lg:ml-64 lg:mr-72">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <!--top modal -->
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153]">
+      <div class="flex items-start justify-between">
+        <button (click)="logData()" type="button"
+                class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+               fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 5H1m0 0 4 4M1 5l4-4" />
+          </svg>
+        </button>
+        <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
+          <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
+        </div>
+      </div>
+      <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-dark-mode">
+      <div class="flex items-start justify-between p-4">
+        <div class="flex items-center">
+          <img src={{fixture.club0?.logo}} alt="team-left" class="w-16 h-16">
+          <p class="ml-2 text-white"> {{fixture.club0?.name}} </p>
+        </div>
+          <div class="flex flex-col items-center">
+            <p class="text-white font-bold">5:30PM</p>
+            <p class="text-gray-400 font-semibold">Today</p>
+          </div>
+          <div class="flex items-center">
+            <p class="truncate mr-2 text-white "> {{fixture.club1?.name}} </p>
+            <img src={{fixture.club1?.logo}} alt="team-right" class="w-16 h-16">
+          </div>
+        </div>
+      <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-dark-mode">
+      <div class="flex justify-between pl-6 pr-6">
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white">01-Dec-23</p>
+        </div>
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white ">Enter a venue</p>
+        </div>
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.656 12.115a3 3 0 0 1 5.682-.015M13 5h3m-3 3h3m-3 3h3M2 1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm6.5 4.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white ">Referee</p>
+        </div>
+      </div>
 
-  <div class="flex p-4 sm:ml-64">
+      </div>
+    </div>
+
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+      <p class="text-2xl text-gray-400 dark:text-gray-500">
+        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+        </svg>
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+      <p class="text-2xl text-gray-400 dark:text-gray-500">
+        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+        </svg>
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+      <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+        <p class="text-2xl text-gray-400 dark:text-gray-500">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+          </svg>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+<section class="bg-light-mode dark:bg-dark-mode">
+  <div class="flex p-4 lg:ml-64">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[950px] ">
       <div class="grid grid-rows-[auto_1fr_auto_auto] gap-4">
         <!--First_widget-->
