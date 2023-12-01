@@ -199,7 +199,7 @@ export class PostViewComponent implements OnInit {
     async checkIfLiked(postId: number | undefined): Promise<boolean> {
         try {
             const user = this.authService.session?.user;
-            if (!user || !user.id) throw new Error('User ID is undefined');
+            if (!user || !user.id) return false;
 
             if (postId === undefined) throw new Error('Post ID is undefined');
             const isLiked = await this.postService.checkIfLiked(postId, user.id);

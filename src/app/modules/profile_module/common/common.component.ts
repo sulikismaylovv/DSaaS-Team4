@@ -35,7 +35,6 @@ export class CommonComponent implements OnInit{
   avatarSafeUrl: SafeResourceUrl | undefined;
   posts: Post[] = [];
   preference: Preference[] = [];
-  favClubImage: SafeResourceUrl | undefined;
   favClub: Club | undefined;
   followingClub: Club[] = [];
   favoriteClub: string | undefined;
@@ -130,7 +129,6 @@ export class CommonComponent implements OnInit{
     if (preference.favorite_club) {
       this.favClub = await this.preferenceService.getClubByClubId(parseInt(preference.club_id));
       this.favoriteClub = this.favClub.name;
-      this.favClubImage = await this.imageService.loadClubImage(this.favClub.logo);
     } else if (preference.followed_club) {
       this.followingClub.push(await this.preferenceService.getClubByClubId(parseInt(preference.club_id)));
       this.followiedClubs?.push(this.followingClub[this.followingClub.length - 1].name);
