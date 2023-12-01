@@ -1,9 +1,157 @@
-<section class="bg-light-mode dark:bg-dark-mode">
+<div class="p-4 lg:ml-64 lg:mr-72">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <!--top modal -->
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153]">
+      <div class="flex items-start justify-between">
+        <button (click)="logData()" type="button"
+                class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+               fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 5H1m0 0 4 4M1 5l4-4" />
+          </svg>
+        </button>
+        <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
+          <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
+        </div>
+      </div>
+      <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
+      <div class="flex items-start justify-between p-4">
+        <div class="flex items-center">
+          <img src={{fixture.club0?.logo}} alt="team-left" class="w-16 h-16">
+          <p class="ml-2 text-black dark:text-white"> {{fixture.club0?.name}} </p>
+        </div>
+          <div class="flex flex-col items-center">
+            <p class="text-black dark:text-white font-bold">5:30PM</p>
+            <p class="text-black dark:text-white font-semibold">Today</p>
+          </div>
+          <div class="flex items-center">
+            <p class="truncate mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
+            <img src={{fixture.club1?.logo}} alt="team-right" class="w-16 h-16">
+          </div>
+        </div>
+      <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
+      <div class="flex justify-between pl-6 pr-6">
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white">01-Dec-23</p>
+        </div>
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white ">Enter a venue</p>
+        </div>
+        <div class="flex mb-4 items-center">
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.656 12.115a3 3 0 0 1 5.682-.015M13 5h3m-3 3h3m-3 3h3M2 1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm6.5 4.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+          </svg>
+          <p class="font-semibold ml-2 text-black dark:text-white ">Referee</p>
+        </div>
+      </div>
+    </div>
+    <!--Betting widget-->
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
+      <p class="text-2xl mt-2 ml-2 text-white font-bold">Place your bets!</p>
+      <p class="text-sm mt-1 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
+      <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
+      <div class="flex items-center justify-evenly pb-3 pt-3">
+        <!--Team 1-->
+        <div class="flex flex-col items-center pr-3 cursor-pointer">
+          <img src={{fixture.club0?.logo}} alt="bla bla" class="w-24 h-24"
+               [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
+          <p class="text-white"> {{fixture.club0?.name}} </p>
+          <p class="text-gray-400 font-semibold"> 45% </p>
+        </div>
+        <!--Draw-->
+        <div class="flex flex-col items-center cursor-pointer">
+          <svg [class.opacity-50]="clickedImage && clickedImage!=='draw'" (click)="toggleContent('draw')" class="w-16 h-16 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+          <p class="text-white"> Draw </p>
+          <p class="text-gray-400 font-semibold"> 10% </p>
+        </div>
+        <!--Team 2-->
+        <div class="flex flex-col items-center pl-3 cursor-pointer">
+          <img src={{fixture.club1?.logo}} alt="bla bla" class="w-24 h-24"
+               [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
+          <p class="truncate ml-2 text-white ">{{fixture.club1?.name}}</p>
+          <p class="text-gray-400 font-semibold"> 55% </p>
+        </div>
+      </div>
+      <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
+           [class.pointer-events-prohibited]="!showContent">
+        <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
+        <form class="flex items-start mt-2 ml-2 mb-4">
+          <input [(ngModel)]="credits" name="credits" type="text" id="betPoints"
+                 class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                 placeholder="I'm hungry" required>
+          <button (click)="placeBet()" type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bet</button>
+        </form>
+      </div>
+      <div id="popup-modal" tabindex="-1"
+           class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button"
+                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="popup-modal">
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+              <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M1 5.917 5.724 10.5 15 1.5" />
+              </svg>
+              <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Congratulations! May the force
+                be with you </h3>
+              <button data-modal-hide="popup-modal" type="button"
+                      class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                Amen
+              </button>
+              <button data-modal-hide="popup-modal" type="button"
+                      class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What
+                have I done?</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Third widget-->
+    <div class="flex h-fit rounded bg-white dark:bg-[#3a4153] mt-4 items-center justify-between p-4">
+      <div class="flex items-center">
+        <img src={{fixture.club0?.logo}} alt="bla bla" class="w-16 h-16">
+        <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
+          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+        </div>
+      </div>
+      <p class="text-white font-bold">Predicted lineup</p>
+      <div class="flex items-center">
+        <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
+          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+        </div>
+        <img src={{fixture.club1?.logo}} alt="bla bla" class="w-16 h-16">
+      </div>
+    </div>
+    <!--TBA-->
+  </div>
+</div>
 
-  <div class="flex p-4 sm:ml-64">
+<!--
+<section class="bg-light-mode dark:bg-dark-mode">
+  <div class="flex p-4 lg:ml-64">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-[950px] ">
       <div class="grid grid-rows-[auto_1fr_auto_auto] gap-4">
-        <!--First_widget-->
+        &lt;!&ndash;First_widget&ndash;&gt;
         <div class="h-36 rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex items-start justify-between">
             <button (click)="logData()" type="button"
@@ -33,18 +181,18 @@
             </div>
           </div>
         </div>
-        <!--Second widget-->
+        &lt;!&ndash;Second widget&ndash;&gt;
         <div class="h-full rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <p class="text-2xl mt-2 ml-2 text-white font-bold">Place your bets!</p>
           <p class="text-sm mt-2 ml-2 text-gray-400 font-bold">Who's taking home the victory?</p>
-          <div class="flex items-center justify-center pb-3"><!--Teams-->
-            <div class="flex flex-col items-center pr-3 cursor-pointer"> <!--Team 1 left-->
+          <div class="flex items-center justify-center pb-3">&lt;!&ndash;Teams&ndash;&gt;
+            <div class="flex flex-col items-center pr-3 cursor-pointer"> &lt;!&ndash;Team 1 left&ndash;&gt;
               <img src={{fixture.club0?.logo}} alt="bla bla" class="w-24 h-24"
                 [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
               <p class="text-white"> {{fixture.club0?.name}} </p>
               <p class="text-gray-400 font-semibold"> 45% </p>
             </div>
-            <div class="flex flex-col items-center pl-3 cursor-pointer"><!--Team 2 right-->
+            <div class="flex flex-col items-center pl-3 cursor-pointer">&lt;!&ndash;Team 2 right&ndash;&gt;
               <img src={{fixture.club1?.logo}} alt="bla bla" class="w-24 h-24"
                 [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
               <p class="truncate ml-2 text-white ">{{fixture.club1?.name}}</p>
@@ -96,8 +244,8 @@
             </div>
           </div>
         </div>
-        <!--Third widget-->
-        <!--lineup top-->
+        &lt;!&ndash;Third widget&ndash;&gt;
+        &lt;!&ndash;lineup top&ndash;&gt;
         <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
@@ -114,12 +262,12 @@
               <img src={{fixture.club1?.logo}} alt="bla bla" class="w-16 h-16">
             </div>
           </div>
-          <!--Football field-->
+          &lt;!&ndash;Football field&ndash;&gt;
           <div *ngIf="lineups && lineups.length" >
             <div class="football-field">
               <img src="assets/images/football_field.png" alt="Football Field">
 
-              <!-- Home Team Players -->
+              &lt;!&ndash; Home Team Players &ndash;&gt;
               <div class="team home-team">
                   <ng-container *ngFor="let position of lineupHome | keyvalue">
                       <div class="player-group" *ngFor="let player of position.value">
@@ -131,7 +279,7 @@
                   </ng-container>
               </div>
 
-              <!-- Away Team Players -->
+              &lt;!&ndash; Away Team Players &ndash;&gt;
               <div class="team away-team">
                   <ng-container *ngFor="let position of lineupAway | keyvalue">
                       <div class="player-group" *ngFor="let player of position.value">
@@ -148,14 +296,14 @@
 
 
 
-            <!-- <div class="football-field">
+            &lt;!&ndash; <div class="football-field">
               <img class="h-96 w-96 scale-150" src="assets/images/football_field.svg" alt="FOotball Field">
               <div *ngFor="let player of lineups[0].startXI" [ngStyle]="getPlayerStyle(player.player.grid)">
                 <span> {{ player.player.number}}</span>
               </div>
-            </div> -->
+            </div> &ndash;&gt;
           </div>
-          <!--Coaches-->
+          &lt;!&ndash;Coaches&ndash;&gt;
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
               <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Gandalf600ppx.jpg/170px-Gandalf600ppx.jpg"
@@ -182,7 +330,7 @@
     </div>
     <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
       <div class="pt-4 grid grid-cols-1 gap-4">
-        <!--Points widgets-->
+        &lt;!&ndash;Points widgets&ndash;&gt;
         <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <p class="text-3xl font-bold text-white ml-2">Your Points</p>
           <p class="text-xl font-bold text-white ml-4">1.234 pts</p>
@@ -193,7 +341,7 @@
               the shop</button>
           </div>
         </div>
-        <!--League standing-->
+        &lt;!&ndash;League standing&ndash;&gt;
         <div class="w-fit h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex justify-center">
             <span class="text-white font-semibold mt-3 text-2xl">Remontada League</span>
@@ -202,7 +350,7 @@
             <img src="assets/images/cup.png" alt="Remontada League" class="w-32 h-32 rounded-full mt-2 mb-2 ">
           </div>
           <div class="mb-3 grid grid-cols-1 md:grid-cols-1 gap-4 mx-4">
-            <!-- Rankings -->
+            &lt;!&ndash; Rankings &ndash;&gt;
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 flex items-center justify-between">
               <div class="flex items-center">
                 <span class="font-semibold text-xs text-light-mode-text dark:text-light-mode ml-1 mr-1">#1</span>
@@ -230,10 +378,10 @@
                 <div class="font-bold text-xs text-light-mode-text dark:text-light-mode">Player Three</div>
               </div>
             </div>
-            <!-- Repeat the structure for each match, replacing team names, scores, and image sources -->
+            &lt;!&ndash; Repeat the structure for each match, replacing team names, scores, and image sources &ndash;&gt;
           </div>
         </div>
-        <!--Belgian league-->
+        &lt;!&ndash;Belgian league&ndash;&gt;
         <div class="h-fit rounded bg-light-mode dark:bg-light-mode-text flex flex-col">
           <div class="flex items-center justify-between">
             <div class="flex flex-col items-start ml-4">
@@ -324,3 +472,4 @@
     </div>
   </div>
 </section>
+-->
