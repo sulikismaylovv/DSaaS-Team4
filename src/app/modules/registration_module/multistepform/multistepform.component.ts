@@ -112,7 +112,7 @@ export class MultistepformComponent implements OnInit {
             await this.updatePreferences();
             this.showSummary = false;
             this.lastPage = true;
-            this.updateProfileForm.reset();
+            //this.updateProfileForm.reset();
             //await this.router.navigate(['/home']);
         } catch (error) {
             if (error instanceof Error) {
@@ -123,6 +123,8 @@ export class MultistepformComponent implements OnInit {
             this.isSubmitting = false;
         }
         this.isSubmitting = false;
+        this.showSummary = false;
+        this.lastPage = true;
     }
 
     async updatePreferences(): Promise<void> {

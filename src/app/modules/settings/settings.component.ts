@@ -163,7 +163,8 @@ export class SettingsComponent implements OnInit{
     console.log('preference: ', preference);
     if( preference !== undefined && preference.club_id !== undefined){
       const favClub = await this.preferencesService.getClubByClubId(parseInt(preference.club_id));
-      const clubLogo = await this.imageDownloadService.loadClubImage(favClub.logo);
+      //const clubLogo = await this.imageDownloadService.loadClubImage(favClub.logo);
+      const clubLogo = undefined;
       return  {club: favClub, clubLogo: clubLogo};
     }
     return undefined;
@@ -173,7 +174,7 @@ export class SettingsComponent implements OnInit{
     let clubs: ClubShow[] = [];
     const Club = await this.preferencesService.fetchAllClubs();
     for (let club of Club){
-      const clubLogo = await this.imageDownloadService.loadClubImage(club.logo);
+      const clubLogo = undefined;
       const clubShow: ClubShow = {club: club, clubLogo: clubLogo};
       clubs.push(clubShow);
     }
@@ -189,7 +190,8 @@ export class SettingsComponent implements OnInit{
     const preferences = await this.preferencesService.getFollowedPreferences(userId);
     for (let preference of preferences){
       const club = await this.preferencesService.getClubByClubId(parseInt(preference.club_id));
-      const clubLogo = await this.imageDownloadService.loadClubImage(club.logo);
+      const clubLogo = undefined;
+      //const clubLogo = await this.imageDownloadService.loadClubImage(club.logo);
       const clubShow: ClubShow = {club: club, clubLogo: clubLogo};
       clubs.push(clubShow);}
     console.log('clubs: ', clubs);

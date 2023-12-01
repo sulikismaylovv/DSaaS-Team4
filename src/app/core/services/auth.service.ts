@@ -60,7 +60,7 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: this.configService.getFullUrl('home')
+                redirectTo: this.configService.getFullUrl('profile')
             }
         });
     }
