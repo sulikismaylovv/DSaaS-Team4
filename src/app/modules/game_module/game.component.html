@@ -82,7 +82,7 @@
         </div>
       </div>
       <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
-           [class.pointer-events-none]="!showContent">
+           [class.pointer-events-prohibited]="!showContent">
         <p class="ml-2 text-white text-sm font-semibold"> How many points would you like to bet? </p>
         <form class="flex items-start mt-2 ml-2 mb-4">
           <input [(ngModel)]="credits" name="credits" type="text" id="betPoints"
@@ -126,6 +126,23 @@
         </div>
       </div>
     </div>
+    <!--Third widget-->
+    <div class="flex h-fit rounded bg-white dark:bg-[#3a4153] mt-4 items-center justify-between p-4">
+      <div class="flex items-center">
+        <img src={{fixture.club0?.logo}} alt="bla bla" class="w-16 h-16">
+        <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
+          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+        </div>
+      </div>
+      <p class="text-white font-bold">Predicted lineup</p>
+      <div class="flex items-center">
+        <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
+          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+        </div>
+        <img src={{fixture.club1?.logo}} alt="bla bla" class="w-16 h-16">
+      </div>
+    </div>
+    <!--TBA-->
   </div>
 </div>
 
