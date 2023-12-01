@@ -110,8 +110,6 @@ export class AuthService {
         });
 
         if (signUpResponse.error) throw signUpResponse.error;
-
-        alert('Registration successful! Please check your email to verify your account.');
     }
 
     async completeProfileSetup(userId: string, additionalDetails: Profile): Promise<Profile> {
@@ -204,4 +202,13 @@ export class AuthService {
             await this.router.navigate(['/login']);
         }
     }
+
+  async profileById(userId: string) {
+    return this.supabase.supabaseClient
+      .from('users')
+      .select(`*`)
+      .eq('id', userId)
+      .single()
+
+  }
 }

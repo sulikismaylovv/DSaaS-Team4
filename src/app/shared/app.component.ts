@@ -25,16 +25,12 @@ export class AppComponent implements OnInit {
       initFlowbite();
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          if (event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/register') {
-            this.footerService.setShowFooter(true);
+          if (event.urlAfterRedirects === '/register') {
+            this.footerService.setShowFooter(false);
           } else {
             this.footerService.setShowFooter(false);
           }
         }
       });
-    }
-
-    toggleTheme() {
-        this.themeService.toggleTheme();
     }
 }

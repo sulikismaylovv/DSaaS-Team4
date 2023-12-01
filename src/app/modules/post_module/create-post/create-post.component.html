@@ -1,52 +1,32 @@
-<div class=" p-4 mb-4">
-  <div class="container mx-auto">
-    <div class="editor mx-auto w-full md:w-10/12 flex flex-col text-gray-800 rounded-lg p-4 shadow-lg max-w-2xl">
-      <form (ngSubmit)="onSubmit()">
-        <div class="flex flex-col items-center border-b border-blue-500 py-2">
-          <div class="flex flex-row">
-            <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4"/>
-            <textarea [(ngModel)]="postContent" name="postContent" class="resize description bg-gray-100 sec p-3 h-30 w-128 border border-gray-300 outline-none w-full"
-                      placeholder="Share your football news with others" required></textarea>
-          </div>
-          <!-- Image preview inside textarea, visible when an image is uploaded -->
-          <div *ngIf="imagePreview" class="relative">
-            <img [src]="imagePreview" alt="Image preview" class="rounded-lg max-w-full h-auto my-4 shadow"/>
-          </div>
-          <!-- Upload image and emoji icons -->
-          <div class="flex justify-items-start justify-between py-2">
-            <div class="flex items-start">
-              <!-- Image upload icon -->
-              <label for="single" class="cursor-pointer hover:text-gray-700">
-                <svg class="border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                </svg>
-              </label>
-              <input #imageInput type="file" id="single" class="hidden" (change)="onImageSelected($event)" accept="image/*"/>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg">
-          <p class="text-sm text-gray-600 mb-2">Retweeting:</p>
-          <div class="flex items-center">
-            <!-- Optionally display the original poster's avatar -->
-            <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
-            <div>
-              <p class="font-semibold">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
-              <p>{{ data.originalPost?.content }}</p>
-            </div>
-          </div>
-          <!-- Optionally display the original post's image -->
-          <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
-        </div>
-
-        <div class="buttons flex justify-end mt-4">
-          <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="resetForm()">Cancel</div>
-          <button class="btn border border-blue-500 p-1 px-4 font-semibold cursor-pointer text-white bg-blue-500 hover:bg-blue-700 ml-2" type="submit">
-            Post
-          </button>
-        </div>
-      </form>
+<div class="p-4 mb-4 overflow-y-scroll h-144">
+  <form (ngSubmit)="onSubmit()">
+    <!-- component -->
+    <div class="heading text-center font-bold text-2xl m-5 text-black dark:text-white">New Post</div>
+    <div class="editor mx-auto w-10/12 flex flex-col border border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
+      <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4 mb-4 border border-gray-500 "/>
+      <textarea [(ngModel)]="postContent" name="postContent" class="text-black dark:text-white placeholder:text-black dark:placeholder:text-[#8a8e9d] description bg-[#e5e6e9] dark:bg-[#3a4151] sec p-3 h-60 border border-gray-300 outline-none rounded-2xl" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
+      <!-- icons -->
+      <div class="icons flex text-gray-500 m-2">
+        <svg class="mr-2 cursor-pointer text-black hover:bg-[#999a9c] dark:hover:text-purple-700 dark:text-white border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+      </div>
+      <!-- buttons -->
+      <div class="flex justify-end">
+        <button (click)="resetForm()" type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-[#999a9c] focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Cancel</button>
+        <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Post</button>
+      </div>
     </div>
-  </div>
+    <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg ">
+      <p class="font-bold text-gray-600 mb-2">Retweeting:</p>
+      <div class="flex items-center">
+        <!-- Optionally display the original poster's avatar -->
+        <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
+        <div>
+          <p class="font-semibold">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
+          <p>{{ data.originalPost?.content }}</p>
+        </div>
+      </div>
+      <!-- Optionally display the original post's image -->
+      <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
+    </div>
+  </form>
 </div>

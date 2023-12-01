@@ -1,0 +1,23 @@
+<div class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="bg-white rounded-lg shadow-xl border p-8 w-3xl">
+    <div class="mb-4">
+      <h1 class="font-semibold text-gray-800">Friend Requests</h1>
+    </div>
+    <div *ngFor="let request of friendRequests" class="flex justify-center items-center mb-8">
+      <div class="w-1/5">
+        <img class="w-12 h-12 rounded-full border border-gray-100 shadow-sm" [src]="request.avatarSafeUrl" alt="user image" />
+      </div>
+      <div class="w-4/5">
+        <div>
+          <span class="font-semibold text-gray-800">{{ request.profile.username }}</span>
+          <span class="text-gray-400"> wants to be your friend</span>
+        </div>
+        <div class="font-semibold">
+          <button (click)="acceptRequest(request.profile.id)" class="text-blue-600 mr-2">Accept</button>
+          <button (click)="declineRequest(request.profile.id)" class="text-gray-400">Decline</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,24 +1,37 @@
-<section class="bg-light-mode dark:bg-dark-mode">
+<div *ngIf="loading; else loadedContent">
+  <div class="text-center h-screen flex items-center justify-center">
+    <div role="status">
+      <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+      </svg>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
 
-  <div class="bg-light-mode dark:bg-dark-mode my-8 sm:mx-52 xl:ml-52 2xl:mx-40 2xl:ml-64 rounded-3xl">
+<ng-template #loadedContent>
+<section class="bg-light-mode dark:bg-dark-mode" >
+
+  <div class="bg-light-mode dark:bg-dark-mode my-8 sm:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
-    <div class="flex items-center max-h-96 relative overflow-hidden rounded-t-3xl">
-      <img src="../assets/images/KVK.png" class="object-cover min-w-full h-full rounded-3xl">
+    <div class="flex items-center max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+      <img class="object-cover min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" src="../assets/images/KVK.png">
     </div>
 
 
     <!-- Profile Info -->
-    <div class=" bg-white dark:bg-test shadow w-full rounded-r-lg">
+    <div class=" bg-white dark:bg-test shadow-sm w-full xl:rounded-br-lg">
       <div class="flex justify-between">
         <div class="flex p-4 z-10">
-          <div class=" flex items-center h-44 w-44 -mt-16 bg-white dark:bg-test rounded-t-full overflow-hidden">
-            <img src="assets/User-Profile-PNG-Image.png" class="h-full w-full object-cover border-primary">
+          <div class=" flex items-center h-28 w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
+            <img [src]="avatarSafeUrl" alt="Avatar" class="h-full w-full object-cover border-primary">
           </div>
 
           <div class="flex-col justify-center">
-            <p class="dark:text-primary-100 text-2xl">{{userName}}</p>
+            <p class="text-light-mode-text dark:text-primary-100 text-lg md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">{{username}}</p>
             <div class="flex justify-start">
-              <img src="assets/logos/KV_Kortrijk_logo.svg" class=" my-1 w-16 h-16">
+              <img class=" my-1 w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20" [src]="favClubImage">
             </div>
           </div>
         </div>
@@ -30,97 +43,117 @@
         <!-- End: Own profile only -->
       </div>
 
-      <div class="px-8 pt-2 w-3/4">
-        <ul class="flex border-y-1 dark:border-dark-mode-text">
-          <li class="text-light-mode-text dark:text-primary-100 text-2xl py-4 mx-12" [class.selected]="selectedLink === 'link1'"><button (click)="changeContent('link1')">{{infoString[0]}}</button></li>
-          <li class="text-light-mode-text dark:text-primary-100 text-2xl py-4 mx-12" [class.selected]="selectedLink === 'link2'"><button (click)="changeContent('link2')">{{infoString[1]}}</button></li>
-          <li class="text-light-mode-text dark:text-primary-100 text-2xl py-4 mx-12" [class.selected]="selectedLink === 'link3'"><button (click)="changeContent('link3')">{{infoString[2]}}</button></li>
+      <div class="px-8 pt-2">
+        <ul class="flex justify-around border-y-1 dark:border-dark-mode-text xl:w-3/5 2xl:w-2/3">
+          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
+            <button (click)="changeContent('link1')">{{infoString[0]}}</button>
+          </li>
+          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
+            <button (click)="changeContent('link2')">{{infoString[1]}}</button>
+          </li>
+          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
+            <button (click)="changeContent('link3')">{{infoString[2]}}</button>
+          </li>
+          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
+            <button (click)="changeContent('link4')">{{infoString[3]}}</button>
+          </li>
         </ul>
       </div>
     </div>
 
     <!-- Content for Link 1 -->
-    <div class="flex">
-      <div class="flex-1 w-2/3 h-1/3 mb-4">
+    <div class="flex flex-col xl:flex-row">
+      <div class="flex-1 h-[460px] mb-4">
         <ng-container *ngIf="selectedLink === 'link1'">
-          <div class="flex bg-white dark:bg-test shadow justify-between rounded-b-lg px-8 p-4 w-full h-full">
-            <div class="bg-light-mode-acc dark:bg-dark-mode shadow px-4 py-2 rounded-2xl">
-              <ul class="grid grid-cols-3">
-                <ng-container *ngFor="let friend of friendsList; let i = index">
-                  <li *ngIf="i < 18">
-                    <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md m-1 p-1">
-                      <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                      <span class="font-bold mx-3 text-lg text-light-mode-text dark:text-light-mode">{{ friend }}</span>
-                      <img [src]="'../assets/icons/' + friendActions[0]" class="w-6 h-6">
+          <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg px-4 2xl:p-8 p-4 h-full">
+            <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
+              <ul class="grid grid-cols-2 md:grid-cols-3">
+                <ng-container>
+                  <li *ngFor="let friend of friendsList.slice(0,12)" class="xl:mb-2 mx-1 xl:mx-2">
+                    <div
+                         class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
+                      <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'"
+                        alt="{{friend.profile.username}}" class="w-6 h-6 md:w-8 md:w-8 xl:w-10 xl:h-10 rounded-full object-cover">
+                      <span
+                        class="mx-4 sm:mx-2 lg:mx-4 xl:mx-6 2xl:mx-8 text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{friend.profile.username}}</span>
+                      <img [src]="'../assets/icons/' + friendActions[1]" class="w-4 h-4 xl:w-6 xl:h-6">
                     </div>
                   </li>
                 </ng-container>
               </ul>
               <div class="flex justify-center">
                 <!-- Show More button -->
-                <button (click)="openModal()" class="bg-very-light-purple dark:bg-lighter-purple rounded-2xl p-1">Show More</button>
+                <button (click)="openModal()" class="text-light-mode-text dark:text-primary-100 rounded-2xl p-1">Show
+                  More
+                </button>
               </div>
             </div>
           </div>
 
-          <div id="friendListModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30" id="friendListModal">
             <div class="flex flex-col bg-light-mode dark:bg-dark-mode p-4 rounded-lg h-4/5 ">
               <h1 class="text-2xl text-light-mode-text dark:text-primary-100 font-bold mb-4">Friends List</h1>
               <ul class="flex-grow p-4 dark:bg-dark-gray rounded-lg overflow-y-auto overscroll-contain">
                 <li *ngFor="let friend of friendsList" class="mb-2">
-                  <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
-                    <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                    <span class="font-bold mx-8 text-lg text-light-mode-text dark:text-primary-100">{{ friend }}</span>
+                  <div (click)="onFriendClick(friend.profile.id)"
+                       class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
+                    <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'"
+                         alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
+                    <span
+                      class="font-bold mx-8 text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
                     <img [src]="'../assets/icons/' + friendActions[1]" class="w-6 h-6">
                   </div>
                 </li>
               </ul>
               <div class="flex justify-center items-center mt-4">
-              <button (click)="closeModal()" class="bg-very-light-purple text-light-mode-text px-4 py-2 rounded">Close</button>
+                <button (click)="closeModal()" class="bg-very-light-purple text-light-mode-text px-4 py-2 rounded">
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         </ng-container>
 
 
         <!-- Content for Link 2 -->
         <ng-container *ngIf="selectedLink === 'link2'" class="h-full">
-          <div class="flex justify-between bg-white dark:bg-test shadow rounded-b-lg px-8 p-4 h-full">
-            <div class="bg-light-mode-acc dark:bg-dark-mode shadow px-4 py-2 rounded-2xl">
+          <div class="flex justify-around bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-2 md:px-4 lg:px-8 py-4 h-full">
+            <div class=" bg-light-mode-acc dark:bg-dark-mode mx-1 px-2 lg:px-4 py-2 rounded-lg">
               <div class="flex justify-center">
-                <span class="text-light-mode-text dark:text-primary-100 content-center text-lg">Remontada League</span>
+                <span class="text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl">Remontada League</span>
               </div>
-              <div class ="flex items-center justify-center py-2">
-                <img src="../assets/img.png" alt="Raymontada League" class="w-32 h-32 rounded-full my-2">
+              <div class="flex items-center justify-center py-2">
+                <img alt="Remontada League" class="w-24 h-24 lg:w-32 lg:h-32 rounded-full my-2" src="../assets/img.png">
               </div>
 
-              <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
-                <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
-                <span class="text-light-mode-text dark:text-primary-100">#1</span>
+              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
+                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
+                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1</span>
               </div>
-              <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
-                <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
-                <span class="text-light-mode-text dark:text-primary-100">#2</span>
+              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
+                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
+                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#2</span>
               </div>
               <div class="flex items-center justify-center">
-                <span class="bg-white dark:bg-test rounded-lg shadow-md px-2">...</span>
+                <span class="text-light-mode-text dark:text-primary-100 -mt-1 px-2">...</span>
               </div>
-              <div class="flex items-center justify-between bg-white dark:bg-test rounded-lg shadow-md my-1 p-1">
-                <img src="/assets/User-Profile-PNG-Image.png" alt="Team 1" class="w-10 h-10 rounded-full object-cover">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ userName }}</span>
-                <span class="text-light-mode-text dark:text-primary-100">#1054</span>
+              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
+                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
+                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
+                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1054</span>
               </div>
             </div>
 
-            <div class="bg-light-mode-acc dark:bg-dark-mode shadow px-4 py-2 rounded-2xl">
-              <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-lg mb-2">Joined Leagues</h1>
-              <div class="grid grid-cols-3 grid-rows-3 gap-4">
+            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
+              <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined
+                Leagues</h1>
+              <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
                 <ng-container *ngFor="let league of leagueList; let i = index">
-                  <div *ngIf="i < 9" class="flex flex-col items-center bg-white dark:bg-test shadow rounded-lg p-2">
-                    <h1 class="text-light-mode-text dark:text-primary-100"> {{league}} </h1>
-                    <img src="../assets/img.png" class="w-16 h-16">
+                  <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
+                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
+                    <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
                   </div>
                 </ng-container>
                 <!-- Additional items if needed -->
@@ -130,31 +163,67 @@
           </div>
         </ng-container>
 
-        <!-- ABOUT SECTION -->
+        <!-- Link 3 -->
         <ng-container *ngIf="selectedLink === 'link3'">
           <!-- Content for Link 3 -->
-          <div class="bg-white dark:bg-test shadow rounded-b-lg p-4">
+          <div class="bg-white dark:bg-test shadow-sm rounded-b-lg p-4 h-full">
             <div class="mb-2">
               <h2 class="text-light-mode-text dark:text-primary-300 text-3xl">
                 <a class="">About</a>
               </h2>
               <ul>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Favorite Teams</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
-                <li class="py-2"><a href="#" class="text-light-mode-text dark:text-primary-100 text-xl">Summary</a></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Full
+                  name: {{profile?.first_name}} {{profile?.last_name}}</p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">
+                  Birthdate: {{profile?.birthdate}}</p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Favorite
+                  Team: {{favoriteClub}} </p></li>
+                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">
+                  Following Teams: {{getFollowingTeams()}}</p></li>
               </ul>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Link 4 -->
+        <ng-container *ngIf="selectedLink === 'link4'">
+          <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
+            <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
+              <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s badges</h1>
+              <div class="flex flex-row justify-around">
+                <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                  <ng-container *ngFor="let badge of badgeList;">
+                    <div (click)="badgeDisplayed(badge)" class="flex flex-col items-center bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
+                      <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl-w16" [src]="'../assets/logos/' + badge">
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800 pl-2 xl:pl-4">
+                  <div class="w-60 sm:w-48 md:w-60 lg:w-full xl:w-56 2xl:w-full max-w-sm bg-white dark:bg-test border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <img class="p-8 rounded-t-lg mx-auto w-40 h-40 xl:w-32 xl:h-32 2xl:w-44 2xl:h-44" [src]="'assets/logos/' + selectedBadge" alt="product image" />
+                    <div class="px-5 pb-5">
+                      <h5 class="md:text-lg lg:text-xl tracking-tight text-gray-900 dark:text-primary-100">Club Brugge badge</h5>
+                      <div class="flex items-center mt-2.5 mb-5">
+                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                          <p class="text-gray-400 dark:text-primary-100 md:text-sm lg:text-md xl:text-sm 2xl-text-lg"> Show your colors with the Club Brugge badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </ng-container>
       </div>
 
-      <div class="flex-grow-0 bg-white dark:bg-test shadow rounded-lg p-4 mt-2 mb-4 ml-2 w-3/4">
-        <div class="bg-light-mode-acc dark:bg-dark-mode shadow p-2 rounded-lg grid grid-cols-2 gap-2">
+      <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg p-2 xl:p-4 xl:mt-2 mb-4 xl:ml-2 ">
+        <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Photo's of {{username}}</h1>
+        <div class="bg-light-mode-acc dark:bg-dark-mode  p-2 rounded-lg grid grid-cols-2 gap-2">
           <ng-container *ngFor="let image of imageList; let i = index">
-            <div class="bg-lighter-purple h-36 w-36">
+            <div class=" xl:h-40 xl:w-40 2xl:w-44 2xl:h-44">
               <!-- Use string interpolation to concatenate the paths -->
-              <img class="w-full h-full object-cover shadow" src="assets/random/unnamed.jpg">
+              <img class="p-1 xl:p-0 w-full h-full object-cover" [src]="'assets/random/' + image ">
             </div>
             <!-- Add more images as needed -->
           </ng-container>
@@ -163,8 +232,10 @@
     </div>
 
     <!-- Start: Own profile only -->
-    <div>
-      <ng-content select=".second-code"></ng-content>
+    <div *ngIf="isOwnProfile">
+      <ng-content select=".second-code">
+
+      </ng-content>
     </div>
     <!-- End: Own profile only-->
 
@@ -174,9 +245,9 @@
       <!-- Post Navbar -->
       <div class="px-4 bg-white dark:bg-test rounded-t-lg">
         <ul class="flex justify-around">
-          <li class="bg-very-light-purple dark:bg-lighter-purple px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[0]}}</a></li>
-          <li class="bg-very-light-purple dark:bg-lighter-purple px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[1]}}</a></li>
-          <li class="bg-light-mode-acc dark:bg-search-bar px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl"><a href="#">{{postString[2]}}</a></li>
+          <li
+            class="bg-light-mode-acc dark:bg-search-bar px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl">
+            <p>{{postString[0]}}</p></li>
         </ul>
       </div>
 
@@ -184,94 +255,25 @@
       <div class=" p-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
-        <!-- Post 1 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w-10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1 bg-dark-mode rounded-lg p-4 text-white">
-              <p>rum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum
-                ipsum lorum ipsum</p>
-            </div>
-          </div>
-
-          <!-- Post 2 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../../../../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Man United won!</p>
-              <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-between">
-                <div class="flex items-center">
-                  <img src="../../../../assets/team1-icon.png" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-                  <span class="font-semibold text-lg text-white">Team 1</span>
-                </div>
-                <span class="font-bold text-xl text-white">2 - 1</span>
-                <div class="flex items-center">
-                  <span class="font-semibold text-lg text-white">Team 2</span>
-                  <img src="../../../../assets/logo1.png" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-                </div>
+          <!-- Post 1 -->
+          <div *ngIf="posts.length > 0; else noPosts">
+            <div *ngFor="let post of posts" class="mb-4">
+              <div (click)="onPostClick(post.id)">
+                <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
+                               [post]="post"></app-post-view>
               </div>
             </div>
           </div>
 
-          <!-- Post 3 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4">
-            <div class="post-header items-center mb-4">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture"
-                   class="w-10 h-10 rounded-full  mr-4">
-              <span class="text-xs text-white">Username</span>
+          <!-- No posts message -->
+          <ng-template #noPosts>
+            <div class="text-center py-10">
+              <p class="text-gray-600 dark:text-primary-100">No posts yet.</p>
             </div>
-            <div class="post-body">
-              <p>Go Rashford!!</p>
-              <div class="bg-dark-mode dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center justify-center">
-                <img src="../assets/Football.png" alt="Football" class="w-10 h-10 rounded-full mr-4">
-                <span class="font-semibold text-lg text-white">Goal by Rashford</span>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- Post 4 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Appreciation post</p>
-              <img src="../assets/Rashford-MUFC.png" alt="Rashford">
-            </div>
-          </div>
-
-          <!-- Post 5 -->
-          <div class="post-card bg-light-mode-text dark:bg-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Some random posts<br><br><br><br><br><br><br><br></p>
-            </div>
-          </div>
-
-          <!-- Post 6 -->
-          <div class="post-card bg-light-mode-text dark:bg-dark-gray-900 rounded-lg shadow-md p-4 flex">
-            <div class="post-header flex-none">
-              <img src="../assets/User-Profile-PNG-Image.png" alt="Profile picture" class="w10 h-10 rounded mr-4">
-              <span class="text-xs text-white">Username</span>
-            </div>
-            <div class="post-body flex-1">
-              <p>Some random posts<br><br><br><br><br><br><br><br></p>
-            </div>
-          </div>
+          </ng-template>
         </div>
       </div>
     </div>
   </div>
 </section>
+</ng-template>

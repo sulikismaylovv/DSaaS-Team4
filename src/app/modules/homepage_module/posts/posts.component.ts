@@ -99,6 +99,7 @@ export class PostsComponent implements OnInit {
         const dialogRef = this.dialog.open(CreatePostComponent, {
             width: '700px',
             data: 0
+
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -107,21 +108,19 @@ export class PostsComponent implements OnInit {
     }
 
   // Function to handle post click
-  async onPostClick() {
+  async onPostClick(postId: number | undefined): Promise<void> {
     // Check if the user is authenticated
     this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
         if (!isAuthenticated) {
             // If not authenticated, redirect to login
             await this.router.navigate(['/login']);
         }
+        else{
+          if (postId === undefined) throw new Error('Post ID is undefined');
+          //await this.router.navigate(['/post', postId]);
+        }
         // If authenticated, you can perform other actions, such as opening the post details
     });
     }
 
-
-
-    async getOriginalPostDate(original_post_id: number): Promise<Date> {
-        const originalPost = await this.postsService.getOriginalPost(original_post_id);
-        return new Date(originalPost.created_at);
-    }
 }

@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Session} from "@supabase/supabase-js";
+import{CustomAlertComponent} from "../custom-alert/custom-alert.component";
 
 @Component({
     selector: 'app-auth',
@@ -17,6 +18,9 @@ export class AuthComponent implements OnInit {
     registerForm!: FormGroup;
     loading = false;
     private session: Session | null | undefined;
+    termsAccepted = false;
+    showAlert = false;
+    alertMessage = '';
 
     constructor(
         protected readonly authService: AuthService,
@@ -33,6 +37,9 @@ export class AuthComponent implements OnInit {
             confirmPassword: ['', Validators.required]
         }, {validator: this.matchingPasswords});
 
+    }
+    termsAcceptedChange() {
+        this.termsAccepted = !this.termsAccepted;
     }
 
     ngOnInit() {
@@ -62,7 +69,7 @@ export class AuthComponent implements OnInit {
                 await this.router.navigate(['/verify-email']);
             } catch (error) {
                 if (error instanceof Error) {
-                    alert(error.message);
+                  alert(error.message);
                 }
             } finally {
                 this.registerForm.reset();
@@ -71,8 +78,10 @@ export class AuthComponent implements OnInit {
         } else {
             // If the form is not valid, you can handle the errors here
             // For example, you can trigger validation messages in your template
-            alert('Please correct the errors on the form.');
+            //alert('Please correct the errors on the form.');
+          this.alertMessage = 'Please correct the errors on the form.';
+          this.showAlert = true;
+          setTimeout(() => this.showAlert = false,6000);
         }
     }
-
 }

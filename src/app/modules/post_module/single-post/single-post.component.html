@@ -2,41 +2,44 @@
   Loading...
 </div>
 <ng-template #loadedContent>
-
-
-
-<div class="min-h-screen bg-gray-100">
-  <div class="container mx-auto flex flex-col items-center py-6">
-    <!-- Display the post content -->
-    <div class="w-full max-w-2xl px-4 mb-4">
-      <app-post-view [post]="post" [originalPost]="originalPost"></app-post-view>
-    </div>
-
-    <!-- Comment Field -->
-    <div class="w-full max-w-2xl px-4 mb-4 bg-white">
-      <div class="flex flex-row items-center border-b border-blue-500 py-2 bg-white shadow-lg rounded-lg">
-        <img [src]="avatarSafeUrl" alt="User Image" class="h-12 w-12 rounded-full mr-4"/>
-        <textarea class="resize description bg-gray-100 sec p-3 h-30 w-full border border-gray-300 outline-none" cols="70" name="commentContent"
-                  [(ngModel)]="commentContent"
-                  placeholder="Share your football news with others"></textarea>
+  <div class="p-4 lg:px-64">
+    <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div class="bg-gray-100">
+        <div class="mx-auto w-full">
+          <!-- Display the post content -->
+          <app-post-view [post]="post" [originalPost]="originalPost"></app-post-view>
+          <!--beta-->
+          <section class="bg-white dark:bg-[#3a4151] py-4 lg:py-8 rounded-lg antialiased h-fit">
+            <div class="mx-auto px-4">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion</h2>
+              </div>
+              <!--post comment-->
+              <form class="mb-6">
+                <div class="py-2 px-4 mb-4 bg-white dark:bg-[#565f77] rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                  <label for="comment" class="sr-only">Your comment</label>
+                  <textarea id="comment" rows="2"
+                            class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-white dark:bg-[#565f77]"
+                            name="commentContent" [(ngModel)]="commentContent"
+                            placeholder="Write a comment..." required></textarea>
+                </div>
+                <button (click)="postComment()"
+                        type="submit"
+                        class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                  Post comment
+                </button>
+              </form>
+              <!--this is the comment section-->
+              <div *ngFor="let comment of comments">
+                <!-- Display the comment content here -->
+                <!-- For example, you might have a 'app-comment-view' component -->
+                <app-comment-view [comment]="comment"></app-comment-view>
+                <hr class="h-px mb-4 w-full bg-gray border-0 dark:bg-dark-mode">
+              </div>
+            </div>
+          </section>
       </div>
-      <!-- Buttons for posting or canceling the comment -->
-      <div class="flex justify-end mt-4">
-        <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500" (click)="cancelComment()">Cancel</div>
-        <button class="btn border border-blue-500 p-1 px-4 font-semibold cursor-pointer text-white bg-blue-500 hover:bg-blue-700 ml-2" (click)="postComment()">
-          Reply
-        </button>
-      </div>
-    </div>
-
-    <!-- Comments Section -->
-    <div class="w-full max-w-2xl px-4 py-6">
-      <div *ngFor="let comment of comments" class="comment bg-white rounded-lg p-4 shadow-lg mb-4">
-        <!-- Display the comment content here -->
-        <!-- For example, you might have a 'app-comment-view' component -->
-        <app-comment-view [comment]="comment"></app-comment-view>
       </div>
     </div>
   </div>
-</div>
 </ng-template>
