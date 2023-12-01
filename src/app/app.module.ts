@@ -33,6 +33,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ProfileComponent } from './modules/profile_module/profile_page/profile.component';
 import { CommonComponent } from './modules/profile_module/common/common.component';
 import { UserComponent } from './modules/profile_module/user/user.component';
+import {SettingsComponent} from "./modules/settings/settings.component";
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+
 
 
 @NgModule({
@@ -40,7 +43,7 @@ import { UserComponent } from './modules/profile_module/user/user.component';
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
-      LeagueComponent, LineupComponent,  ProfileComponent, CommonComponent, UserComponent
+      LeagueComponent, LineupComponent,  ProfileComponent, CommonComponent, UserComponent, SettingsComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule

@@ -16,6 +16,7 @@ import {ShopComponent} from "./modules/shop/shop.component";
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {UserComponent} from "./modules/profile_module/user/user.component";
+import {SettingsComponent} from "./modules/settings/settings.component";
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     {path: 'league',component: GloballeagueComponent},
   { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard]},
   { path: 'user', component: UserComponent},
+  { path: 'settings', component: SettingsComponent}
 ];
 
 @NgModule({

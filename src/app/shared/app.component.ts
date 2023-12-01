@@ -6,7 +6,8 @@ import {ThemeService} from '../core/services/theme.service';
 import {Router, NavigationEnd} from '@angular/router';
 import {GameComponent} from "../modules/game_module/game.component";
 import {FooterService} from "../core/services/footer.service";
-
+import { filter } from 'rxjs/operators';
+declare let gtag: Function;
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
       // Subscribe to the auth state changes
       this.authService.authChanges((_, session) => (this.session = session));
       initFlowbite();
+     // this.setUpAnalytics();
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           if (event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/register') {
@@ -33,6 +35,17 @@ export class AppComponent implements OnInit {
         }
       });
     }
+  setUpAnalytics() {
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        const navigationEndEvent = event as NavigationEnd;
+        gtag('config', 'G-34MNLJ2ZXW',
+          {
+            page_path: navigationEndEvent.urlAfterRedirects
+          }
+        );
+      });
+  }
 
     toggleTheme() {
         this.themeService.toggleTheme();
