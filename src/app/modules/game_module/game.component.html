@@ -127,20 +127,30 @@
       </div>
     </div>
     <!--Third widget-->
-    <div class="flex h-fit rounded bg-white dark:bg-[#3a4153] mt-4 items-center justify-between p-4">
-      <div class="flex items-center">
-        <img src={{fixture.club0?.logo}} alt="bla bla" class="w-16 h-16">
-        <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
-          <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
-        </div>
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
+      <p class="text-black dark:text-white text-xl font-bold ml-4 mt-4">Predicted lineup</p>
+      <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
+      <!--Add the team images to the left and right-->
+      <div class="flex justify-between">
+        <img src={{fixture.club0?.logo}} alt="bla bla" class="ml-10 w-16 h-16">
+        <img src={{fixture.club1?.logo}} alt="bla bla" class="mr-10 w-16 h-16">
       </div>
-      <p class="text-white font-bold">Predicted lineup</p>
-      <div class="flex items-center">
+      <!--Try to add the lineup here-->
+      
+
+
+      <!-- <div class="flex items-center">
+         <img src={{fixture.club0?.logo}} alt="bla bla" class="w-16 h-16">
+         <div class="ml-4 shadow bg-indigo-800  drop-shadow-lg">
+           <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
+         </div>
+       </div>-->
+      <!--<div class="flex items-center">
         <div class="ml-4 shadow bg-indigo-800 drop-shadow-lg ">
           <p class="ml-2 mr-2 rounded font-semibold text-white">5-2-2</p>
         </div>
         <img src={{fixture.club1?.logo}} alt="bla bla" class="w-16 h-16">
-      </div>
+      </div>-->
     </div>
     <!--TBA-->
   </div>
