@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
 import {Router} from "@angular/router";
+import {map} from "rxjs/operators";
 
 export interface Profile {
     id?: string;
@@ -55,6 +56,13 @@ export class AuthService {
     isAuthenticated(): boolean {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
+
+  checkEmailExists(email: string): boolean {
+      const data = this.supabase.supabaseClient.from(
+        'users'
+      ).select('email').eq('email', email).single();
+      return data != null;
+  }
 
     async signInWithProvider() {
         return this.supabase.supabaseClient.auth.signInWithOAuth({
