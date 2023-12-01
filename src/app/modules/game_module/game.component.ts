@@ -208,7 +208,6 @@ export class GameComponent implements OnInit {
     }
 
     toggleContent(team: string) {
-
         if (this.clickedImage === team) {
             // If the same team is clicked again, reset everything
             this.showContent = false;
@@ -218,7 +217,6 @@ export class GameComponent implements OnInit {
             // Otherwise, show content and set the clicked team
             this.showContent = true;
             this.clickedImage = team;
-
             if (team === 'team1') {
                 this.teamToWin = true;
             } else if (team === 'team2') {
