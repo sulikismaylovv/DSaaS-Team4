@@ -241,4 +241,18 @@ export class AuthService {
       .single()
 
   }
+
+  async updateUser(param: { background: string }) {
+      console.log("Param: " , param);
+    const {background} = param;
+    const update = {
+      id: this._session?.user?.id, // Ensure the correct user ID is used
+      email: this._session?.user?.email, // Ensure the correct email is used
+      bg_url: background,
+      updated_at: new Date(),
+    };
+    console.log(update);
+    return this.supabase.supabaseClient.from('users').upsert(update);
+
+  }
 }

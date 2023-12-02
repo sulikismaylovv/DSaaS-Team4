@@ -33,6 +33,7 @@ export class CommonComponent implements OnInit{
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  bgImageSafeUrl: SafeResourceUrl | undefined;
   bgSafeUrl: string | ArrayBuffer | null = 'assets/images/default-background.jpg';
   posts: Post[] = [];
   preference: Preference[] = [];
@@ -100,6 +101,8 @@ export class CommonComponent implements OnInit{
       // Set additional properties based on the profile
       this.username = this.profile?.username;
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
+      this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+      console.log("Image: " , this.bgImageSafeUrl);
       if (this.userRefId) {
         await this.checkFriendStatus();
       }
