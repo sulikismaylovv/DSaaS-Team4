@@ -1,3 +1,43 @@
+interface ApiOdds {
+  league: League;
+  fixture: Fixture;
+  update: string;
+  bookmakers: Bookmaker[];
+}
+
+interface League {
+  id: number;
+  name: string;
+  country: string;
+  logo: string;
+  flag: string;
+  season: number;
+}
+
+interface Fixture {
+  id: number;
+  timezone: string;
+  date: string;
+  timestamp: number;
+}
+
+interface Bookmaker {
+  id: number;
+  name: string;
+  bets: Bet[];
+}
+
+interface Bet {
+  id: number;
+  name: string;
+  values: BetValue[];
+}
+
+interface BetValue {
+  value: string;
+  odd: string;
+}
+
 import {
   createClient,
   SupabaseClient,
@@ -10,42 +50,84 @@ const options = {
   },
 };
 
-interface bets{
-  
+interface SupabaseOdds {
+  odds_home: number;
+  odds_away: number;
+  odds_draw: number;
 }
 
-async function updateScore(supabaseClient: SupabaseClient, fixture: Fixture) {
-  const isFinished = fixture.score.fulltime.home !== null &&
-    fixture.score.fulltime.away !== null;
-  const scoreUpdate = {
-    odds_home: fixture.goals.home,
-    odds_away: fixture.goals.away,
-    odds_draw: isFinished,
-  };
-  const { data, error } = await supabaseClient
-    .from("fixtures")
-    .update(scoreUpdate)
-    .eq("fixtureID", fixture.fixture.id);
-  if (error) throw error;
-
-  return new Response(JSON.stringify({ data }), {
-    headers: { "Content-Type": "application/json" },
-    status: 200,
-  });
-}
-
-
-Deno.serve(async (req) => {
-  const { name } = await req.json()
-  const data = {
-    message: `Hello ${name}!`,
+function convertApiOddsToSupabaseOdds(apiOdds: ApiOdds): SupabaseOdds {
+  const firstBetValues = apiOdds.bookmakers[0]?.bets[0]?.values;
+  if (!firstBetValues || firstBetValues.length < 3) {
+    throw new Error("Invalid bet values");
   }
 
-  return new Response(
-    JSON.stringify(data),
-    { headers: { "Content-Type": "application/json" } },
-  )
-})
+  // Convert string odds to numbers and return the SupabaseOdds structure
+  return {
+    odds_home: parseFloat(firstBetValues[0].odd),
+    odds_draw: parseFloat(firstBetValues[1].odd),
+    odds_away: parseFloat(firstBetValues[2].odd),
+  };
+}
+
+async function getTodayBets(): Promise<ApiOdds[]> {
+  const today = new Date();
+  const date = today.toISOString().split("T")[0];
+  const url =
+    `https://api-football-v1.p.rapidapi.com/v3/odds?league=144&season=2023&date=${date}&bookmaker=16`;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data.response;
+  } catch (error) {
+    console.error("Error fetching fixtures:", error);
+    return [];
+  }
+}
+
+async function addBets(supabaseClient: SupabaseClient, bets: ApiOdds[]) {
+  for (const bet of bets) {
+    const odds = convertApiOddsToSupabaseOdds(bet);
+    const { data, error } = await supabaseClient
+      .from("fixtures")
+      .update([{
+        odds_home: odds.odds_home,
+        odds_away: odds.odds_away,
+        odds_draw: odds.odds_draw,
+      }])
+      .eq("fixtureID", bet.fixture.id);
+
+    if (error) {
+      console.error("Error inserting bet:", error);
+    } else {
+      console.log("Inserted bet:", data);
+    }
+  }
+}
+
+Deno.serve(async (req) => {
+  const { url, method } = req;
+
+  const supabaseClient = createClient(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    {
+      global: {
+        headers: { Authorization: req.headers.get("Authorization")! },
+      },
+    },
+  );
+
+  if (method === "OPTIONS") {
+    return new Response("ok", { status: 200 });
+  }
+
+  const bets = await getTodayBets();
+  await addBets(supabaseClient, bets);
+
+
+  return new Response();
+});
 
 /* To invoke locally:
 

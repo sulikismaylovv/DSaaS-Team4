@@ -110,6 +110,7 @@ async function getClubPoints(): Promise<ClubData[]> {
     const response = await fetch(url, options);
     const data = await response.json();
     const standings = data.response[0].league.standings[0];
+    
     return standings.map((team: any) => ({
       id: team.team.id,
       points: team.points,
@@ -154,14 +155,14 @@ async function updateClubData(supabaseClient: SupabaseClient) {
 
 async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
   const now = new Date();
-  const oneHourBefore = new Date(now.getTime() - 60 * 60 * 1000); // 1 hour before now
-  const threeHoursAfter = new Date(now.getTime() + 3 * 60 * 60 * 1000); // 3 hours after now
+  // No need for oneHourBefore, as we start from the current time
+  const threeAndHalfHoursAfter = new Date(now.getTime() + 3.5 * 60 * 60 * 1000); // 3.5 hours after now
   
   const { data, error } = await supabaseClient
     .from("fixtures")
     .select("time")
-    .gte("time", oneHourBefore.toISOString())
-    .lte("time", threeHoursAfter.toISOString());
+    .gte("time", now.toISOString()) // Start from the current time
+    .lte("time", threeAndHalfHoursAfter.toISOString()); // Up to 3.5 hours after
 
   if (error) {
     throw error;
@@ -169,6 +170,8 @@ async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
 
   return data.length > 0;
 }
+
+
 
 
 Deno.serve(async (req) => {
