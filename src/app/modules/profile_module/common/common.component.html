@@ -13,10 +13,13 @@
 <ng-template #loadedContent>
 <section class="bg-light-mode dark:bg-dark-mode" >
 
-  <div class="bg-light-mode dark:bg-dark-mode my-8 sm:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+  <div class="bg-light-mode dark:bg-dark-mode my-8 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
     <div class="flex items-center max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
-      <img class="object-cover min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" src="../assets/images/KVK.png">
+      <img class="object-cover min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl"  [src]="bgSafeUrl">
+        <div>
+          <ng-content select=".edit-bg"></ng-content>
+      </div>
     </div>
 
 
@@ -24,14 +27,16 @@
     <div class=" bg-white dark:bg-test shadow-sm w-full xl:rounded-br-lg">
       <div class="flex justify-between">
         <div class="flex p-4 z-10">
-          <div class=" flex items-center h-28 w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
+          <div class="flex items-center h-28 w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
             <img [src]="avatarSafeUrl" alt="Avatar" class="h-full w-full object-cover border-primary">
           </div>
 
-          <div class="flex-col justify-center">
+          <div class="flex-col justify-center xl:ml-4">
             <p class="text-light-mode-text dark:text-primary-100 text-lg md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">{{username}}</p>
-            <div class="flex justify-start">
-              <img class=" my-1 w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 2xl:w-20 2xl:h-20" [src]="favClubImage">
+            <div class="flex justify-start -ml-20">
+              <div class="bg-white p-2 my-2 w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 rounded-full">
+                <img class="w-full h-full" [src]="favClub?.logo">
+              </div>
             </div>
           </div>
         </div>
@@ -166,7 +171,7 @@
         <!-- Link 3 -->
         <ng-container *ngIf="selectedLink === 'link3'">
           <!-- Content for Link 3 -->
-          <div class="bg-white dark:bg-test shadow-sm rounded-b-lg p-4 h-full">
+          <div class="bg-white dark:bg-test shadow rounded-b-lg p-4">
             <div class="mb-2">
               <h2 class="text-light-mode-text dark:text-primary-300 text-3xl">
                 <a class="">About</a>
@@ -258,7 +263,7 @@
           <!-- Post 1 -->
           <div *ngIf="posts.length > 0; else noPosts">
             <div *ngFor="let post of posts" class="mb-4">
-              <div (click)="onPostClick(post.id)">
+              <div>
                 <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
                                [post]="post"></app-post-view>
               </div>

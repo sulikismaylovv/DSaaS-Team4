@@ -33,9 +33,9 @@ export class CommonComponent implements OnInit{
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  bgSafeUrl: string | ArrayBuffer | null = 'assets/images/default-background.jpg';
   posts: Post[] = [];
   preference: Preference[] = [];
-  favClubImage: SafeResourceUrl | undefined;
   favClub: Club | undefined;
   followingClub: Club[] = [];
   favoriteClub: string | undefined;
@@ -81,7 +81,6 @@ export class CommonComponent implements OnInit{
         }
       )
       .subscribe();
-
   }
 
   async ngOnInit(): Promise<void> {
@@ -114,7 +113,6 @@ export class CommonComponent implements OnInit{
       // Set additional properties based on the profile
       this.username = this.profile?.username;
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-
       if (this.userRefId) {
         await this.checkFriendStatus();
       }
@@ -126,11 +124,12 @@ export class CommonComponent implements OnInit{
     }
   }
 
+
+
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
       this.favClub = await this.preferenceService.getClubByClubId(parseInt(preference.club_id));
       this.favoriteClub = this.favClub.name;
-      this.favClubImage = await this.imageService.loadClubImage(this.favClub.logo);
     } else if (preference.followed_club) {
       this.followingClub.push(await this.preferenceService.getClubByClubId(parseInt(preference.club_id)));
       this.followiedClubs?.push(this.followingClub[this.followingClub.length - 1].name);

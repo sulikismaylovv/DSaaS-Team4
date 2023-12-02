@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, from, Observable} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
 import {Router} from "@angular/router";
+import {map} from "rxjs/operators";
 
 export interface Profile {
     id?: string;
@@ -56,11 +57,31 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
 
+  checkEmailExists(email: string): boolean {
+      const data = this.supabase.supabaseClient.from(
+        'users'
+      ).select('email').eq('email', email).single();
+      return data != null;
+  }
+
+  checkUsernameExists(username: string, currentUserId: string): Observable<boolean> {
+    const query = this.supabase.supabaseClient
+      .from('users')
+      .select('username')
+      .eq('username', username)
+      .not('id', 'eq', currentUserId) // Exclude the current user based on their ID
+      .then(response => response.data ? response.data.length > 0 : false);
+
+    return from(query).pipe(
+      map(exists => exists)
+    );
+  }
+
     async signInWithProvider() {
         return this.supabase.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: this.configService.getFullUrl('home')
+                redirectTo: this.configService.getFullUrl('profile')
             }
         });
     }

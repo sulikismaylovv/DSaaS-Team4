@@ -29,8 +29,8 @@ export class FirstSignGuard implements CanActivate {
         return false;
       }
 
-      const profile = await this.authService.profile(user);
-      if (!profile.data || !profile.data.username || !profile.data.birthdate) {
+
+      if (this.isWithinOneMinute(user.last_sign_in_at , user.created_at)) {
         await this.router.navigate(['/complete-profile']);
         return false;
       }
@@ -41,4 +41,19 @@ export class FirstSignGuard implements CanActivate {
       return false;
     }
   }
+
+  private isWithinOneMinute(lastSignIn: string | undefined, createdAt: string): boolean {
+    if (!lastSignIn) return true;
+    const lastSignInDate = new Date(lastSignIn);
+    const createdDate = new Date(createdAt);
+
+    // Calculate the difference in milliseconds
+    const difference = Math.abs(lastSignInDate.getTime() - createdDate.getTime());
+
+    // Check if the difference is less than or equal to 60,000 milliseconds (1 minute)
+    return difference <= 30000;
+  }
+
+
+
 }
