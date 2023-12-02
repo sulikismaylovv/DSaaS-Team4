@@ -118,21 +118,6 @@ async function updateScore(supabaseClient: SupabaseClient, fixture: Fixture) {
   });
 }
 
-// async function main() {
-//   try {
-//       const fixtures = await getTodayFixtures();
-
-//       for (const fixture of fixtures) {
-//           // Fetch detailed fixture data
-//           // Update the score in the Supabase database
-//           await updateScore(supabaseClient, fixture);
-//       }
-
-//       console.log("Fixture updates complete.");
-//   } catch (error) {
-//       console.error('Error in main function:', error);
-//   }
-// }
 
 Deno.serve(async (req) => {
   const { url, method } = req;

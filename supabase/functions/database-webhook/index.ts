@@ -37,6 +37,16 @@ function whoScored(record: FixtureRecord, oldRecord: FixtureRecord): boolean { /
   );
 }
 
+function isGoalScored(
+  record: FixtureRecord,
+  oldRecord: FixtureRecord,
+): boolean {
+  return (
+    record.home_goals !== oldRecord.home_goals ||
+    record.away_goals !== oldRecord.away_goals
+  );
+}
+
 async function addPost(SupabaseClient: SupabaseClient, newInfo: String) {
   const { data, error } = await SupabaseClient
     .from("posts")
@@ -90,17 +100,30 @@ Deno.serve(async (req) => {
     payload.record.team0,
     payload.record.team1,
   );
-  const score = `${payload.record.home_goals}  - ${payload.record.away_goals}`;
-  const message = whoScored(payload.record, payload.old_record!)
-    ? awayTeam.concat(" scored!")
-    : homeTeam.concat(" scored!");
-  addPost(
-    supabaseClient,
-    score.concat(" ", message),
-  );
+  // if (isGoalScored(payload.record, payload.old_record!)) {
+  //   const score =
+  //     `${payload.record.home_goals}  - ${payload.record.away_goals}`;
+  //   const message = whoScored(payload.record, payload.old_record!)
+  //     ? awayTeam.concat(" scored!")
+  //     : homeTeam.concat(" scored!");
+  //   addPost(
+  //     supabaseClient,
+  //     score.concat(" ", message),
+  //   );
+  // }
+  if (isGoalScored(payload.record, payload.old_record!)) {
+    const score = `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
+    const scoringTeam = whoScored(payload.record, payload.old_record!) ? awayTeam : homeTeam;
+    const message = `${scoringTeam} just scored!`;
+    addPost(
+      supabaseClient,
+      `${score} - ${message}`,
+    );
+}
+
+
   const data = {
     message: "Request processed successfully",
-    score: score,
     homeTeam: homeTeam,
     awayTeam: awayTeam,
   };
