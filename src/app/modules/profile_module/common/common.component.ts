@@ -97,6 +97,13 @@ export class CommonComponent implements OnInit{
         ? await this.getProfileById(this.userRefId)
         : await this.getProfile();
 
+      // Set additional properties based on the profile
+      this.username = this.profile?.username;
+      this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
+      if (this.userRefId) {
+        await this.checkFriendStatus();
+      }
+
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
       const friendsPromise = this.fetchFriends(this.profile?.id);
@@ -110,12 +117,6 @@ export class CommonComponent implements OnInit{
         await this.sortPreference(preference);
       }
 
-      // Set additional properties based on the profile
-      this.username = this.profile?.username;
-      this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-      if (this.userRefId) {
-        await this.checkFriendStatus();
-      }
     } catch (error) {
       console.error('An error occurred during initialization:', error);
       // Handle the error properly
@@ -255,10 +256,12 @@ export class CommonComponent implements OnInit{
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
     if(this.userRefId == null) throw new Error('User ID is undefined');
+    console.log(this.userRefId);
     const targetUserId = this.userRefId;
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
     // This is a hypothetical method that you would need to implement
     const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
+    console.log(status);
     if(status === 'accepted') {
       this.friendRequestStatus = FriendRequestStatus.Friends;
     } else if (status === 'pending') {
