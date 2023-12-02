@@ -14,7 +14,7 @@ export class ProfileComponent extends CommonComponent {
 
   openCreatePostModal(): void {
     const dialogRef = this.dialog.open(CreatePostComponent, {
-      width: '700px',
+      width: '900px',
       data: 0
     });
 
@@ -25,8 +25,8 @@ export class ProfileComponent extends CommonComponent {
 
   openBgImageSelectorModal(): void {
     const dialogRef = this.dialog.open(BgImageSelectorComponent, {
-      width: '700px',
-      data: 0
+      width: '800px',
+      data: this.profile
     });
 
     dialogRef.afterClosed().subscribe(result => {

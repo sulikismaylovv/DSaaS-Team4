@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,7 +7,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 
 export enum FriendRequestStatus {
@@ -63,10 +63,9 @@ export class CommonComponent implements OnInit{
     private readonly preferenceService: PreferencesService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly imageService: ImageDownloadService,
+    protected readonly imageService: ImageDownloadService,
     protected dialog: MatDialog,
-    protected readonly friendshipService: FriendshipService
-
+    protected readonly friendshipService: FriendshipService,
   ) {
     this.supabase.supabaseClient
       .channel('realtime-posts')
@@ -102,7 +101,6 @@ export class CommonComponent implements OnInit{
       this.username = this.profile?.username;
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
       this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
-      console.log("Image: " , this.bgImageSafeUrl);
       if (this.userRefId) {
         await this.checkFriendStatus();
       }
