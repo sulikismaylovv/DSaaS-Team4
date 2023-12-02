@@ -155,13 +155,13 @@ async function updateClubData(supabaseClient: SupabaseClient) {
 async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
   const now = new Date();
   const oneHourBefore = new Date(now.getTime() - 60 * 60 * 1000); // 1 hour before now
-  const twoHoursFifteenAfter = new Date(now.getTime() + (2 * 60 + 15) * 60 * 1000); // 2 hours and 15 minutes after now
-
+  const threeHoursAfter = new Date(now.getTime() + 3 * 60 * 60 * 1000); // 3 hours after now
+  
   const { data, error } = await supabaseClient
     .from("fixtures")
     .select("time")
     .gte("time", oneHourBefore.toISOString())
-    .lte("time", twoHoursFifteenAfter.toISOString());
+    .lte("time", threeHoursAfter.toISOString());
 
   if (error) {
     throw error;
