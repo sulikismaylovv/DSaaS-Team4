@@ -263,7 +263,7 @@
           <!-- Post 1 -->
           <div *ngIf="posts.length > 0; else noPosts">
             <div *ngFor="let post of posts" class="mb-4">
-              <div (click)="onPostClick(post.id)">
+              <div>
                 <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
                                [post]="post"></app-post-view>
               </div>
