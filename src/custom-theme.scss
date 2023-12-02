@@ -45,4 +45,8 @@ $DSaaS-theme: mat.define-light-theme((
   background-color: transparent !important;
 }
 
+.cdk-overlay-pane {
+  width: auto ; /* or specify a width */
+  height: auto ; /* or specify a height */}
+
 

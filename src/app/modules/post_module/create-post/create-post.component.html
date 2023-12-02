@@ -1,8 +1,7 @@
-<div class="p-4 mb-4  h-144 dark:bg-dark-mode shadow-lg rounded-2xl">
+
   <form (ngSubmit)="onSubmit()">
     <!-- component -->
-    <div class="heading text-center font-bold text-2xl m-5 text-black dark:text-white">New Post</div>
-    <div class="editor mx-auto w-10/12 flex flex-col border border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
+    <div class="editor mx-auto flex flex-col border bg-light-mode-acc border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
       <div class="flex flex-row">
         <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4 mb-4 border border-gray-500 "/>
         <p class="font-bold text-md dark:text-white" >{{ profile?.username }}</p>
@@ -33,4 +32,3 @@
       <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
     </div>
   </form>
-</div>
