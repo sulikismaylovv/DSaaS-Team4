@@ -15,6 +15,7 @@ export interface Profile {
     first_name: string;
     last_name: string;
     avatar_url?: string;
+    bg_url?: string;
 }
 
 interface RegisterResponse {
@@ -190,6 +191,14 @@ export class AuthService {
 
     uploadAvatar(filePath: string, file: File) {
         return this.supabase.supabaseClient.storage.from('avatars').upload(filePath, file)
+    }
+
+    downLoadBackground(path: string) {
+        return this.supabase.supabaseClient.storage.from('background_user').download(path)
+    }
+
+    uploadBackground(filePath: string, file: File) {
+        return this.supabase.supabaseClient.storage.from('background_user').upload(filePath, file)
     }
 
     async restoreSession() {
