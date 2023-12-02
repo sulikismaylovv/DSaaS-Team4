@@ -47,12 +47,13 @@ function isGoalScored(
   );
 }
 
-async function addPost(SupabaseClient: SupabaseClient, newInfo: String) {
+async function addPost(SupabaseClient: SupabaseClient, newInfo: string, image_url?: string) {
   const { data, error } = await SupabaseClient
     .from("posts")
     .upsert([
       {
         user_id: "c83cef52-7948-41be-b5af-d2bdef31e033",
+        image_url: image_url,
         content: newInfo,
         created_at: new Date(),
         original_post_id: null,
@@ -82,6 +83,25 @@ async function getClubInformation(
   return { homeTeam: data[0]?.name, awayTeam: data[1]?.name };
 }
 
+async function getClubPictures(
+  supabaseClient: SupabaseClient,
+  clubIDHome: number,
+  clubIDAway: number,
+) {
+  const { data, error } = await supabaseClient
+    .from("clubs")
+    .select("logo")
+    .in("id", [clubIDHome, clubIDAway]);
+
+  if (error) {
+    throw error;
+  }
+
+  // Assuming the data array contains the rows in the same order as the IDs were provided
+  console.log("Fetched", data);
+  return { homeTeamPicture: data[0]?.logo, awayTeamPicture: data[1]?.logo };
+}
+
 Deno.serve(async (req) => {
   const payload: WebhookPayload = await req.json();
 
@@ -96,6 +116,11 @@ Deno.serve(async (req) => {
   );
 
   const { homeTeam, awayTeam } = await getClubInformation(
+    supabaseClient,
+    payload.record.team0,
+    payload.record.team1,
+  );
+  const { homeTeamPicture, awayTeamPicture } = await getClubPictures(
     supabaseClient,
     payload.record.team0,
     payload.record.team1,
@@ -115,9 +140,14 @@ Deno.serve(async (req) => {
     const score = `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
     const scoringTeam = whoScored(payload.record, payload.old_record!) ? awayTeam : homeTeam;
     const message = `${scoringTeam} just scored!`;
+
+
+    const sentImage = whoScored(payload.record, payload.old_record!) ? awayTeamPicture : homeTeamPicture;
+
     addPost(
       supabaseClient,
       `${score} - ${message}`,
+      sentImage,
     );
 }
 
