@@ -33,3 +33,16 @@ $DSaaS-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($DSaaS-theme);
 
+// Custom styles
+.modal-content {
+  border: none !important;
+}
+
+.mat-dialog-container {
+  box-shadow: none !important;
+}
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+}
+
+
