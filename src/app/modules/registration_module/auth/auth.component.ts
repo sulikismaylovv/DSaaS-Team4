@@ -93,4 +93,14 @@ export class AuthComponent implements OnInit {
           setTimeout(() => this.showAlert = false,6000);
         }
     }
+
+  async signInWithProvider() {
+    try {
+      await this.authService.signInWithProvider();
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  }
 }

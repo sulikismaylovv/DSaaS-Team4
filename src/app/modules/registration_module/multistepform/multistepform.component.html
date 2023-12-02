@@ -37,7 +37,8 @@
               <label class="xl:text-base text-black dark:text-white">Username</label>
               <div class="flex">
                 <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="username" placeholder="e.g. johndoe123" type="text"/>
-                <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched" [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                        [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
                         data-tooltip-target="tooltip-username" data-tooltip-placement="right"
                         type="button"
                         class="rounded-full ms-4 focus:outline-none p-2.5">
@@ -46,6 +47,10 @@
                   </svg>
                 </button>
               </div>
+              <div *ngIf="updateProfileForm.controls['username'].errors?.['usernameExists']" class="text-red-600">
+                This username is already in use. Please choose another one.
+              </div>
+
               <!-- Birthdate -->
               <label class="xl:text-base text-black dark:text-white">Birthdate</label>
               <div class="flex">
