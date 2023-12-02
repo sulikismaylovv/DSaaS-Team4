@@ -39,10 +39,6 @@ module.exports = {
       },
       margin:{
         '121': '30.25rem',
-        '128': '32rem',
-        '144': '36rem',
-        '160': '40rem',
-        '200': '50rem',
       },
 
       borderColor: theme => ({
