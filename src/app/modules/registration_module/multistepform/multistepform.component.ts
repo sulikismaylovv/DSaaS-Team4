@@ -1,9 +1,19 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation,} from '@angular/core';
-import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation,} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidatorFn,
+  AsyncValidatorFn,
+  ValidationErrors
+} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {PreferencesService} from "../../../core/services/preference.service";
 import {NavbarService} from "../../../core/services/navbar.service";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
 
 interface Team {
     id: number;
@@ -30,6 +40,8 @@ export class MultistepformComponent implements OnInit {
     storage = 2;
     customProfile = 2;
     total = 9;
+    showSummary = true;
+    isSubmitting = false;
 
     teams = [
         {id: 260, name: 'OH Leuven', logoPath: 'assets/logos/oud-heverlee-leuven-seeklogo.com-3.svg', favorite: false},
@@ -60,7 +72,8 @@ export class MultistepformComponent implements OnInit {
         private router: Router,
         private formBuilder: FormBuilder,
         private preferencesService: PreferencesService,
-        public navbarService: NavbarService
+        public navbarService: NavbarService,
+        private cd: ChangeDetectorRef,
     ) {
     }
 
@@ -93,7 +106,7 @@ export class MultistepformComponent implements OnInit {
         this.navbarService.setShowNavbar(false);
         // Subscribe to the auth state changes
         this.updateProfileForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            username: ['', Validators.required , this.usernameValidator()],
             birthdate: [null, Validators.required],
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
@@ -102,23 +115,51 @@ export class MultistepformComponent implements OnInit {
         await this.fetch();
     }
 
+   usernameValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        // If the control value is falsy (e.g., empty string), return an observable that emits null
+        return of(null);
+      }
 
-    async onSubmit() {
-        try {
-            await this.completeProfile();
-            await this.updatePreferences();
-            this.lastPage = true;
-            this.updateProfileForm.reset();
+      const userId = this.authService.session?.user?.id;
+      if (!userId) throw new Error('User ID is undefined');
 
-            await this.router.navigate(['/home']);
-        } catch (error) {
-            if (error instanceof Error) {
-                // Show an error message and allow the user to try again
-                alert('An error occurred: ' + error.message + ' Please try again.');
-                // Optionally, reset part of your form or state here if needed
-            }
-        }
+      // Check if the username exists
+      return this.authService.checkUsernameExists(control.value , userId).pipe(
+        map(res => {
+          // if res is true, username exists, return validation error
+          return res ? { usernameExists: true } : null;
+          // NB: Return null if there is no error
+        })
+      );
+    };
+  }
+
+
+  async onSubmit() {
+    this.isSubmitting = true;
+
+    try {
+      await this.completeProfile();
+      await this.updatePreferences();
+      console.log("Profile updated");
+    } catch (error) {
+      if (error instanceof Error) {
+        alert('An error occurred: ' + error.message + ' Please try again.');
+        this.isSubmitting = false;
+        return; // Exit the function if there was an error
+      }
     }
+
+    // If everything is successful, update the state to show the last page
+    this.isSubmitting = false;
+    this.showSummary = false;
+    this.lastPage = true;
+    this.cd.markForCheck(); // Manually trigger change detection
+
+
+  }
 
     async updatePreferences(): Promise<void> {
         try {

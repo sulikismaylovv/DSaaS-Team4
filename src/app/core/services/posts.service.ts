@@ -27,6 +27,21 @@ export class PostsService {
         }
     }
 
+    async getPostsByUserId(userId: string): Promise<Post[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('posts')
+                .select('*')
+                .match({user_id: userId});
+
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+            throw error;
+        }
+    }
+
     // Create a new post
     async createPost(post: Post, file: File | null, filePath: string): Promise<Post> {
         let imageUrl;

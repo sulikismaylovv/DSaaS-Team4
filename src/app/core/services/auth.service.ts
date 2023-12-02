@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, from, Observable} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
 import {Router} from "@angular/router";
+import {map} from "rxjs/operators";
 
 export interface Profile {
     id?: string;
@@ -14,6 +15,7 @@ export interface Profile {
     first_name: string;
     last_name: string;
     avatar_url?: string;
+    bg_url?: string;
 }
 
 interface RegisterResponse {
@@ -56,11 +58,31 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
 
+  checkEmailExists(email: string): boolean {
+      const data = this.supabase.supabaseClient.from(
+        'users'
+      ).select('email').eq('email', email).single();
+      return data != null;
+  }
+
+  checkUsernameExists(username: string, currentUserId: string): Observable<boolean> {
+    const query = this.supabase.supabaseClient
+      .from('users')
+      .select('username')
+      .eq('username', username)
+      .not('id', 'eq', currentUserId) // Exclude the current user based on their ID
+      .then(response => response.data ? response.data.length > 0 : false);
+
+    return from(query).pipe(
+      map(exists => exists)
+    );
+  }
+
     async signInWithProvider() {
         return this.supabase.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: this.configService.getFullUrl('home')
+                redirectTo: this.configService.getFullUrl('profile')
             }
         });
     }
@@ -110,8 +132,6 @@ export class AuthService {
         });
 
         if (signUpResponse.error) throw signUpResponse.error;
-
-        alert('Registration successful! Please check your email to verify your account.');
     }
 
     async completeProfileSetup(userId: string, additionalDetails: Profile): Promise<Profile> {
@@ -173,6 +193,14 @@ export class AuthService {
         return this.supabase.supabaseClient.storage.from('avatars').upload(filePath, file)
     }
 
+    downLoadBackground(path: string) {
+        return this.supabase.supabaseClient.storage.from('background_user').download(path)
+    }
+
+    uploadBackground(filePath: string, file: File) {
+        return this.supabase.supabaseClient.storage.from('background_user').upload(filePath, file)
+    }
+
     async restoreSession() {
         try {
             const {data: sessionData, error} = await this.supabase.supabaseClient.auth.getSession();
@@ -204,4 +232,27 @@ export class AuthService {
             await this.router.navigate(['/login']);
         }
     }
+
+  async profileById(userId: string) {
+    return this.supabase.supabaseClient
+      .from('users')
+      .select(`*`)
+      .eq('id', userId)
+      .single()
+
+  }
+
+  async updateUser(param: { background: string }) {
+      console.log("Param: " , param);
+    const {background} = param;
+    const update = {
+      id: this._session?.user?.id, // Ensure the correct user ID is used
+      email: this._session?.user?.email, // Ensure the correct email is used
+      bg_url: background,
+      updated_at: new Date(),
+    };
+    console.log(update);
+    return this.supabase.supabaseClient.from('users').upsert(update);
+
+  }
 }

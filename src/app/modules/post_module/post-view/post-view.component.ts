@@ -8,6 +8,7 @@ import {PostsService} from "../../../core/services/posts.service";
 import {Router} from "@angular/router";
 import {CreatePostComponent} from "../create-post/create-post.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
     selector: 'app-post-view',
@@ -39,7 +40,8 @@ export class PostViewComponent implements OnInit {
         private readonly postService: PostsService,
         private readonly router: Router,
         private sanitizer: DomSanitizer,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private imageDownloadService: ImageDownloadService
 
     ) {
     }
@@ -51,16 +53,15 @@ export class PostViewComponent implements OnInit {
 
         // Load avatar image
         if (this.post.user_id) {
-            await this.loadAvatarImage(this.post.user_id);
+            this.avatarSafeUrl = await this.imageDownloadService.loadAvatarImage(this.post.user_id);
         }
 
         // Load post image
         if (this.post.image_url) {
-            await this.loadPostImage(this.post.image_url);
+            this.postSafeUrl = await this.imageDownloadService.loadPostImage(this.post.image_url);
         }
 
         if (this.post.original_post_id) {
-            console.log('Original post ID:', this.post.original_post_id);
             await this.loadOriginalPost(this.post.original_post_id);
         }
 
@@ -74,49 +75,20 @@ export class PostViewComponent implements OnInit {
     private async loadOriginalPost(originalPostId: number) {
         try {
             this.originalPost = await this.postService.getOriginalPost(originalPostId)
-            console.log('Original post:', this.originalPost);
             if (this.originalPost.image_url) {
-                const data = await this.postService.downLoadImage(this.originalPost.image_url);
-                if (data instanceof Blob) {
-                    this.originalPostImageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-                }
+                this.originalPostImageUrl = await this.imageDownloadService.loadPostImage(this.originalPost.image_url);
             }
 
 
             if(this.originalPost.user_id){
                 await this.getUsernameRetweetedById(this.originalPost.user_id)
-                const { data } = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.originalPost.user_id));
-                if (data instanceof Blob) {
-                    this.retweetAvatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-                }
+                this.retweetAvatarSafeUrl = await this.imageDownloadService.loadAvatarImage(this.originalPost.user_id);
             }
         } catch (error) {
             console.error('Error loading original post:', error);
         }
     }
 
-
-    private async loadAvatarImage(userId: string) {
-        try {
-            const { data } = await this.authService.downLoadImage(await this.getAvatarUrlByID(userId));
-            if (data instanceof Blob) {
-                this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-            }
-        } catch (error) {
-            console.error('Error downloading image:', error);
-        }
-    }
-
-    private async loadPostImage(imageUrl: string) {
-        try {
-            const data = await this.postService.downLoadImage(imageUrl);
-            if (data instanceof Blob) {
-                this.postSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
-            }
-        } catch (error) {
-            console.error('Error downloading image:', error);
-        }
-    }
 
     async getProfile() {
         try {
@@ -139,7 +111,6 @@ export class PostViewComponent implements OnInit {
             this.loading = false;
         }
     }
-
 
     //Like Logic
     toggleLike(postId: number | undefined) {
@@ -228,7 +199,7 @@ export class PostViewComponent implements OnInit {
     async checkIfLiked(postId: number | undefined): Promise<boolean> {
         try {
             const user = this.authService.session?.user;
-            if (!user || !user.id) throw new Error('User ID is undefined');
+            if (!user || !user.id) return false;
 
             if (postId === undefined) throw new Error('Post ID is undefined');
             const isLiked = await this.postService.checkIfLiked(postId, user.id);
@@ -300,12 +271,24 @@ export class PostViewComponent implements OnInit {
     }
 
 
-    async getAvatarUrlByID(id: string) {
-        return this.userService.getUserByID(id).then(user => {
-            return user.avatar_url;
+    async onPostClick(postId: number | undefined): Promise<void> {
+        // Check if the user is authenticated
+        this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
+            if (!isAuthenticated) {
+                // If not authenticated, redirect to login
+                await this.router.navigate(['/login']);
+            }
+            else{
+                if (postId === undefined) throw new Error('Post ID is undefined');
+                await this.router.navigate(['/post', postId]);
+                window.location.reload();
+            }
+        }
+        )
+    }
 
-        }).catch(error => {
-            console.error('Could not fetch avatar_url', error);
-        });
+    async onAvatarClick(userId: string | undefined): Promise<void> {
+      if (userId === undefined) throw new Error('User ID is undefined');
+      await this.router.navigate(['/profile', userId]);
     }
 }

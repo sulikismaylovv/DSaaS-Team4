@@ -13,6 +13,7 @@ import { BetModel } from 'src/app/core/models/bets.model';
 import { Bet } from 'src/app/core/models/bets.model';
 import { BetsService } from 'src/app/core/services/bets.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { SupabaseFixture, SupabaseFixtureModel } from 'src/app/core/models/supabase-fixtures.model';
 
 @Component({
     selector: 'app-game',
@@ -23,7 +24,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class GameComponent implements OnInit {
     showContent: boolean = false;
     clickedImage: string | null = null;
-    fixture: Fixture = new FixtureModel();
+    fixture: SupabaseFixture = new SupabaseFixtureModel();
     lineups: Lineup[] = [];
     lineupHome: { [key: number]: { name: string, number: number }[] } = {};
     lineupAway: { [key: number]: { name: string, number: number }[] } = {};
@@ -48,14 +49,23 @@ export class GameComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const id = +params.get('id')!;
             this.fixtureTransferService.currentFixture.subscribe(fixture => {
-                if (fixture?.fixture.id === id) {
+                if (fixture?.fixtureID === id) {
                     this.fixture = fixture;
+                }else{
+                    this.fetchFixture(id);
                 }
             });
         });
-        this.fetchLineup(this.fixture.fixture.id);
-        this.initializeLineups();
+        // this.fetchLineup(this.fixture.fixtureID);
+        // this.initializeLineups();
     }
+
+
+    async fetchFixture(fixtureID: number) {
+        const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID)
+        this.fixture = data;
+    }
+
 
     private initializeLineups(): void {
         // Initialize lineupHome and lineupAway with empty arrays for each position
@@ -100,12 +110,12 @@ export class GameComponent implements OnInit {
         if (!user || !user.id) throw new Error('User ID is undefined');
         const bet: Bet = {
             betterID: betterID,
-            fixtureID: this.fixture.fixture.id,
+            fixtureID: this.fixture.fixtureID,
             time_placed: new Date(),
             team_chosen: true,
             credits: this.credits
         }
-        const checkIfBetExists = await this.betsService.checkIfBetExists(bet.betterID, this.fixture.fixture.id);
+        const checkIfBetExists = await this.betsService.checkIfBetExists(bet.betterID, this.fixture.fixtureID);
         if (!checkIfBetExists) {
             const betCreated = await this.betsService.createBet(bet, user.id);
             if (betCreated) {
@@ -163,20 +173,20 @@ export class GameComponent implements OnInit {
     }
 
 
-    fetchLineup(fixtureID: number) {
-        this.apiService.fetchLineups(fixtureID).subscribe({
+    // fetchLineup(fixtureID: number) {
+    //     this.apiService.fetchLineups(fixtureID).subscribe({
 
-            next: (data: Lineup[]) => {
-                this.lineups = data;
-                this.initializeLineups(); // Initialize lineups before categorizing players
-                this.categorizePlayers();   // Categorize players after lineups data is fetched
-                this.isLoading = false;
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        })
-    };
+    //         next: (data: Lineup[]) => {
+    //             this.lineups = data;
+    //             this.initializeLineups(); // Initialize lineups before categorizing players
+    //             this.categorizePlayers();   // Categorize players after lineups data is fetched
+    //             this.isLoading = false;
+    //         },
+    //         error: (error) => {
+    //             console.log(error);
+    //         }
+    //     })
+    // };
 
     //convert from type Date to type string YYYY-MM-DD
     getDateAsString(date: Date): string {
@@ -198,7 +208,6 @@ export class GameComponent implements OnInit {
     }
 
     toggleContent(team: string) {
-
         if (this.clickedImage === team) {
             // If the same team is clicked again, reset everything
             this.showContent = false;
@@ -208,7 +217,6 @@ export class GameComponent implements OnInit {
             // Otherwise, show content and set the clicked team
             this.showContent = true;
             this.clickedImage = team;
-
             if (team === 'team1') {
                 this.teamToWin = true;
             } else if (team === 'team2') {
