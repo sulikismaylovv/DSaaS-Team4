@@ -72,7 +72,7 @@ interface ClubData {
   goalsDiff: number;
 }
 
-import f from "https://cdn.jsdelivr.net/npm/@supabase/node-fetch@2.6.14/+esm";
+// import f from "https://cdn.jsdelivr.net/npm/@supabase/node-fetch@2.6.14/+esm";
 import {
   createClient,
   SupabaseClient,
@@ -155,14 +155,15 @@ async function updateClubData(supabaseClient: SupabaseClient) {
 
 async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
   const now = new Date();
-  // No need for oneHourBefore, as we start from the current time
-  const threeAndHalfHoursAfter = new Date(now.getTime() + 3.5 * 60 * 60 * 1000); // 3.5 hours after now
+  // Assuming a match lasts for approximately 2 hours (120 minutes)
+  const twoHoursBefore = new Date(now.getTime() - 2 * 60 * 60 * 1000); // 2 hours before now
   
   const { data, error } = await supabaseClient
     .from("fixtures")
-    .select("time")
-    .gte("time", now.toISOString()) // Start from the current time
-    .lte("time", threeAndHalfHoursAfter.toISOString()); // Up to 3.5 hours after
+    .select("time, is_finished")
+    .gte("time", twoHoursBefore.toISOString()) // Matches that have started within the last 2 hours
+    .lte("time", now.toISOString()) // Up to the current time
+    .is("is_finished", false); // Ensure the match is not finished
 
   if (error) {
     throw error;
@@ -170,6 +171,7 @@ async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
 
   return data.length > 0;
 }
+
 
 
 
@@ -195,7 +197,7 @@ Deno.serve(async (req) => {
   if (await isThereMatch(supabaseClient)) {
     fixtures = await getTodayFixtures();
     updateClubData(supabaseClient);
-  }
+  }else{return new Response("No match", { status: 404});}
   for (const fixture of fixtures) {
     await updateScore(supabaseClient, fixture);
   }

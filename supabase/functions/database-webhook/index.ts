@@ -31,10 +31,15 @@ interface WebhookPayload {
   old_record: null | FixtureRecord;
 }
 
-function whoScored(record: FixtureRecord, oldRecord: FixtureRecord): boolean { //0 for home team, 1 for away team
-  return (
-    record.home_goals !== oldRecord.home_goals
-  );
+function whoScored(record: FixtureRecord, oldRecord: FixtureRecord): string { 
+  // Determine which team scored
+  if (record.home_goals !== oldRecord.home_goals) {
+    return 'home';
+  } else if (record.away_goals !== oldRecord.away_goals) {
+    return 'away';
+  } else {
+    return 'none'; // In case no team scored
+  }
 }
 
 function isGoalScored(
@@ -138,18 +143,29 @@ Deno.serve(async (req) => {
   // }
   if (isGoalScored(payload.record, payload.old_record!)) {
     const score = `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
-    const scoringTeam = whoScored(payload.record, payload.old_record!) ? awayTeam : homeTeam;
-    const message = `${scoringTeam} just scored!`;
+    const whoScoredResult = whoScored(payload.record, payload.old_record!);
 
+    let scoringTeam = "";
+    let sentImage = "";
 
-    const sentImage = whoScored(payload.record, payload.old_record!) ? awayTeamPicture : homeTeamPicture;
+    if (whoScoredResult === 'home') {
+      scoringTeam = homeTeam;
+      sentImage = homeTeamPicture;
+    } else if (whoScoredResult === 'away') {
+      scoringTeam = awayTeam;
+      sentImage = awayTeamPicture;
+    }
 
-    addPost(
-      supabaseClient,
-      `${score} - ${message}`,
-      sentImage,
-    );
-}
+    const message = scoringTeam ? `${scoringTeam} just scored!` : "";
+
+    if (message) {
+      addPost(
+        supabaseClient,
+        `${score} - ${message}`,
+        sentImage,
+      );
+    }
+  }
 
 
   const data = {
