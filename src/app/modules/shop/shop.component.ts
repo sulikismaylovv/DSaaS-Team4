@@ -7,7 +7,9 @@ import {PlayerService} from "../../core/services/player.service";
 import {PreferencesService} from "../../core/services/preference.service";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 
-
+export interface PlayerWithClubDetails extends Player {
+  clubname: string; // Assuming 'name' is the property you want from the club details
+}
 export interface userPlayerPurchase{
   id?: number;
   user_id: string;
@@ -32,14 +34,15 @@ export interface Club {
 export class ShopComponent implements OnInit {
   userCredits: number = 0;
   currentUserID: string | undefined
-  players: Player[] = []; // Define Player model according to your data structure
+  players: PlayerWithClubDetails[] = []; // Define Player model according to your data structure
   favoriteClub: Club | undefined;
   followedClubs: Club[] = [];
   playersByClub: { [key: number]: Player[] } = {};
-  randomPlayerFavoriteClub: Player | undefined;
-  randomPlayer1: Player | undefined;
-  randomPlayer2: Player | undefined;
-  surprisePlayer: Player | undefined;
+  randomPlayerFavoriteClub: PlayerWithClubDetails | undefined;
+  randomPlayer1: PlayerWithClubDetails | undefined;
+  randomPlayer2: PlayerWithClubDetails | undefined;
+  surprisePlayer: PlayerWithClubDetails | undefined;
+
 
   showMoreBadges = false;
 
@@ -63,9 +66,7 @@ export class ShopComponent implements OnInit {
     if (this.currentUserID) {
       await this.loadUserCredits();
       await this.loadUserFavoriteClub();
-      await this.loadFollowedClubs();
       await this.loadPlayersForFavoriteClub();
-      await this.loadPlayersForFollowedClubs();
       await this.fetchAndDisplayRandomPlayers();
     }
   }
@@ -85,33 +86,22 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  // async loadPlayersForFavoriteClub() {
-  //   if (this.favoriteClub && this.favoriteClub.id) {
-  //     console.log("Fetching players for club ID:", this.favoriteClub.id);
-  //     this.players = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
-  //     console.log("Players for favorite club:", this.players);
-  //   } else {
-  //     console.log("No favorite club or club ID is undefined.");
-  //   }
-  // }
   async loadPlayersForFavoriteClub() {
     if (this.favoriteClub && this.favoriteClub.id) {
-      console.log("Fetching players for club ID:", this.favoriteClub.id);
-
-      // Fetch all players from the favorite club
-      const allPlayers = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
+      const allPlayersWithDetails = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
 
       // Fetch the list of player IDs that the user has already purchased
       const purchasedPlayerIds = await this.getPurchasedPlayerIds(this.currentUserID);
 
       // Filter out the purchased players
-      this.players = allPlayers.filter(player => !purchasedPlayerIds.includes(player.id));
+      this.players = allPlayersWithDetails.filter(player => !purchasedPlayerIds.includes(player.id));
 
       console.log("Available players for favorite club:", this.players);
     } else {
       console.log("No favorite club or club ID is undefined.");
     }
   }
+
   async loadFollowedClubs() {
     if (this.currentUserID) {
       const preferences = await this.preferencesService.getPreferences(this.currentUserID);
@@ -154,7 +144,7 @@ export class ShopComponent implements OnInit {
         //for fav club
         if (this.players.length > 0) {
           const randomIndex = Math.floor(Math.random() * this.players.length);
-          this.randomPlayerFavoriteClub = this.players[randomIndex];
+          this.randomPlayerFavoriteClub = this.players[randomIndex] as PlayerWithClubDetails;
         }
 
         console.log('Favorite Team Random Player:', this.randomPlayerFavoriteClub);
@@ -182,22 +172,46 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  async fetchRandomPlayer(userId: string, excludePlayerIds: number[] = [], favoriteTeamId?: number): Promise<Player | undefined> {
+  async fetchRandomPlayer(userId: string, excludePlayerIds: number[] = [], favoriteTeamId?: number): Promise<PlayerWithClubDetails | undefined> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const { data: playerData, error: playerError } = await this.supabase.supabaseClient
         .rpc('get_random_player', {
           excluded_players: excludePlayerIds,
           fav_team_id: favoriteTeamId || null
         });
 
-      if (error) throw error;
+      if (playerError) throw playerError;
 
-      return data?.[0];
+      // If the RPC already includes the club name, use it directly
+      // Otherwise, fetch the club name separately
+      if (playerData?.[0]) {
+        let clubName = playerData[0].clubname; // Assuming the RPC returns clubname
+
+        // If clubname isn't part of the RPC response, fetch it separately
+        if (!clubName) {
+          const { data: clubData, error: clubError } = await this.supabase.supabaseClient
+            .from('clubs')
+            .select('name')
+            .eq('id', playerData[0].club);
+
+          if (clubError) throw clubError;
+          clubName = clubData?.[0]?.name;
+        }
+
+        // Return the player data with the club name
+        return {
+          ...playerData[0],
+          clubname: clubName
+        } as PlayerWithClubDetails;
+      }
+
+      return undefined;
     } catch (error) {
       console.error('Error fetching random player:', error);
       throw error;
     }
   }
+
 
   async loadPlayersForFollowedClubs() {
     if (this.currentUserID) {
