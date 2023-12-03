@@ -38,11 +38,13 @@ import {HttpClient} from "@angular/common/http";
         this._bgImageUrl = bgImageUrl;
         this.convertSafeUrlToBase64(this._bgImageUrl).then(base64 => {
           // You can now use the Base64 string for the image source
+          this.imageBase64 = base64;
+          console.log('Background image loaded:', this.imageBase64);
+          this.showCropper = true; // Show cropper when bgImage exists
         }).catch(error => {
           // Handle any errors here
+          console.error('Error converting image:', error);
         });
-        console.log('Background image loaded:', this.imageBase64);
-        this.showCropper = true; // Show cropper when bgImage exists
       }
     }
 
@@ -50,13 +52,21 @@ import {HttpClient} from "@angular/common/http";
       this.zoom = event.target.value;
     }
 
-    handleImageSelection(event: Event): void {
-      const fileInput: HTMLInputElement = event.target as HTMLInputElement;
-      if (fileInput.files && fileInput.files.length) {
-        const file: File = fileInput.files[0];
-        this.imageChangedEvent = { target: { files: [file] } };
-      }
+  handleImageSelection(event: Event): void {
+    const fileInput: HTMLInputElement = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length) {
+      const file: File = fileInput.files[0];
+      this.imageChangedEvent = { target: { files: [file] } };
+
+      // Read the new file and set it as the base64 source for the cropper
+      const reader = new FileReader();
+      reader.onload = (loadEvent: any) => {
+        this.imageBase64 = loadEvent.target.result;
+        this.showCropper = true;
+      };
+      reader.readAsDataURL(file);
     }
+  }
 
     imageCropped(event: ImageCroppedEvent) {
       // If the cropped image data is directly in the event object
@@ -81,29 +91,19 @@ import {HttpClient} from "@angular/common/http";
     }
 
     async applyImage() {
-      console.log('Cropped image:', this.croppedImage);
       if (!this.croppedImage) {
         console.error('No image to apply.');
         return;
       }
 
-      console.log('Applying image...');
       this.uploading = true;
       try {
         const blob = this.dataURItoBlob(this.croppedImage);
         const file = new File([blob], 'background.png', { type: 'image/png' });
         const filePath = `backgrounds/${new Date().getTime()}.png`;
-
-        console.log('Uploading file...');
-        const uploadResult = await this.authService.uploadBackground(filePath, file);
-        console.log('Upload result:', uploadResult);
-
-        console.log('Updating user profile...');
-        const updateResult = await this.authService.updateUser({ background: filePath });
-        console.log('Update result:', updateResult);
-
+        await this.authService.uploadBackground(filePath, file);
+        await this.authService.updateUser({ background: filePath });
         this.bgImageUpload.emit(filePath);
-        console.log('Image applied successfully.');
       } catch (error) {
         console.error('Error applying the image:', error);
       } finally {
@@ -151,33 +151,25 @@ import {HttpClient} from "@angular/common/http";
     }
 
     private convertSafeUrlToBase64(url: SafeResourceUrl): Promise<string> {
-      // Use the sanitizer to unwrap the SafeResourceUrl back to a regular URL string
       const imageUrl = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
       if (!imageUrl) {
-        throw new Error('Invalid image URL provided.');
+        return Promise.reject('Invalid image URL provided.');
       }
 
       return new Promise((resolve, reject) => {
-        // Fetch the image as a Blob
-        this.http.get(imageUrl, { responseType: 'blob' }).subscribe(
-          (blob) => {
-            // Create a FileReader to read the Blob
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              // The result contains the Base64 string
-              const base64data = reader.result as string;
-              resolve(base64data);
-            };
-            reader.onerror = (error) => {
-              reject(error);
-            };
-            // Start reading the Blob as DataURL
-            reader.readAsDataURL(blob);
-          },
-          (error) => {
+        this.http.get(imageUrl, { responseType: 'blob' }).subscribe(blob => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            const base64data = reader.result as string;
+            resolve(base64data);
+          };
+          reader.onerror = error => {
             reject(error);
-          }
-        );
+          };
+        }, error => {
+          reject(error);
+        });
       });
     }
 
