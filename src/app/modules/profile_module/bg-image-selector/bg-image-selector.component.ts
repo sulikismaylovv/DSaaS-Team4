@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output, SecurityContext} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output, SecurityContext} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {AuthService, Profile} from "../../../core/services/auth.service";
@@ -28,43 +28,34 @@ import {HttpClient} from "@angular/common/http";
       @Inject(MAT_DIALOG_DATA) public data: Profile,
       private dialogRef: MatDialogRef<BgImageSelectorComponent>,
       private sanitizer: DomSanitizer,
-      private http: HttpClient
+      private http: HttpClient,
+      private cd: ChangeDetectorRef
     ) {}
 
     async ngOnInit(): Promise<void> {
       // Load initial background image if available
       const bgImageUrl = await this.imageService.loadBackgroundImage(this.data.id);
-      if (bgImageUrl) {
-        this._bgImageUrl = bgImageUrl;
-        this.convertSafeUrlToBase64(this._bgImageUrl).then(base64 => {
-          // You can now use the Base64 string for the image source
-          this.imageBase64 = base64;
-          console.log('Background image loaded:', this.imageBase64);
-          this.showCropper = true; // Show cropper when bgImage exists
-        }).catch(error => {
-          // Handle any errors here
-          console.error('Error converting image:', error);
-        });
-      }
+      this._bgImageUrl = bgImageUrl;
+      this.convertSafeUrlToBase64(bgImageUrl).then(base64 => {
+        this.imageBase64 = base64; // Make sure this line is executed
+        this.showCropper = false; // Then set this to true to display the cropper
+        // Consider adding change detection here if necessary
+      }).catch(error => {
+        console.error('Error converting image URL to base64:', error);
+      });
     }
 
     onZoomChange(event: any) {
       this.zoom = event.target.value;
+      this.cd.detectChanges(); // Manually trigger change detection
     }
 
   handleImageSelection(event: Event): void {
     const fileInput: HTMLInputElement = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length) {
       const file: File = fileInput.files[0];
-      this.imageChangedEvent = { target: { files: [file] } };
-
-      // Read the new file and set it as the base64 source for the cropper
-      const reader = new FileReader();
-      reader.onload = (loadEvent: any) => {
-        this.imageBase64 = loadEvent.target.result;
-        this.showCropper = true;
-      };
-      reader.readAsDataURL(file);
+      this.imageChangedEvent = {target: {files: [file]}};
+      this.showCropper = true;
     }
   }
 
@@ -150,28 +141,29 @@ import {HttpClient} from "@angular/common/http";
       return new Blob(byteArrays, {type: contentType});
     }
 
-    private convertSafeUrlToBase64(url: SafeResourceUrl): Promise<string> {
-      const imageUrl = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
-      if (!imageUrl) {
-        return Promise.reject('Invalid image URL provided.');
-      }
-
-      return new Promise((resolve, reject) => {
-        this.http.get(imageUrl, { responseType: 'blob' }).subscribe(blob => {
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          reader.onloadend = () => {
-            const base64data = reader.result as string;
-            resolve(base64data);
-          };
-          reader.onerror = error => {
-            reject(error);
-          };
-        }, error => {
-          reject(error);
-        });
-      });
+  private convertSafeUrlToBase64(url: SafeResourceUrl): Promise<string> {
+    const imageUrl = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
+    if (!imageUrl) {
+      return Promise.reject('Invalid image URL provided.');
     }
+
+    return new Promise((resolve, reject) => {
+      this.http.get(imageUrl, { responseType: 'blob' }).subscribe(blob => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          const base64data = reader.result as string;
+          resolve(base64data);
+          this.cd.detectChanges(); // Update the view with the new image
+        };
+        reader.onerror = error => {
+          reject(error);
+        };
+      }, error => {
+        reject(error);
+      });
+    });
+  }
 
     cancel() {
       this.dialogRef.close();
