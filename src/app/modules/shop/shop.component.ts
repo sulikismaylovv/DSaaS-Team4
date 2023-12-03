@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {booleanAttribute, Component} from '@angular/core';
 import { OnInit } from '@angular/core';
 import {BetsService} from "../../core/services/bets.service";
 import {AuthService} from "../../core/services/auth.service";
@@ -33,6 +33,8 @@ export interface Club {
 })
 export class ShopComponent implements OnInit {
   userCredits: number = 0;
+  showSurpriseModal: boolean = false;
+
   currentUserID: string | undefined
   players: PlayerWithClubDetails[] = []; // Define Player model according to your data structure
   favoriteClub: Club | undefined;
@@ -258,7 +260,40 @@ export class ShopComponent implements OnInit {
     return Object.keys(this.playersByClub).map(Number);
   }
 
-  async makePurchase(userId: string | undefined, playerId: number): Promise<boolean> {
+  // async makePurchase(userId: string | undefined, playerId: number): Promise<boolean> {
+  //   try {
+  //     if (!userId) {
+  //       console.error('User ID is undefined');
+  //       return false;
+  //     }
+  //
+  //     // First, check if the user has enough credits
+  //     if (this.userCredits < 100) {
+  //       console.error('Not enough credits');
+  //       return false;
+  //     }
+  //
+  //     const creditsUpdated = await this.betsService.updateCredits(userId, 100);
+  //
+  //     if (!creditsUpdated) {
+  //       console.error('Failed to update user credits');
+  //       return false;
+  //     }
+  //     // Make the purchase transaction
+  //     const { error } = await this.supabase.supabaseClient
+  //       .from('user_player_purchases')
+  //       .upsert([{ user_id: userId, player_id: playerId}]);
+  //
+  //     if (error) throw error;
+  //
+  //     return true;
+  //   } catch (error) {
+  //     console.error('Error making purchase:', error);
+  //     return false;
+  //   }
+  // }
+
+  async makePurchase(userId: string | undefined, playerId: number, isSurprise: boolean = false): Promise<boolean> {
     try {
       if (!userId) {
         console.error('User ID is undefined');
@@ -266,23 +301,39 @@ export class ShopComponent implements OnInit {
       }
 
       // First, check if the user has enough credits
-      if (this.userCredits < 100) {
+      if (this.userCredits < 100) { // You might want to handle the surprise price differently
         console.error('Not enough credits');
         return false;
       }
 
-      const creditsUpdated = await this.betsService.updateCredits(userId, 100);
+      let creditsUpdated: boolean = false;
+
+      if (isSurprise) {
+
+        creditsUpdated = await this.betsService.updateCredits(userId, 50); // Adjust the credit deduction for surprise player if needed
+      }
+      else {
+        creditsUpdated = await this.betsService.updateCredits(userId, 100); // Adjust the credit deduction for surprise player if needed
+
+      }
 
       if (!creditsUpdated) {
         console.error('Failed to update user credits');
         return false;
       }
+
       // Make the purchase transaction
       const { error } = await this.supabase.supabaseClient
         .from('user_player_purchases')
-        .upsert([{ user_id: userId, player_id: playerId}]);
+        .upsert([{ user_id: userId, player_id: playerId }]);
 
       if (error) throw error;
+
+      // If it's a surprise player, handle the reveal
+      if (isSurprise) {
+        this.showSurpriseModal = true;
+        console.log(" this.showSurpriseModal");
+      }
 
       return true;
     } catch (error) {
@@ -291,4 +342,7 @@ export class ShopComponent implements OnInit {
     }
   }
 
+  closeSurpriseModal() {
+    this.showSurpriseModal = false;
+  }
 }
