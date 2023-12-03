@@ -15,6 +15,7 @@ export interface Profile {
     first_name: string;
     last_name: string;
     avatar_url?: string;
+    bg_url?: string;
 }
 
 interface RegisterResponse {
@@ -192,6 +193,14 @@ export class AuthService {
         return this.supabase.supabaseClient.storage.from('avatars').upload(filePath, file)
     }
 
+    downLoadBackground(path: string) {
+        return this.supabase.supabaseClient.storage.from('background_user').download(path)
+    }
+
+    uploadBackground(filePath: string, file: File) {
+        return this.supabase.supabaseClient.storage.from('background_user').upload(filePath, file)
+    }
+
     async restoreSession() {
         try {
             const {data: sessionData, error} = await this.supabase.supabaseClient.auth.getSession();
@@ -230,6 +239,20 @@ export class AuthService {
       .select(`*`)
       .eq('id', userId)
       .single()
+
+  }
+
+  async updateUser(param: { background: string }) {
+      console.log("Param: " , param);
+    const {background} = param;
+    const update = {
+      id: this._session?.user?.id, // Ensure the correct user ID is used
+      email: this._session?.user?.email, // Ensure the correct email is used
+      bg_url: background,
+      updated_at: new Date(),
+    };
+    console.log(update);
+    return this.supabase.supabaseClient.from('users').upsert(update);
 
   }
 }
