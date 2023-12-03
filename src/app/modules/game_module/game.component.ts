@@ -29,6 +29,7 @@ export class GameComponent implements OnInit {
     lineupHome: { [key: number]: { name: string, number: number }[] } = {};
     lineupAway: { [key: number]: { name: string, number: number }[] } = {};
     isLoading: boolean = true;
+    isDisabled: boolean = false;
     // bet: BetModel = null!;
     credits: number = 0;
     teamToWin: boolean | null = null;
@@ -42,6 +43,9 @@ export class GameComponent implements OnInit {
         private authService: AuthService,
         private apiService: ApiService,
         private betsService: BetsService) {
+    }
+    disableBettingWidget(){
+        this.isDisabled = true;
     }
 
     ngOnInit(): void {
@@ -204,9 +208,9 @@ export class GameComponent implements OnInit {
     }
 
 
-    toggleTheme() {
+    /*toggleTheme() {
         this.themeService.toggleTheme();
-    }
+    }*/
 
     toggleContent(team: string) {
         if (this.clickedImage === team) {
