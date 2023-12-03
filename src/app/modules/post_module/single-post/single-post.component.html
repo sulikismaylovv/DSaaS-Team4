@@ -2,8 +2,8 @@
   Loading...
 </div>
 <ng-template #loadedContent>
-  <div class="p-4 lg:px-64">
-    <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+  <div class=" p-20 lg:px-64">
+    <div class="p-12 m-3 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div class="bg-gray-100">
         <div class="mx-auto w-full">
           <!-- Display the post content -->
@@ -12,8 +12,12 @@
           <section class="bg-white dark:bg-[#3a4151] py-4 lg:py-8 rounded-lg antialiased h-fit">
             <div class="mx-auto px-4">
               <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comment section</h2>
-              </div>
+              <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comment section</h2>
+              <!-- Go Back button -->
+              <button (click)="goBack()" class="  dark:text-purple hover:text-gray-800 dark:hover:text-gray-300">
+                <i class="fas fa-arrow-left bg-pink"></i> Go Back
+              </button>
+            </div>
               <!--post comment-->
               <form class="mb-6">
                 <div class="py-2 px-4 mb-4 bg-white dark:bg-[#565f77] rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
