@@ -8,9 +8,13 @@
 
       </div>
       <textarea [(ngModel)]="postContent" name="postContent" class="text-black dark:text-white placeholder:text-black dark:placeholder:text-[#8a8e9d] description bg-[#e5e6e9] dark:bg-[#3a4151] sec p-3 h-60 border border-gray-300 outline-none rounded-2xl" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
+      <input type="file" #fileInput class="hidden" (change)="onImageSelected($event)" accept="image/*"/>
+      <img *ngIf="imagePreview" [src]="imagePreview" alt="Image preview" class="mt-4 rounded-lg"/>
       <!-- icons -->
       <div class="icons flex text-gray-500 m-2">
-        <svg class="mr-2 cursor-pointer text-black hover:bg-[#999a9c] dark:hover:text-purple-700 dark:text-white border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+        <svg (click)="fileInput.click()" class="mr-2 cursor-pointer text-black hover:bg-[#999a9c] dark:hover:text-purple-700 dark:text-white border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+        </svg>
       </div>
       <!-- buttons -->
       <div class="flex justify-end">
