@@ -69,6 +69,7 @@
               </div>
             </div>
           </section>
+
           <section *ngIf="currentStep === 2">
             <h2 class="text-2xl text-start font-bold mb-4 xl:text-3xl text-black dark:text-white">Select your favorite team</h2>
             <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
@@ -79,6 +80,7 @@
               </div>
             </div>
           </section>
+          <div #topOfPage></div> <!-- Place this at the top of your component or where you want to scroll to -->
           <section *ngIf="currentStep === 3">
             <h2 class="text-2xl text-start font-bold mb-4 xl:text-3xl text-black dark:text-white">Choose clubs you want to follow</h2>
             <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
