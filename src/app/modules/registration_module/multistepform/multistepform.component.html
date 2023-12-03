@@ -36,8 +36,14 @@
               <!-- Username -->
               <label class="xl:text-base text-black dark:text-white">Username</label>
               <div class="flex">
-                <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="username" placeholder="e.g. johndoe123" type="text"/>
-                <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched" [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                <div class="flex flex-col">
+                  <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="username" placeholder="e.g. johndoe123" type="text"/>
+                  <div *ngIf="updateProfileForm.controls['username'].errors?.['usernameExists']" class="text-red-600 text-xs">
+                    This username is already in use.
+                  </div>
+                </div>
+                <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                        [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
                         data-tooltip-target="tooltip-username" data-tooltip-placement="right"
                         type="button"
                         class="rounded-full ms-4 focus:outline-none p-2.5">
@@ -46,6 +52,8 @@
                   </svg>
                 </button>
               </div>
+
+
               <!-- Birthdate -->
               <label class="xl:text-base text-black dark:text-white">Birthdate</label>
               <div class="flex">
@@ -121,9 +129,9 @@
             <img alt="" class="w-fit h-fit mb-4 xl:w-[5.25rem] xl:mb-8" src="assets/success.gif"/>
             <h2 class="text-2xl font-bold mb-2 xl:text-4xl">Thank you!</h2>
             <p class="w-72 text-neutral-cool-gray text-gray-300 font-medium mb-3">
-              Thanks for confirming your subscription! We hope you have fun using
-              our platform. If you ever need support, please feel free to email us
-              at support@loremgaming.com.
+              If you ever need support, please feel free to email us
+              at <a class="text-blue-500 hover:underline" href="mailto:help@remontada.com">
+              help@remontada.com</a>.
             </p>
             <a href="/login" class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Login</a>
           </section>

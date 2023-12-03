@@ -4,8 +4,19 @@
       <img class="w-16 h-16 mr-2" src="assets/icons/logo-dark.png" alt="logo">
       Remontada
     </a>
-    <div class="w-full bg-white dark:bg-[#394151] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+    <div class="w-full bg-white dark:bg-[#394151] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8 dark:text-white">
+        <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
+          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150 dark:border" >
+            <img alt="google logo" class="w-6 h-6" loading="lazy" src="https://www.svgrepo.com/show/475656/google-color.svg">
+            <span class="dark:text-white">Sign up with with Google</span>
+          </button>
+        </div>
+        <div class="flex items-center justify-center space-x-2 dark:text-white">
+          <span class="h-px w-44 bg-gray-200 dark:bg-white"></span>
+          <span class="text-gray-300 font-normal">or</span>
+          <span class="h-px w-44 bg-gray-200 dark:bg-white"></span>
+        </div>
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Create an account
         </h1>

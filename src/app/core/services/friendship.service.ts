@@ -78,28 +78,41 @@ export class FriendshipService {
     return data;
   }
 
-  async checkFriendRequestStatus(userId: string | undefined, friendId: string,) : Promise<'accepted' | 'pending' | 'rejected' | 'blocked' | undefined> {
-    // Fetch the friendship status
+  async checkFriendRequestStatus(userId: string | undefined, friendId: string,) : Promise<'accepted' | 'pending' | 'rejected' | 'blocked' | 'none' | undefined> {
+    // Validate the input
     if (!userId || !friendId) {
       console.error('User IDs are required');
       return undefined;
     }
 
-    // Fetch the friendship status
-    const { data, error } = await this.supabase.supabaseClient
-      .from('friendships')
-      .select('*')
-      .or(`user1_id.eq.${userId},user2_id.eq.${friendId},user1_id.eq.${friendId},user2_id.eq.${userId}`);
+    // Fetch the friendship status between user1 and user2
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('friendships')
+        .select('status')
+        .or(`and(user1_id.eq.${userId},user2_id.eq.${friendId}),and(user1_id.eq.${friendId},user2_id.eq.${userId})`);
 
-    if (error) {
+      if (error) {
+        console.error('Error fetching friend request status:', error);
+        throw error;
+      }
+
+      // Log the data for debugging purposes
+      console.log('Friend request status:', data);
+
+      // Determine the friendship status
+      if (data && data.length > 0) {
+        // Assuming the status field holds the friendship status
+        const status = data[0].status;
+        return status ? status : 'none';
+      } else {
+        // No friendship found
+        return 'none';
+      }
+    } catch (error) {
       console.error('Error fetching friend request status:', error);
       throw error;
     }
-
-    if (data && data.length > 0) {
-      return data[0].status;
-    } else {
-      return undefined;
-    }
   }
+
 }

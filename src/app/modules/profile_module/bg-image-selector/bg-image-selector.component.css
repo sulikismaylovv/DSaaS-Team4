@@ -1,0 +1,26 @@
+/* Additional Slider Styling */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem; /* Size of the handle */
+  height: 1rem; /* Size of the handle */
+  background: #4CAF50; /* Slider Handle Color */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%; /* Circular handle */
+}
+
+.slider::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider::-ms-thumb {
+  width: 1rem;
+  height: 1rem;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
+}

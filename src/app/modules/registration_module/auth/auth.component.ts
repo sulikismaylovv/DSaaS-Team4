@@ -32,11 +32,15 @@ export class AuthComponent implements OnInit {
             password: ['', [
                 Validators.required,
                 Validators.minLength(8), // Minimum length for the password
-                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$') // Passwords must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
+                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$') // Passwords must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number,
             ]],
             confirmPassword: ['', Validators.required]
         }, {validator: this.matchingPasswords});
 
+    }
+
+    private emailExists(email: string): boolean {
+      return this.authService.checkEmailExists(email);
     }
     termsAcceptedChange() {
         this.termsAccepted = !this.termsAccepted;
@@ -62,6 +66,11 @@ export class AuthComponent implements OnInit {
                 const email = this.registerForm.value.email as string;
                 const password = this.registerForm.value.password as string;
 
+                if(this.emailExists(email)) {
+                  alert('Email already exists');
+                  return;
+                }
+
                 // Call the simplified register method without additional details
                 await this.authService.register(email, password);
                 // After the alert in the register method, control returns here.
@@ -84,4 +93,14 @@ export class AuthComponent implements OnInit {
           setTimeout(() => this.showAlert = false,6000);
         }
     }
+
+  async signInWithProvider() {
+    try {
+      await this.authService.signInWithProvider();
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  }
 }

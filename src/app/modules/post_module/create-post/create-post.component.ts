@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
 import {PostsService} from "../../../core/services/posts.service";
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
@@ -23,6 +23,9 @@ export class CreatePostComponent implements OnInit {
 
   public uploading: boolean | undefined;
   public retweet: boolean = false;
+
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement> | undefined;
+
 
   @Output() postCreated = new EventEmitter<boolean>(); // Emit a boolean for simplicity
   imagePreview: string | ArrayBuffer | null | undefined;

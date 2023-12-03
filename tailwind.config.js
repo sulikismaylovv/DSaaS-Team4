@@ -37,6 +37,9 @@ module.exports = {
         '600': '6',
         '700': '7',
       },
+      margin:{
+        '121': '30.25rem',
+      },
 
       borderColor: theme => ({
         ...theme('colors'), // This ensures you keep all existing colors
