@@ -86,74 +86,27 @@
         </div>
       </div>
     </div>
-    <!-- Players grid -->
-<!--    <p class="text-white font-semibold text-2xl mb-4">Players from your favorite club</p>-->
-<!--    <div class="grid grid-cols-4 gap-4 mb-4">-->
-<!--      &lt;!&ndash; Player cards &ndash;&gt;-->
-<!--      <ng-container *ngFor="let player of players | slice:0:4"> &lt;!&ndash; Only display the first 4 players &ndash;&gt;-->
-<!--        <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">-->
-<!--          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
-<!--            <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />-->
-<!--            <div class="px-5 pb-5">-->
-<!--              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.name }}</h5>-->
-<!--              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.club }}</h5>-->
-<!--              <div class="flex items-center justify-between">-->
-<!--                <span class="text-3xl font-bold text-gray-900 dark:text-black">100 pts</span>-->
-<!--                <button (click)="makePurchase(currentUserID, player.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </ng-container>-->
-<!--    </div>-->
-
-<!--    <p class="text-white font-semibold text-2xl mb-4">Players from followed clubs</p>-->
-
-<!--    &lt;!&ndash;Followed Clubs Players Grid&ndash;&gt;-->
-<!--    <div *ngFor="let clubId of getClubIds()" class="mb-8">-->
-<!--&lt;!&ndash;      <p class="text-white font-semibold text-2xl mb-4">Players from club {{ clubs[clubId]?.name }}</p>&ndash;&gt;-->
-<!--      <div class="grid grid-cols-4 gap-4">-->
-<!--        <ng-container *ngFor="let player of playersByClub[clubId] | slice:0:4">-->
-<!--          <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">-->
-<!--            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
-<!--              <img class="p-8 rounded-t-lg mx-auto" [src]="player.photo" alt="player image" />-->
-<!--              <div class="px-5 pb-5">-->
-<!--                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{{ player.name }}</h5>-->
-<!--                <div class="flex items-center justify-between">-->
-<!--                  <span class="text-3xl font-bold text-gray-900 dark:text-black">100 pts</span>-->
-<!--                  <button (click)="makePurchase(currentUserID, player.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </ng-container>-->
-<!--      </div>-->
-<!--    </div>-->
 
     <!-- Favorite Club Player Display -->
     <p class="text-white font-semibold text-2xl mb-4">Featured Player from Your Favorite Club</p>
     <div class="grid grid-cols-4 gap-4 mb-4">
-      <ng-container *ngIf="players.length > 0">
+      <ng-container *ngIf="randomPlayerFavoriteClub">
         <div class="player-card-container">
-          <!-- Display the first player from the favorite club -->
+          <!-- Display the random player from the favorite club -->
           <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img class="p-8 rounded-t-lg mx-auto" [src]="players[0].photo" alt="player image" />
+            <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayerFavoriteClub.photo" alt="player image" />
             <div class="px-5 pb-5">
-              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ players[0].name }}</h5>
+              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayerFavoriteClub.name }}</h5>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
-                <button (click)="makePurchase(currentUserID, players[0].id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
+                <button (click)="makePurchase(currentUserID, randomPlayerFavoriteClub.id)" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy</button>
               </div>
             </div>
           </div>
         </div>
       </ng-container>
-    </div>
 
-    <!-- Random Players Display -->
-    <p class="text-white font-semibold text-2xl mb-4">Randomly Selected Players</p>
-    <div class="grid grid-cols-4 gap-4 mb-4">
-      <!-- Display randomPlayer1 -->
+    <!-- Display randomPlayer1 -->
       <ng-container *ngIf="randomPlayer1">
         <div class="player-card-container">
           <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -184,11 +137,7 @@
           </div>
         </div>
       </ng-container>
-    </div>
 
-    <!-- Surprise Player Display -->
-    <p class="text-white font-semibold text-2xl mb-4">Mystery Player Offer</p>
-    <div class="grid grid-cols-4 gap-4 mb-4">
       <ng-container *ngIf="surprisePlayer">
         <div class="player-card-container">
           <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -204,49 +153,6 @@
           </div>
         </div>
       </ng-container>
-    </div>
-
-
-
-    <!--4 grid column containing Badge collections-->
-    <p class="text-white font-semibold text-2xl mb-4">Badge collections</p>
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <!--First badge collection-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full h-max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/Belgian_Pro_League_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Jupiler pro league</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Complete your collection with the Jupiler League badges! Each one is a tiny trophy of football glory, perfect for fans who live and breathe the game. Grab them all and show off your ultimate league loyalty! </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Second badge collection-->
-      <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800">
-        <div class="w-full h-max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <img class="p-8 rounded-t-lg mx-auto  w-64 h-64" src="assets/logos/Belgian_Pro_League_logo.svg" alt="product image" />
-          <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Jupiler pro league</h5>
-            <div class="flex items-center mt-2.5 mb-5">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400"> Complete your collection with the Jupiler League badges! Each one is a tiny trophy of football glory, perfect for fans who live and breathe the game. Grab them all and show off your ultimate league loyalty! </p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-3xl font-bold text-gray-900 dark:text-white">100 pts</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy now</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

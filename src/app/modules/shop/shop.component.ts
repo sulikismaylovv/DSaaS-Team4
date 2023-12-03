@@ -36,6 +36,7 @@ export class ShopComponent implements OnInit {
   favoriteClub: Club | undefined;
   followedClubs: Club[] = [];
   playersByClub: { [key: number]: Player[] } = {};
+  randomPlayerFavoriteClub: Player | undefined;
   randomPlayer1: Player | undefined;
   randomPlayer2: Player | undefined;
   surprisePlayer: Player | undefined;
@@ -84,16 +85,33 @@ export class ShopComponent implements OnInit {
     }
   }
 
+  // async loadPlayersForFavoriteClub() {
+  //   if (this.favoriteClub && this.favoriteClub.id) {
+  //     console.log("Fetching players for club ID:", this.favoriteClub.id);
+  //     this.players = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
+  //     console.log("Players for favorite club:", this.players);
+  //   } else {
+  //     console.log("No favorite club or club ID is undefined.");
+  //   }
+  // }
   async loadPlayersForFavoriteClub() {
     if (this.favoriteClub && this.favoriteClub.id) {
       console.log("Fetching players for club ID:", this.favoriteClub.id);
-      this.players = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
-      console.log("Players for favorite club:", this.players);
+
+      // Fetch all players from the favorite club
+      const allPlayers = await this.playerService.fetchPlayersByClubId(this.favoriteClub.id);
+
+      // Fetch the list of player IDs that the user has already purchased
+      const purchasedPlayerIds = await this.getPurchasedPlayerIds(this.currentUserID);
+
+      // Filter out the purchased players
+      this.players = allPlayers.filter(player => !purchasedPlayerIds.includes(player.id));
+
+      console.log("Available players for favorite club:", this.players);
     } else {
       console.log("No favorite club or club ID is undefined.");
     }
   }
-
   async loadFollowedClubs() {
     if (this.currentUserID) {
       const preferences = await this.preferencesService.getPreferences(this.currentUserID);
@@ -115,7 +133,7 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  async getPurchasedPlayerIds(userId: string): Promise<number[]> {
+  async getPurchasedPlayerIds(userId: string | undefined): Promise<number[]> {
     const { data, error } = await this.supabase.supabaseClient
       .from('user_player_purchases')
       .select('player_id')
@@ -133,6 +151,14 @@ export class ShopComponent implements OnInit {
   async fetchAndDisplayRandomPlayers() {
     if (this.currentUserID) {
       try {
+        //for fav club
+        if (this.players.length > 0) {
+          const randomIndex = Math.floor(Math.random() * this.players.length);
+          this.randomPlayerFavoriteClub = this.players[randomIndex];
+        }
+
+        console.log('Favorite Team Random Player:', this.randomPlayerFavoriteClub);
+
         // Fetch the first random player while excluding purchased players
         this.randomPlayer1 = await this.fetchRandomPlayer(this.currentUserID);
         console.log('Random Player 1:', this.randomPlayer1);
