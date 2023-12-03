@@ -1,21 +1,56 @@
 <div class="mx-auto rounded-lg bg-light-mode-acc border-gray-300 p-4 shadow-lg max-w dark:bg-[#3a4151]">
   <!-- Background Image -->
-  <div class="mb-2">
-    <img *ngIf="_bgImageUrl" [src]="_bgImageUrl" alt="Background Image" class="rounded-lg"
-         style="height: 300px; width: 100%; object-fit: cover;">
-    <div *ngIf="!_bgImageUrl" class="rounded-lg bg-gray-300" style="height: 300px; width: 100%;">
-      <!-- Placeholder content -->
-      <p>DAAAAMN</p>
-    </div>
+  <div *ngIf="showCropper" class="mb-2">
+    <image-cropper
+      *ngIf="imageChangedEvent"
+      [imageBase64]="imageBase64"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="16 / 9"
+      format="png"
+      [containWithinAspectRatio]="true"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()">
+    </image-cropper>
   </div>
 
+  <!-- Display Initial Background Image -->
+  <div *ngIf="!showCropper && _bgImageUrl" class="flex items-center justify-center rounded-lg w-full h-full">
+    <img [src]="_bgImageUrl" class="object-contain w-full h-full" alt="Background Image">
+  </div>
+
+  <!-- Placeholder Content -->
+  <div *ngIf="!showCropper && !_bgImageUrl" class="flex items-center justify-center rounded-lg bg-gray-300 dark:bg-gray-800 w-full h-full">
+    <svg class="w-16 h-16 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <!-- Zoom Slider -->
+  <div class="flex justify-center my-4">
+    <input type="range" class="zoom-slider" min="1" max="3" step="0.1" [(ngModel)]="zoom" (input)="onZoomChange($event)"/>
+  </div>
   <!-- Upload Button -->
-  <div>
-    <label class="button primary block w-[130px] text-purple-500 font-medium text-sm px-5 py-2 text-center"
-           for="bg-image-upload">
-      {{ uploading ? 'Uploading ...' : 'Upload' }}
+  <div class="right-0 flex justify-end space-x-2 mt-4">
+    <!-- Apply Button -->
+    <button (click)="cancel()" [disabled]="!_bgImageUrl"
+            class="button primary bg-gold dark:bg-red-500 text-light-mode-text dark:text-dark-mode-text font-medium text-sm px-5 py-2 rounded-md shadow-sm hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-opacity">
+      Cancel
+    </button>
+    <label
+      class="button primary cursor-pointer text-light-mode-text dark:text-dark-mode-text bg-primary-500 dark:bg-very-light-purple font-medium text-sm px-5 py-2 rounded-md shadow-sm hover:bg-primary-700 dark:hover:bg-lighter-purple transition-colors"
+      for="bg-image-upload">
+      {{ _bgImageUrl ? 'Upload Another Image' : (uploading ? 'Uploading ...' : 'Upload Image') }}
     </label>
-    <input (change)="uploadBgImage($event)" [disabled]="uploading" accept="image/*" id="bg-image-upload"
-           style="visibility: hidden; position: absolute" type="file"/>
+    <input (change)="handleImageSelection($event)" [disabled]="uploading" accept="image/*" class="hidden"
+           id="bg-image-upload" type="file"/>
+
+    <!-- Apply Button -->
+    <button (click)="applyImage()" [disabled]="!_bgImageUrl"
+            class="button primary bg-gold dark:bg-pink text-light-mode-text dark:text-dark-mode-text font-medium text-sm px-5 py-2 rounded-md shadow-sm hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-opacity">
+      Apply
+    </button>
   </div>
 </div>

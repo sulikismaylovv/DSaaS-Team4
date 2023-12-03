@@ -25,8 +25,9 @@ export class ProfileComponent extends CommonComponent {
 
   openBgImageSelectorModal(): void {
     const dialogRef = this.dialog.open(BgImageSelectorComponent, {
-      width: '800px',
-      data: this.profile
+      width: '900px',
+      data: this.profile,
+      panelClass: 'mat-dialog-container',
     });
 
     dialogRef.afterClosed().subscribe(result => {

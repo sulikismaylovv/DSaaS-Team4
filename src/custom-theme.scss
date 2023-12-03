@@ -40,6 +40,9 @@ $DSaaS-theme: mat.define-light-theme((
 
 .mat-dialog-container {
   box-shadow: none !important;
+  height: auto !important;
+  max-height: 100%;
+  overflow: hidden !important;
 }
 .mat-mdc-dialog-container .mdc-dialog__surface {
   background-color: transparent !important;

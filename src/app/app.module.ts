@@ -36,6 +36,10 @@ import {UserComponent} from "./modules/profile_module/user/user.component";
 import { CustomAlertComponent } from './modules/registration_module/custom-alert/custom-alert.component';
 import { NotificationComponent } from './modules/notification-module/notification/notification.component';
 import { BgImageSelectorComponent } from './modules/profile_module/bg-image-selector/bg-image-selector.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import 'hammerjs';
+
+
 
 @NgModule({
     declarations: [
@@ -45,7 +49,9 @@ import { BgImageSelectorComponent } from './modules/profile_module/bg-image-sele
       LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent
     ],
     imports: [
-        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule
+        BrowserModule, ReactiveFormsModule, AppRoutingModule,
+      FormsModule, CommonModule, HttpClientModule, NgOptimizedImage ,
+      MatDialogModule, ImageCropperModule
     ],
     providers: [],
     bootstrap: [AppComponent],

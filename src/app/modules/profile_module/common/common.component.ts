@@ -81,6 +81,22 @@ export class CommonComponent implements OnInit{
         }
       )
       .subscribe();
+
+
+    this.supabase.supabaseClient
+      .channel('realtime-preferences')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'users',
+        },
+        async (payload) => {
+          this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+        }
+      )
+      .subscribe();
   }
 
   async ngOnInit(): Promise<void> {
