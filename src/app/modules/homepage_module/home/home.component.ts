@@ -13,8 +13,8 @@ import {NavbarService} from "../../../core/services/navbar.service";
 export class HomeComponent implements OnInit {
     session: any; // Adjust the type based on your session object
     hideForm = false;
-    showPosts: boolean = true;
-    showMatches: boolean = false;
+    showPosts: boolean = false;
+    showMatches: boolean = true;
 
     constructor(
       public themeService: ThemeService,
