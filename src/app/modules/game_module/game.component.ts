@@ -168,6 +168,7 @@ export class GameComponent implements OnInit {
   }
 
   async placeBet() {
+    this.testInput();
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
     if (!user || !user.id) throw new Error("User ID is undefined");
@@ -182,7 +183,7 @@ export class GameComponent implements OnInit {
       bet.betterID,
       this.fixture.fixtureID,
     );
-    if (!checkIfBetExists) {
+    if (!checkIfBetExists && this.betCanBePlaced) {
       const betCreated = await this.betsService.createBet(bet, user.id);
       if (betCreated) {
         console.log("Bet created");
@@ -318,15 +319,15 @@ export class GameComponent implements OnInit {
       // If the same team is clicked again, reset everything
       this.showContent = false;
       this.clickedImage = null;
-      this.teamToWin = null; // Reset teamToWin as well
+      this.teamChosen = null; // Reset teamToWin as well
     } else {
       // Otherwise, show content and set the clicked team
       this.showContent = true;
       this.clickedImage = team;
       if (team === "team1") {
-        this.teamToWin = true;
+        this.teamChosen = "home";
       } else if (team === "team2") {
-        this.teamToWin = false;
+        this.teamChosen = "away";
       }
     }
   }
