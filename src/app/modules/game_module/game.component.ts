@@ -91,6 +91,7 @@ export class GameComponent implements OnInit {
     this.updateTheTime();
     this.getUserCredits();
     this.checkIfBetCanBePlaced();
+    this.getStanding();
   }
 
   checkIfBetCanBePlaced() {
