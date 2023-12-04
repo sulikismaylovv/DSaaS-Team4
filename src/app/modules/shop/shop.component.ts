@@ -34,6 +34,8 @@ export interface Club {
 export class ShopComponent implements OnInit {
   userCredits: number = 0;
   showSurpriseModal: boolean = false;
+  showPlayerModal: boolean = false;
+
 
   currentUserID: string | undefined
   players: PlayerWithClubDetails[] = []; // Define Player model according to your data structure
@@ -44,6 +46,7 @@ export class ShopComponent implements OnInit {
   randomPlayer1: PlayerWithClubDetails | undefined;
   randomPlayer2: PlayerWithClubDetails | undefined;
   surprisePlayer: PlayerWithClubDetails | undefined;
+  viewedPlayer: PlayerWithClubDetails | undefined;
 
 
   showMoreBadges = false;
@@ -293,30 +296,21 @@ export class ShopComponent implements OnInit {
   //   }
   // }
 
-  async makePurchase(userId: string | undefined, playerId: number, isSurprise: boolean = false): Promise<boolean> {
+  async makePurchase(userId: string | undefined, player: PlayerWithClubDetails, isSurprise: boolean = false): Promise<boolean> {
     try {
       if (!userId) {
         console.error('User ID is undefined');
         return false;
       }
 
-      // First, check if the user has enough credits
-      if (this.userCredits < 100) { // You might want to handle the surprise price differently
+      const cost = isSurprise ? 50 : 100; // Cost depends on whether it's a surprise
+      if (this.userCredits < cost) {
         console.error('Not enough credits');
         return false;
       }
 
-      let creditsUpdated: boolean = false;
-
-      if (isSurprise) {
-
-        creditsUpdated = await this.betsService.updateCredits(userId, 50); // Adjust the credit deduction for surprise player if needed
-      }
-      else {
-        creditsUpdated = await this.betsService.updateCredits(userId, 100); // Adjust the credit deduction for surprise player if needed
-
-      }
-
+      // Update the user credits
+      const creditsUpdated = await this.betsService.updateCredits(userId, cost);
       if (!creditsUpdated) {
         console.error('Failed to update user credits');
         return false;
@@ -325,14 +319,14 @@ export class ShopComponent implements OnInit {
       // Make the purchase transaction
       const { error } = await this.supabase.supabaseClient
         .from('user_player_purchases')
-        .upsert([{ user_id: userId, player_id: playerId }]);
+        .upsert([{ user_id: userId, player_id: player.id }]);
 
       if (error) throw error;
 
-      // If it's a surprise player, handle the reveal
       if (isSurprise) {
-        this.showSurpriseModal = true;
-        console.log(" this.showSurpriseModal");
+        this.showSurpriseModal = true; // Reveal the surprise player in a modal
+      } else {
+        this.openPlayerModal(player); // Show the player details in a modal
       }
 
       return true;
@@ -340,6 +334,15 @@ export class ShopComponent implements OnInit {
       console.error('Error making purchase:', error);
       return false;
     }
+  }
+
+
+  openPlayerModal(player: PlayerWithClubDetails) {
+    this.viewedPlayer = player;
+    this.showPlayerModal = true;
+  }
+  closePlayerModal() {
+    this.showPlayerModal = false;
   }
 
   closeSurpriseModal() {
