@@ -271,17 +271,20 @@ export class MultistepformComponent implements OnInit {
 
   changePage(isNextPage: boolean) {
     const addOns =
-      (this.updateProfileForm.get('onlineService')?.value &&
-        this.onlineService) +
+      (this.updateProfileForm.get('onlineService')?.value && this.onlineService) +
       (this.updateProfileForm.get('storage')?.value && this.storage) +
       (this.updateProfileForm.get('customProfile')?.value &&
         this.customProfile);
-
+    if (this.topOfPageElement?.nativeElement) {
+      setTimeout(() => {
+        // @ts-ignore
+        this.topOfPageElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 0); // Introducing a 0ms delay to ensure the DOM is updated
+    }
     if (!isNextPage) {
       return this.currentStep--;
     } else {
       if (this.currentStep === 3 && this.topOfPageElement) {
-        this.topOfPageElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
         if (this.updateProfileForm.get('plan')?.value === 'arcadePlan') {
           this.total = this.arcadePlan + addOns;
         } else if (this.updateProfileForm.get('plan')?.value === 'advanced') {
@@ -290,6 +293,7 @@ export class MultistepformComponent implements OnInit {
           this.total = this.proPlan + addOns;
         }
       }
+
       return this.currentStep++;
     }
   }
