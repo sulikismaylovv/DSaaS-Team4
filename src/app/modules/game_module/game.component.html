@@ -409,7 +409,7 @@
       <div class="">
         <div class="flex items-center justify-between">
           <div class="flex flex-col items-start">
-            <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
+            <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> aaaaaaaBelgian League</p>
             <p class="text-lg mt-1 ml-4 text-black dark:text-white font-bold"> Belgium</p>
           </div>
           <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
@@ -417,15 +417,12 @@
         </div>
         <table class="h-fit w-full mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-          <tr>
+          <tr >
             <th scope="col" class="px-6 py-3">
               #
             </th>
             <th scope="col" class="px-6 py-3">
               Team
-            </th>
-            <th scope="col" class="px-6 py-3">
-              PL
             </th>
             <th scope="col" class="px-6 py-3">
               GD
@@ -436,57 +433,22 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-              1"
-            </th>
-            <td class="px-6 py-4">
-              A.S OOST...
-            </td>
-            <td class="px-6 py-4">
-              10
-            </td>
-            <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
-            </td>
-          </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1"
-            </th>
-            <td class="px-6 py-4">
-              A.S OOST...
-            </td>
-            <td class="px-6 py-4">
-              10
-            </td>
-            <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
-            </td>
-          </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1"
-            </th>
-            <td class="px-6 py-4">
-              A.S OOST...
-            </td>
-            <td class="px-6 py-4">
-              10
-            </td>
-            <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
-            </td>
-          </tr>
+            <tr *ngFor="let team of league; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                {{ i+1 }}
+              </th>
+              <td class="px-6 py-4">
+                {{ team.name }}
+              </td>
+              <td class="px-6 py-4">
+                {{ team.goalDifference }}
+              </td>
+              <td class="px-6 py-4">
+                {{ team.points }}
+              </td>
+            </tr>
+            
+
           </tbody>
         </table>
       </div>

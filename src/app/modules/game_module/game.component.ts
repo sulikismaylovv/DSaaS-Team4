@@ -14,6 +14,7 @@ import { Bet } from "src/app/core/models/bets.model";
 import { BetsService } from "src/app/core/services/bets.service";
 import { AuthService } from "src/app/core/services/auth.service";
 import { ChangeDetectorRef } from "@angular/core";
+import { Club } from "src/app/core/models/club.model";
 import {
   SupabaseFixture,
   SupabaseFixtureModel,
@@ -40,6 +41,7 @@ export class GameComponent implements OnInit {
   betAmount: number = 200;
   availableCredits: number = 0;
   betCanBePlaced: boolean = false;
+  league: Club[] = [];
 
   time: string = "fsdsd";
   timeLeft: string = "";
@@ -165,6 +167,10 @@ export class GameComponent implements OnInit {
     } else {
       console.log("team1");
     }
+  }
+  async getStanding() {
+    const data = await this.apiService.fetchStandings();
+    this.league = data;
   }
 
   async placeBet() {
