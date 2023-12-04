@@ -58,11 +58,17 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
 
-  checkEmailExists(email: string): boolean {
-      const data = this.supabase.supabaseClient.from(
+  checkEmailExists(email: string): Observable<boolean> {
+      return from(this.supabase.supabaseClient.from('users').select('email').eq('email', email).single())
+        .pipe(
+          map(response => {
+            return response.data != null
+          })
+        );
+      /*const data = this.supabase.supabaseClient.from(
         'users'
       ).select('email').eq('email', email).single();
-      return data != null;
+      return data != null;*/
   }
 
   checkUsernameExists(username: string, currentUserId: string): Observable<boolean> {
