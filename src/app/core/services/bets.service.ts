@@ -9,6 +9,7 @@ export class BetsService {
 
   constructor(private supabase: SupabaseService) { }
 
+
   async createBet(bet: Bet, userID: string) {
     try {
       // Check if user is registered and retrieve the betterID

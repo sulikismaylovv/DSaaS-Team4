@@ -115,7 +115,7 @@
           </svg>
         </button>
         <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
-          <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
+          <p class="text-black dark:text-white font-bold">Jupiler Pro League</p>
         </div>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -125,8 +125,8 @@
           <p class="ml-2 text-black dark:text-white"> {{fixture.club0?.name}} </p>
         </div>
           <div class="flex flex-col items-center">
-            <p class="text-black dark:text-white font-bold">5:30PM</p>
-            <p class="text-black dark:text-white font-semibold">Today</p>
+            <p class="text-black dark:text-white font-bold"> {{time}}</p>
+            <p class="text-black dark:text-white font-semibold">{{timeLeft}}</p>
           </div>
           <div class="flex items-center">
             <p class="truncate mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
@@ -139,13 +139,13 @@
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white">01-Dec-23</p>
+          <p class="font-semibold ml-2 text-black dark:text-white">{{date}}</p>
         </div>
         <div class="flex mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white ">Enter a venue</p>
+          <p class="font-semibold ml-2 text-black dark:text-white ">{{fixture.venue}}</p>
         </div>
         <div class="flex mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -179,7 +179,7 @@
           <img src={{fixture.club0?.logo}} alt="bla bla" class="w-24 h-24"
                [class.opacity-50]="clickedImage && clickedImage!=='team1'" (click)="toggleContent('team1')">
           <p class="text-white"> {{fixture.club0?.name}} </p>
-          <p class="text-black dark:text-white font-semibold"> 45% </p>
+          <p class="text-black dark:text-white font-semibold"> {{fixture.odds_home}} </p>
         </div>
         <!--Draw-->
         <div class="flex flex-col items-center cursor-pointer">
@@ -187,44 +187,44 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
           </svg>
           <p class="text-white"> Draw </p>
-          <p class="text-black dark:text-white font-semibold"> 10% </p>
+          <p class="text-black dark:text-white font-semibold"> {{fixture.odds_draw}} </p>
         </div>
         <!--Team 2-->
         <div class="flex flex-col items-center pl-3 cursor-pointer">
           <img src={{fixture.club1?.logo}} alt="bla bla" class="w-24 h-24"
                [class.opacity-50]="clickedImage && clickedImage!=='team2'" (click)="toggleContent('team2')">
           <p class="truncate ml-2 text-white ">{{fixture.club1?.name}}</p>
-          <p class="text-black dark:text-white font-semibold"> 55% </p>
+          <p class="text-black dark:text-white font-semibold"> {{fixture.odds_away}} </p>
         </div>
       </div>
       <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
            [class.pointer-events-prohibited]="!showContent">
-        <p class="ml-6 text-black dark:text-white text-sm font-semibold"> How many points would you like to bet? </p>
+        <p class="ml-6 text-black dark:text-white text-sm font-semibold"> You have {{availableCredits}} credits.</p>
         <form class="flex items-start mt-2 ml-2 mb-4">
-          <input [(ngModel)]="credits" name="credits" type="text" id="betPoints"
+          <input [(ngModel)]="betAmount" name="credits" type="text" id="betPoints"
                  class="mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                  placeholder="I'm hungry" required>
           <!--Button group-->
           <div class="flex items-center">
             <!--Plus button-->
-            <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+            <button (click)="addAmount(50)" type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
               </svg>
             </button>
             <!--Minus button-->
-            <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+            <button (click)="addAmount(-50)" type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
               </svg>
             </button>
             <!--Bet button-->
-            <button (click)="placeBet()" type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+            <button (click)="checkIfBetCanBePlaced()" type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                     class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Bet</button>
             <!--Max button-->
-            <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Max</button>
+            <button (click)="setMaxBetAmount()" type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Max</button>
             <!--Min button-->
-            <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Min</button>
+            <button (click)="setMinBetAmount()"type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Min</button>
           </div>
         </form>
       </div>

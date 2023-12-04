@@ -2,7 +2,7 @@ export interface SupabaseFixture {
     fixtureID: number;
     team0: number;
     team1: number;
-    time: Date;
+    time: string;
     venue: string;
     is_finished: boolean;
     winner?: boolean;
@@ -27,14 +27,14 @@ export class SupabaseFixtureModel implements SupabaseFixture{
     fixtureID: number;
     team0: number;
     team1: number;
-    time: Date;
+    time: string;
     venue: string;
     is_finished: boolean;
     constructor() {
         this.fixtureID = 0;
         this.team0 = 0;
         this.team1 = 0;
-        this.time = new Date();
+        this.time = "";
         this.venue = "";
         this.is_finished = false;
     }

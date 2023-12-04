@@ -14,6 +14,7 @@ export interface Better{
   userID: string; //foreign key to users table
   credits: number;
   activeCredits: number; //credits that are currently in bets
+  xp: number;
 }
 
 export class BetModel implements Bet{
@@ -39,11 +40,13 @@ export class BetterModel implements Better{
   userID: string;
   credits: number;
   activeCredits: number;
+  xp: number;
 
-  constructor(userID: string, credits: number, activeCredits: number) {
+  constructor(userID: string, credits: number, activeCredits: number, xp: number) {
     this.userID = userID;
     this.credits = credits;
     this.activeCredits = activeCredits;
+    this.xp = xp;
   }
 }
 
