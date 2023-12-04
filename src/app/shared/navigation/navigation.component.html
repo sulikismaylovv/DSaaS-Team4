@@ -181,6 +181,14 @@
         </svg>
       </a>
     </li>
+    <li *ngIf="authService.isAuthenticated$ | async">
+      <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/shop">
+        <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 9V4a3 3 0 0 0-6 0v5m9.92 10H2.08a1 1 0 0 1-1-1.077L2 6h14l.917 11.923A1 1 0 0 1 15.92 19Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </svg>
+        <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
+      </a>
+    </li>
     <!--Profile-->
     <li *ngIf="authService.isAuthenticated$ | async">
       <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/profile">
