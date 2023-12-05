@@ -4,29 +4,22 @@
     <meta charset="utf-8">
     <title>Remontada</title>
     <base href="/">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="width=device-width, user-scalable=0;" name="viewport">
     <link href="/assets/logo1.png" rel="icon" type="image">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Google tag (gtag.js) -->
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JX1SFN837W"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      console.log('Session1:', window.userId);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-
-      gtag('config', 'G-JX1SFN837W', {
-        'user_id': window.userId
-      });
-    });
+    gtag('config', 'G-JX1SFN837W');
   </script>
 </head>
-<body class="bg-light-mode dark:bg-dark-mode">
+<body class="bg-light-mode dark:bg-dark-mode mat-typography">
 <app-root></app-root>
 </body>
 </html>

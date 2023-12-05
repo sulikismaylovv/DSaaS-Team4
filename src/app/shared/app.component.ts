@@ -6,35 +6,35 @@ import {ThemeService} from '../core/services/theme.service';
 import {Router, NavigationEnd} from '@angular/router';
 import {GameComponent} from "../modules/game_module/game.component";
 import {FooterService} from "../core/services/footer.service";
-import { filter } from 'rxjs/operators';
-declare let gtag: Function;
+import {filter} from "rxjs/operators";
+declare var gtag: Function; // Declare gtag function
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    title = environment.appTitle;
-    session: any; // Adjust the type based on your session object
-    protected readonly GameComponent = GameComponent;
+  title = environment.appTitle;
+  session: any; // Adjust the type based on your session object
+  protected readonly GameComponent = GameComponent;
 
-    constructor(private router: Router, private footerService: FooterService, protected readonly authService: AuthService, public themeService: ThemeService) {}
+  constructor(private router: Router, private footerService: FooterService, protected readonly authService: AuthService, public themeService: ThemeService) {}
 
-    ngOnInit() {
-      // Subscribe to the auth state changes
-      this.authService.authChanges((_, session) => (this.session = session));
-      initFlowbite();
-     // this.setUpAnalytics();
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          if (event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/register') {
-            this.footerService.setShowFooter(true);
-          } else {
-            this.footerService.setShowFooter(false);
-          }
+  ngOnInit() {
+    // Subscribe to the auth state changes
+    this.authService.authChanges((_, session) => (this.session = session));
+    initFlowbite();
+    this.setUpAnalytics();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.urlAfterRedirects === '/register') {
+          this.footerService.setShowFooter(false);
+        } else {
+          this.footerService.setShowFooter(false);
         }
-      });
-    }
+      }
+    });
+  }
   setUpAnalytics() {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event) => {
@@ -46,8 +46,4 @@ export class AppComponent implements OnInit {
         );
       });
   }
-
-    toggleTheme() {
-        this.themeService.toggleTheme();
-    }
 }

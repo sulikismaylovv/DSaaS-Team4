@@ -23,7 +23,7 @@
         <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index"
              [ngClass]="{'bg-your-color': isCurrentUser(member.userid), 'bg-lighter-purple': !isCurrentUser(member.userid)}" class="user-card rounded-lg p-4 flex-grow mx-auto max-w-md flex items-center justify-between shadow-lg relative">
           <!-- Member Details -->
-          <span class="font-bold ml-4">
+          <span class="text-white rounded px-4 py-2 flex-grow">
             <span class="user-details"><span *ngIf="i > 2" class="rank-number">{{ i + 1 }}</span>
             <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
             <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
@@ -31,7 +31,7 @@
             <img src="assets/images/user_profile_img.png" alt="Profile Picture" class="profile-picture">
             <span class="username">{{ member.username }}</span>
             </span>
-            </span>
+          </span>
           <!-- Member XP -->
           <div class="flex items-center">
             <span class="xp text-sm bg-primary-700 px-3 py-1 rounded-full">{{ member.xp }} XP</span>

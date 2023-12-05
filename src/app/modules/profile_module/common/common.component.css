@@ -3,6 +3,15 @@
   border-radius: 15px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;}
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .selected {
   color: #1c2632;
   padding-top: 1rem;

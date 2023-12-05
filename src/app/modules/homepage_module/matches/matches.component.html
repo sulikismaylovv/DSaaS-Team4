@@ -1,52 +1,62 @@
-<div class="flex justify-center py-4 h-1/6">
-  <div class="flex rounded-full shadow-lg" role="group">
-    <button (click)="goToPreviousWeek()"
-      class="bg-gray-300 text-gray-800 font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Previous</button>
-    <button
-      class="bg-gray-500 text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-600 focus:outline-none">{{formatShortDate(startDate)}}
-      - {{formatShortDate(endDate)}}</button>
-    <button (click)="goToNextWeek()"
-      class="bg-gray-300 text-gray-800 font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-gray-400 focus:outline-none">Next</button>
+<div class="w-full">
+  <div class="flex justify-center py-4 h-full">
+    <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
+      <button (click)="goToPreviousWeek()"
+              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+        </svg>
+      </button>
+      <button
+        class="text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
+        - {{formatShortDate(endDate)}}</button>
+      <button (click)="goToNextWeek()"
+              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+        </svg>
+      </button>
+    </div>
   </div>
-</div>
 
-
-<div class="bg-gray-800 p-6 rounded-lg shadow-md overflow-y-auto h-5/6">
-  <div class="grid grid-cols-1 gap-4">
-
-    <!-- Outer loop for grouped fixtures by date -->
-    <div *ngFor="let date of groupedFixtureKeys" class="date-group">
-
-      <!-- Display Date -->
-      <div class="text-white text-lg font-bold mb-4">
-        {{ formatShortDateString(date) }}
-      </div>
-
-      <!-- Inner loop for fixtures on a particular date -->
-      <div *ngFor="let fixture of groupedFixtures[date]"
-        class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4 flex items-center justify-between">
-        <button (click)="onGameSelect(fixture)" class="text-white underline">
-          <!-- Team 1 -->
-          <div class="flex-1 flex items-center justify-start">
-            <img [src]="fixture.teams.home.logo" alt="Team 1" class="w-10 h-10 rounded-full mr-4">
-            <span class="font-semibold text-lg truncate">{{ fixture.teams.home.name }}</span>
-          </div>
-
-          <!-- Score -->
-          <div class="font-bold text-xl flex-none w-16 text-center">
-            {{ fixture.score.fulltime.home }} - {{ fixture.score.fulltime.away }}
-          </div>
-
-          <!-- Team 2 -->
-          <div class="flex-1 flex items-center justify-end">
-            <span class="font-semibold text-lg truncate">{{ fixture.teams.away.name }}</span>
-            <img [src]="fixture.teams.away.logo" alt="Team 2" class="w-10 h-10 rounded-full ml-4">
-          </div>
-        </button>
+  <div class="bg-gray-800 rounded-lg p-4 overflow-y-auto h-fit w-full">
+    <div class="w-full">
+      <!-- Outer loop for grouped fixtures by date -->
+      <div *ngFor="let date of groupedFixtureKeys" class="date-group mb-4">
+        <!-- Display Date -->
+        <div class="text-black dark:text-white text-lg font-bold mb-4">
+          {{ formatShortDateString(date) }}
+        </div>
+        <!-- Inner loop for fixtures on a particular date -->
+        <div *ngFor="let fixture of groupedFixtures[date]"
+             class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4">
+          <button (click)="onGameSelect(fixture)" class="text-white underline w-full">
+            <div class="flex justify-between w-full">
+              <!-- Team 1 -->
+              <div class="flex flex-col items-center justify-center w-full">
+                <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
+                <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+              </div>
+              <!-- Score -->
+              <div class="flex items-center justify-center font-bold text-xl w-full">
+                {{ fixture.home_goals }} - {{ fixture.away_goals }}
+              </div>
+              <!-- Team 2 -->
+              <div class="flex flex-col items-center justify-center w-full">
+                <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
+<a class="opacity-0 cursor-default flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+  <div class="flex flex-col justify-between p-4 leading-normal">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+  </div>
+</a>
 
-<!-- <button (click)="logList()">LOG LIST</button> -->

@@ -1,4 +1,4 @@
-<div class="bg-dark-mode min-h-screen p-6">
+<div class="bg-dark-mode min-h-screen p-6 w-100%">
   <!-- Tabbed Navigation -->
   <div class="tabs bg-dark-mode text-center p-4">
     <button (click)="currentView = 'friends'" [ngClass]="{'active': currentView === 'friends'}" class="tab text-2xl px-6 py-3 m-2">
@@ -18,6 +18,123 @@
   <div *ngIf="currentView === 'regional'">
 <!--    <app-createleague></app-createleague> &lt;!&ndash; Component for Friends League &ndash;&gt;-->
     <app-league></app-league>
+  </div>
 
+  <button data-modal-target="default-modal" data-modal-toggle="default-modal" class=" absolute right-12 top-12 block text-white bg-purple-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+    Create Friends League
+  </button>
+
+  <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Create a New Friends League
+          </h3>
+          <button type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-toggle="default-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+
+        </div>
+        <!-- Modal body -->
+        <form [formGroup]="leagueForm" (ngSubmit)="onSubmit()" class="bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+          <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2">
+              <label for="leagueName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <input formControlName="leagueName" id="leagueName" type="text"
+                     placeholder="Enter league name"
+                     class="bg-very-light-purple text-dark-mode border border-light-gray rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                     required>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <div class="mb-4">
+                <label class="block text-sm font-bold mb-2 text-white">
+                  Invite Friends
+                </label>
+
+                <!-- Input to search and add a new friend -->
+                <div class="flex items-center mb-2">
+                  <input #newFriendInput type="text"
+                         (input)="onUserSearch($event)"
+                         placeholder="Search and add friends by username"
+                         class="bg-very-light-purple text-black border border-light-gray rounded px-4 py-2 mr-2 flex-grow">
+                  <button (click)="addAndClear(newFriendInput.value, newFriendInput)" type="button"
+                          class="bg-green-500 text-white w-8 h-8 rounded flex items-center justify-center">
+                    +
+                  </button>
+                </div>
+
+              </div>
+            <div class="col-span-2">
+              <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">
+                <li *ngFor="let user of userSearchResults"
+                    (click)="addAndClear(user.username, newFriendInput)"
+                    class="cursor-pointer text-black hover:bg-lighter-purple p-2">
+                  {{ user.username }}
+                </li>
+              </ul>
+              <!-- Container for added friends -->
+              <div class="flex flex-col space-y-4 mb-4">
+                <div *ngFor="let friendControl of friends.controls; let i = index" class="flex items-center">
+                  <div class="bg-lighter-purple text-white rounded px-4 py-2 flex-grow">
+                    {{ friendControl.value.username }}
+                  </div>
+                  <button (click)="removeFriend(i)" type="button"
+                          class="ml-2 bg-red-500 text-white w-8 h-8 rounded flex items-center justify-center">
+                    X
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          </div>
+
+            <div class="col-span-2">
+
+            <div class="flex justify-end mt-4">
+              <button class="bg-lighter-purple hover:bg-light-mode-text text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Create League
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showModalConfirm">
+          <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">League Created Successfully!</h3>
+              <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500">League Name: {{ submittedLeagueName }}</p>
+                <p class="text-sm text-gray-500">
+                  Friends Invited:
+                <ul>
+                  <li *ngFor="let username of submittedFriendsUsernames">{{ username }}</li>
+                </ul>
+
+              </div>
+              <div class="items-center px-4 pb-3">
+                <button class="bg-blue-500 text-white rounded-md px-4 py-2" (click)="closeModalConfirm()">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<!--  <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-[80%] md:w-[90%] h-[80%] md:h-[90%] max-h-[90vh]">-->
+<!--    <div class="p-4 w-full max-w-4xl max-h-full">-->
+<!--      <app-createleague></app-createleague>-->
+<!--    </div>-->
+<!--  </div>-->
+

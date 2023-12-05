@@ -3,6 +3,7 @@ import {Comment} from "../../../core/models/posts.model";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AuthService} from "../../../core/services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-comment-view',
@@ -18,6 +19,7 @@ export class CommentViewComponent {
     private readonly authService: AuthService,
     private readonly userService: UserServiceService,
     private readonly sanitizer: DomSanitizer,
+    private readonly router: Router
   ) {
   }
 
@@ -56,6 +58,11 @@ export class CommentViewComponent {
     }).catch(error => {
       console.error('Could not fetch avatar_url', error);
     });
+  }
+
+  async onAvatarClick(userId: string | undefined): Promise<void> {
+    if (userId === undefined) throw new Error('User ID is undefined');
+    await this.router.navigate(['/profile', userId]);
   }
 
 }

@@ -12,7 +12,7 @@
       /* Additional custom styles can go here */
     </style>
   </head>
-  <body class="bg-custom-gradient rounded">
+  <div class="bg-custom-gradient rounded">
   <div class="container mx-auto p-2 ">
     <div class="bg-light-mode dark:text-white dark:bg-dark-mode shadow-md rounded px-8 pt-6 pb-8 ">
       <div class="isolate bg-light-mode dark:bg-dark-mode dark:text-white px-6 py-24 sm:py-10 lg:px-8">
@@ -57,73 +57,58 @@
               <!-- input fields -->
             </div>
 
-            <div class="sm:col-span-2">
-              <label for="email" class="block text-sm font-semibold leading-6 text-gray-900  dark:text-white">Email</label>
-              <div class="mt-2.5">
-                <input type="email" formControlName="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              </div>
-            </div>
 
             <div class="sm:col-span-2">
-              <label for="email" class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Favourite club</label>
+              <label class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Favourite club</label>
               <button id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" class="flex items-center w-full rounded-md border-0 px-3.5 py-1.5 mt-2.5 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <span id="selectedClubText" class="mr-3">Select a club</span>
+                <ng-container *ngIf="selectedFavoriteClubId; else selectClubText">
+                  <img [src]="favoriteClub?.club?.logo" alt="{{favoriteClub?.club?.name}}" class="inline-block h-6 w-6 rounded-full mr-2">
+                  <span id="selectedClubTextX" class="mr-3">{{favoriteClub?.club?.name}}</span>
+                </ng-container>
+                <ng-template #selectClubText>
+                  <span id="selectedClubText" class="mr-3">Select a club</span>
+                </ng-template>
                 <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-
-<!--                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">-->
                   <!-- Your SVG content -->
                 </svg>
               </button>
 
 
+
               <!-- Dropdown menu -->
-            <div id="dropdownUsers" class="z-10 hidden bg-white dark:text-white dark:bg-dark-mode rounded-lg shadow w-144 ">
-              <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600  dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KAA_Gent_logo.svg" alt="KAA_GENT">
-                    Jese Leos
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/kvc-westerlo.svg" alt="Jese image">
-                    Robert Gough
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KV_Mechelen_logo.svg" alt="Jese image">
-                    Bonnie Green
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white  dark:hover:text-white">
-                    <img class="w-6 h-6 me-2 rounded-full" src="assets/logos/KV_Mechelen_logo.svg" alt="Jese image">
-                    Bonnie Green
-                  </a>
-                </li>
-
-              </ul>
-
-            </div>
+              <div id="dropdownUsers" class="z-10 hidden bg-white dark:text-white dark:bg-dark-mode rounded-lg shadow w-144 ">
+                <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
+                  <li *ngFor="let club of clubs" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      (click)="selectFavoriteClub(club.club.id)">
+                    <img [src]="club.club.logo" alt="Club Logo" class="inline-block h-6 w-6 rounded-full mr-2">
+                    <span [class.font-bold]="club.club.id === selectedFavoriteClubId">{{ club.club.name }}</span>
+                    <span *ngIf="club.club.id === selectedFavoriteClubId" class="ml-auto text-green-500">✓</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
 
 
             <div class="sm:col-span-2">
-              <label for="user" class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Change following</label>
-              <div class="mt-2.5">
-                <select name="user" id="user" class="block w-full rounded-md border-0 px-3.5 py-2 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  <option value="" selected disabled>Select teams</option>
-                  <option value="user1">
-                    <img src="assets/logo1.png" alt="User 1" class="inline-block h-6 w-6 rounded-full mr-2">User 1
-                  </option>
-                  <option value="user2">
-                    <img src="assets/logos/KAA_Gent_logo.svg" alt="User 2" class="inline-block h-6 w-6 rounded-full mr-2">User 2
-                  </option>
-                  <!-- Add more options as needed -->
-                </select>
+              <label class="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">Follow Clubs</label>
+              <button id="dropdownFollowedClubsButton" data-dropdown-toggle="dropdownFollowedClubs" data-dropdown-placement="bottom" class="flex items-center w-full rounded-md border-0 px-3.5 py-1.5 mt-2.5 bg-transparent dark:text-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <span class="mr-3">Manage Followed Clubs</span>
+                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <!-- Your SVG content -->
+                </svg>
+              </button>
+
+              <!-- Dropdown menu for Followed Clubs -->
+              <div id="dropdownFollowedClubs" class="z-10 hidden bg-white dark:text-white dark:bg-dark-mode rounded-lg shadow w-144 ">
+                <ul class="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownFollowedClubsButton">
+                  <li *ngFor="let club of clubs" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      (click)="toggleFollowClub(club.club.id)">
+                    <img [src]="club.club.logo" alt="Club Logo" class="inline-block h-6 w-6 rounded-full mr-2">
+                    <span>{{ club.club.name }}</span>
+                    <span *ngIf="isClubFollowed(club.club.id)" class="ml-auto text-green-500">✓</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
@@ -151,7 +136,7 @@
       </div>
     </div>
   </div>
-  </body>
+  </div>
       </div>
     </div>
   </div>

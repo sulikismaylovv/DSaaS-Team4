@@ -14,28 +14,32 @@ import {MatchesComponent} from "./modules/homepage_module/matches/matches.compon
 import {SinglePostComponent} from "./modules/post_module/single-post/single-post.component";
 import {ShopComponent} from "./modules/shop/shop.component";
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
-import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
-import {UserComponent} from "./modules/profile_module/user/user.component";
 import {SettingsComponent} from "./modules/settings/settings.component";
+import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
+import {CommonComponent} from "./modules/profile_module/common/common.component";
+import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
+import {FirstSignGuard} from "./core/guards/first-sign.guard";
 
 
 const routes: Routes = [
-    {path: 'login', component: LoginComponent, pathMatch: 'full'},
-    {path: 'dashboard', component: DashboardComponent, canActivate: [ProfileGuard]},
-    {path: 'register', component: AuthComponent, pathMatch: 'full'},
-    {path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
-    {path: '', redirectTo: '/home', pathMatch: 'full',},
-    {path: 'home', component: HomeComponent, pathMatch: 'full'},
-    {path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
-    {path: 'game/:id', component: GameComponent, pathMatch: 'full'},
-    {path: 'posts', component: PostsComponent},
-    {path: 'games', component: MatchesComponent},
-    { path: 'post/:id', component: SinglePostComponent },
-    { path: 'shop', component: ShopComponent },
-    {path: 'league',component: GloballeagueComponent},
-  { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard]},
-  { path: 'user', component: UserComponent},
-  { path: 'settings', component: SettingsComponent}
+    { path: 'login', component: LoginComponent, pathMatch: 'full'},
+    { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [ProfileGuard]},
+    { path: 'register', component: AuthComponent, pathMatch: 'full'},
+    { path: 'complete-profile', component: MultistepformComponent, pathMatch: 'full'},
+    { path: '', redirectTo: '/home', pathMatch: 'full',},
+    { path: 'home', component: HomeComponent, pathMatch: 'full'},
+    { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
+    { path: 'game/:id', component: GameComponent, pathMatch: 'full'},
+    { path: 'posts', component: PostsComponent, pathMatch: 'full'},
+    { path: 'games', component: MatchesComponent, pathMatch: 'full'},
+    { path: 'post/:id', component: SinglePostComponent},
+    { path: 'shop', component: ShopComponent, pathMatch: 'full' },
+    { path: 'league',component: GloballeagueComponent, pathMatch: 'full'},
+    { path: 'settings', component: SettingsComponent, canActivate: [ProfileGuard], pathMatch: 'full'},
+    { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard, FirstSignGuard]},
+    { path: 'profile/:userId', component: ProfileComponent},
+    { path: 'notifications', component: NotificationComponent, canActivate: [ProfileGuard]},
+
 ];
 
 @NgModule({
