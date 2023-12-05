@@ -34,7 +34,7 @@ import { ProfileComponent } from './modules/profile_module/profile_page/profile.
 import { CommonComponent } from './modules/profile_module/common/common.component';
 import { UserComponent } from './modules/profile_module/user/user.component';
 import {SettingsComponent} from "./modules/settings/settings.component";
-import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
+
 
 
 
