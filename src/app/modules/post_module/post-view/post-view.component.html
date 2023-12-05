@@ -33,7 +33,7 @@
     <p class="text-gray-800 dark:text-white mt-3">{{ originalPost.content }}</p>
     <!-- Original Post Image if exists -->
     <div *ngIf="originalPost.image_url" class="mt-4">
-      <img [src]="originalPostImageUrl" alt="Original post image" class="rounded-lg w-fit h-64 mx-auto"/>
+      <img [src]="originalPostImageUrl" alt="Original post image" class="rounded-lg w-fit h-64 lg:h-auto mx-auto"/>
     </div>
   </div>
 
