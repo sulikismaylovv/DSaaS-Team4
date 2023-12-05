@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   hideForm = false;
   showPosts: boolean = false;
   showMatches: boolean = true;
+  activeContent: string = 'matches';
 
   constructor(
     public themeService: ThemeService,
@@ -45,11 +46,13 @@ export class HomeComponent implements OnInit {
   }
 
   showPostsContent() {
+    this.activeContent= 'posts';
     this.showPosts = true;
     this.showMatches = false;
   }
 
   showMatchesContent() {
+    this.activeContent= 'matches';
     this.showPosts = false;
     this.showMatches = true;
   }
