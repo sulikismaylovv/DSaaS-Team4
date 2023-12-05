@@ -204,12 +204,35 @@
         <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
              [class.pointer-events-none]="!showContent">
           <p class="ml-6 text-black dark:text-white text-sm font-semibold"> How many points would you like to bet? </p>
-          <form class="flex flex-col items-start mt-2 ml-2 mb-4">
+          <form class="flex flex-col sm:flex-row items-start mt-2 ml-2 mb-4">
             <input [(ngModel)]="credits" name="credits" type="number" id="betPoints"
                    class="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                    placeholder="Enter number of credits" required>
-            <!--Button group-->
-            <div class="flex flex-col items-start">
+            <!--Button group for the rest-->
+            <div class="flex hidden sm:inline-flex">
+              <!--Plus button-->
+              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                </svg>
+              </button>
+              <!--Minus button-->
+              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                </svg>
+              </button>
+              <!--Bet button-->
+              <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                Bet
+              </button>
+              <!--Max button-->
+              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Max</button>
+              <!--Min button-->
+              <button  type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Min</button>
+            </div>
+            <!--Button group smartphones-tablets-->
+            <div class="flex flex-col sm:hidden items-start">
               <div class="flex items-center justify-center  mt-2">
                 <!--Plus button-->
                 <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
