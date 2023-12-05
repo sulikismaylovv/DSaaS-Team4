@@ -1,28 +1,40 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ThemeService {
-  private darkMode=false;
+  private darkMode = false;
+  private mediaQueryListener!: MediaQueryList;
+
   constructor() {
-    // Load dark mode setting from local storage
     const savedMode = localStorage.getItem('darkMode');
-    // If the user has explicitly chosen light or dark
     if (savedMode) {
       this.darkMode = savedMode === 'true';
     } else {
-      // Optionally set a default or detect from system preferences
-      // Example: Use system preference
-      this.darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.setupSystemThemeListener();
     }
     this.updateDocumentClass();
   }
+
+  private setupSystemThemeListener() {
+    this.mediaQueryListener = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkMode = this.mediaQueryListener.matches;
+    this.mediaQueryListener.addEventListener('change', this.systemThemeChanged.bind(this));
+  }
+
+  private systemThemeChanged(event: MediaQueryListEvent) {
+    this.darkMode = event.matches;
+    this.updateDocumentClass();
+    // Optionally, save this setting to localStorage if you want
+  }
+
   toggleTheme() {
     this.darkMode = !this.darkMode;
     localStorage.setItem('darkMode', String(this.darkMode));
     this.updateDocumentClass();
   }
+
   private updateDocumentClass() {
     if (this.darkMode) {
       document.documentElement.classList.add('dark');
@@ -30,8 +42,15 @@ export class ThemeService {
       document.documentElement.classList.remove('dark');
     }
   }
+
   isDarkModeEnabled(): boolean {
     return this.darkMode;
   }
+
+  // Clean up the listener when the service is destroyed
+  ngOnDestroy() {
+    this.mediaQueryListener.removeEventListener('change', this.systemThemeChanged.bind(this));
+  }
 }
+
 

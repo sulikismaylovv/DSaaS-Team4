@@ -38,6 +38,7 @@ import { NotificationComponent } from './modules/notification-module/notificatio
 import { BgImageSelectorComponent } from './modules/profile_module/bg-image-selector/bg-image-selector.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import 'hammerjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -51,7 +52,7 @@ import 'hammerjs';
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule,
       FormsModule, CommonModule, HttpClientModule, NgOptimizedImage ,
-      MatDialogModule, ImageCropperModule
+      MatDialogModule, ImageCropperModule, BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent],
