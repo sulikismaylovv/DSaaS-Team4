@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 
@@ -7,6 +7,8 @@ import {AuthService} from '../../../core/services/auth.service';
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Session} from "@supabase/supabase-js";
 import{CustomAlertComponent} from "../custom-alert/custom-alert.component";
+import {catchError, Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-auth',
@@ -28,15 +30,24 @@ export class AuthComponent implements OnInit {
         public navbarService: NavbarService,
         private formBuilder: FormBuilder) {
         this.registerForm = this.formBuilder.group({
-            email: formBuilder.control('', [Validators.required, Validators.email, Validators.minLength(5)]),
+            email: formBuilder.control('', [Validators.required, Validators.email, Validators.minLength(5)], [this.emailExistsValidator.bind(this)]),
             password: ['', [
                 Validators.required,
                 Validators.minLength(8), // Minimum length for the password
-                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$') // Passwords must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
+                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$') // Passwords must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number,
             ]],
             confirmPassword: ['', Validators.required]
         }, {validator: this.matchingPasswords});
 
+    }
+    emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+      return this.emailExists(control.value).pipe(
+        map((exists: boolean) => (exists ? {emailExists: true} : null)),
+        catchError(() => of(null))
+      );
+    }
+    private emailExists(email: string): Observable<boolean> {
+      return this.authService.checkEmailExists(email);
     }
     termsAcceptedChange() {
         this.termsAccepted = !this.termsAccepted;
@@ -62,6 +73,11 @@ export class AuthComponent implements OnInit {
                 const email = this.registerForm.value.email as string;
                 const password = this.registerForm.value.password as string;
 
+                if(this.emailExists(email)) {
+                  alert('Email already exists');
+                  return;
+                }
+
                 // Call the simplified register method without additional details
                 await this.authService.register(email, password);
                 // After the alert in the register method, control returns here.
@@ -84,4 +100,14 @@ export class AuthComponent implements OnInit {
           setTimeout(() => this.showAlert = false,6000);
         }
     }
+
+  async signInWithProvider() {
+    try {
+      await this.authService.signInWithProvider();
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  }
 }

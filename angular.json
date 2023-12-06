@@ -45,8 +45,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "1.5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -104,6 +104,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -113,6 +114,9 @@
     }
   },
   "cli": {
-    "analytics": "0c48d765-d4a8-4465-88e4-ec8c9671154a"
+    "analytics": "0c48d765-d4a8-4465-88e4-ec8c9671154a",
+    "cache": {
+      "environment": "all"
+    }
   }
 }
