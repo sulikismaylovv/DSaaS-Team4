@@ -42,6 +42,10 @@ export class GameComponent implements OnInit {
   availableCredits: number = 0;
   betCanBePlaced: boolean = false;
   league: Club[] = [];
+  showNewContent: boolean = false;
+  credits: number = 10;
+
+
 
   time: string = "fsdsd";
   timeLeft: string = "";
@@ -337,5 +341,9 @@ export class GameComponent implements OnInit {
         this.teamChosen = "away";
       }
     }
+  }
+
+  toggleNewContent(){
+    this.showNewContent = true;
   }
 }
