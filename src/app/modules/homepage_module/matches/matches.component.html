@@ -2,12 +2,20 @@
   <div class="flex justify-center py-4 h-full">
     <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
-              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Previous</button>
+              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+        </svg>
+      </button>
       <button
         class="text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
         - {{formatShortDate(endDate)}}</button>
       <button (click)="goToNextWeek()"
-              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Next</button>
+              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+        </svg>
+      </button>
     </div>
   </div>
 
