@@ -13,17 +13,21 @@
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JX1SFN837W"></script>
   <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() { dataLayer.push(arguments); }
+
     document.addEventListener('DOMContentLoaded', function () {
       console.log('Session1:', window.userId);
 
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
 
       gtag('config', 'G-JX1SFN837W', {
         'user_id': window.userId
       });
     });
+
+
   </script>
 </head>
 <body class="bg-light-mode dark:bg-dark-mode">
