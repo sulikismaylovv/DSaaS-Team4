@@ -110,7 +110,7 @@ async function getClubPoints(): Promise<ClubData[]> {
     const response = await fetch(url, options);
     const data = await response.json();
     const standings = data.response[0].league.standings[0];
-    
+
     return standings.map((team: any) => ({
       id: team.team.id,
       points: team.points,
@@ -153,24 +153,50 @@ async function updateClubData(supabaseClient: SupabaseClient) {
   }
 }
 
+// async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
+//   const now = new Date();
+//   // Assuming a match lasts for approximately 2 hours (120 minutes)
+//   const twoHoursBefore = new Date(now.getTime() - 2 * 60 * 60 * 1000); // 2 hours before now
+
+//   const { data, error } = await supabaseClient
+//     .from("fixtures")
+//     .select("time, is_finished")
+//     .gte("time", twoHoursBefore.toISOString()) // Matches that have started within the last 2 hours
+//     .lte("time", now.toISOString()) // Up to the current time
+//     .is("is_finished", false); // Ensure the match is not finished
+
+//   if (error) {
+//     throw error;
+//   }
+
+//   return data.length > 0;
+// }
 async function isThereMatch(supabaseClient: SupabaseClient): Promise<boolean> {
   const now = new Date();
-  // Assuming a match lasts for approximately 2 hours (120 minutes)
-  const twoHoursBefore = new Date(now.getTime() - 2 * 60 * 60 * 1000); // 2 hours before now
-  
+
   const { data, error } = await supabaseClient
     .from("fixtures")
-    .select("time, is_finished")
-    .gte("time", twoHoursBefore.toISOString()) // Matches that have started within the last 2 hours
-    .lte("time", now.toISOString()) // Up to the current time
-    .is("is_finished", false); // Ensure the match is not finished
+    .select("*")
 
   if (error) {
     throw error;
   }
 
-  return data.length > 0;
+  // Check if there is a match within the 3-hour window
+  for (const fixture of data) {
+    const matchTime = new Date(fixture.time);
+    const endTime = new Date(matchTime.getTime() + 3 * 60 * 60 * 1000); // 3 hours after match time
+
+
+    if (now >= matchTime && now <= endTime) {
+      console.log("Match is happening now");
+      return true; // Current time is within the 3-hour window of the match duration
+    }
+  }
+
+  return false; // No match is currently happening within the 3-hour window
 }
+
 
 
 
@@ -197,7 +223,10 @@ Deno.serve(async (req) => {
   if (await isThereMatch(supabaseClient)) {
     fixtures = await getTodayFixtures();
     updateClubData(supabaseClient);
-  }else{return new Response("No match", { status: 404});}
+  } else {
+    console.log("No match");
+    return new Response("No match", { status: 404 });
+  }
   for (const fixture of fixtures) {
     await updateScore(supabaseClient, fixture);
   }
