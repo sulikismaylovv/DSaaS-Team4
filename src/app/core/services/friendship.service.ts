@@ -115,4 +115,42 @@ export class FriendshipService {
     }
   }
 
+
+  async checkIfFriends(userId: string | undefined, friendId: string,) : Promise<boolean | undefined> {
+    // Validate the input
+    if (!userId || !friendId) {
+      console.error('User IDs are required');
+      return undefined;
+    }
+
+    // Fetch the friendship status between user1 and user2
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('friendships')
+        .select('status')
+        .or(`and(user1_id.eq.${userId},user2_id.eq.${friendId}),and(user1_id.eq.${friendId},user2_id.eq.${userId})`);
+
+      if (error) {
+        console.error('Error fetching friend request status:', error);
+        throw error;
+      }
+
+      // Log the data for debugging purposes
+      console.log('Friend request status:', data);
+
+      // Determine the friendship status
+      if (data && data.length > 0) {
+        // Assuming the status field holds the friendship status
+        const status = data[0].status;
+        return status === 'accepted';
+      } else {
+        // No friendship found
+        return false;
+      }
+    } catch (error) {
+      console.error('Error fetching friend request status:', error);
+      throw error;
+    }
+  }
+
 }
