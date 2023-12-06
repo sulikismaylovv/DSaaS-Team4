@@ -14,6 +14,7 @@ export class ProfileComponent extends CommonComponent {
   openCreatePostModal(): void {
     const dialogRef = this.dialog.open(CreatePostComponent, {
       width: '700px',
+      panelClass: 'custom-dialog', // Use a custom CSS class for styling
       data: 0
     });
 
