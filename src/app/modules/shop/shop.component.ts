@@ -145,6 +145,7 @@ export class ShopComponent implements OnInit {
       }
     });
 
+    this.loadUserCredits();
     // If you're using OnPush change detection strategy, manually trigger change detection
     this.changeDetectorRef.detectChanges();
   }

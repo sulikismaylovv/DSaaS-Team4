@@ -26,10 +26,10 @@
             <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayerFavoriteClub.photo" alt="player image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayerFavoriteClub.name }}</h5>
-              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayerFavoriteClub?.clubname}}</p>
+              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayerFavoriteClub.clubname}}</p>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">100 credits</span>
-                <button (click)="randomPlayerFavoriteClub.owned ? null : makePurchase(currentUserID, randomPlayerFavoriteClub,false)"
+                <button (click)="makePurchase(currentUserID, randomPlayerFavoriteClub,false)"
                         [disabled]="randomPlayerFavoriteClub.owned"
                         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                   Buy
@@ -50,7 +50,7 @@
             <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer1.photo" alt="player image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer1.name }}</h5>
-              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayer1?.clubname}}</p>
+              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayer1.clubname}}</p>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">100 credits</span>
                 <button (click)="!randomPlayer1.owned && makePurchase(currentUserID, randomPlayer1,false)"
@@ -74,7 +74,7 @@
             <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer2.photo" alt="player image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer2.name }}</h5>
-              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayer2?.clubname}}</p>
+              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayer2.clubname}}</p>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">100 credits</span>
                 <button (click)="!randomPlayer2.owned && makePurchase(currentUserID, randomPlayer2,false)"
@@ -106,7 +106,7 @@
                 <button (click)="!surprisePlayer.owned && makePurchase(currentUserID, surprisePlayer, true)"
                         [disabled]="surprisePlayer.owned"
                         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:focus:ring-purple-900">
-                  Close
+                  Buy
                 </button>
               </div>
             </div>
@@ -123,7 +123,7 @@
                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">You have purchased</h3>
                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ viewedPlayer?.name }}</h3>
                 <div class="mt-2 px-7 py-3">
-                  <img src="{{ viewedPlayer?.photo }}" alt="{{ viewedPlayer?.name }}" class="w-24 h-24 rounded-full object-cover mx-auto" *ngIf="viewedPlayer">
+                  <img src="{{ viewedPlayer.photo }}" alt="{{ viewedPlayer.name }}" class="w-24 h-24 rounded-full object-cover mx-auto" *ngIf="viewedPlayer">
                   <p class="text-md text-gray-500 dark:text-white">{{ viewedPlayer?.clubname }}</p>
                 </div>
                 <div class="items-center px-4 pb-3">
@@ -144,9 +144,9 @@
               <div class="mt-2 px-7 py-3">
                 <p class="text-sm text-gray-500 dark:text-white">You've revealed the mystery player:</p>
                 <div class="flex flex-col items-center justify-center">
-                  <img src="{{ surprisePlayer?.photo }}" alt="Mystery Player" class="w-24 h-24 rounded-full object-cover bg-gray-300" *ngIf="surprisePlayer">
-                  <p class="text-lg font-semibold mt-3 text-gray-500  dark:text-white">{{ surprisePlayer?.name }}</p>
-                  <p class="text-md text-gray-500 dark:text-white">{{ surprisePlayer?.clubname }}</p>
+                  <img src="{{ surprisePlayer.photo }}" alt="Mystery Player" class="w-24 h-24 rounded-full object-cover bg-gray-300" *ngIf="surprisePlayer">
+<!--                  <p class="text-lg font-semibold mt-3 text-gray-500  dark:text-white">{{ surprisePlayer?.name }}</p>-->
+<!--                  <p class="text-md text-gray-500 dark:text-white">{{ surprisePlayer?.clubname }}</p>-->
                 </div>
               </div>
               <div class="items-center px-4 pb-3">
