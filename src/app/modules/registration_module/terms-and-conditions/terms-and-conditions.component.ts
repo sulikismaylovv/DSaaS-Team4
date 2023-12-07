@@ -11,6 +11,6 @@ export class TermsAndConditionsComponent {
     protected dialog: MatDialog
   ){}
   closeTCModal(): void{
-    const dialogReg =this.dialog.closeAll()
+    this.dialog.closeAll()
   }
 }
