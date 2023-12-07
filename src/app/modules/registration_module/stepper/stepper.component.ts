@@ -10,7 +10,7 @@ export class StepperComponent implements OnInit {
     @Input()
         // currentStep!: number;
         // steps: number[] = [1, 2, 3, 4]; // Adjust the array based on the number of steps
-    currentStep: number = 1; // Starts at step 1
+    currentStep = 1; // Starts at step 1
 
 
     steps = [1, 2, 3, 4];

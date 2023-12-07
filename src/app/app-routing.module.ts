@@ -16,7 +16,6 @@ import {ShopComponent} from "./modules/shop/shop.component";
 import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
 import {SettingsComponent} from "./modules/settings/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
-import {CommonComponent} from "./modules/profile_module/common/common.component";
 import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
 import {FirstSignGuard} from "./core/guards/first-sign.guard";
 

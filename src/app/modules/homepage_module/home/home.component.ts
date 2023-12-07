@@ -2,11 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {ThemeService} from "../../../core/services/theme.service";
-import {initFlowbite} from "flowbite";
 import {NavbarService} from "../../../core/services/navbar.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
-import {SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-home',
@@ -16,9 +14,9 @@ import {SafeResourceUrl} from "@angular/platform-browser";
 export class HomeComponent implements OnInit {
   session: any; // Adjust the type based on your session object
   hideForm = false;
-  showPosts: boolean = false;
-  showMatches: boolean = true;
-  activeContent: string = 'matches';
+  showPosts = false;
+  showMatches = true;
+  activeContent = 'matches';
   userSearchResults: any[] = [];
 
   constructor(
@@ -56,7 +54,7 @@ export class HomeComponent implements OnInit {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
       this.userSearchResults = await this.userService.searchUsersByFirstThreeLetters(searchTerm);
-      for (let user of this.userSearchResults) {
+      for (const user of this.userSearchResults) {
             user.avatarSafeUrl = await this.imageDownloadService.loadAvatarImage(user.id);
       }
     } else {

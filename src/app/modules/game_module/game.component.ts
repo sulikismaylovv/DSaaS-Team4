@@ -1,25 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { ThemeService } from "../../core/services/theme.service";
-import { Fixture, FixtureModel } from "src/app/core/models/fixtures.model";
-import { DatePipe } from "@angular/common";
-import { NavbarService } from "../../core/services/navbar.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FixtureTransferService } from "../../core/services/fixture-transfer.service";
-import { Lineup, LineupModel } from "src/app/core/models/lineup.model";
-import { ApiService } from "src/app/core/services/api.service";
-import { LineupComponent } from "./lineup/lineup.component";
-import { groupBy } from "lodash";
-import { BetModel } from "src/app/core/models/bets.model";
-import { Bet } from "src/app/core/models/bets.model";
-import { BetsService } from "src/app/core/services/bets.service";
-import { AuthService } from "src/app/core/services/auth.service";
-import { ChangeDetectorRef } from "@angular/core";
-import { Club } from "src/app/core/models/club.model";
-import {
-  SupabaseFixture,
-  SupabaseFixtureModel,
-} from "src/app/core/models/supabase-fixtures.model";
-import { is } from "date-fns/locale";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ThemeService} from "../../core/services/theme.service";
+import {DatePipe} from "@angular/common";
+import {NavbarService} from "../../core/services/navbar.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FixtureTransferService} from "../../core/services/fixture-transfer.service";
+import {Lineup} from "src/app/core/models/lineup.model";
+import {ApiService} from "src/app/core/services/api.service";
+import {Bet} from "src/app/core/models/bets.model";
+import {BetsService} from "src/app/core/services/bets.service";
+import {AuthService} from "src/app/core/services/auth.service";
+import {Club} from "src/app/core/models/club.model";
+import {SupabaseFixture, SupabaseFixtureModel,} from "src/app/core/models/supabase-fixtures.model";
 
 @Component({
   selector: "app-game",
@@ -28,28 +19,27 @@ import { is } from "date-fns/locale";
   providers: [DatePipe],
 })
 export class GameComponent implements OnInit {
-  showContent: boolean = false;
+  showContent = false;
   clickedImage: string | null = null;
   fixture: SupabaseFixture = new SupabaseFixtureModel();
   lineups: Lineup[] = [];
   lineupHome: { [key: number]: { name: string; number: number }[] } = {};
   lineupAway: { [key: number]: { name: string; number: number }[] } = {};
-  isLoading: boolean = true;
+  isLoading = true;
   // bet: BetModel = null!;
   teamToWin: boolean | null = null;
   teamChosen: string | null = null;
-  betAmount: number = 200;
-  availableCredits: number = 0;
-  betCanBePlaced: boolean = false;
+  betAmount = 200;
+  availableCredits = 0;
+  betCanBePlaced = false;
   league: Club[] = [];
-  showNewContent: boolean = false;
-  credits: number = 100;
+  showNewContent = false;
+  credits = 100;
 
 
-
-  time: string = "fsdsd";
-  timeLeft: string = "";
-  date: string = "";
+  time = "fsdsd";
+  timeLeft = "";
+  date = "";
 
   constructor(
     public themeService: ThemeService,
@@ -99,12 +89,12 @@ export class GameComponent implements OnInit {
   }
 
   checkIfBetCanBePlaced() {
-    let fixtureTimeUTC0 = new Date(this.fixture.time);
+    const fixtureTimeUTC0 = new Date(this.fixture.time);
     // Convert fixture time to UTC+1
-    let fixtureTimeUTC1 = new Date(
+    const fixtureTimeUTC1 = new Date(
       fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
     );
-    let currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
+    const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
     this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
   }
 
@@ -180,7 +170,7 @@ export class GameComponent implements OnInit {
   }
 
   async placeBet() {
-    this.testInput();
+    await this.testInput();
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
     if (!user || !user.id) throw new Error("User ID is undefined");

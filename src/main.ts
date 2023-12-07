@@ -2,9 +2,9 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 
 import {AppModule} from './app/app.module';
-import { enableProdMode } from '@angular/core';
-import { environment } from './environments/environment';
-import { AuthService } from './app/core/services/auth.service';
+import {enableProdMode} from '@angular/core';
+import {environment} from './environments/environment';
+import {AuthService} from './app/core/services/auth.service';
 
 // Extend the Window interface with the custom property
 interface CustomWindow extends Window {
@@ -12,7 +12,7 @@ interface CustomWindow extends Window {
 }
 
 // Declare the global variable with the extended interface
-declare var window: CustomWindow;
+declare let window: CustomWindow;
 
 if (environment.production) {
   enableProdMode();

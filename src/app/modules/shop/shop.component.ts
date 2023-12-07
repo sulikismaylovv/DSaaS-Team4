@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BetsService} from "../../core/services/bets.service";
 import {AuthService} from "../../core/services/auth.service";
-import {Player} from "../../core/services/player.service";
-import {PlayerService} from "../../core/services/player.service";
+import {Player, PlayerService} from "../../core/services/player.service";
 import {PreferencesService} from "../../core/services/preference.service";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import seedrandom from 'seedrandom';
@@ -34,9 +33,9 @@ export interface Club {
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  userCredits: number = 0;
-  showSurpriseModal: boolean = false;
-  showPlayerModal: boolean = false;
+  userCredits = 0;
+  showSurpriseModal = false;
+  showPlayerModal = false;
 
 
   currentUserID: string | undefined
@@ -82,7 +81,7 @@ export class ShopComponent implements OnInit {
       await this.fetchPlayerFavoriteClub(this.currentUserID, [], this.favoriteClub?.id);
       // await this.fetchRandomPlayers(this.currentUserID, [], this.favoriteClub?.id);
       await this.fetchThreeRandomPlayers(this.favoriteClub?.id);
-      this.updateOwnedPlayers();
+      await this.updateOwnedPlayers();
 
     }
 
@@ -258,7 +257,7 @@ export class ShopComponent implements OnInit {
     return Object.keys(this.playersByClub).map(Number);
   }
 
-  async makePurchase(userId: string | undefined, player: PlayerWithClubDetails, isSurprise: boolean = false): Promise<boolean> {
+  async makePurchase(userId: string | undefined, player: PlayerWithClubDetails, isSurprise = false): Promise<boolean> {
     try {
       if (!userId) {
         console.error('User ID is undefined');

@@ -1,20 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { DatePipe } from "@angular/common";
-import { initFlowbite } from "flowbite";
-import {
-  addDays,
-  compareAsc,
-  endOfWeek,
-  format,
-  parseISO,
-  startOfWeek,
-  subDays,
-} from "date-fns";
-import { Fixture } from "../../../core/models/fixtures.model";
-import { ApiService } from "../../../core/services/api.service";
-import { Router } from "@angular/router";
-import { FixtureTransferService } from "../../../core/services/fixture-transfer.service";
-import { SupabaseFixture } from "../../../core/models/supabase-fixtures.model";
+import {Component, OnInit} from "@angular/core";
+import {DatePipe} from "@angular/common";
+import {addDays, compareAsc, endOfWeek, startOfWeek, subDays,} from "date-fns";
+import {Fixture} from "../../../core/models/fixtures.model";
+import {ApiService} from "../../../core/services/api.service";
+import {Router} from "@angular/router";
+import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
+import {SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
 
 @Component({
   selector: "app-matches",
@@ -65,10 +56,10 @@ export class MatchesComponent implements OnInit {
   }
 
   async fetchFixturesForWeek() {
-    let startDateString = this.getDateAsString(this.startDate);
-    let endDateString = this.getDateAsString(this.endDate);
+    const startDateString = this.getDateAsString(this.startDate);
+    const endDateString = this.getDateAsString(this.endDate);
     try {
-      let fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
+      const fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
         startDateString,
         endDateString,
       );

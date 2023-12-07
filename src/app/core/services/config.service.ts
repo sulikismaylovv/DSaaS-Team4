@@ -5,12 +5,10 @@ import {environment} from 'src/environments/environment';
     providedIn: 'root'
 })
 export class ConfigService {
-    constructor() {
-    }
 
     getFullUrl(path: string): string {
         // Check if the base URL is for localhost and use http if true
-        const protocol = environment.baseUrl.includes('localhost') ? 'http://' : 'https://';
+      const protocol = environment.baseUrl.includes('localhost') ? 'https://' : 'https://';
         const baseUrl = environment.baseUrl.startsWith('http')
             ? environment.baseUrl
             : `${protocol}${environment.baseUrl}`;
