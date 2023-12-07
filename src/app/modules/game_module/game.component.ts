@@ -16,10 +16,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { SupabaseFixture, SupabaseFixtureModel } from 'src/app/core/models/supabase-fixtures.model';
 
 @Component({
-  selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css'],
-  providers: [DatePipe]
+    selector: 'app-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.css'],
+    providers: [DatePipe]
 })
 export class GameComponent implements OnInit {
   showContent: boolean = false;
@@ -49,14 +49,14 @@ export class GameComponent implements OnInit {
       const id = +params.get('id')!;
       this.fixtureTransferService.currentFixture.subscribe(fixture => {
         if (fixture?.fixtureID === id) {
-          this.fixture = fixture;
+                    this.fixture = fixture;
         }else{
           this.fetchFixture(id);
         }
       });
     });
-    // this.fetchLineup(this.fixture.fixtureID);
-    // this.initializeLineups();
+        // this.fetchLineup(this.fixture.fixtureID);
+        // this.initializeLineups();
   }
 
   toggleNewContent(){
@@ -73,10 +73,10 @@ export class GameComponent implements OnInit {
       this.lineupAway[i] = [];
     }
   }
-  // getBetterID(): number {
-  //     const user = this.authService.session?.user;
-  //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
-  // }
+    // getBetterID(): number {
+    //     const user = this.authService.session?.user;
+    //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
+    // }
   async getBetterID(): Promise<number> {
     const user = this.authService.session?.user;
     if (user) {
@@ -159,38 +159,38 @@ export class GameComponent implements OnInit {
   }
 
 
-  // fetchLineup(fixtureID: number) {
-  //     this.apiService.fetchLineups(fixtureID).subscribe({
+    // fetchLineup(fixtureID: number) {
+    //     this.apiService.fetchLineups(fixtureID).subscribe({
 
-  //         next: (data: Lineup[]) => {
-  //             this.lineups = data;
-  //             this.initializeLineups(); // Initialize lineups before categorizing players
-  //             this.categorizePlayers();   // Categorize players after lineups data is fetched
-  //             this.isLoading = false;
-  //         },
-  //         error: (error) => {
-  //             console.log(error);
-  //         }
-  //     })
-  // };
+    //         next: (data: Lineup[]) => {
+    //             this.lineups = data;
+    //             this.initializeLineups(); // Initialize lineups before categorizing players
+    //             this.categorizePlayers();   // Categorize players after lineups data is fetched
+    //             this.isLoading = false;
+    //         },
+    //         error: (error) => {
+    //             console.log(error);
+    //         }
+    //     })
+    // };
 
-  //convert from type Date to type string YYYY-MM-DD
+    //convert from type Date to type string YYYY-MM-DD
   getDateAsString(date: Date): string {
     const offset = date.getTimezoneOffset();
     const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
     return adjustedDate.toISOString().split('T')[0];
   }
 
-  //convert from type string YYYY-MM-DD to type string MMM d
+    //convert from type string YYYY-MM-DD to type string MMM d
   formatShortDateString(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
 
-  /*toggleTheme() {
-      this.themeService.toggleTheme();
-  }*/
+    /*toggleTheme() {
+        this.themeService.toggleTheme();
+    }*/
   toggleContent(team: string) {
     if (this.clickedImage === team) {
       // If the same team is clicked again, reset everything
