@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
       # Get the npm cache directory.
       - name: Get npm cache directory
         id: npm-cache-dir
