@@ -56,13 +56,11 @@
 
 }
 
-/* Replace the background-color with actual images for crests */
 .bronze { background-image: url('src/assets/crests/bronzecrest.svg');}
 .silver { background-image: url('src/assets/crests/silvercrest.svg');}
 .gold {background-image: url('src/assets/crests/goldencrest.svg');}
 .platinum { background-image: url('src/assets/crests/platinumcrest.svg');}
 
-/* Optional: Add a hover effect */
 .league-badge:hover {
   transform: scale(1.1);
 }
@@ -78,11 +76,9 @@
 
 .coming-soon-title {
   font-size: 2.5rem;
-  color: #a855f7; /* Golden color */
+  color: #a855f7;
   margin-bottom: 30px;
-  text-shadow: 0px 0px 10px rgba(168, 85, 247, 0.7); /* Slight glow effect */
-  animation: beep 1s linear infinite; /* Blink every second */
-
+  text-shadow: 0px 0px 10px rgba(168, 85, 247, 0.7);
 }
 
 .countdown {

@@ -77,10 +77,6 @@ export class AuthComponent implements OnInit {
                 const email = this.registerForm.value.email as string;
                 const password = this.registerForm.value.password as string;
 
-                if(this.emailExists(email)) {
-                  alert('Email already exists');
-                  return;
-                }
 
                 // Call the simplified register method without additional details
                 await this.authService.register(email, password);

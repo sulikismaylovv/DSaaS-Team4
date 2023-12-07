@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,7 +7,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 
 export enum FriendRequestStatus {
@@ -28,7 +28,7 @@ interface FriendInfo {
 })
 export class CommonComponent implements OnInit{
   @Input() userRefId: string | null | undefined;
-  isOwnProfile: boolean = false;
+  isOwnProfile = false;
   loading = true;
   profile: Profile | undefined;
   username: string | undefined;
@@ -52,8 +52,8 @@ export class CommonComponent implements OnInit{
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
   imageList: string[]= ['KV-Kortrijk-wallpaper.jpg','unnamed.jpg','v2_large_8717893f85b4c67b835c8b9984d0115fbdb37ecf.jpg','vieren-KV-Kortrijk-21-10-2023.jpg'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
-  selectedLink: string = 'link1';
-  selectedBadge: string= 'KV_Kortrijk_logo.svg';
+  selectedLink = 'link1';
+  selectedBadge = 'KV_Kortrijk_logo.svg';
   badgeList: string[]= ['Belgian_Pro_League_logo.svg', 'Club_Brugge_KV_logo.svg', 'KAA_Gent_logo.svg', 'Kas_Eupen_Logo.svg','KRC_Genk_Logo_2016.svg','KV_Kortrijk_logo.svg','KV_Mechelen_logo.svg','kvc-westerlo.svg','OHL.svg','Logo_RWDMolenbeek.svg','oud-heverlee-leuven-seeklogo.com-3.svg','R-Logo-04.svg','Royal_Antwerp_Football_Club_logo.svg','Royal_Belgian_FA_logo_2019.svg','Royal_Charleroi_Sporting_Club_logo.svg','Royal_Standard_de_Liege.svg','RSC_Anderlecht_logo.svg','union-saint-gilloise.svg','VV_St._Truiden_Logo.svg','Logo_Cercle_Bruges_KSV_-_2022.svg' ];
 
   constructor(
@@ -77,7 +77,8 @@ export class CommonComponent implements OnInit{
           table: 'posts',
         },
         (payload) => {
-          this.loadPosts(this.profile?.id);
+          this.loadPosts(this.profile?.id).then(r => {
+          });
         }
       )
       .subscribe();
@@ -202,7 +203,7 @@ export class CommonComponent implements OnInit{
   async loadPosts(userId: string | undefined) {
     if (userId === undefined) throw new Error('User ID is undefined');
       try{
-        let posts = await this.postService.getPostsByUserId(userId);
+        const posts = await this.postService.getPostsByUserId(userId);
         this.posts = posts.sort((a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       } catch (error) {
@@ -214,7 +215,7 @@ export class CommonComponent implements OnInit{
     // Check if the user is authenticated
     this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
       if (!isAuthenticated) {
-        // If not authenticated, redirect to login
+        // If not authenticated, redirect to log in
         await this.router.navigate(['/login']);
       }
       else{

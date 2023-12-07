@@ -32,6 +32,38 @@ export class UserServiceService {
         return data;
     }
 
+
+    async searchUsersByFirstThreeLetters(term: string): Promise<any[]> {
+        console.log('searchUsersByFirstThreeLetters:', term);
+        const currentUserId = this.authService.session?.user?.id;
+        if (!currentUserId) {
+            console.error('No current user ID found');
+            return [];
+        }
+
+        // Check if the search term is at least 3 characters long
+        if (term.length < 3) {
+            console.warn('Search term must be at least 3 characters');
+            return [];
+        }
+
+        // Use the `or` functionality of Supabase to search across multiple columns
+        const query = `first_name.ilike.%${term}%,last_name.ilike.%${term}%,username.ilike.%${term}%`;
+
+        const { data, error } = await this.supabase.supabaseClient
+            .from('users')
+            .select('id, first_name, last_name, username')
+            .or(query)
+            .not('id', 'eq', currentUserId); // Exclude the current user from the results
+
+        if (error) {
+            console.error('Error searching for users:', error);
+            throw error;
+        }
+
+        return data;
+    }
+
     async getUsernameByID(id: string): Promise<any> {
         const {data, error} = await this.supabase.supabaseClient
             .from('users')

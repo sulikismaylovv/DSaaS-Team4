@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Post, Comment } from "../../../core/models/posts.model";
-import { PostsService } from "../../../core/services/posts.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {Comment, Post} from "../../../core/models/posts.model";
+import {PostsService} from "../../../core/services/posts.service";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-single-post',
@@ -20,7 +20,7 @@ export class SinglePostComponent implements OnInit {
   avatarSafeUrl: SafeResourceUrl | undefined;
   loading = true;
   profile: Profile | undefined;
-  commentContent: string = '';
+  commentContent = '';
   constructor(
     private route: ActivatedRoute,
     private readonly postsService: PostsService,

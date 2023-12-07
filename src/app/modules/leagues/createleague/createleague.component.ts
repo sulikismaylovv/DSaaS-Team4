@@ -17,8 +17,8 @@ interface Friend {
 })
 export class CreateleagueComponent implements OnInit {
   leagueForm: FormGroup;
-  showModal: boolean = false;
-  submittedLeagueName: string = '';
+  showModal = false;
+  submittedLeagueName = '';
   submittedFriendsUsernames: string[] = [];
   userSearchResults: any[] = [];
 
@@ -35,13 +35,13 @@ export class CreateleagueComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createFriendGroup(username: string = ''): FormGroup {
+  createFriendGroup(username = ''): FormGroup {
     return this.fb.group({
       username: [username, Validators.required]
     });
   }
 
-  addFriend(username: string = ''): void {
+  addFriend(username = ''): void {
     this.friends.push(this.createFriendGroup(username));
   }
 

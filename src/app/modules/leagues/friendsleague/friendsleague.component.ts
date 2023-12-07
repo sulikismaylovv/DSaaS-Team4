@@ -17,7 +17,7 @@ import {Session} from "@supabase/supabase-js";
 export class FriendsleagueComponent implements OnInit{
 
 
-  currentUserID: string | undefined; // Add a property to store the current user's ID
+  currentUserID: string | undefined;
 
   leagueIds: number[] = [];
 
