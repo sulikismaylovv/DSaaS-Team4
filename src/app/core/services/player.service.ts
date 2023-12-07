@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 
 export interface PlayerWithClubDetails extends Player {
-    clubname: string; // Assuming 'name' is the property you want from the club details
+    clubname: string;
+    owned?: boolean;
+
 }
 export interface Club {
   id?: number;
