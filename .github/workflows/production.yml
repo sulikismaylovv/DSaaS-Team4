@@ -101,7 +101,7 @@ jobs:
         run: npm run ng build --configuration=development
 
   Deploy-Preview:
-    needs: build_and_test
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
