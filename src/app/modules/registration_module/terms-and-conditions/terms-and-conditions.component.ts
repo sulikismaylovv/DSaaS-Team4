@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../../core/services/auth.service";
-import {Router} from "@angular/router";
-import {NavbarService} from "../../../core/services/navbar.service";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({

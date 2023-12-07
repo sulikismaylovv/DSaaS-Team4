@@ -277,7 +277,7 @@ export class MultistepformComponent implements OnInit {
         this.customProfile);
     if (this.topOfPageElement?.nativeElement) {
       setTimeout(() => {
-        // @ts-ignore
+        if(this.topOfPageElement)
         this.topOfPageElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
       }, 0); // Introducing a 0ms delay to ensure the DOM is updated
     }

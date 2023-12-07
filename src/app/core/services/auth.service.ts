@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AuthChangeEvent, AuthSession, PostgrestSingleResponse, Session, User} from '@supabase/supabase-js';
+import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
 import {BehaviorSubject, catchError, from, Observable, of} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
@@ -17,12 +17,6 @@ export interface Profile {
     avatar_url?: string;
     bg_url?: string;
 }
-
-interface RegisterResponse {
-    dataProfile?: Profile;
-    error?: any;
-}
-
 @Injectable({
     providedIn: 'root'
 })
