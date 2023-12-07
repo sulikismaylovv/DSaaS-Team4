@@ -90,6 +90,12 @@ jobs:
         with:
           node-version: '16'
 
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
       - name: Cache npm dependencies
         uses: actions/cache@v3
         with:
@@ -124,6 +130,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
       - name: Cache npm dependencies
         uses: actions/cache@v3
