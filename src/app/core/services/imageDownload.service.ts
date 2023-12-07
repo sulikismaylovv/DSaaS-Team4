@@ -47,6 +47,34 @@ export class ImageDownloadService {
     }
   }
 
+  async loadBackgroundImage(userId: string | undefined): Promise<SafeResourceUrl> {
+    // Define the path to the standard user logo
+    const defaultBackgroundPath = '../../assets/images/default-background.jpg'; // Adjust the path as necessary
+
+    if (userId === undefined) {
+      // If userId is undefined, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
+    }
+
+    try {
+      const backgroundUrl = await this.getBackgroundUrlByID(userId);
+      if (backgroundUrl) {
+        const {data} = await this.authService.downLoadBackground(backgroundUrl);
+
+        if (data instanceof Blob) {
+          // If an avatar image is downloaded, use it
+          return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));}
+      }
+      // If no avatar image is downloaded, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
+
+    } catch (error) {
+      console.error('Error downloading avatar:', error);
+      // In case of any error, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
+    }
+  }
+
   async getAvatarUrlByID(id: string) {
     return this.userService.getUserByID(id).then(user => {
       return user.avatar_url;
@@ -81,5 +109,15 @@ export class ImageDownloadService {
       console.error('Error downloading image:', error);
       return undefined;
     }
+  }
+
+  private async getBackgroundUrlByID(userId: string) {
+    return this.userService.getUserByID(userId).then(user => {
+      return user.bg_url;
+
+    }).catch(error => {
+      console.error('Could not fetch background_url', error);
+    });
+
   }
 }

@@ -4,8 +4,19 @@
       <img class="w-16 h-16 mr-2" src="assets/icons/logo-dark.png" alt="logo">
       Remontada
     </a>
-    <div class="w-full bg-white dark:bg-[#394151] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+    <div class="w-full bg-white dark:bg-[#394151] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8 dark:text-white">
+        <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
+          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150 dark:border" >
+            <img alt="google logo" class="w-6 h-6" loading="lazy" src="https://www.svgrepo.com/show/475656/google-color.svg">
+            <span class="dark:text-white">Sign up with with Google</span>
+          </button>
+        </div>
+        <div class="flex items-center justify-center space-x-2 dark:text-white">
+          <span class="h-px w-44 bg-gray-200 dark:bg-white"></span>
+          <span class="text-gray-300 font-normal">or</span>
+          <span class="h-px w-44 bg-gray-200 dark:bg-white"></span>
+        </div>
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Create an account
         </h1>
@@ -15,13 +26,13 @@
             <label for="registerEmail" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
             <div class="relative">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <svg class="w-4 h-4 text-gray-500 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                   <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
                   <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                 </svg>
               </div>
               <div class="flex">
-                <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
+                <input type="email" name="email" id="registerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="email"  placeholder="name@company.com">
                 <button [class.bg-green-700]="registerForm.controls['email'].valid && registerForm.controls['email'].touched"
                         [class.bg-red-700]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
                         data-tooltip-target="tooltip-email" data-tooltip-placement="right"
@@ -90,7 +101,7 @@
               <input id="terms" aria-describedby="terms" type="checkbox" (change)="termsAcceptedChange()" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required>
             </div>
             <div class="ml-3 text-sm">
-              <label for="terms" class="font-light text-gray-500 dark:text-white">I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
+              <label for="terms" class="font-light text-gray-500 dark:text-white">I accept the <a (click)="openTCModal()" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
             </div>
           </div>
           <button [disabled]="loading || !termsAccepted"
@@ -119,6 +130,7 @@
     <div *ngIf="registerForm.controls['email'].errors?.['required']">Email is required.</div>
     <div *ngIf="registerForm.controls['email'].errors?.['email']">Please enter a valid email.</div>
     <div *ngIf="registerForm.controls['email'].errors?.['minlength']">Email must be at least 5 characters long.</div>
+    <div *ngIf="registerForm.controls['email'].errors?.['emailExists']">Email is already in use!</div>
   </div>
   <div *ngIf="registerForm.controls['email'].valid">Email is valid.</div>
   <div class="tooltip-arrow" data-popper-arrow></div>

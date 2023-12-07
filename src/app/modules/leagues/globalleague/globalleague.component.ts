@@ -139,7 +139,7 @@ export class GloballeagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      this.userSearchResults = await this.userService.searchUserByUsername(searchTerm);
+      this.userSearchResults = await this.userService.searchFriendsByUsername(searchTerm);
     } else {
       this.userSearchResults = [];
     }

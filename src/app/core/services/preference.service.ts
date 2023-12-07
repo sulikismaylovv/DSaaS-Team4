@@ -138,7 +138,10 @@ export class PreferencesService {
 
         // Check 1: User can have only 1 favorite team
         if (isFavorite && existingPreferences.some(pref => pref.favorite_club)) {
-            throw new Error('You can have only 1 favorite team. Try again.');
+          const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
+          if (favoritePreference) {
+            await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
+          }
         }
 
         // Check 2 and 4: If the team is already followed, it cannot be added again
