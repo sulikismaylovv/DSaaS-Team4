@@ -96,9 +96,12 @@ export class PostsComponent implements OnInit {
     }
 
     openCreatePostModal(): void {
-        const dialogRef = this.dialog.open(CreatePostComponent, {
+        const dialogRef = this.dialog.open(CreatePostComponent,
+        {
+            panelClass: 'mat-dialog-container',
             width: '700px',
-            data: 0
+            data: 0 // 0 means no original post
+
         });
 
         dialogRef.afterClosed().subscribe(result => {

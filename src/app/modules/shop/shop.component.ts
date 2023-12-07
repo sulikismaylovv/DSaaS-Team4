@@ -5,7 +5,7 @@ import {Player} from "../../core/services/player.service";
 import {PlayerService} from "../../core/services/player.service";
 import {PreferencesService} from "../../core/services/preference.service";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
-import * as seedrandom from 'seedrandom';
+import seedrandom from 'seedrandom';
 
 
 export interface PlayerWithClubDetails extends Player {

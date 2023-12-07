@@ -47,7 +47,9 @@ h2 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px; /* Adjust as needed */
+    /*
+    padding: 20px; !* Adjust as needed *!
+    */
 }
 
 .team-card.favorite {
@@ -158,9 +160,9 @@ h2 {
 }
 
 .team-logo {
-    width: 100%; /* Use a percentage to make it responsive */
-    height: auto;
-    object-fit: contain; /* This will prevent distortion */
+   /* width: 100%; !* Use a percentage to make it responsive *!
+    height: auto;*/
+    /*object-fit: contain; !* This will prevent distortion *!*/
 }
 
 .team-name {

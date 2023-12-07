@@ -56,6 +56,74 @@ export class PreferencesService {
         }
     }
 
+    async deletePreference(preference: Preference) {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .delete()
+                .match({user_id: preference.user_id, club_id: preference.club_id, favorite_club: preference.favorite_club, followed_club: preference.followed_club});
+
+            if (error) {
+                console.error('Error deleting preference:', error);
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async getFavoritePreferences(userId: string): Promise<Preference> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('*')
+                .eq('user_id', userId)
+                .eq('favorite_club', true);
+
+            if (error) {
+                console.error('Error fetching favorite preferences:', error);
+                throw error;
+            }
+
+            return data[0];
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async getFollowedPreferences(userId: string): Promise<Preference[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('*')
+                .eq('user_id', userId)
+                .eq('followed_club', true);
+
+            if (error) {
+                console.error('Error fetching followed preferences:', error);
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
     private async checkAndUpdatePreferences(userId: string, clubId: bigint, isFavorite: boolean, isFollowed: boolean): Promise<void> {
         // Fetch existing preferences
         const {data: existingPreferences, error} = await this.supabase.supabaseClient
@@ -70,20 +138,32 @@ export class PreferencesService {
 
         // Check 1: User can have only 1 favorite team
         if (isFavorite && existingPreferences.some(pref => pref.favorite_club)) {
-            throw new Error('You can have only 1 favorite team. Try again.');
+          const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
+          if (favoritePreference) {
+            await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
+          }
         }
 
         // Check 2 and 4: If the team is already followed, it cannot be added again
-        if (isFollowed && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
+        else if (isFollowed && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
             throw new Error('This team is already followed. Try again.');
         }
 
         // Check 3: If user wants to change the preferred team, the old favorite team will be updated
-        if (isFavorite) {
+        else if (isFavorite) {
             const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
             if (favoritePreference) {
-                await this.upsertPreference({...favoritePreference, favorite_club: false});
+                await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
             }
+        }
+
+      // Additional Check: If a team is set as favorite, it should also be followed
+      else if (isFavorite && !existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
+        await this.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
+      }
+
+      else if(!isFavorite && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)){
+          await this.deletePreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
         }
     }
 
@@ -127,5 +207,37 @@ export class PreferencesService {
             }
             throw error; // Re-throw the error to be handled by the caller
         }
+    }
+
+    async fetchAllClubs(): Promise<Club[]> {
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('clubs')
+                .select('*');
+
+            if (error) {
+                console.error('Error fetching clubs:', error);
+                throw error;
+            }
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
+    async downLoadImage(imageUrl: string): Promise<Blob | undefined> {
+      const {data, error} = await this.supabase.supabaseClient.storage
+        .from('Club_logos')
+        .download(imageUrl);
+
+      if (error) {
+        console.error('Error downloading image:', error);
+        throw error;
+      }
+
+      return data;
     }
 }

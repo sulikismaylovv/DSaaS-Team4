@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserServiceService } from './user-service.service';
 import {PostsService} from "./posts.service";
+import {PreferencesService} from "./preference.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +15,63 @@ export class ImageDownloadService {
     private authService: AuthService,
     private sanitizer: DomSanitizer,
     private userService: UserServiceService,
-    private postService: PostsService
+    private postService: PostsService,
+    private preferenceService: PreferencesService
   ) {}
 
-  async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl | undefined> {
-    if (userId === undefined) throw new Error('User ID is undefined');
+  async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl> {
+    // Define the path to the standard user logo
+    const defaultAvatarPath = '../../assets/icons/user-alt-3profile.png'; // Adjust the path as necessary
+
+    if (userId === undefined) {
+      // If userId is undefined, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
+    }
+
     try {
       const avatarUrl = await this.getAvatarUrlByID(userId);
-      const { data } = await this.authService.downLoadImage(avatarUrl);
-      if (data instanceof Blob) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+      if (avatarUrl) {
+        const {data} = await this.authService.downLoadImage(avatarUrl);
+
+        if (data instanceof Blob) {
+          // If an avatar image is downloaded, use it
+          return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));}
       }
-      return undefined;
+      // If no avatar image is downloaded, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
+
     } catch (error) {
       console.error('Error downloading avatar:', error);
-      return undefined;
+      // In case of any error, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultAvatarPath);
+    }
+  }
+
+  async loadBackgroundImage(userId: string | undefined): Promise<SafeResourceUrl> {
+    // Define the path to the standard user logo
+    const defaultBackgroundPath = '../../assets/images/default-background.jpg'; // Adjust the path as necessary
+
+    if (userId === undefined) {
+      // If userId is undefined, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
+    }
+
+    try {
+      const backgroundUrl = await this.getBackgroundUrlByID(userId);
+      if (backgroundUrl) {
+        const {data} = await this.authService.downLoadBackground(backgroundUrl);
+
+        if (data instanceof Blob) {
+          // If an avatar image is downloaded, use it
+          return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));}
+      }
+      // If no avatar image is downloaded, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
+
+    } catch (error) {
+      console.error('Error downloading avatar:', error);
+      // In case of any error, return the standard logo
+      return this.sanitizer.bypassSecurityTrustResourceUrl(defaultBackgroundPath);
     }
   }
 
@@ -53,5 +96,28 @@ export class ImageDownloadService {
       console.error('Error downloading image:', error);
       return undefined;
     }
+  }
+
+  async loadClubImage(imageUrl: string): Promise<SafeResourceUrl | undefined> {
+    try {
+      const data = await this.preferenceService.downLoadImage(imageUrl);
+      if (data instanceof Blob) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+      }
+      return undefined;
+    } catch (error) {
+      console.error('Error downloading image:', error);
+      return undefined;
+    }
+  }
+
+  private async getBackgroundUrlByID(userId: string) {
+    return this.userService.getUserByID(userId).then(user => {
+      return user.bg_url;
+
+    }).catch(error => {
+      console.error('Could not fetch background_url', error);
+    });
+
   }
 }

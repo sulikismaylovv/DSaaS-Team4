@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,7 +7,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 
 export enum FriendRequestStatus {
@@ -29,10 +29,12 @@ interface FriendInfo {
 export class CommonComponent implements OnInit{
   @Input() userRefId: string | null | undefined;
   isOwnProfile: boolean = false;
-  loading = false;
+  loading = true;
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
+  bgImageSafeUrl: SafeResourceUrl | undefined;
+  bgSafeUrl: string | ArrayBuffer | null = 'assets/images/default-background.jpg';
   posts: Post[] = [];
   preference: Preference[] = [];
   favClub: Club | undefined;
@@ -44,13 +46,15 @@ export class CommonComponent implements OnInit{
 
 
 
-
-  infoString: string[]= ['Friends', 'Leagues', 'About'];
+  testfriendsList: string[]= ['Username', 'Username',  'Username', 'Username','Username', 'Username', 'Username',  'Username',  'Username', 'Username',  'Username', 'Username',  'Username', 'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  ];
+  infoString: string[]= ['Friends', 'Leagues', 'About','Badges'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
   imageList: string[]= ['KV-Kortrijk-wallpaper.jpg','unnamed.jpg','v2_large_8717893f85b4c67b835c8b9984d0115fbdb37ecf.jpg','vieren-KV-Kortrijk-21-10-2023.jpg'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
   selectedLink: string = 'link1';
+  selectedBadge: string= 'KV_Kortrijk_logo.svg';
+  badgeList: string[]= ['Belgian_Pro_League_logo.svg', 'Club_Brugge_KV_logo.svg', 'KAA_Gent_logo.svg', 'Kas_Eupen_Logo.svg','KRC_Genk_Logo_2016.svg','KV_Kortrijk_logo.svg','KV_Mechelen_logo.svg','kvc-westerlo.svg','OHL.svg','Logo_RWDMolenbeek.svg','oud-heverlee-leuven-seeklogo.com-3.svg','R-Logo-04.svg','Royal_Antwerp_Football_Club_logo.svg','Royal_Belgian_FA_logo_2019.svg','Royal_Charleroi_Sporting_Club_logo.svg','Royal_Standard_de_Liege.svg','RSC_Anderlecht_logo.svg','union-saint-gilloise.svg','VV_St._Truiden_Logo.svg','Logo_Cercle_Bruges_KSV_-_2022.svg' ];
 
   constructor(
     protected readonly authService: AuthService,
@@ -59,10 +63,9 @@ export class CommonComponent implements OnInit{
     private readonly preferenceService: PreferencesService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly imageService: ImageDownloadService,
+    protected readonly imageService: ImageDownloadService,
     protected dialog: MatDialog,
-    protected readonly friendshipService: FriendshipService
-
+    protected readonly friendshipService: FriendshipService,
   ) {
     this.supabase.supabaseClient
       .channel('realtime-posts')
@@ -79,53 +82,67 @@ export class CommonComponent implements OnInit{
       )
       .subscribe();
 
+
+    this.supabase.supabaseClient
+      .channel('realtime-preferences')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'users',
+        },
+        async (payload) => {
+          this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+        }
+      )
+      .subscribe();
   }
 
   async ngOnInit(): Promise<void> {
+    this.loading = true; // Start with loading set to true
     // Get the userId from the URL
     const urlUserId = this.route.snapshot.paramMap.get('userId');
     const authenticatedUserId = this.authService.session?.user?.id;
 
-    if(urlUserId == null){
-      this.isOwnProfile = true;
-    }
-    else if (urlUserId && authenticatedUserId && urlUserId === authenticatedUserId) {
-      // If the userId from URL is the same as the authenticated user's ID, set userRefId to null
-      this.userRefId = null;
-      this.isOwnProfile = true;
-    } else {
-      // Otherwise, use the userId from the URL
-      this.userRefId = urlUserId;
-      this.isOwnProfile = false;
-    }
+    this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
+    this.userRefId = this.isOwnProfile ? null : urlUserId;
 
-    if(this.userRefId != null){
-      this.getProfileById(this.userRefId).then(async () => {
-        await this.checkFriendStatus();
-        await this.fetchFriends(this.profile?.id);
-        this.username = this.profile?.username;
-        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-        await this.loadPosts(this.profile?.id || '');
-        this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
-        for (let i = 0; i < this.preference.length; i++) {
-          await this.sortPreference(this.preference[i]);    }
-      });
+    try {
+      const profileData = this.userRefId
+        ? await this.getProfileById(this.userRefId)
+        : await this.getProfile();
 
-    }
-    else{
-    this.getProfile().then(async () => {
+      // Set additional properties based on the profile
       this.username = this.profile?.username;
-      await this.fetchFriends(this.profile?.id);
       this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
-      await this.loadPosts(this.profile?.id || '');
-      this.preference= await this.preferenceService.getPreferences(<string>this.profile?.id);
-      for (let i = 0; i < this.preference.length; i++) {
-        await this.sortPreference(this.preference[i]);    }
-      });
+      this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+      if (this.userRefId) {
+        await this.checkFriendStatus();
+      }
+
+      // Assuming `getProfile` and `getProfileById` set `this.profile`
+      const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
+      const friendsPromise = this.fetchFriends(this.profile?.id);
+      const postsPromise = this.loadPosts(this.profile?.id || '');
+
+      // Wait for all promises to resolve
+      const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
+      this.preference = preferences;
+
+      for (const preference of this.preference) {
+        await this.sortPreference(preference);
+      }
+
+    } catch (error) {
+      console.error('An error occurred during initialization:', error);
+      // Handle the error properly
+    } finally {
+      this.loading = false; // Ensure loading is set to false after operations complete
     }
-
-
   }
+
+
 
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
@@ -137,6 +154,8 @@ export class CommonComponent implements OnInit{
     }
   }
 
+
+
   getFollowingTeams(): string {
     return this.followingClub.map(club => club.name).join(', ');
   }
@@ -145,7 +164,6 @@ export class CommonComponent implements OnInit{
 
   async getProfile() {
     try {
-      this.loading = true;
       const user = this.authService.session?.user;
       if (user) {
         const {data: profile, error} = await this.authService.profile(user);
@@ -161,13 +179,11 @@ export class CommonComponent implements OnInit{
         alert(error.message);
       }
     } finally {
-      this.loading = false;
     }
   }
 
   async getProfileById(userId: string) {
     try {
-      this.loading = true;
       const {data: profile, error} = await this.authService.profileById(userId);
       if (error) {
         alert(error.message);
@@ -180,7 +196,6 @@ export class CommonComponent implements OnInit{
         alert(error.message);
       }
     } finally {
-      this.loading = false;
     }
   }
 
@@ -210,7 +225,9 @@ export class CommonComponent implements OnInit{
     });
   }
 
-
+  badgeDisplayed(badge:string): void {
+    this.selectedBadge = badge;
+  }
   changeContent(link: string): void {
     this.selectedLink = link;
   }
@@ -256,10 +273,12 @@ export class CommonComponent implements OnInit{
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
     if(this.userRefId == null) throw new Error('User ID is undefined');
+    console.log(this.userRefId);
     const targetUserId = this.userRefId;
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
     // This is a hypothetical method that you would need to implement
     const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
+    console.log(status);
     if(status === 'accepted') {
       this.friendRequestStatus = FriendRequestStatus.Friends;
     } else if (status === 'pending') {

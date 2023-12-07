@@ -35,16 +35,25 @@ import {CommonComponent} from "./modules/profile_module/common/common.component"
 import {UserComponent} from "./modules/profile_module/user/user.component";
 import { CustomAlertComponent } from './modules/registration_module/custom-alert/custom-alert.component';
 import { NotificationComponent } from './modules/notification-module/notification/notification.component';
+import { BgImageSelectorComponent } from './modules/profile_module/bg-image-selector/bg-image-selector.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import 'hammerjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
+
+
 
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
-      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent
+      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent
     ],
     imports: [
-        BrowserModule, ReactiveFormsModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule, NgOptimizedImage , MatDialogModule
+        BrowserModule, ReactiveFormsModule, AppRoutingModule,
+      FormsModule, CommonModule, HttpClientModule, NgOptimizedImage ,
+      MatDialogModule, ImageCropperModule, BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent],
