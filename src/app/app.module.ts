@@ -39,6 +39,7 @@ import { BgImageSelectorComponent } from './modules/profile_module/bg-image-sele
 import { ImageCropperModule } from 'ngx-image-cropper';
 import 'hammerjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
 
 
 
@@ -47,7 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
-      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent
+      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule,
