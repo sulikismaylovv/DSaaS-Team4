@@ -1,4 +1,4 @@
-<div class="p-4 mb-4 overflow-y-scroll h-144">
+<div class="p-4 mb-4 h-144">
   <form (ngSubmit)="onSubmit()">
     <!-- component -->
     <div class="editor mx-auto flex flex-col border bg-light-mode-acc border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
@@ -7,6 +7,20 @@
         <p class="font-bold text-md dark:text-white" >{{ profile?.username }}</p>
 
       </div>
+      <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg ">
+        <p class="font-bold text-black dark:text-light-mode mb-2">Retweeting:</p>
+        <div class="flex items-center">
+          <!-- Optionally display the original poster's avatar -->
+          <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
+          <div>
+            <p class="font-semibold text-black dark:text-light-mode mb-2">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
+            <p class="text-black dark:text-light-mode mb-2">{{ data.originalPost?.content }}</p>
+          </div>
+        </div>
+        <!-- Optionally display the original post's image -->
+        <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
+      </div>
+
       <textarea [(ngModel)]="postContent" name="postContent" class="text-black dark:text-white placeholder:text-black dark:placeholder:text-[#8a8e9d] description bg-[#e5e6e9] dark:bg-[#3a4151] sec p-3 h-60 border border-gray-300 outline-none rounded-2xl" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
       <input type="file" #fileInput class="hidden" (change)="onImageSelected($event)" accept="image/*"/>
       <img *ngIf="imagePreview" [src]="imagePreview" alt="Image preview" class="mt-4 rounded-lg"/>
@@ -21,19 +35,6 @@
         <button (click)="resetForm()" type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-[#999a9c] focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Cancel</button>
         <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Post</button>
       </div>
-    </div>
-    <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg ">
-      <p class="font-bold text-gray-600 mb-2">Retweeting:</p>
-      <div class="flex items-center">
-        <!-- Optionally display the original poster's avatar -->
-        <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
-        <div>
-          <p class="font-semibold">{{ usernameRetweeted }}</p> <!-- Replace with username if available -->
-          <p>{{ data.originalPost?.content }}</p>
-        </div>
-      </div>
-      <!-- Optionally display the original post's image -->
-      <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
     </div>
   </form>
 </div>
