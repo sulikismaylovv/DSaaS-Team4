@@ -216,16 +216,24 @@
             </ng-container>
           </div>
         </div>
-        <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg pt-2 px-2 xl:pt-4 xl:px-4 xl:mt-2 xl:ml-2 ">
-          <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Photo's of {{username}}</h1>
-          <div class="bg-light-mode-acc dark:bg-dark-mode  p-2 rounded-lg grid grid-cols-2 gap-2">
-            <ng-container *ngFor="let image of imageList; let i = index">
-              <div class=" xl:h-40 xl:w-40 2xl:w-44 2xl:h-44">
-                <!-- Use string interpolation to concatenate the paths -->
-                <img class="p-1 xl:p-0 w-full h-full object-cover" [src]="'assets/random/' + image ">
+
+        <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg pt-2 px-2 xl:pt-4 xl:px-4 mt-4 xl:mt-2 xl:ml-2 relative">
+          <div class="opacity-30 p-6 ">
+            <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Achievements</h1>
+            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
+              <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
+                <ng-container *ngFor="let league of leagueList; let i = index">
+                  <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
+                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
+                    <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
+                  </div>
+                </ng-container>
+                <!-- Additional items if needed -->
               </div>
-              <!-- Add more images as needed -->
-            </ng-container>
+            </div>
+          </div>
+          <div class="flex justify-center items-center absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode">
+            <h1 class="text-white md:text-xl lg:text-3xl">Coming Soon</h1>
           </div>
         </div>
       </div>
@@ -239,7 +247,7 @@
     <!-- End: Own profile only-->
 
     <!-- Posts -->
-    <div class="bg-white dark:bg-test shadow px-4 py-2 rounded-lg">
+    <div class="bg-white dark:bg-test shadow my-4 px-4 py-2 rounded-lg">
 
       <!-- Post Navbar -->
       <div class="px-4 bg-white dark:bg-test rounded-t-lg">
