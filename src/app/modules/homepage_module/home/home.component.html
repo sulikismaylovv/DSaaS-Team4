@@ -116,24 +116,43 @@
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
           </div>
-          <input type="search" id="default-search" class="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-[#394151] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-20" placeholder="Search..." required>
-          <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          <input type="search" id="default-search"
+                 (input)="onUserSearch($event)"
+                 class="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-[#394151] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-20"
+                 placeholder="Search..." required>
+          <button type="submit"
+                  class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Search</button>
         </div>
       </form>
+    </div>
+
+    <div class="relative">
+      <!-- ... Other search input HTML code ... -->
+      <ul *ngIf="userSearchResults.length > 0"
+          class="absolute w-full list-none bg-light-mode dark:bg-dark-mode text-black dark:text-light-mode  p-2 mt-1 rounded shadow-lg z-10">
+        <li *ngFor="let user of userSearchResults"
+            (click)="redirectToProfile(user.id)"
+            class="flex items-center cursor-pointer hover:bg-lighter-purple p-2 rounded">
+          <img *ngIf="user.avatarSafeUrl" [src]="user.avatarSafeUrl" alt="Avatar"
+               class="w-10 h-10 rounded-full object-cover mr-2">
+          <span class="flex-1">{{ user.username }}</span>
+        </li>
+      </ul>
     </div>
     <!--Links for posts/matches-->
     <div class="flex items-center justify-center h-fit mb-4 rounded">
       <nav class="flex justify-center py-4 space-x-4">
-        <button (click)="showPostsContent()"
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-          <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-light-mode dark:bg-dark-mode rounded-md group-hover:bg-opacity-0">
-            Posts
-          </span>
-        </button>
         <button (click)="showMatchesContent()"
                 class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
           <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-light-mode dark:bg-dark-mode rounded-md group-hover:bg-opacity-0">
             Matches
+          </span>
+        </button>
+        <button (click)="showPostsContent()"
+                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+          <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-light-mode dark:bg-dark-mode rounded-md group-hover:bg-opacity-0">
+            Posts
           </span>
         </button>
       </nav>
