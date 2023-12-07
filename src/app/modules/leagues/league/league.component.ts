@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 // Add the User interface here
 interface User {
@@ -13,7 +13,7 @@ interface User {
   styleUrls: ['./league.component.css']
 })
 export class LeagueComponent implements OnInit {
-  leagueName: string = 'Gold'; // Example league name
+  leagueName = 'Gold'; // Example league name
   comingSoonDate: Date = new Date('2023-12-31T23:59:59'); // Set your coming soon date here
   countdown: any;
 

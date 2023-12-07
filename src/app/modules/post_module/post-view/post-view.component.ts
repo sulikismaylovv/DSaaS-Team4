@@ -1,6 +1,6 @@
 // posts-view.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {Like, Post  } from "../../../core/models/posts.model";
+import {Like, Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
@@ -18,7 +18,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 export class PostViewComponent implements OnInit {
     @Input() post!: Post;
     @Input() originalPost?: Post;
-    @Input() clickable: boolean = true; // New input property
+  @Input() clickable = true; // New input property
 
     originalPostImageUrl?: SafeResourceUrl;
     loading = false;
@@ -275,7 +275,7 @@ export class PostViewComponent implements OnInit {
         // Check if the user is authenticated
         this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
             if (!isAuthenticated) {
-                // If not authenticated, redirect to login
+              // If not authenticated, redirect to log in
                 await this.router.navigate(['/login']);
             }
             else{

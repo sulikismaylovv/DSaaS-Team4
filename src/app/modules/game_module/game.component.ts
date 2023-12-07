@@ -1,38 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { ThemeService } from "../../core/services/theme.service";
-import { Fixture, FixtureModel } from 'src/app/core/models/fixtures.model';
-import { DatePipe } from '@angular/common';
-import { NavbarService } from "../../core/services/navbar.service";
-import { Router, ActivatedRoute } from '@angular/router';
-import { FixtureTransferService } from '../../core/services/fixture-transfer.service';
-import { Lineup, LineupModel } from 'src/app/core/models/lineup.model';
-import { ApiService } from 'src/app/core/services/api.service';
-import { LineupComponent } from './lineup/lineup.component';
-import { groupBy } from 'lodash';
-import { BetModel } from 'src/app/core/models/bets.model';
-import { Bet } from 'src/app/core/models/bets.model';
-import { BetsService } from 'src/app/core/services/bets.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { SupabaseFixture, SupabaseFixtureModel } from 'src/app/core/models/supabase-fixtures.model';
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ThemeService} from "../../core/services/theme.service";
+import {DatePipe} from "@angular/common";
+import {NavbarService} from "../../core/services/navbar.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FixtureTransferService} from "../../core/services/fixture-transfer.service";
+import {Lineup} from "src/app/core/models/lineup.model";
+import {ApiService} from "src/app/core/services/api.service";
+import {Bet} from "src/app/core/models/bets.model";
+import {BetsService} from "src/app/core/services/bets.service";
+import {AuthService} from "src/app/core/services/auth.service";
+import {Club} from "src/app/core/models/club.model";
+import {SupabaseFixture, SupabaseFixtureModel,} from "src/app/core/models/supabase-fixtures.model";
 
 @Component({
-    selector: 'app-game',
-    templateUrl: './game.component.html',
-    styleUrls: ['./game.component.css'],
-    providers: [DatePipe]
+  selector: "app-game",
+  templateUrl: "./game.component.html",
+  styleUrls: ["./game.component.css"],
+  providers: [DatePipe],
 })
 export class GameComponent implements OnInit {
-  showContent: boolean = false;
+  showContent = false;
   clickedImage: string | null = null;
   fixture: SupabaseFixture = new SupabaseFixtureModel();
   lineups: Lineup[] = [];
-  lineupHome: { [key: number]: { name: string, number: number }[] } = {};
-  lineupAway: { [key: number]: { name: string, number: number }[] } = {};
-  isLoading: boolean = true;
-  showNewContent: boolean = false;
+  lineupHome: { [key: number]: { name: string; number: number }[] } = {};
+  lineupAway: { [key: number]: { name: string; number: number }[] } = {};
+  isLoading = true;
   // bet: BetModel = null!;
-  credits: number = 10;
   teamToWin: boolean | null = null;
+  teamChosen: string | null = null;
+  betAmount = 200;
+  availableCredits = 0;
+  betCanBePlaced = false;
+  league: Club[] = [];
+  showNewContent = false;
+  credits = 100;
+
+
+  time = "fsdsd";
+  timeLeft = "";
+  date = "";
+
   constructor(
     public themeService: ThemeService,
     public navbarService: NavbarService,
@@ -41,31 +49,84 @@ export class GameComponent implements OnInit {
     private fixtureTransferService: FixtureTransferService,
     private authService: AuthService,
     private apiService: ApiService,
-    private betsService: BetsService) {
+    private betsService: BetsService,
+    private cdr: ChangeDetectorRef,
+  ) {
+  }
+
+  // async updateTheTime() {
+  //   this.time = this.formatDateToHHMM(this.fixture.time);
+  //   this.cdr.detectChanges();
+  // }
+  async updateTheTime() {
+    this.time = this.convertToLocaleTimeString(this.fixture.time);
+    this.timeLeft = this.convertDate(this.fixture.time);
+    this.date = this.convertToLocalReadableDateString(this.fixture.time);
+    this.cdr.detectChanges();
   }
   ngOnInit(): void {
     this.navbarService.setShowNavbar(true);
-    this.route.paramMap.subscribe(params => {
-      const id = +params.get('id')!;
-      this.fixtureTransferService.currentFixture.subscribe(fixture => {
+    this.route.paramMap.subscribe((params) => {
+      const id = +params.get("id")!;
+      this.fixtureTransferService.currentFixture.subscribe((fixture) => {
         if (fixture?.fixtureID === id) {
-                    this.fixture = fixture;
-        }else{
+          this.fixture = fixture;
+          this.updateTheTime();
+        } else {
+          // this.fetchFixture(id).then(() => this.updateTheTime());
           this.fetchFixture(id);
+          this.updateTheTime();
         }
       });
     });
-        // this.fetchLineup(this.fixture.fixtureID);
-        // this.initializeLineups();
+    this.time = "test";
+    // this.fetchLineup(this.fixture.fixtureID);
+    // this.initializeLineups();
+    this.updateTheTime();
+    this.getUserCredits();
+    this.checkIfBetCanBePlaced();
+    this.getStanding();
   }
 
-  toggleNewContent(){
-    this.showNewContent = true;
+  checkIfBetCanBePlaced() {
+    const fixtureTimeUTC0 = new Date(this.fixture.time);
+    // Convert fixture time to UTC+1
+    const fixtureTimeUTC1 = new Date(
+      fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
+    );
+    const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
+    this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
   }
+
   async fetchFixture(fixtureID: number) {
-    const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID)
-    this.fixture = data;
+    const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
+    this.fixture = data; // Ensure that this.fixture is updated with the fetched data
+    // this.time = this.formatDateToHHMM(this.fixture.time);
   }
+
+  setMinBetAmount() {
+    this.betAmount = 50;
+  }
+
+  setMaxBetAmount() {
+    this.betAmount = this.availableCredits;
+  }
+
+  addAmount(number: number) {
+    if (
+      this.betAmount + number > 0 &&
+      this.betAmount + number <= this.availableCredits
+    ) {
+      this.betAmount += number;
+      console.log(this.betAmount)
+    }
+  }
+
+  async getUserCredits() {
+    const user = this.authService.session?.user;
+    this.availableCredits = await this.betsService.getUserCredits(user?.id!);
+  }
+
   private initializeLineups(): void {
     // Initialize lineupHome and lineupAway with empty arrays for each position
     for (let i = 0; i <= 5; i++) {
@@ -73,14 +134,17 @@ export class GameComponent implements OnInit {
       this.lineupAway[i] = [];
     }
   }
-    // getBetterID(): number {
-    //     const user = this.authService.session?.user;
-    //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
-    // }
+
+  // getBetterID(): number {
+  //     const user = this.authService.session?.user;
+  //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
+  // }
   async getBetterID(): Promise<number> {
     const user = this.authService.session?.user;
     if (user) {
-      const isRegistered = await this.betsService.checkIfUserIsRegistered(user.id);
+      const isRegistered = await this.betsService.checkIfUserIsRegistered(
+        user.id,
+      );
       if (isRegistered) {
         return this.betsService.getBetterID(user.id);
       } else {
@@ -88,8 +152,9 @@ export class GameComponent implements OnInit {
         return this.betsService.getBetterID(user.id);
       }
     }
-    throw new Error('User is not registered or session is not available');
+    throw new Error("User is not registered or session is not available");
   }
+
   async testInput() {
     const betterID = await this.getBetterID();
     console.log(this.teamToWin);
@@ -99,113 +164,177 @@ export class GameComponent implements OnInit {
       console.log("team1");
     }
   }
+  async getStanding() {
+    const data = await this.apiService.fetchStandings();
+    this.league = data;
+  }
+
   async placeBet() {
+    await this.testInput();
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
-    if (!user || !user.id) throw new Error('User ID is undefined');
+    if (!user || !user.id) throw new Error("User ID is undefined");
     const bet: Bet = {
       betterID: betterID,
       fixtureID: this.fixture.fixtureID,
       time_placed: new Date(),
-      team_chosen: true,
-      credits: this.credits
-    }
-    const checkIfBetExists = await this.betsService.checkIfBetExists(bet.betterID, this.fixture.fixtureID);
-    if (!checkIfBetExists) {
+      team_chosen: this.teamChosen!,
+      credits: this.betAmount,
+    };
+    const checkIfBetExists = await this.betsService.checkIfBetExists(
+      bet.betterID,
+      this.fixture.fixtureID,
+    );
+    if (!checkIfBetExists && this.betCanBePlaced) {
       const betCreated = await this.betsService.createBet(bet, user.id);
       if (betCreated) {
         console.log("Bet created");
       } else {
-        throw new Error('Error creating bet');
+        throw new Error("Error creating bet");
       }
     } else {
       this.handleBetAlreadyExists();
-      throw new Error('Bet already exists');
-
+      throw new Error("Bet already exists");
     }
   }
-  handleBetAlreadyExists(){
+
+  handleBetAlreadyExists() {
     //something needs to be done here
   }
+
   categorizePlayers(): void {
     this.initializeLineups();
+
     this.lineups.forEach((lineup, index) => {
       // Determine if it's the home or away lineup
       const currentLineup = index === 0 ? this.lineupHome : this.lineupAway;
+
       // Parse formation to get the count of players in each category
-      const formationParts = [1, ...lineup.formation.split('-').map(Number)]; // Prepend '1' for the goalkeeper
+      const formationParts = [1, ...lineup.formation.split("-").map(Number)]; // Prepend '1' for the goalkeeper
       if (formationParts.length < 3 || formationParts.length > 6) {
-        throw new Error('Invalid formation. Formation should have 2 to 5 parts, plus the goalkeeper.');
+        throw new Error(
+          "Invalid formation. Formation should have 2 to 5 parts, plus the goalkeeper.",
+        );
       }
+
       // Reset current lineup
-      Object.keys(currentLineup).forEach(key => currentLineup[Number(key)] = []);
+      Object.keys(currentLineup).forEach((key) =>
+        currentLineup[Number(key)] = []
+      );
+
       // Assign players to their positions based on formation
       let positionIndex = 0;
-      lineup.startXI.forEach(player => {
-        if (currentLineup[positionIndex].length >= formationParts[positionIndex]) {
+      lineup.startXI.forEach((player) => {
+        if (
+          currentLineup[positionIndex].length >= formationParts[positionIndex]
+        ) {
           positionIndex++;
         }
+
         if (positionIndex < formationParts.length) {
-          currentLineup[positionIndex].push({ name: player.player.name, number: player.player.number });
+          currentLineup[positionIndex].push({
+            name: player.player.name,
+            number: player.player.number,
+          });
         } else {
           console.warn(`Extra player in formation: ${player.player.name}`);
         }
       });
     });
   }
-  async logData() {
-    await this.router.navigate(['/home']);
-    //console.log(this.lineupHome);
+
+  logData() {
+    console.log(this.lineupHome);
   }
 
+  convertToLocaleTimeString(dateString: string): string {
+    if (this.fixture.is_finished) {
+      return `${this.fixture.home_goals} - ${this.fixture.away_goals}`;
+    } else if (this.fixture.is_finished == false) {
+      return "LIVE";
+    } else {
+      // Parse the date string into a Date object
+      const date = new Date(dateString);
 
-    // fetchLineup(fixtureID: number) {
-    //     this.apiService.fetchLineups(fixtureID).subscribe({
+      // Define options for the time format
+      const options: Intl.DateTimeFormatOptions = {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true, // Use 12-hour format
+      };
 
-    //         next: (data: Lineup[]) => {
-    //             this.lineups = data;
-    //             this.initializeLineups(); // Initialize lineups before categorizing players
-    //             this.categorizePlayers();   // Categorize players after lineups data is fetched
-    //             this.isLoading = false;
-    //         },
-    //         error: (error) => {
-    //             console.log(error);
-    //         }
-    //     })
-    // };
-
-    //convert from type Date to type string YYYY-MM-DD
-  getDateAsString(date: Date): string {
-    const offset = date.getTimezoneOffset();
-    const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
-    return adjustedDate.toISOString().split('T')[0];
+      // Use Intl.DateTimeFormat to format the time according to local timezone
+      return new Intl.DateTimeFormat("en-US", options).format(date);
+    }
   }
 
-    //convert from type string YYYY-MM-DD to type string MMM d
-  formatShortDateString(dateString: string): string {
+  convertToLocalReadableDateString(dateString: string): string {
+    // Parse the date string into a Date object
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    // Define options for the date and time format
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true, // Use 12-hour format with AM/PM
+    };
+
+    // Use Intl.DateTimeFormat to format the date and time according to local timezone
+    return new Intl.DateTimeFormat("en-US", options).format(date);
   }
 
+  convertDate(dateString: string): string {
+    if (this.fixture.is_finished) {
+      return "FT";
+    }
 
-    /*toggleTheme() {
-        this.themeService.toggleTheme();
-    }*/
+    const matchDate = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // Resetting the time part of the dates for accurate comparison
+    today.setHours(0, 0, 0, 0);
+    matchDate.setHours(0, 0, 0, 0);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    if (matchDate.getTime() === today.getTime()) {
+      return "Today";
+    } else if (matchDate.getTime() === tomorrow.getTime()) {
+      return "Tomorrow";
+    } else {
+      const diffTime = Math.abs(matchDate.getTime() - today.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays + " days";
+    }
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
   toggleContent(team: string) {
     if (this.clickedImage === team) {
       // If the same team is clicked again, reset everything
       this.showContent = false;
       this.clickedImage = null;
-      this.teamToWin = null; // Reset teamToWin as well
+      this.teamChosen = null; // Reset teamToWin as well
     } else {
       // Otherwise, show content and set the clicked team
       this.showContent = true;
       this.clickedImage = team;
-      if (team === 'team1') {
-        this.teamToWin = true;
-      } else if (team === 'team2') {
-        this.teamToWin = false;
+      if (team === "team1") {
+        this.teamChosen = "home";
+      } else if (team === "team2") {
+        this.teamChosen = "away";
       }
     }
+  }
+
+  toggleNewContent(){
+    this.showNewContent = true;
   }
 }

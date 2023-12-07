@@ -7,10 +7,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class TeamComponent {
     @Input() team: any;
-    @Input() selected: boolean = false;
-    @Input() favorite: boolean = false; // Add this line to represent a favorite team
+  @Input() selected = false;
+  @Input() favorite = false; // Add this line to represent a favorite team
     @Output() selectTeam = new EventEmitter<any>();
-    hover: boolean = false;
+  hover = false;
 
     toggleSelection() {
         // If you want to prevent changing the selection of the favorite team,

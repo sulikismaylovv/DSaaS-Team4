@@ -1,8 +1,7 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {AuthService} from "../services/auth.service";
-import {User} from "@supabase/supabase-js";
 
 @Injectable({
   providedIn: 'root'
