@@ -76,10 +76,7 @@ export class ShopComponent implements OnInit {
     if (this.currentUserID) {
       await this.loadUserCredits();
       await this.loadUserFavoriteClub();
-      // await this.loadPlayersForFavoriteClub();
-      // await this.fetchAndDisplayRandomPlayers();
       await this.fetchPlayerFavoriteClub(this.currentUserID, [], this.favoriteClub?.id);
-      // await this.fetchRandomPlayers(this.currentUserID, [], this.favoriteClub?.id);
       await this.fetchThreeRandomPlayers(this.favoriteClub?.id);
       await this.updateOwnedPlayers();
 
