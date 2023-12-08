@@ -1,16 +1,17 @@
-import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
-import {ThemeService} from "../../core/services/theme.service";
-import {DatePipe} from "@angular/common";
-import {NavbarService} from "../../core/services/navbar.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FixtureTransferService} from "../../core/services/fixture-transfer.service";
-import {Lineup} from "src/app/core/models/lineup.model";
-import {ApiService} from "src/app/core/services/api.service";
-import {Bet} from "src/app/core/models/bets.model";
-import {BetsService} from "src/app/core/services/bets.service";
-import {AuthService} from "src/app/core/services/auth.service";
-import {Club} from "src/app/core/models/club.model";
-import {SupabaseFixture, SupabaseFixtureModel,} from "src/app/core/models/supabase-fixtures.model";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ThemeService } from "../../core/services/theme.service";
+import { DatePipe } from "@angular/common";
+import { NavbarService } from "../../core/services/navbar.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FixtureTransferService } from "../../core/services/fixture-transfer.service";
+import { Lineup } from "src/app/core/models/lineup.model";
+import { ApiService } from "src/app/core/services/api.service";
+import { Bet } from "src/app/core/models/bets.model";
+import { BetsService } from "src/app/core/services/bets.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { Club } from "src/app/core/models/club.model";
+import { SupabaseFixture, SupabaseFixtureModel, } from "src/app/core/models/supabase-fixtures.model";
+import { SupabaseService } from "src/app/core/services/supabase.service";
 
 @Component({
   selector: "app-game",
@@ -27,7 +28,6 @@ export class GameComponent implements OnInit {
   lineupAway: { [key: number]: { name: string; number: number }[] } = {};
   isLoading = true;
   // bet: BetModel = null!;
-  teamToWin: boolean | null = null;
   teamChosen: string | null = null;
   betAmount = 200;
   availableCredits = 0;
@@ -51,71 +51,88 @@ export class GameComponent implements OnInit {
     private apiService: ApiService,
     private betsService: BetsService,
     private cdr: ChangeDetectorRef,
+    private readonly supabase: SupabaseService,
   ) {
-  }
+    this.supabase.supabaseClient.channel('realtime-bettingrecord')
+      .on('postgres_changes', {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'bettingrecord',
+      }, async (payload) => {
+        const betterID = (payload.new as { betterID: number }).betterID;
+        const fixtureID = (payload.new as { fixtureID: number }).fixtureID;
+        const credits = (payload.new as { credits: number }).credits;
+        const betExists =  await this.betsService.checkIfBetExists(betterID,fixtureID);
 
+        if(betExists) {
+          this.betCanBePlaced=false;
+          this.credits -= credits;
+        } else this.betCanBePlaced=true;
+
+      }).subscribe();
+    }
   // async updateTheTime() {
   //   this.time = this.formatDateToHHMM(this.fixture.time);
   //   this.cdr.detectChanges();
   // }
   async updateTheTime() {
-    this.time = this.convertToLocaleTimeString(this.fixture.time);
-    this.timeLeft = this.convertDate(this.fixture.time);
-    this.date = this.convertToLocalReadableDateString(this.fixture.time);
-    this.cdr.detectChanges();
-  }
+      this.time = this.convertToLocaleTimeString(this.fixture.time);
+      this.timeLeft = this.convertDate(this.fixture.time);
+      this.date = this.convertToLocalReadableDateString(this.fixture.time);
+      this.cdr.detectChanges();
+    }
   ngOnInit(): void {
-    this.navbarService.setShowNavbar(true);
-    this.route.paramMap.subscribe((params) => {
-      const id = +params.get("id")!;
-      this.fixtureTransferService.currentFixture.subscribe((fixture) => {
-        if (fixture?.fixtureID === id) {
-          this.fixture = fixture;
-          this.updateTheTime();
-        } else {
-          // this.fetchFixture(id).then(() => this.updateTheTime());
-          this.fetchFixture(id);
-          this.updateTheTime();
-        }
+      this.navbarService.setShowNavbar(true);
+      this.route.paramMap.subscribe((params) => {
+        const id = +params.get("id")!;
+        this.fixtureTransferService.currentFixture.subscribe((fixture) => {
+          if (fixture?.fixtureID === id) {
+            this.fixture = fixture;
+            this.updateTheTime();
+          } else {
+            // this.fetchFixture(id).then(() => this.updateTheTime());
+            this.fetchFixture(id);
+            this.updateTheTime();
+          }
+        });
       });
-    });
-    this.time = "test";
-    // this.fetchLineup(this.fixture.fixtureID);
-    // this.initializeLineups();
-    this.updateTheTime();
-    this.getUserCredits();
-    this.checkIfBetCanBePlaced();
-    this.getStanding();
-  }
+      this.time = "test";
+      // this.fetchLineup(this.fixture.fixtureID);
+      // this.initializeLineups();
+      this.updateTheTime();
+      this.getUserCredits();
+      this.checkIfBetCanBePlaced();
+      this.getStanding();
+    }
 
   checkIfBetCanBePlaced() {
-    const fixtureTimeUTC0 = new Date(this.fixture.time);
-    // Convert fixture time to UTC+1
-    const fixtureTimeUTC1 = new Date(
-      fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
-    );
-    const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
-    this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
-  }
+      const fixtureTimeUTC0 = new Date(this.fixture.time);
+      // Convert fixture time to UTC+1
+      const fixtureTimeUTC1 = new Date(
+        fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
+      );
+      const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
+      this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
+    }
 
   async fetchFixture(fixtureID: number) {
-    const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
-    this.fixture = data; // Ensure that this.fixture is updated with the fetched data
-    // this.time = this.formatDateToHHMM(this.fixture.time);
-  }
+      const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
+      this.fixture = data; // Ensure that this.fixture is updated with the fetched data
+      // this.time = this.formatDateToHHMM(this.fixture.time);
+    }
 
   setMinBetAmount() {
-    this.betAmount = 50;
-  }
+      this.betAmount = 50;
+    }
 
   setMaxBetAmount() {
-    this.betAmount = this.availableCredits;
-  }
+      this.betAmount = this.availableCredits;
+    }
 
   addAmount(number: number) {
-    if (
-      this.betAmount + number > 0 &&
-      this.betAmount + number <= this.availableCredits
+      if(
+        this.betAmount + number > 0 &&
+          this.betAmount + number <= this.availableCredits
     ) {
       this.betAmount += number;
       console.log(this.betAmount)
@@ -123,8 +140,12 @@ export class GameComponent implements OnInit {
   }
 
   async getUserCredits() {
-    const user = this.authService.session?.user;
-    this.availableCredits = await this.betsService.getUserCredits(user?.id!);
+    const userId = this.authService.session?.user?.id;
+    if (userId) {
+      this.availableCredits = await this.betsService.getUserCredits(userId);
+    } else {
+      console.log("User not logged in");
+    }
   }
 
   private initializeLineups(): void {
@@ -155,22 +176,13 @@ export class GameComponent implements OnInit {
     throw new Error("User is not registered or session is not available");
   }
 
-  async testInput() {
-    const betterID = await this.getBetterID();
-    console.log(this.teamToWin);
-    if (this.teamToWin) {
-      console.log("team2");
-    } else {
-      console.log("team1");
-    }
-  }
+
   async getStanding() {
     const data = await this.apiService.fetchStandings();
     this.league = data;
   }
 
   async placeBet() {
-    await this.testInput();
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
     if (!user || !user.id) throw new Error("User ID is undefined");
@@ -334,7 +346,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  toggleNewContent(){
+  toggleNewContent() {
     this.showNewContent = true;
   }
 }
