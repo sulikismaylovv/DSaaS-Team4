@@ -1,20 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { DatePipe } from "@angular/common";
-import { initFlowbite } from "flowbite";
-import {
-  addDays,
-  compareAsc,
-  endOfWeek,
-  format,
-  parseISO,
-  startOfWeek,
-  subDays,
-} from "date-fns";
-import { Fixture } from "../../../core/models/fixtures.model";
-import { ApiService } from "../../../core/services/api.service";
-import { Router } from "@angular/router";
-import { FixtureTransferService } from "../../../core/services/fixture-transfer.service";
-import { SupabaseFixture } from "../../../core/models/supabase-fixtures.model";
+import {Component, OnInit} from "@angular/core";
+import {DatePipe} from "@angular/common";
+import {addDays, compareAsc, endOfWeek, startOfWeek, subDays,} from "date-fns";
+import {ApiService} from "../../../core/services/api.service";
+import {Router} from "@angular/router";
+import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
+import {SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
   selector: "app-matches",
@@ -35,27 +26,28 @@ export class MatchesComponent implements OnInit {
     private apiService: ApiService,
     private datePipe: DatePipe,
     private router: Router,
+    private authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
   ) {
     this.currentDate = new Date();
     this.stringDate = this.currentDate.toISOString().split("T")[0];
   }
 
-  onGameSelect(fixture: SupabaseFixture) {
-    this.fixtureTransferService.changeFixture(fixture);
-    this.router.navigateByUrl("/game/" + fixture.fixtureID, {
-      state: { fixture: fixture },
-    });
-  }
-  ngOnInit() {
-    this.setWeek(new Date());
-    this.fetchFixturesForWeek();
+    async onGameSelect(fixture: SupabaseFixture) {
+        if (this.authService.isLogged()) {
+            console.log("Authenticated");
+            this.fixtureTransferService.changeFixture(fixture);
+            await this.router.navigateByUrl("/game/" + fixture.fixtureID, {
+                state: {fixture: fixture},
+            });
+        } else {
+            await this.router.navigateByUrl("/login");
+        }
   }
 
-  goToGamePage(fixture: Fixture) {
-    this.router.navigateByUrl("/game/" + fixture.fixture.id, {
-      state: { fixture: fixture },
-    });
+    async ngOnInit() {
+        this.setWeek(new Date());
+        await this.fetchFixturesForWeek();
   }
 
   // Set the start of the week to Friday and end to next Thursday
@@ -65,10 +57,10 @@ export class MatchesComponent implements OnInit {
   }
 
   async fetchFixturesForWeek() {
-    let startDateString = this.getDateAsString(this.startDate);
-    let endDateString = this.getDateAsString(this.endDate);
+    const startDateString = this.getDateAsString(this.startDate);
+    const endDateString = this.getDateAsString(this.endDate);
     try {
-      let fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
+      const fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
         startDateString,
         endDateString,
       );
@@ -78,10 +70,6 @@ export class MatchesComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  getGroupedFixtureKeys(): string[] {
-    return Object.keys(this.groupedFixtures);
   }
 
   groupFixturesByDate(): void {

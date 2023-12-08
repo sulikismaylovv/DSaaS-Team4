@@ -15,7 +15,7 @@ import {HttpClient} from "@angular/common/http";
     uploading = false;
     imageChangedEvent: any = '';
     croppedImage: any = '';
-    zoom: number = 1;
+    zoom = 1;
     showCropper = false;
     imageBase64: string | undefined;
 

@@ -3,7 +3,7 @@
   <div class="edit-bg"  *ngIf="isOwnProfile">
     <div class="absolute top-0 right-0 p-4">
       <button class="px-4 py-2 rounded">
-        <img src="assets/icons/edit-pencil.svg" (click)="openBgImageSelectorModal()" class="w-12 h-12">
+        <img (click)="openBgImageSelectorModal()" alt="edit icon" class="w-12 h-12" src="assets/icons/edit-pencil.svg">
       </button>
     </div>
   </div>
@@ -30,7 +30,7 @@
     <div class="bg-white dark:bg-test rounded-lg">
       <div class="flex bg-white dark:bg-test border-dark-mode-text rounded-lg shadow-sm p-2 mb-4">
         <div class="flex-none">
-          <img [src]="avatarSafeUrl" alt="Profile picture" class="w-6 h-6 lg:w-10 lg:h-10 rounded mr-4">
+          <img [src]="avatarSafeUrl" alt="Profile picture" class="w-6 h-6 lg:w-10 lg:h-10 rounded-full mr-4">
         </div>
         <div class="flex-1 bg-light-mode-acc dark:bg-dark-mode rounded-lg  text-white">
           <form class="w-full border-0">

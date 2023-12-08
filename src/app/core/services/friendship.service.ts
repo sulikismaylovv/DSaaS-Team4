@@ -47,11 +47,23 @@ export class FriendshipService {
 
   // Remove a friend regardless of who initiated the friendship
   async removeFriend(userId: string, friendId: string) {
-    const { error } = await this.supabase.supabaseClient
+    console.log('removeFriend', userId, friendId);
+    // First try to delete where userId is user1_id and friendId is user2_id
+    let {error} = await this.supabase.supabaseClient
       .from('friendships')
       .delete()
-      .or(`user1_id.eq.${userId},user2_id.eq.${friendId},user1_id.eq.${friendId},user2_id.eq.${userId}`);
+      .match({user1_id: userId, user2_id: friendId});
 
+    // If no error and deletion is successful, return
+    if (!error) return;
+
+    // If first deletion didn't work, try the second combination
+    ({error} = await this.supabase.supabaseClient
+      .from('friendships')
+      .delete()
+      .match({user1_id: friendId, user2_id: userId}));
+
+    // If there's an error in the second deletion, throw it
     if (error) throw error;
   }
 
@@ -78,10 +90,10 @@ export class FriendshipService {
     return data;
   }
 
-  async checkFriendRequestStatus(userId: string | undefined, friendId: string,) : Promise<'accepted' | 'pending' | 'rejected' | 'blocked' | 'none' | undefined> {
+  async checkFriendRequestStatus(userId: string | undefined, friendId: string): Promise<'accepted' | 'pending' | 'rejected' | 'blocked' | 'none' | undefined> {
     // Validate the input
     if (!userId || !friendId) {
-      console.error('User IDs are required');
+      //console.error('User IDs are required');
       return undefined;
     }
 
@@ -93,12 +105,12 @@ export class FriendshipService {
         .or(`and(user1_id.eq.${userId},user2_id.eq.${friendId}),and(user1_id.eq.${friendId},user2_id.eq.${userId})`);
 
       if (error) {
-        console.error('Error fetching friend request status:', error);
+        //console.error('Error fetching friend request status:', error);
         throw error;
       }
 
       // Log the data for debugging purposes
-      console.log('Friend request status:', data);
+      //console.log('Friend request status:', data);
 
       // Determine the friendship status
       if (data && data.length > 0) {
@@ -110,7 +122,7 @@ export class FriendshipService {
         return 'none';
       }
     } catch (error) {
-      console.error('Error fetching friend request status:', error);
+      //console.error('Error fetching friend request status:', error);
       throw error;
     }
   }
@@ -136,7 +148,7 @@ export class FriendshipService {
       }
 
       // Log the data for debugging purposes
-      console.log('Friend request status:', data);
+      //console.log('Friend request status:', data);
 
       // Determine the friendship status
       if (data && data.length > 0) {

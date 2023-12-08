@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,8 +7,16 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Post} from "../../../core/models/posts.model";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
+import {Player} from "../../../core/services/player.service";
+import {
+  FriendsLeagueInterface,
+  FriendsLeague,
+  EnhancedUserInFriendsLeague, UserInFriendsLeague
+} from "../../../core/services/friends-league.service";
+import {UserServiceService} from "../../../core/services/user-service.service";
+
 
 export enum FriendRequestStatus {
   None = 'none',
@@ -16,10 +24,24 @@ export enum FriendRequestStatus {
   Friends = 'friends'
 }
 
+interface UserLeague {
+  leagueId: number | undefined;
+  leagueName: string;
+  userPosition: number | string;
+}
+type LeagueMembers = { [key: number]: UserInFriendsLeague[] };
+
+
 interface FriendInfo {
   profile: Profile;
   avatarSafeUrl: SafeResourceUrl;
 }
+export interface PlayerWithClubDetails extends Player {
+  clubname: string;
+  owned?: boolean;
+}
+
+
 
 @Component({
   selector: 'app-common',
@@ -28,7 +50,7 @@ interface FriendInfo {
 })
 export class CommonComponent implements OnInit{
   @Input() userRefId: string | null | undefined;
-  isOwnProfile: boolean = false;
+  isOwnProfile = false;
   loading = true;
   profile: Profile | undefined;
   username: string | undefined;
@@ -44,17 +66,22 @@ export class CommonComponent implements OnInit{
   friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
   friendsList: FriendInfo[] = []; // Array to store friends' info
 
-
-
-  testfriendsList: string[]= ['Username', 'Username',  'Username', 'Username','Username', 'Username', 'Username',  'Username',  'Username', 'Username',  'Username', 'Username',  'Username', 'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  'Username',  ];
-  infoString: string[]= ['Friends', 'Leagues', 'About','Badges'];
+  infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
-  imageList: string[]= ['KV-Kortrijk-wallpaper.jpg','unnamed.jpg','v2_large_8717893f85b4c67b835c8b9984d0115fbdb37ecf.jpg','vieren-KV-Kortrijk-21-10-2023.jpg'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
-  selectedLink: string = 'link1';
-  selectedBadge: string= 'KV_Kortrijk_logo.svg';
-  badgeList: string[]= ['Belgian_Pro_League_logo.svg', 'Club_Brugge_KV_logo.svg', 'KAA_Gent_logo.svg', 'Kas_Eupen_Logo.svg','KRC_Genk_Logo_2016.svg','KV_Kortrijk_logo.svg','KV_Mechelen_logo.svg','kvc-westerlo.svg','OHL.svg','Logo_RWDMolenbeek.svg','oud-heverlee-leuven-seeklogo.com-3.svg','R-Logo-04.svg','Royal_Antwerp_Football_Club_logo.svg','Royal_Belgian_FA_logo_2019.svg','Royal_Charleroi_Sporting_Club_logo.svg','Royal_Standard_de_Liege.svg','RSC_Anderlecht_logo.svg','union-saint-gilloise.svg','VV_St._Truiden_Logo.svg','Logo_Cercle_Bruges_KSV_-_2022.svg' ];
+  selectedLink = 'link1';
+
+  ownedPlayersDetails: PlayerWithClubDetails[] = [];
+  currentUserID: string | undefined
+  leagueIds: number[] = [];
+
+  leagues: FriendsLeagueInterface[] = [];
+  userLeagues: UserLeague[] = [];
+
+
+
+
 
   constructor(
     protected readonly authService: AuthService,
@@ -66,6 +93,9 @@ export class CommonComponent implements OnInit{
     protected readonly imageService: ImageDownloadService,
     protected dialog: MatDialog,
     protected readonly friendshipService: FriendshipService,
+    private friendsLeague: FriendsLeague,
+    private userService: UserServiceService,
+
   ) {
     this.supabase.supabaseClient
       .channel('realtime-posts')
@@ -76,8 +106,8 @@ export class CommonComponent implements OnInit{
           schema: 'public',
           table: 'posts',
         },
-        (payload) => {
-          this.loadPosts(this.profile?.id);
+        async () => {
+          await this.loadPosts(this.profile?.id);
         }
       )
       .subscribe();
@@ -104,6 +134,7 @@ export class CommonComponent implements OnInit{
     // Get the userId from the URL
     const urlUserId = this.route.snapshot.paramMap.get('userId');
     const authenticatedUserId = this.authService.session?.user?.id;
+    this.currentUserID = authenticatedUserId;
 
     this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
     this.userRefId = this.isOwnProfile ? null : urlUserId;
@@ -129,6 +160,9 @@ export class CommonComponent implements OnInit{
       // Wait for all promises to resolve
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
+
+      await this.updateOwnedPlayers();
+      await this.getLeaguesForUser();
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
@@ -178,7 +212,6 @@ export class CommonComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 
@@ -195,14 +228,13 @@ export class CommonComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 
   async loadPosts(userId: string | undefined) {
     if (userId === undefined) throw new Error('User ID is undefined');
       try{
-        let posts = await this.postService.getPostsByUserId(userId);
+        const posts = await this.postService.getPostsByUserId(userId);
         this.posts = posts.sort((a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       } catch (error) {
@@ -214,7 +246,7 @@ export class CommonComponent implements OnInit{
     // Check if the user is authenticated
     this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
       if (!isAuthenticated) {
-        // If not authenticated, redirect to login
+        // If not authenticated, redirect to log in
         await this.router.navigate(['/login']);
       }
       else{
@@ -225,9 +257,7 @@ export class CommonComponent implements OnInit{
     });
   }
 
-  badgeDisplayed(badge:string): void {
-    this.selectedBadge = badge;
-  }
+
   changeContent(link: string): void {
     this.selectedLink = link;
   }
@@ -273,12 +303,12 @@ export class CommonComponent implements OnInit{
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
     if(this.userRefId == null) throw new Error('User ID is undefined');
-    console.log(this.userRefId);
+    //console.log(this.userRefId);
     const targetUserId = this.userRefId;
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
     // This is a hypothetical method that you would need to implement
     const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
-    console.log(status);
+    //console.log(status);
     if(status === 'accepted') {
       this.friendRequestStatus = FriendRequestStatus.Friends;
     } else if (status === 'pending') {
@@ -295,7 +325,7 @@ export class CommonComponent implements OnInit{
     if (currentUserId) {
       this.friendshipService.removeFriend(currentUserId, targetUserId)
         .then(() => {
-          console.log('Friend removed');
+          //console.log('Friend removed');
           this.friendRequestStatus = FriendRequestStatus.None;
           // You can update the UI accordingly
         })
@@ -333,6 +363,93 @@ export class CommonComponent implements OnInit{
       window.location.reload();
     });
   }
+
+
+
+  //fetching player collection
+  async getPurchasedPlayerIds(userId: string | undefined): Promise<number[]> {
+    const {data, error} = await this.supabase.supabaseClient
+      .from('user_player_purchases')
+      .select('player_id')
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error fetching purchased players:', error);
+      throw error;
+    }
+
+    // Map through the data to extract just the player_ids
+    return data.map((purchase) => purchase.player_id);
+  }
+
+  async updateOwnedPlayers() {
+    const ownedPlayerIds = await this.getPurchasedPlayerIds(this.currentUserID);
+    await this.fetchOwnedPlayersDetails(ownedPlayerIds);
+  }
+
+  async fetchOwnedPlayersDetails(ownedPlayerIds: number[]) {
+    // Replace 'players' and 'clubs' with your actual table names
+    const { data: playersData, error } = await this.supabase.supabaseClient
+      .from('players')
+      .select('*, clubs(name)') // Adjust the select statement to include the club name
+      .in('id', ownedPlayerIds);
+
+    if (error) {
+      console.error('Error fetching player details:', error);
+      return;
+    }
+
+    // Transform data to align with the PlayerWithClubDetails interface
+    this.ownedPlayersDetails = playersData.map(player => ({
+      ...player,
+      clubname: player.clubs?.name, // Extract the club name
+      owned: true // Since these are owned players
+    }));
+  }
+
+
+  //league section
+  async getLeaguesForUser() {
+    try {
+      // Get the league IDs for the current user
+      this.leagueIds = await this.friendsLeague.getLeaguesIDForCurrentUser();
+
+      // Get the details of these leagues
+      this.leagues = await this.friendsLeague.getLeaguesByIds(this.leagueIds);
+
+      // Get the members for each league
+      const leagueMembers = await this.friendsLeague.getMembersForLeagues(this.leagueIds);
+
+      // Initialize an array to hold league details and user positions
+
+      this.userLeagues = this.leagues.map(league => {
+        // Check if league.id is not undefined
+        if (typeof league.id !== 'undefined') {
+          const members = leagueMembers[league.id];
+          // Ensure member is typed
+          const userPosition = members.findIndex((member: UserInFriendsLeague) => member.userid === this.authService.session?.user?.id) + 1;
+
+          return {
+            leagueId: league.id,
+            leagueName: league.name,
+            userPosition: userPosition > 0 ? userPosition : 'N/A'
+          };
+        } else {
+          return {
+            leagueId: undefined,
+            leagueName: league.name,
+            userPosition: 'N/A'
+          };
+        }
+      });
+
+
+      console.log("User Leagues with Positions: ", this.userLeagues);
+    } catch (error) {
+      console.error("Error fetching leagues for user: ", error);
+    }
+  }
+
 
 
 }

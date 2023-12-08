@@ -14,6 +14,12 @@ import {PreferencesService} from "../../../core/services/preference.service";
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
+declare let gtag: Function;
+
+
+
+
+
 
 interface Team {
     id: number;
@@ -154,6 +160,7 @@ export class MultistepformComponent implements OnInit {
     private preferencesService: PreferencesService,
     public navbarService: NavbarService,
     private cd: ChangeDetectorRef,
+
   ) {}
 
   selectFavorite(team: Team): void {
@@ -277,7 +284,7 @@ export class MultistepformComponent implements OnInit {
         this.customProfile);
     if (this.topOfPageElement?.nativeElement) {
       setTimeout(() => {
-        // @ts-ignore
+        if(this.topOfPageElement)
         this.topOfPageElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
       }, 0); // Introducing a 0ms delay to ensure the DOM is updated
     }
@@ -344,4 +351,12 @@ export class MultistepformComponent implements OnInit {
       this.loading = false;
     }
   }
+
+
+  trackButtonClick(): void {
+    console.log("success", "hey");
+    gtag('event', 'Click', {
+      event_category: 'Button',
+      event_label: 'DownloadButton'
+    });}
 }

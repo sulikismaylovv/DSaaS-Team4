@@ -1,18 +1,38 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { Fixture } from "../models/fixtures.model";
-import { Lineup } from "../models/lineup.model";
-import { SupabaseService } from "./supabase.service";
-import { SupabaseFixture } from "../models/supabase-fixtures.model";
-import { ca } from "date-fns/locale";
+import {Injectable} from "@angular/core";
+import {SupabaseService} from "./supabase.service";
+import {SupabaseFixture} from "../models/supabase-fixtures.model";
+import {Club} from "../models/club.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class ApiService {
   constructor(private supabase: SupabaseService) {}
+
+  async fetchStandings(): Promise<Club[]> { // This should return an array of Club
+    try {
+      // Fetch data from Supabase with club information
+      const { data, error } = await this.supabase.supabaseClient
+        .from("clubs")
+        .select("id, name, points, goal_difference") // Select only the required fields
+        .order("points", { ascending: false }); // Order by points in descending order
+
+      if (error) {
+        throw error;
+      }
+
+      // Map the data to match the Club interface if the column names are different
+      return data.map((club: any) => ({
+        id: club.id,
+        name: club.name,
+        points: club.points,
+        goalDifference: club.goal_difference, // Assuming the column name is goal_difference
+      }));
+    } catch (error) {
+      console.error("Error fetching standings:", error);
+      throw error;
+    }
+  }
 
   async fetchSupabaseFixturesDateRange(
     startDate: string,

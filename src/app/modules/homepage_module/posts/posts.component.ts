@@ -36,8 +36,8 @@ export class PostsComponent implements OnInit {
                     schema: 'public',
                     table: 'posts',
                 },
-                (payload) => {
-                    this.loadPosts();
+              async (payload) => {
+                await this.loadPosts();
                 }
             )
             .subscribe();
@@ -85,7 +85,7 @@ export class PostsComponent implements OnInit {
 
     async loadPosts() {
         try {
-            let posts = await this.postsService.getPosts();
+          const posts = await this.postsService.getPosts();
 
             // Sort posts based on sortDate
             this.posts = posts.sort((a, b) =>
@@ -114,7 +114,7 @@ export class PostsComponent implements OnInit {
     // Check if the user is authenticated
     this.authService.isAuthenticated$.subscribe(async isAuthenticated => {
         if (!isAuthenticated) {
-            // If not authenticated, redirect to login
+          // If not authenticated, redirect to log in
             await this.router.navigate(['/login']);
         }
         else{
