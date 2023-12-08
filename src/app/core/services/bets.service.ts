@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import {SupabaseService} from './supabase.service';
-import {Bet} from '../models/bets.model';
-
+import { Injectable } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+import { Bet, Better } from '../models/bets.model';
+import { Observable } from 'rxjs';
+import { from } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -68,6 +69,21 @@ export class BetsService {
     }
   }
 
+  async fetchBetInfo(betterID: number, fixtureID: number): Promise<Bet>{
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('bettingrecord')
+        .select('*')
+        .eq('betterID', betterID)
+        .eq('fixtureID', fixtureID);
+      if (error) throw error;
+      return data[0];
+    } catch (error) {
+      console.error('Error fetching bets:', error);
+      throw error;
+    }
+  }
+
   async checkIfUserAffordsBet(userID: string, credits: number): Promise<boolean> {
     try {
       const { data, error } = await this.supabase.supabaseClient
@@ -127,7 +143,6 @@ export class BetsService {
       throw error;
     }
   }
-
 
   async checkIfUserIsRegistered(userID: string): Promise<boolean> {
     try {
@@ -208,6 +223,7 @@ export class BetsService {
       throw error;
     }
   }
+
 
 
 }

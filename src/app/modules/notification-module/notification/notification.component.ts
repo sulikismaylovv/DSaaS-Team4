@@ -31,11 +31,11 @@ export class NotificationComponent implements OnInit {
       .on(
       'postgres_changes',
       {
-        event: '*',
+        event: 'UPDATE',
         schema: 'public',
         table: 'friendships',
       },
-        (payload) => {
+        () => {
           this.fetchRequests(this.currentUserId).then(r =>
           window.location.reload());
         }

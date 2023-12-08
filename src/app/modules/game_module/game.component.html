@@ -106,7 +106,7 @@
     <!--top modal -->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153]">
       <div class="flex items-center">
-        <button (click)="logData()" type="button"
+        <button type="button"
                 class="ml-2 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
           <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                fill="none" viewBox="0 0 14 10">
@@ -166,9 +166,9 @@
         </div>
       </div>
     </div>
-    <!--Betting widget-->
-    <div  class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
-      <ng-container *ngIf="!showNewContent">
+    <!--Betting widget abdo-->
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
+      <ng-container *ngIf="!betAlreadyPlaced">
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Place your bets!</p>
         <p class="text-sm mt-1 ml-6 text-black dark:text-white font-bold">Who's taking home the victory?</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -267,22 +267,23 @@
       </ng-container>
       <!--After betting-->
       <!--Abdoooo change this :D-->
-      <ng-container *ngIf="showNewContent">
+      <ng-container *ngIf="betAlreadyPlaced" >
+        <button (click)="logData()"> TESTTTTT</button>
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
         <div class="flex flex-col items-center justify-center">
           <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Chosen team:</p>
-          <div *ngIf="clickedImage" class="mt-4">
-            <img *ngIf="clickedImage === 'team1'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}" class="w-36 h-36">
-            <p *ngIf="clickedImage === 'team1'" class="text-white text-center"> {{fixture.club0?.name}} </p>
+          <div *ngIf="true" class="mt-4">
+            <img *ngIf="teamChosen === 'home'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}" class="w-36 h-36">
+            <p *ngIf="teamChosen === 'home'" class="text-white text-center"> {{fixture.club0?.name}} </p>
 
-            <img *ngIf="clickedImage === 'team2'" [src]="fixture.club1?.logo" alt="{{fixture.club1?.name}}" class="w-24 h-24">
-            <p *ngIf="clickedImage === 'team2'" class="text-white text-center "> {{fixture.club1?.name}} </p>
-            <svg  *ngIf="clickedImage ==='draw'" class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <img *ngIf="teamChosen === 'away'" [src]="fixture.club1?.logo" alt="{{fixture.club1?.name}}" class="w-24 h-24">
+            <p *ngIf="teamChosen === 'away'" class="text-white text-center "> {{fixture.club1?.name}} </p>
+            <svg  *ngIf="teamChosen ==='draw'" class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
-            <p *ngIf="clickedImage === 'draw'" class="text-white text-center "> Draw </p>
+            <p *ngIf="teamChosen === 'draw'" class="text-white text-center "> Draw </p>
           </div>
         </div>
         <div class="flex items-center justify-start ml-6 mb-4">
