@@ -24,7 +24,7 @@
 
 
       <!-- Profile Info -->
-      <div class=" bg-white dark:bg-test shadow-sm w-full xl:rounded-br-lg">
+      <div class=" bg-white dark:bg-test shadow-sm w-full">
         <div class="flex justify-between">
           <div class="flex p-4 z-10">
             <div class="flex items-center h-28 w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
@@ -50,7 +50,7 @@
       </div>
 
       <!-- Content for Link 1 -->
-      <div class="flex flex-col xl:flex-row">
+      <div class="flex flex-col bg-white dark:bg-test xl:flex-row">
         <div class="flex flex-col flex-1 h-[510px] ">
           <div class="px-8 bg-white dark:bg-test shadow-sm">
             <ul class="flex justify-around border-y-1 dark:border-dark-mode-text w-full">
@@ -119,7 +119,6 @@
 
 
             <!-- Content for Link 2 -->
-            <!-- Content for Link 2 -->
             <ng-container *ngIf="selectedLink === 'link2'">
               <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
                 <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
@@ -137,24 +136,6 @@
                 </div>
               </div>
             </ng-container>
-
-
-
-            <!--              <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">-->
-            <!--                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined-->
-            <!--                    Leagues</h1>-->
-            <!--                  <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">-->
-            <!--                    <ng-container *ngFor="let league of leagueList; let i = index">-->
-            <!--                      <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">-->
-            <!--                        <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>-->
-            <!--                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">-->
-            <!--                      </div>-->
-            <!--                    </ng-container>-->
-            <!--                    &lt;!&ndash; Additional items if needed &ndash;&gt;-->
-            <!--                  </div>-->
-
-            <!--                </div>-->
-            <!--              </div>-->
 
             <!-- Link 3 -->
             <ng-container *ngIf="selectedLink === 'link3'">
@@ -196,12 +177,11 @@
                 </div>
               </div>
             </ng-container>
-
-
           </div>
         </div>
 
-        <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg pt-2 px-2 xl:pt-4 xl:px-4 mt-4 xl:mt-2 xl:ml-2 relative">
+        <div class="border-4 dark:border-dark-mode rounded-xl p-1 mb-4 mx-4">
+        <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg p-2 xl:p-4 m-2 relative">
           <div class="opacity-30 p-6 ">
             <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Achievements</h1>
             <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 lg:py-4 rounded-lg">
@@ -219,6 +199,7 @@
           <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode p-1">
             <h1 class="text-white md:text-xl lg:text-2xl">Coming Soon</h1>
           </div>
+        </div>
         </div>
       </div>
 
