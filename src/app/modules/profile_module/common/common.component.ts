@@ -69,6 +69,7 @@ export class CommonComponent implements OnInit{
   infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
+  achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
   selectedLink = 'link1';
 
@@ -176,7 +177,12 @@ export class CommonComponent implements OnInit{
     }
   }
 
-
+  limitUsernameLength(username: string, maxLength: number): string {
+    if (username.length > maxLength) {
+      return `${username.slice(0, maxLength)}...`;
+    }
+    return username;
+  }
 
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
@@ -359,9 +365,7 @@ export class CommonComponent implements OnInit{
 
   async onFriendClick(friendId: string | undefined): Promise<void> {
     if (friendId === undefined) throw new Error('Friend ID is undefined');
-    await this.router.navigate(['/profile', friendId]).then(() => {
-      window.location.reload();
-    });
+    await this.router.navigate(['/profile', friendId]);
   }
 
 
