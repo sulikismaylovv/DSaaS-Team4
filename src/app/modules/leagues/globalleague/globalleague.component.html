@@ -1,4 +1,4 @@
-  <div class="mx-auto p-4 2xl:ml-64 lg:ml-28  sm:mx-auto">
+  <div class="mx-auto h-screen p-4 2xl:ml-64 lg:ml-28  sm:mx-auto">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <!--Create friends league button-->
       <div class="flex justify-end">
@@ -7,9 +7,9 @@
         </button>
       </div>
       <!-- Tabbed Navigation -->
-      <div class="flex items-center justify-center h-fit mb-4 rounded">
+      <div class="h-fit mb-4 rounded">
         <div class="mb-2 border-b border-transparent ">
-          <ul class="flex flex-wrap -mb-px text-lg font-bold text-center text-black dark:text-white" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+          <ul class="flex flex-wrap justify-center -mb-px text-lg font-bold text-center text-black dark:text-white" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
             <li class="me-2" role="presentation">
               <button (click)="currentView = 'friends'" [ngClass]="{'active': currentView === 'friends'}" class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
                 Friends League
