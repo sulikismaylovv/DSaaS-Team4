@@ -117,52 +117,42 @@
 
 
             <!-- Content for Link 2 -->
+            <!-- Content for Link 2 -->
             <ng-container *ngIf="selectedLink === 'link2'">
-              <div class="flex justify-around bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-2 md:px-4 lg:px-8 py-4 h-full">
-                <div class=" bg-light-mode-acc dark:bg-dark-mode mx-1 px-2 lg:px-4 py-2 rounded-lg">
-                  <div class="flex justify-center">
-                    <span class="text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl">Remontada League</span>
-                  </div>
-                  <div class="flex items-center justify-center py-2">
-                    <img alt="Remontada League" class="w-24 h-24 lg:w-32 lg:h-32 rounded-full my-2" src="../assets/img.png">
-                  </div>
-
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1</span>
-                  </div>
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#2</span>
-                  </div>
-                  <div class="flex items-center justify-center">
-                    <span class="text-light-mode-text dark:text-primary-100 -mt-1 px-2">...</span>
-                  </div>
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1054</span>
-                  </div>
-                </div>
-
-                <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
-                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined
-                    Leagues</h1>
-                  <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
-                    <ng-container *ngFor="let league of leagueList; let i = index">
-                      <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
-                        <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
-                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
+              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
+                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2">
+                    {{ profile?.first_name }}'s Leagues
+                  </h1>
+                  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                    <ng-container *ngFor="let league of userLeagues">
+                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
+                        <p class="text-center text-dark-mode dark:text-light-mode">{{ league.leagueName }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.userPosition }}</p>
                       </div>
                     </ng-container>
-                    <!-- Additional items if needed -->
                   </div>
-
                 </div>
               </div>
             </ng-container>
+
+
+
+            <!--              <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">-->
+            <!--                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined-->
+            <!--                    Leagues</h1>-->
+            <!--                  <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">-->
+            <!--                    <ng-container *ngFor="let league of leagueList; let i = index">-->
+            <!--                      <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">-->
+            <!--                        <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>-->
+            <!--                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">-->
+            <!--                      </div>-->
+            <!--                    </ng-container>-->
+            <!--                    &lt;!&ndash; Additional items if needed &ndash;&gt;-->
+            <!--                  </div>-->
+
+            <!--                </div>-->
+            <!--              </div>-->
 
             <!-- Link 3 -->
             <ng-container *ngIf="selectedLink === 'link3'">
@@ -190,32 +180,22 @@
             <ng-container *ngIf="selectedLink === 'link4'">
               <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
                 <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
-                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s badges</h1>
-                  <div class="flex flex-row justify-around">
-                    <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
-                      <ng-container *ngFor="let badge of badgeList;">
-                        <div (click)="badgeDisplayed(badge)" class="flex flex-col items-center bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
-                          <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl-w16" [src]="'../assets/logos/' + badge">
-                        </div>
-                      </ng-container>
-                    </div>
-                    <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800 pl-2 xl:pl-4">
-                      <div class="w-60 sm:w-48 md:w-60 lg:w-full xl:w-56 2xl:w-full max-w-sm bg-white dark:bg-test border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <img class="p-8 rounded-t-lg mx-auto w-40 h-40 xl:w-32 xl:h-32 2xl:w-44 2xl:h-44" [src]="'assets/logos/' + selectedBadge" alt="product image" />
-                        <div class="px-5 pb-5">
-                          <h5 class="md:text-lg lg:text-xl tracking-tight text-gray-900 dark:text-primary-100">Club Brugge badge</h5>
-                          <div class="flex items-center mt-2.5 mb-5">
-                            <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                              <p class="text-gray-400 dark:text-primary-100 md:text-sm lg:text-md xl:text-sm 2xl-text-lg"> Show your colors with the Club Brugge badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-                            </div>
-                          </div>
-                        </div>
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
+                  <div class="flex flex-row justify-around"><div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                    <ng-container *ngFor="let player of ownedPlayersDetails">
+                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-full">
+                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
+                        <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p> <!-- Display club name -->
                       </div>
-                    </div>
+                    </ng-container>
+                  </div>
                   </div>
                 </div>
               </div>
             </ng-container>
+
+
           </div>
         </div>
 
