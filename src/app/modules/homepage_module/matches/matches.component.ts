@@ -92,10 +92,7 @@ export class MatchesComponent implements OnInit {
           startDateString,
           endDateString,
       );
-      this.fixtures = this.fixtures.filter(fixture =>
-          this.isClubRelevantToUserPreferences(fixture.club0) ||
-          this.isClubRelevantToUserPreferences(fixture.club1)
-      );
+
       this.groupFixturesByDate();
       console.log(this.fixtures);
     } catch (error) {
