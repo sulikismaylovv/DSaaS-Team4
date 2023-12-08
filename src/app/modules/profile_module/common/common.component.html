@@ -115,52 +115,42 @@
 
 
             <!-- Content for Link 2 -->
+            <!-- Content for Link 2 -->
             <ng-container *ngIf="selectedLink === 'link2'">
-              <div class="flex justify-around bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-2 md:px-4 lg:px-8 py-4 h-full">
-                <div class=" bg-light-mode-acc dark:bg-dark-mode mx-1 px-2 lg:px-4 py-2 rounded-lg">
-                  <div class="flex justify-center">
-                    <span class="text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl">Remontada League</span>
-                  </div>
-                  <div class="flex items-center justify-center py-2">
-                    <img alt="Remontada League" class="w-24 h-24 lg:w-32 lg:h-32 rounded-full my-2" src="../assets/img.png">
-                  </div>
-
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1</span>
-                  </div>
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#2</span>
-                  </div>
-                  <div class="flex items-center justify-center">
-                    <span class="text-light-mode-text dark:text-primary-100 -mt-1 px-2">...</span>
-                  </div>
-                  <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                    <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                    <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                    <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1054</span>
-                  </div>
-                </div>
-
-                <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
-                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined
-                    Leagues</h1>
-                  <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
-                    <ng-container *ngFor="let league of leagueList; let i = index">
-                      <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
-                        <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
-                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
+              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
+                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2">
+                    {{ profile?.first_name }}'s Leagues
+                  </h1>
+                  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                    <ng-container *ngFor="let league of userLeagues">
+                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
+                        <p class="text-center text-dark-mode dark:text-light-mode">{{ league.leagueName }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.userPosition }}</p>
                       </div>
                     </ng-container>
-                    <!-- Additional items if needed -->
                   </div>
-
                 </div>
               </div>
             </ng-container>
+
+
+
+            <!--              <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">-->
+            <!--                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined-->
+            <!--                    Leagues</h1>-->
+            <!--                  <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">-->
+            <!--                    <ng-container *ngFor="let league of leagueList; let i = index">-->
+            <!--                      <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">-->
+            <!--                        <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>-->
+            <!--                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">-->
+            <!--                      </div>-->
+            <!--                    </ng-container>-->
+            <!--                    &lt;!&ndash; Additional items if needed &ndash;&gt;-->
+            <!--                  </div>-->
+
+            <!--                </div>-->
+            <!--              </div>-->
 
             <!-- Link 3 -->
             <ng-container *ngIf="selectedLink === 'link3'">

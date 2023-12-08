@@ -10,12 +10,27 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
+import {
+  FriendsLeagueInterface,
+  FriendsLeague,
+  EnhancedUserInFriendsLeague, UserInFriendsLeague
+} from "../../../core/services/friends-league.service";
+import {UserServiceService} from "../../../core/services/user-service.service";
+
 
 export enum FriendRequestStatus {
   None = 'none',
   Requested = 'requested',
   Friends = 'friends'
 }
+
+interface UserLeague {
+  leagueId: number | undefined;
+  leagueName: string;
+  userPosition: number | string;
+}
+type LeagueMembers = { [key: number]: UserInFriendsLeague[] };
+
 
 interface FriendInfo {
   profile: Profile;
@@ -59,6 +74,13 @@ export class CommonComponent implements OnInit{
 
   ownedPlayersDetails: PlayerWithClubDetails[] = [];
   currentUserID: string | undefined
+  leagueIds: number[] = [];
+
+  leagues: FriendsLeagueInterface[] = [];
+  userLeagues: UserLeague[] = [];
+
+
+
 
 
   constructor(
@@ -71,6 +93,9 @@ export class CommonComponent implements OnInit{
     protected readonly imageService: ImageDownloadService,
     protected dialog: MatDialog,
     protected readonly friendshipService: FriendshipService,
+    private friendsLeague: FriendsLeague,
+    private userService: UserServiceService,
+
   ) {
     this.supabase.supabaseClient
       .channel('realtime-posts')
@@ -138,6 +163,7 @@ export class CommonComponent implements OnInit{
       this.preference = preferences;
 
       await this.updateOwnedPlayers();
+      await this.getLeaguesForUser();
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
@@ -381,5 +407,50 @@ export class CommonComponent implements OnInit{
       owned: true // Since these are owned players
     }));
   }
+
+
+  //league section
+  async getLeaguesForUser() {
+    try {
+      // Get the league IDs for the current user
+      this.leagueIds = await this.friendsLeague.getLeaguesIDForCurrentUser();
+
+      // Get the details of these leagues
+      this.leagues = await this.friendsLeague.getLeaguesByIds(this.leagueIds);
+
+      // Get the members for each league
+      const leagueMembers = await this.friendsLeague.getMembersForLeagues(this.leagueIds);
+
+      // Initialize an array to hold league details and user positions
+
+      this.userLeagues = this.leagues.map(league => {
+        // Check if league.id is not undefined
+        if (typeof league.id !== 'undefined') {
+          const members = leagueMembers[league.id];
+          // Ensure member is typed
+          const userPosition = members.findIndex((member: UserInFriendsLeague) => member.userid === this.authService.session?.user?.id) + 1;
+
+          return {
+            leagueId: league.id,
+            leagueName: league.name,
+            userPosition: userPosition > 0 ? userPosition : 'N/A'
+          };
+        } else {
+          return {
+            leagueId: undefined,
+            leagueName: league.name,
+            userPosition: 'N/A'
+          };
+        }
+      });
+
+
+      console.log("User Leagues with Positions: ", this.userLeagues);
+    } catch (error) {
+      console.error("Error fetching leagues for user: ", error);
+    }
+  }
+
+
 
 }
