@@ -31,11 +31,11 @@ export class GameComponent implements OnInit {
   teamChosen: string | null = null;
   betAmount = 200;
   availableCredits = 0;
-  betCanBePlaced = false;
+  betCanBePlaced = true;
   league: Club[] = [];
   showNewContent = false;
   credits = 100;
-
+  testingdata: any;
 
   time = "fsdsd";
   timeLeft = "";
@@ -59,17 +59,21 @@ export class GameComponent implements OnInit {
         schema: 'public',
         table: 'bettingrecord',
       }, async (payload) => {
+        this.testingdata = payload.old['credits'];
         const betterID = (payload.new as { betterID: number }).betterID;
         const fixtureID = (payload.new as { fixtureID: number }).fixtureID;
         const credits = (payload.new as { credits: number }).credits;
         const betExists =  await this.betsService.checkIfBetExists(betterID,fixtureID);
-
         if(betExists) {
           this.betCanBePlaced=false;
           this.credits -= credits;
         } else this.betCanBePlaced=true;
 
       }).subscribe();
+    }
+
+    logData() {
+      console.log(this.testingdata);
     }
   // async updateTheTime() {
   //   this.time = this.formatDateToHHMM(this.fixture.time);
@@ -255,9 +259,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  async logData() {
-    await this.router.navigate(['/home']);
-  }
+
 
   convertToLocaleTimeString(dateString: string): string {
     if (this.fixture.is_finished) {

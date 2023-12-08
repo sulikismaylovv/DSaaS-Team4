@@ -166,9 +166,10 @@
         </div>
       </div>
     </div>
-    <!--Betting widget-->
-    <div  class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
-      <ng-container *ngIf="!showNewContent">
+    <!--Betting widget abdo-->
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
+      <button (click)="logData()"> temp button</button>
+      <ng-container *ngIf="betCanBePlaced">
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Place your bets!</p>
         <p class="text-sm mt-1 ml-6 text-black dark:text-white font-bold">Who's taking home the victory?</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -267,7 +268,7 @@
       </ng-container>
       <!--After betting-->
       <!--Abdoooo change this :D-->
-      <ng-container *ngIf="showNewContent && !betCanBePlaced" >
+      <ng-container *ngIf="!betCanBePlaced" >
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
