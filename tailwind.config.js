@@ -12,7 +12,7 @@ module.exports = {
         'dark-mode': "#1c2632",
         'test': "#2c3642",
         'dark-mode-text': "#b5a8ee",
-        'light-mode': "#fffff0",
+        'light-mode': "#f4f2ed",
         'light-mode-acc': "#f5f5dd",
         'light-mode-text':"#1c2632",
         'gold': '#FFD700',
