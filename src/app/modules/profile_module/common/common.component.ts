@@ -11,9 +11,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
 import {
-  FriendsLeagueInterface,
   FriendsLeague,
-  EnhancedUserInFriendsLeague, UserInFriendsLeague
+  FriendsLeagueInterface,
+  UserInFriendsLeague
 } from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 
@@ -99,35 +99,42 @@ export class CommonComponent implements OnInit{
 
   ) {
     this.supabase.supabaseClient
-      .channel('realtime-posts')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'posts',
-        },
-        async () => {
-          await this.loadPosts(this.profile?.id);
-        }
-      )
-      .subscribe();
-
-
-    this.supabase.supabaseClient
-      .channel('realtime-preferences')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'users',
-        },
-        async (payload) => {
-          this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
-        }
-      )
-      .subscribe();
+        .channel('realtime-updates')
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'posts',
+            },
+            async () => {
+              await this.loadPosts(this.profile?.id);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'users',
+            },
+            async (payload) => {
+              this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'friendships',
+            },
+            async () => {
+              //await this.fetchFriends(this.profile?.id);
+              await this.checkFriendStatus();
+            }
+        )
+        .subscribe();
   }
 
   async ngOnInit(): Promise<void> {
