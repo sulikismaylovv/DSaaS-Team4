@@ -17,8 +17,8 @@ interface Friend {
 })
 export class CreateleagueComponent implements OnInit {
   leagueForm: FormGroup;
-  showModal: boolean = false;
-  submittedLeagueName: string = '';
+  showModal = false;
+  submittedLeagueName = '';
   submittedFriendsUsernames: string[] = [];
   userSearchResults: any[] = [];
 
@@ -35,13 +35,13 @@ export class CreateleagueComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createFriendGroup(username: string = ''): FormGroup {
+  createFriendGroup(username = ''): FormGroup {
     return this.fb.group({
       username: [username, Validators.required]
     });
   }
 
-  addFriend(username: string = ''): void {
+  addFriend(username = ''): void {
     this.friends.push(this.createFriendGroup(username));
   }
 
@@ -133,7 +133,7 @@ export class CreateleagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      this.userSearchResults = await this.userService.searchUserByUsername(searchTerm);
+      this.userSearchResults = await this.userService.searchFriendsByUsername(searchTerm);
     } else {
       this.userSearchResults = [];
     }

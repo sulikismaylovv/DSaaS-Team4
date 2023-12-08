@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {
   FriendsLeagueInterface,
   FriendsLeague,
-  UserInFriendsLeague,
   EnhancedUserInFriendsLeague
 } from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
@@ -17,14 +16,14 @@ import {Session} from "@supabase/supabase-js";
 export class FriendsleagueComponent implements OnInit{
 
 
-  currentUserID: string | undefined; // Add a property to store the current user's ID
+  currentUserID: string | undefined;
 
   leagueIds: number[] = [];
 
   leagues: FriendsLeagueInterface[] = [];
   // username: string = '';
   leagueMembers: { [key: number]: EnhancedUserInFriendsLeague[] } = {};
-  private session: Session | null | undefined;
+  protected session: Session | null | undefined;
   constructor(private friendsLeague: FriendsLeague,
               private userService: UserServiceService,
               private readonly authService: AuthService) {}

@@ -6,7 +6,6 @@ import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
 
 
-
 interface Friend {
   username: string;
 }
@@ -18,11 +17,11 @@ interface Friend {
 export class GloballeagueComponent implements OnInit {
   currentView: 'regional' | 'friends' = 'friends';
   private session: Session | null | undefined;
-  showModal: boolean = false;
+  showModal = false;
 
   leagueForm: FormGroup;
-  showModalConfirm: boolean = false;
-  submittedLeagueName: string = '';
+  showModalConfirm = false;
+  submittedLeagueName = '';
   submittedFriendsUsernames: string[] = [];
   userSearchResults: any[] = [];
 
@@ -44,15 +43,13 @@ export class GloballeagueComponent implements OnInit {
   }
 
 
-
-
-  createFriendGroup(username: string = ''): FormGroup {
+  createFriendGroup(username = ''): FormGroup {
     return this.fb.group({
       username: [username, Validators.required]
     });
   }
 
-  addFriend(username: string = ''): void {
+  addFriend(username = ''): void {
     this.friends.push(this.createFriendGroup(username));
   }
 
@@ -139,7 +136,7 @@ export class GloballeagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      this.userSearchResults = await this.userService.searchUserByUsername(searchTerm);
+      this.userSearchResults = await this.userService.searchFriendsByUsername(searchTerm);
     } else {
       this.userSearchResults = [];
     }

@@ -3,7 +3,7 @@ import {PostsService} from "../../../core/services/posts.service";
 import {Post} from "../../../core/models/posts.model";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserServiceService} from "../../../core/services/user-service.service";
 
 @Component({
@@ -12,7 +12,7 @@ import {UserServiceService} from "../../../core/services/user-service.service";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  postContent: string = '';
+  postContent = '';
   loading = false;
   profile: Profile | undefined;
   usernameRetweeted: string | undefined;
@@ -22,7 +22,7 @@ export class CreatePostComponent implements OnInit {
   originalPostImage?: SafeResourceUrl | undefined; // URL of the original post's image
 
   public uploading: boolean | undefined;
-  public retweet: boolean = false;
+  public retweet = false;
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement> | undefined;
 
@@ -180,7 +180,7 @@ export class CreatePostComponent implements OnInit {
   // Separate method to handle file selection
   onImageSelected(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+    const fileList: FileList | null = element.files;
     if (fileList && fileList.length > 0) {
       this.selectedImage = fileList[0];
 

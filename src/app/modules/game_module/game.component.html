@@ -2,7 +2,7 @@
   <div class="bg-light-mode-acc dark:bg-[#394151] rounded-lg shadow-md p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
-        <p class="text-3xl font-bold text-white">Your Credits: 1.234</p>
+        <p class="text-3xl font-bold text-black dark:text-white">Your Credits: {{availableCredits}}</p>
         <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending your credits</p>
         <div class="flex justify-center">
           <button type="button"
@@ -44,8 +44,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
             1"
           </th>
           <td class="px-6 py-4">
@@ -61,8 +61,8 @@
             100
           </td>
         </tr>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
             1"
           </th>
           <td class="px-6 py-4">
@@ -78,8 +78,8 @@
             100
           </td>
         </tr>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
             1"
           </th>
           <td class="px-6 py-4">
@@ -105,18 +105,16 @@
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
     <!--top modal -->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153]">
-      <div class="flex items-start justify-between">
+      <div class="flex items-center">
         <button (click)="logData()" type="button"
-                class="ml-2 mt-2 text-white bg-light-mode-text hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-violet-950 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="ml-2 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
           <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M13 5H1m0 0 4 4M1 5l4-4" />
           </svg>
         </button>
-        <div class="mt-2 mr-2 flex justify-center items-center flex-grow">
-          <p class="text-black dark:text-white font-bold">Belgian League round 1234</p>
-        </div>
+        <p class="text-black text-center mt-2 ml-100 dark:text-white font-bold">Belgian League</p>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
       <div class="flex items-start justify-between p-4">
@@ -125,8 +123,8 @@
           <p class="ml-2 text-black dark:text-white"> {{fixture.club0?.name}} </p>
         </div>
           <div class="flex flex-col items-center">
-            <p class="text-black dark:text-white font-bold">5:30PM</p>
-            <p class="text-black dark:text-white font-semibold">Today</p>
+            <p class="text-black dark:text-white font-bold">{{time}}</p>
+            <p class="text-black dark:text-white font-semibold">{{timeLeft}}</p>
           </div>
           <div class="flex items-center">
             <p class="truncate mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
@@ -139,13 +137,13 @@
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white">01-Dec-23</p>
+          <p class="font-semibold ml-2 text-black dark:text-white">{{ date }}</p>
         </div>
         <div class="flex mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white ">Enter a venue</p>
+          <p class="font-semibold ml-2 text-black dark:text-white "> {{fixture.venue}} </p>
         </div>
         <div class="flex mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -158,7 +156,7 @@
     <!--Only for smartphone screens credit balance-->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
       <div class="justify-start">
-        <p class="text-3xl font-bold ml-4 mt-4 m text-white">Your Credits: 1.234</p>
+        <p class="text-3xl font-bold ml-4 mt-4 m text-white">Your Credits: {{availableCredits}}</p>
         <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending your credits</p>
         <div class="flex justify-center">
           <button type="button"
@@ -180,7 +178,7 @@
             <img src={{fixture.club0?.logo}} alt="bla bla" class="w-24 h-24 hover:-translate-y-1 transition"
                  [class.opacity-50]="clickedImage && clickedImage!=='team1'"  [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team1'" (click)="toggleContent('team1')">
             <p class="text-white"> {{fixture.club0?.name}} </p>
-            <p class="text-black dark:text-white font-semibold"> 45% </p>
+            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_home}} </p>
           </div>
           <!--Draw-->
           <div class="flex flex-col items-center cursor-pointer">
@@ -188,7 +186,7 @@
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
             <p class="text-white"> Draw </p>
-            <p class="text-black dark:text-white font-semibold"> 10% </p>
+            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_draw}} </p>
           </div>
           <!--Team 2-->
           <div class="flex flex-col items-center pl-3 cursor-pointer">
@@ -198,70 +196,77 @@
                  [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team2'"
                  (click)="toggleContent('team2')">
             <p class="truncate ml-2 text-white">{{fixture.club1?.name}}</p>
-            <p class="text-black dark:text-white font-semibold">55%</p>
+            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_away}} </p>
           </div>
         </div>
         <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
              [class.pointer-events-none]="!showContent">
-          <p class="ml-6 text-black dark:text-white text-sm font-semibold"> How many points would you like to bet? </p>
-          <form class="flex flex-col sm:flex-row items-start mt-2 ml-2 mb-4">
-            <input [(ngModel)]="credits" name="credits" type="number" id="betPoints"
-                   class="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                   placeholder="Enter number of credits" required>
+          <p class="ml-6 text-black dark:text-white text-sm font-semibold"> You have {{availableCredits}} Credits </p>
+          <form class="flex  sm:flex-row items-center justify-center mt-2 ml-2 mb-4">
             <!--Button group for the rest-->
             <div class="flex hidden sm:inline-flex">
-              <!--Plus button-->
-              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                </svg>
-              </button>
+              <!--Min button-->
+              <button (click)="setMinBetAmount()" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Min</button>
               <!--Minus button-->
-              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+              <button (click)="addAmount(-50)" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                 </svg>
               </button>
-              <!--Bet button-->
-              <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                Bet
+              <!--Input field-->
+              <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
+                     class="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     placeholder="Enter number of credits" required
+              >
+              <!--Plus button-->
+              <button (click)="addAmount(50)" type="button" class=" ml-4 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                </svg>
               </button>
               <!--Max button-->
-              <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Max</button>
-              <!--Min button-->
-              <button  type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Min</button>
+              <button (click)="setMaxBetAmount()" type="button" class=" text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Max</button>
+              <!--Bet button-->
+              <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Bet
+              </button>
             </div>
-            <!--Button group smartphones-tablets-->
+          <!--Button group smartphones-tablets-->
             <div class="flex flex-col sm:hidden items-start">
-              <div class="flex items-center justify-center  mt-2">
+              <div class="flex items-center justify-center mt-2">
                 <!--Plus button-->
-                <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <button (click)="addAmount(50)" type="button" class="ml-4 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                  <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                   </svg>
                 </button>
                 <!--Minus button-->
-                <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                <button (click)="addAmount(-50)" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                  <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                   </svg>
                 </button>
+                <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
+                       class="ml-2 mb-2 mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Enter number of credits" required
+                >
                 <!--Bet button-->
-                <button (click)="placeBet()" type="submit" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-                        class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Bet</button>
+                <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                  Bet
+                </button>
               </div>
-              <div class="flex items-center justify-center mt-2">
+              <div class="flex items-center justify-center ml-4 mt-1">
                 <!--Max button-->
-                <button type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Max</button>
+                <button (click)="setMaxBetAmount()" type="button" class=" text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Max</button>
                 <!--Min button-->
-                <button  type="button" class="ml-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Min</button>
+                <button (click)="setMinBetAmount()" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Min</button>
               </div>
             </div>
-
           </form>
         </div>
       </ng-container>
       <!--After betting-->
+      <!--Abdoooo change this :D-->
       <ng-container *ngIf="showNewContent">
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -482,9 +487,6 @@
               Team
             </th>
             <th scope="col" class="px-6 py-3">
-              PL
-            </th>
-            <th scope="col" class="px-6 py-3">
               GD
             </th>
             <th scope="col" class="px-6 py-3">
@@ -493,57 +495,21 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-              1"
+          <tr *ngFor="let team of league; let i = index" class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap ">
+              {{i+1}}
             </th>
             <td class="px-6 py-4">
-              A.S OOST...
+              {{team.name}}
             </td>
             <td class="px-6 py-4">
-              10
+              {{ team.goalDifference }}
             </td>
             <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
+              {{team.points}}
             </td>
           </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1"
-            </th>
-            <td class="px-6 py-4">
-              A.S OOST...
-            </td>
-            <td class="px-6 py-4">
-              10
-            </td>
-            <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
-            </td>
-          </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1"
-            </th>
-            <td class="px-6 py-4">
-              A.S OOST...
-            </td>
-            <td class="px-6 py-4">
-              10
-            </td>
-            <td class="px-6 py-4">
-              20
-            </td>
-            <td class="px-6 py-4">
-              100
-            </td>
-          </tr>
+
           </tbody>
         </table>
       </div>

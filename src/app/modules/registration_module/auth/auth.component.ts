@@ -6,9 +6,10 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Session} from "@supabase/supabase-js";
-import{CustomAlertComponent} from "../custom-alert/custom-alert.component";
 import {catchError, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
+import {MatDialog} from "@angular/material/dialog";
+import {TermsAndConditionsComponent} from "../terms-and-conditions/terms-and-conditions.component";
 
 @Component({
     selector: 'app-auth',
@@ -28,6 +29,7 @@ export class AuthComponent implements OnInit {
         protected readonly authService: AuthService,
         private router: Router,
         public navbarService: NavbarService,
+        protected dialog: MatDialog,
         private formBuilder: FormBuilder) {
         this.registerForm = this.formBuilder.group({
             email: formBuilder.control('', [Validators.required, Validators.email, Validators.minLength(5)], [this.emailExistsValidator.bind(this)]),
@@ -73,10 +75,6 @@ export class AuthComponent implements OnInit {
                 const email = this.registerForm.value.email as string;
                 const password = this.registerForm.value.password as string;
 
-                if(this.emailExists(email)) {
-                  alert('Email already exists');
-                  return;
-                }
 
                 // Call the simplified register method without additional details
                 await this.authService.register(email, password);
@@ -110,4 +108,16 @@ export class AuthComponent implements OnInit {
       }
     }
   }
+
+    openTCModal(): void {
+      const dialogRef = this.dialog.open(TermsAndConditionsComponent, {
+        width: '600px',
+        height:'700px',
+        data: 0
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
 }
