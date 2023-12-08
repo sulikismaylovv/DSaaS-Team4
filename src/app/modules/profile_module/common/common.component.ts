@@ -76,7 +76,7 @@ export class CommonComponent implements OnInit{
           schema: 'public',
           table: 'posts',
         },
-        (payload) => {
+        () => {
           this.loadPosts(this.profile?.id).then(r => {
           });
         }
@@ -179,7 +179,6 @@ export class CommonComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 
@@ -196,7 +195,6 @@ export class CommonComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 

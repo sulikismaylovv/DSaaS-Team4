@@ -144,13 +144,13 @@ export class ShopComponent implements OnInit {
       }
     });
 
-    this.loadUserCredits();
+    this.loadUserCredits().then(r => {});
     // If you're using OnPush change detection strategy, manually trigger change detection
     this.changeDetectorRef.detectChanges();
   }
 
 
-  async fetchPlayerFavoriteClub(userId: string, excludePlayerIds: number[] = [], favoriteTeamId?: number): Promise<PlayerWithClubDetails[]> {
+  async fetchPlayerFavoriteClub(userId: string, _excludePlayerIds: number[] = [], favoriteTeamId?: number): Promise<PlayerWithClubDetails[]> {
     try {
       const ownedPlayerIds = await this.getPurchasedPlayerIds(userId);
       console.log("Owned player IDs:", ownedPlayerIds);

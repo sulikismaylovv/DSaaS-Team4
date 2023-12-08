@@ -36,8 +36,8 @@ export class PostsComponent implements OnInit {
                     schema: 'public',
                     table: 'posts',
                 },
-                (payload) => {
-                    this.loadPosts();
+              async (payload) => {
+                await this.loadPosts();
                 }
             )
             .subscribe();

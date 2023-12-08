@@ -243,8 +243,8 @@ export class GameComponent implements OnInit {
     });
   }
 
-  logData() {
-    console.log(this.lineupHome);
+  async logData() {
+    await this.router.navigate(['/home']);
   }
 
   convertToLocaleTimeString(dateString: string): string {

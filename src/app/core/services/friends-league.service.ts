@@ -23,6 +23,7 @@ export interface UserInFriendsLeague {
 @Injectable({
   providedIn: 'root'
 })
+
 export class FriendsLeague {
   constructor(private supabase: SupabaseService,private authService: AuthService) {}
 

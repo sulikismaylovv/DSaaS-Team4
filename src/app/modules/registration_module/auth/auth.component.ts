@@ -6,10 +6,8 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Session} from "@supabase/supabase-js";
-import{CustomAlertComponent} from "../custom-alert/custom-alert.component";
 import {catchError, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
-import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
 import {MatDialog} from "@angular/material/dialog";
 import {TermsAndConditionsComponent} from "../terms-and-conditions/terms-and-conditions.component";
 
