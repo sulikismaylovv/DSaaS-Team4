@@ -53,9 +53,11 @@ export class MatchesComponent implements OnInit {
   }
 
     async ngOnInit() {
-      await this.loadUserPreferences();
         this.setWeek(new Date());
         await this.fetchFixturesForWeek();
+      if (this.authService.isLogged()) {
+        await this.loadUserPreferences();
+      }
   }
 
   // Set the start of the week to Friday and end to next Thursday
