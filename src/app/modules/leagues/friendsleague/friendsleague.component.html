@@ -3,12 +3,24 @@
 <div class="rankings-section bg-dark-mode rounded-lg w-full max-w-md mx-auto text-white">
   <!-- Carousel Navigation Controls -->
   <div class="flex justify-between w-full px-4 py-2">
-    <button (click)="moveToPreviousLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+    <button (click)="moveToPreviousLeague()"
+            class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+      </svg>
+    </button>
+    <button (click)="moveToNextLeague()"
+            class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+      </svg>
+    </button>
+    <!--<button (click)="moveToPreviousLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
       Previous
-    </button>
-    <button (click)="moveToNextLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+    </button>-->
+   <!-- <button (click)="moveToNextLeague()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
       Next
-    </button>
+    </button>-->
   </div>
   <!-- Carousel Content -->
   <div class="flex flex-col items-center gap-4">
