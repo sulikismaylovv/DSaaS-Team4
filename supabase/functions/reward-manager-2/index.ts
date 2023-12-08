@@ -7,7 +7,7 @@ import {
   SupabaseClient,
 } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
-interface UserData{
+interface UserData {
   user_id: string;
   updated_at: Date;
   is_eligible?: boolean;
@@ -15,38 +15,48 @@ interface UserData{
 
 
 
-async function getUserData(supabase: SupabaseClient): Promise<UserData[] | undefined> {
-  // const {data, error} = await supabase.auth.admin.listUsers();
-  const {data, error} = await supabase.auth.getUser();
-  console.log(data.user?.last_sign_in_at);
-  // let { data, error } = await supabase
-  //   .from('auth.users')
-  //   .select('id, updated_at');
 
-  if (error) {
-    console.error(error);
-    return []; // Return an empty array in case of an error
-  }
-
-  if (!data) {
-    return []; // Return an empty array if data is undefined
-  }
-
-  // Map the data to the UserData interface and check eligibility
-  // const users: UserData[] = data.map(user => {
-  //   const updatedDate = new Date(user.updated_at);
-  //   const currentDate = new Date();
-  //   const hoursDifference = (currentDate.getTime() - updatedDate.getTime()) / (1000 * 60 * 60);
-
-  //   return {
-  //     user_id: user.id,
-  //     updated_at: updatedDate,
-  //     is_eligible: hoursDifference <= 24
-  //   };
-  // });
-
-  return undefined;
+interface UserData {
+  user_id: string;
+  updated_at: Date;
+  is_eligible?: boolean;
 }
+
+async function processUserData(supabase: SupabaseClient): Promise<UserData[]> {
+  const response = await supabase.auth.admin.listUsers();
+
+  // Check for errors
+  if (response.error) {
+      console.error(response.error);
+      throw response.error;
+  }
+
+  // Extract users from the response
+  const users = response.data.users;
+  console.log("Response from Supabase:", response);
+  console.log(`Fetched ${users.length} users`);
+  // Process users to create UserData array
+  return users.map(user => {
+      if (user.updated_at === undefined) {
+          // Handle the case where updated_at is undefined
+          // For example, throw an error or continue to the next user
+          throw new Error('Updated at date is undefined for user ' + user.id);
+      }
+
+      const updated_at = new Date(user.updated_at);
+      const is_eligible = (new Date().getTime() - updated_at.getTime()) < 24 * 60 * 60 * 1000;
+      console.log(`Processing user ${user.id}: updated_at = ${updated_at}, is_eligible = ${is_eligible}`);
+
+      return {
+          user_id: user.id,
+          updated_at: updated_at,
+          is_eligible: is_eligible
+      };
+  });
+}
+
+
+
 
 async function updateUserCreditsAndLogStatus(supabase: SupabaseClient, userData: UserData[]) {
   for (const user of userData) {
@@ -63,7 +73,7 @@ async function updateUserCreditsAndLogStatus(supabase: SupabaseClient, userData:
     if (user.is_eligible) {
       // Check if the user exists in the userinbetting table
       let { data: userInBettingData, error: bettingError } = await supabase
-        .from('userinbetting')
+        .from('usersinbetting')
         .select('credits')
         .eq('userID', user.user_id)
         .maybeSingle(); // maybeSingle will return null if not found instead of an error
@@ -77,9 +87,11 @@ async function updateUserCreditsAndLogStatus(supabase: SupabaseClient, userData:
         // If the user exists, update the credits by adding 200
         const newCredits = userInBettingData.credits + 200;
         const { error: updateError } = await supabase
-          .from('userinbetting')
+          .from('usersinbetting')
           .update({ credits: newCredits })
           .eq('userID', user.user_id);
+
+        console.log('Updated credits for user:', user.user_id, 'to', newCredits);
 
         if (updateError) {
           console.error('Error updating credits for user:', user.user_id, updateError);
@@ -87,8 +99,8 @@ async function updateUserCreditsAndLogStatus(supabase: SupabaseClient, userData:
       } else {
         // If the user does not exist, create a new entry with 1000 credits
         const { error: createError } = await supabase
-          .from('userinbetting')
-          .insert([{ userID: user.user_id, credits: 1000 }]);
+          .from('usersinbetting')
+          .insert([{ userID: user.user_id, credits: 1200 }]);
 
         if (createError) {
           console.error('Error creating user in betting table:', user.user_id, createError);
@@ -106,14 +118,14 @@ Deno.serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    "***",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2amhvaWZtYWJ4aXRrZWxmZW9kIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NzEzNDc0MywiZXhwIjoyMDEyNzEwNzQzfQ.E7YyyKG0NUWAyk0mmaVUhPd4PeDW2QqNqeX3YtFP6XQ",
     {
       global: {
         headers: { Authorization: req.headers.get("Authorization")! },
       },
     },
   );
-  const userData = await getUserData(supabaseClient);
-  updateUserCreditsAndLogStatus(supabaseClient, userData);
+  const userData = await processUserData(supabaseClient);
+  await updateUserCreditsAndLogStatus(supabaseClient, userData);
   return new Response()
 })
