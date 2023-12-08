@@ -106,9 +106,8 @@ export class CommonComponent implements OnInit{
           schema: 'public',
           table: 'posts',
         },
-        () => {
-          this.loadPosts(this.profile?.id).then(r => {
-          });
+        async () => {
+          await this.loadPosts(this.profile?.id);
         }
       )
       .subscribe();
@@ -304,12 +303,12 @@ export class CommonComponent implements OnInit{
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
     if(this.userRefId == null) throw new Error('User ID is undefined');
-    console.log(this.userRefId);
+    //console.log(this.userRefId);
     const targetUserId = this.userRefId;
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
     // This is a hypothetical method that you would need to implement
     const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
-    console.log(status);
+    //console.log(status);
     if(status === 'accepted') {
       this.friendRequestStatus = FriendRequestStatus.Friends;
     } else if (status === 'pending') {
@@ -326,7 +325,7 @@ export class CommonComponent implements OnInit{
     if (currentUserId) {
       this.friendshipService.removeFriend(currentUserId, targetUserId)
         .then(() => {
-          console.log('Friend removed');
+          //console.log('Friend removed');
           this.friendRequestStatus = FriendRequestStatus.None;
           // You can update the UI accordingly
         })
