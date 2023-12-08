@@ -7,7 +7,7 @@
       <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Retweeter's Username -->
-        <p class="font-bold text-md dark:text-white" (click)="onAvatarClick(post.user_id)">{{ usernameRetweeted }}</p>
+        <p (click)="onAvatarClick(post.user_id)" class="font-bold text-md dark:text-white">{{ username }}</p>
         <!-- Retweet Date -->
         <p class="text-sm text-gray-600 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
@@ -24,7 +24,7 @@
       <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Original Poster's Username -->
-        <p class="font-bold text-md dark:text-white" >{{ username }}</p>
+        <p class="font-bold text-md dark:text-white">{{ usernameRetweeted }}</p>
         <!-- Original Post Date -->
         <p class="text-sm text-gray-600 dark:text-white"  >{{ originalPost.created_at | date: 'medium' }}</p>
       </div>
