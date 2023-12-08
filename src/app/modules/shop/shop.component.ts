@@ -63,10 +63,23 @@ export class ShopComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
 
   ) {
+    this.supabase.supabaseClient
+        .channel('realtime-player-purchases')
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'user_player_purchases',
+            },
+            async () => {
+              await this.initializeUser();
+            }
+        )
   }
 
-  ngOnInit() {
-    this.initializeUser();
+  async ngOnInit() {
+    await this.initializeUser();
   }
 
   async initializeUser() {
@@ -131,7 +144,7 @@ export class ShopComponent implements OnInit {
     return data.map((purchase) => purchase.player_id);
   }
 
-  updatePlayerOwnership() {
+  async updatePlayerOwnership() {
     if (this.randomPlayerFavoriteClub) {
       this.randomPlayerFavoriteClub.owned = this.ownedPlayers.has(this.randomPlayerFavoriteClub.id);
     }
@@ -141,7 +154,7 @@ export class ShopComponent implements OnInit {
       }
     });
 
-    this.loadUserCredits().then(r => {});
+    await this.loadUserCredits();
     // If you're using OnPush change detection strategy, manually trigger change detection
     this.changeDetectorRef.detectChanges();
   }
@@ -268,6 +281,7 @@ export class ShopComponent implements OnInit {
       }
 
       // Update the user credits
+      console.log('Updating user credits');
       const creditsUpdated = await this.betsService.updateCredits(userId, cost);
       if (!creditsUpdated) {
         console.error('Failed to update user credits');

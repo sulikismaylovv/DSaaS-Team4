@@ -17,19 +17,25 @@ export class FriendshipService {
 
   // Get the list of friends where the friendship status is 'accepted'
   async getFriends(userId: string): Promise<string[]> {
-    const { data, error } = await this.supabase.supabaseClient
-      .from('friendships')
-      .select('*')
-      .or(`user1_id.eq.${userId},user2_id.eq.${userId}`)
-      .eq('status', 'accepted');
+    try {
+      const {data, error} = await this.supabase.supabaseClient
+          .from('friendships')
+          .select('*')
+          // Combine the OR and conditions correctly
+          .or(`user1_id.eq.${userId},user2_id.eq.${userId}`)
+          .eq('status', 'accepted');
 
-    if (error) throw error;
+      if (error) throw error;
 
-    // Extract the friend IDs
-    return data.map(friendship => {
-      // If the current user is user1, then the friend is user2, and vice versa
-      return friendship.user1_id === userId ? friendship.user2_id : friendship.user1_id;
-    });
+      // Filter out the current user's ID and only return the friend's ID
+      return data.map(friendship => {
+        return friendship.user1_id === userId ? friendship.user2_id : friendship.user1_id;
+      });
+
+    } catch (error) {
+      console.error('Error fetching friends:', error);
+      throw error;
+    }
   }
 
 
