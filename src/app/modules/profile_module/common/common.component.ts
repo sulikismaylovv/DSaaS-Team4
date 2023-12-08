@@ -12,9 +12,7 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
 import {
   FriendsLeagueInterface,
-  FriendsLeague,
-  EnhancedUserInFriendsLeague, UserInFriendsLeague
-} from "../../../core/services/friends-league.service";
+  FriendsLeague} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 
 
