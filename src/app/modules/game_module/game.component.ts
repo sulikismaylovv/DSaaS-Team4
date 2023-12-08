@@ -12,6 +12,8 @@ import { AuthService } from "src/app/core/services/auth.service";
 import { Club } from "src/app/core/models/club.model";
 import { SupabaseFixture, SupabaseFixtureModel, } from "src/app/core/models/supabase-fixtures.model";
 import { SupabaseService } from "src/app/core/services/supabase.service";
+import { Observable } from "rxjs";
+import { from } from "rxjs";
 
 @Component({
   selector: "app-game",
@@ -37,6 +39,7 @@ export class GameComponent implements OnInit {
   credits = 100;
   testingdata: any;
   betAlreadyPlaced = false;
+  betInfo$: Observable<{ betAmount: number, teamChosen: string }> = new Observable<{ betAmount: number, teamChosen: string }>();
 
   time = "";
   timeLeft = "";
@@ -73,80 +76,120 @@ export class GameComponent implements OnInit {
         this.betAlreadyPlaced = await this.betsService.checkIfBetExists(await this.getBetterID(), this.fixture.fixtureID);
         console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
         this.cdr.detectChanges();
+        if(this.betAlreadyPlaced) {
+          console.log("getBetInfo() called");
+          this.getBetInfo();
+        }
       }).subscribe();
-    }
+  }
 
-    logData() {
-      console.log(this.testingdata);
-    }
   // async updateTheTime() {
   //   this.time = this.formatDateToHHMM(this.fixture.time);
   //   this.cdr.detectChanges();
   // }
   async updateTheTime() {
-      this.time = this.convertToLocaleTimeString(this.fixture.time);
-      this.timeLeft = this.convertDate(this.fixture.time);
-      this.date = this.convertToLocalReadableDateString(this.fixture.time);
-      this.cdr.detectChanges();
-    }
-  ngOnInit(): void {
+    this.time = this.convertToLocaleTimeString(this.fixture.time);
+    this.timeLeft = this.convertDate(this.fixture.time);
+    this.date = this.convertToLocalReadableDateString(this.fixture.time);
+    this.cdr.detectChanges();
+  }
+
+
+
+    ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id")!;
-        this.fixtureTransferService.currentFixture.subscribe((fixture) => {
-          if (fixture?.fixtureID === id) {
-            this.fixture = fixture;
-            console.log("fetchFixture() called");
-            console.log("date.time: ", fixture.time)
+      this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
+        if (fixture?.fixtureID === id) {
+          this.fixture = fixture;
+          //console.log("fetchFixture() called");
+          //console.log("date.time: ", fixture.time)
 
-            this.updateTheTime();
-          } else {
-            // this.fetchFixture(id).then(() => this.updateTheTime());
-            this.fetchFixture(id);
+          this.updateTheTime();
+          this.checkIfBetCanBePlaced();
+          if(this.betAlreadyPlaced) {
+            //console.log("getBetInfo() called");
+            this.getBetInfo().then(() => this.logData());
           }
-        });
-      });
-      this.navbarService.setShowNavbar(true);
-      this.time = "test";
-      // this.fetchLineup(this.fixture.fixtureID);
-      // this.initializeLineups();
-      this.updateTheTime();
-      this.getUserCredits();
-      this.checkIfBetCanBePlaced();
-      this.getStanding();
-    }
+        } else {
+          // this.fetchFixture(id).then(() => this.updateTheTime());
+          this.fetchFixture(id);
+        }
 
-  checkIfBetCanBePlaced() {
-      const fixtureTimeUTC0 = new Date(this.fixture.time);
-      // Convert fixture time to UTC+1
-      const fixtureTimeUTC1 = new Date(
-        fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
-        );
-        const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
-      this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
+        this.navbarService.setShowNavbar(true);
+        this.time = "test";
+        async () => await this.updateTheTime();
+        // this.fetchLineup(this.fixture.fixtureID);
+        // this.initializeLineups();
+        this.getUserCredits();
+        this.getStanding();
+      });
+    });
+
+  }
+
+  async getBetInfo() {
+    const user = this.authService.session?.user;
+    if (user) {
+      const betterID = await this.betsService.getBetterID(user.id);
+      const bet = await this.betsService.fetchBetInfo(betterID, this.fixture.fixtureID);
+      this.betAmount = bet.credits;
+      this.teamChosen = bet.team_chosen;
     }
+    this.cdr.detectChanges();
+  }
+
+  fetchBetInfoObservable(betterID: number, fixtureID: number): Observable<Bet> {
+    return from(this.betsService.fetchBetInfo(betterID, fixtureID));
+  }
+
+
+
+
+  logData(){
+    console.log("team chosen: ", this.teamChosen);
+    console.log("bet amount: ", this.betAmount);
+  }
+
+  async checkIfBetCanBePlaced() {
+    const fixtureTimeUTC0 = new Date(this.fixture.time);
+    // Convert fixture time to UTC+1
+    const fixtureTimeUTC1 = new Date(
+      fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
+    );
+    const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
+    this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
+    this.betAlreadyPlaced = await this.betsService.checkIfBetExists(await this.getBetterID(), this.fixture.fixtureID);
+    if(this.betAlreadyPlaced) {
+      console.log("getBetInfo() called");
+      this.getBetInfo();
+    }
+  }
 
   async fetchFixture(fixtureID: number) {
-      const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
-      console.log("fetchFixture() called");
-      console.log("date.time: ",data.time)
-      this.fixture = data; // Ensure that this.fixture is updated with the fetched data
-      this.updateTheTime();
+    const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
+    console.log("fetchFixture() called");
+    console.log("date.time: ", data.time)
+    this.fixture = data; // Ensure that this.fixture is updated with the fetched data
+    await this.updateTheTime();
+    this.checkIfBetCanBePlaced();
 
-      // this.time = this.formatDateToHHMM(this.fixture.time);
-    }
+
+    // this.time = this.formatDateToHHMM(this.fixture.time);
+  }
 
   setMinBetAmount() {
-      this.betAmount = 50;
-    }
+    this.betAmount = 50;
+  }
 
   setMaxBetAmount() {
-      this.betAmount = this.availableCredits;
-    }
+    this.betAmount = this.availableCredits;
+  }
 
   addAmount(number: number) {
-      if(
-        this.betAmount + number > 0 &&
-          this.betAmount + number <= this.availableCredits
+    if (
+      this.betAmount + number > 0 &&
+      this.betAmount + number <= this.availableCredits
     ) {
       this.betAmount += number;
       console.log(this.betAmount)
@@ -223,7 +266,6 @@ export class GameComponent implements OnInit {
       this.handleBetAlreadyExists();
       throw new Error("Bet already exists");
     }
-    console.log("placeBet() finished. betCanBePlaced: ", this.betCanBePlaced);
   }
 
   handleBetAlreadyExists() {
