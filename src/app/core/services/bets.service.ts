@@ -3,7 +3,6 @@ import { SupabaseService } from './supabase.service';
 import { Bet, Better } from '../models/bets.model';
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -120,7 +119,7 @@ export class BetsService {
         .single();
 
       if (fetchError) throw fetchError;
-      if (!data) {
+      if (!currentData) {
         console.error('User not found');
         return false;
       }
@@ -143,6 +142,7 @@ export class BetsService {
       throw error;
     }
   }
+
 
   async checkIfUserIsRegistered(userID: string): Promise<boolean> {
     try {

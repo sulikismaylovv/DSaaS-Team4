@@ -12,8 +12,7 @@
 
 <ng-template #loadedContent>
 <section class="bg-light-mode dark:bg-dark-mode" >
-
-  <div class="bg-light-mode dark:bg-dark-mode my-8 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+  <div class="bg-light-mode dark:bg-dark-mode p-4 2xl:ml-64 lg:ml-28 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
     <div class="flex items-center max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
       <img class="object-contain min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" [src]="bgImageSafeUrl" alt="None">
@@ -42,7 +41,7 @@
           </div>
 
           <!-- Start: Own profile only -->
-          <div>
+          <div class="p-4">
             <ng-content select=".first-code"></ng-content>
           </div>
           <!-- End: Own profile only -->
@@ -69,16 +68,18 @@
             </ul>
           </div>
           <div class="flex-grow">
+
+            <!-- Friends -->
             <ng-container *ngIf="selectedLink === 'link1'">
               <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg px-4 2xl:p-8 p-4 h-full">
                 <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
-                  <ul class="grid grid-cols-2 md:grid-cols-3">
+                  <ul class="grid grid-cols-2 md:grid-cols-3 gap-2">
                     <ng-container>
                       <li *ngFor="let friend of friendsList.slice(0,12)" class="xl:mb-2 mx-1 xl:mx-2">
                         <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md p-1">
-                          <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'" alt="{{friend.profile.username}}" class="w-6 h-6 md:w-8 md:w-8 xl:w-10 xl:h-10 rounded-full object-cover">
-                          <span class="mx-1 text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{friend.profile.username}}</span>
-                          <img [src]="'../assets/icons/' + friendActions[1]" class="w-4 h-4 xl:w-6 xl:h-6">
+                          <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'" (click)="onFriendClick(friend.profile.id)" alt="{{friend.profile.username}}" class="w-6 h-6 md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full object-cover">
+                          <span class="mx-1 text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{ limitUsernameLength(friend.profile.username, 20) }}</span>
+                            <img [src]="'../assets/icons/' + (friendRequestStatus === 'friends' ? friendActions[1] : friendActions[0])"class="w-4 h-4 xl:w-6 xl:h-6">
                         </div>
                       </li>
                     </ng-container>
@@ -100,7 +101,7 @@
                       <div (click)="onFriendClick(friend.profile.id)" class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
                         <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'" alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
                         <span class=" mx-8 text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
-                        <img [src]="'../assets/icons/' + friendActions[1]" class="w-6 h-6">
+                        <img [src]="'../assets/icons/' + (friendRequestStatus === 'friends' ? friendActions[1] : friendActions[0])" class="w-6 h-6">
                       </div>
                     </li>
                   </ul>
@@ -200,20 +201,20 @@
         <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg pt-2 px-2 xl:pt-4 xl:px-4 mt-4 xl:mt-2 xl:ml-2 relative">
           <div class="opacity-30 p-6 ">
             <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Achievements</h1>
-            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
-              <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
-                <ng-container *ngFor="let league of leagueList; let i = index">
-                  <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
-                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
+            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 lg:py-4 rounded-lg">
+              <div class="flex flex-col gap-2 lg:gap-4">
+                <ng-container *ngFor="let achievement of achievementList; let i = index">
+                  <div *ngIf="i < 3" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
                     <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
+                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg"> {{achievement}} </h1>
                   </div>
                 </ng-container>
                 <!-- Additional items if needed -->
               </div>
             </div>
           </div>
-          <div class="flex justify-center items-center absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode">
-            <h1 class="text-white md:text-xl lg:text-3xl">Coming Soon</h1>
+          <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode p-1">
+            <h1 class="text-white md:text-xl lg:text-2xl">Coming Soon</h1>
           </div>
         </div>
       </div>
@@ -239,12 +240,12 @@
       </div>
 
       <!-- User Posts -->
-      <div class=" p-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
+      <div class=" px-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
           <!-- Post 1 -->
           <div *ngIf="posts.length > 0; else noPosts">
-            <div *ngFor="let post of posts" class="mb-4">
+            <div *ngFor="let post of posts" class="my-4">
               <div (click)="onPostClick(post.id)">
                 <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
                                [post]="post"></app-post-view>

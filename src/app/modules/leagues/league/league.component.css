@@ -21,10 +21,10 @@
 
 .league-container {
   display: flex;
-  justify-content: space-around; /* This will space out the crests evenly */
+  justify-content: normal; /* This will space out the crests evenly */
   align-items: flex-end; /* Aligns the badges at the bottom */
   flex-wrap: wrap; /* Allows the badges to wrap onto the next line if necessary */
-  gap: 5px; /* Adjust the gap between crests as needed */
+  gap: 2px; /* Adjust the gap between crests as needed */
 }
 
 .crest {
@@ -34,13 +34,14 @@
   width: 80px;
   height: auto;
   margin-bottom: 1rem; /* Adds space below each crest */
-
-
+  transform: scale(0.7);
+  padding: 1px;
 }
+
 .league-info {
   text-align: center;
-  margin-top: 8px; /* Spacing between crests and text, adjust as needed */
-  padding: 5px;
+  margin-top: 4px; /* Spacing between crests and text, adjust as needed */
+  padding: 1px;
 }
 
 
@@ -51,7 +52,7 @@
   background-position: center;
   background-size: cover;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
-  padding: 5px;
+  padding: 2px;
   margin-bottom: 0.5rem; /* Adds space below the badge */
 
 }
@@ -62,7 +63,7 @@
 .platinum { background-image: url('src/assets/crests/platinumcrest.svg');}
 
 .league-badge:hover {
-  transform: scale(1.1);
+  transform: scale(0.9);
 }
 
 .coming-soon-overlay {
@@ -139,10 +140,14 @@
 }
 
 .icon-container {
+  display: flex;
+  justify-content: center; /* Center the icon */
+  align-items: center;
   text-align: center; /* Center the icon */
   background-color: #848CA9; /* Light gray background for the icon area */
   padding: 20px; /* Space around the icon */
   width: 100%; /* Ensure icon container fills card width */
+
 }
 
 .icon {

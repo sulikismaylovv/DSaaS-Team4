@@ -11,9 +11,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
 import {
-  FriendsLeagueInterface,
   FriendsLeague,
-  EnhancedUserInFriendsLeague, UserInFriendsLeague
+  FriendsLeagueInterface,
+  UserInFriendsLeague
 } from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 
@@ -69,6 +69,7 @@ export class CommonComponent implements OnInit{
   infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
+  achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
   selectedLink = 'link1';
 
@@ -98,35 +99,42 @@ export class CommonComponent implements OnInit{
 
   ) {
     this.supabase.supabaseClient
-      .channel('realtime-posts')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'posts',
-        },
-        async () => {
-          await this.loadPosts(this.profile?.id);
-        }
-      )
-      .subscribe();
-
-
-    this.supabase.supabaseClient
-      .channel('realtime-preferences')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'users',
-        },
-        async (payload) => {
-          this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
-        }
-      )
-      .subscribe();
+        .channel('realtime-updates')
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'posts',
+            },
+            async () => {
+              await this.loadPosts(this.profile?.id);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'users',
+            },
+            async (payload) => {
+              this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'friendships',
+            },
+            async () => {
+              //await this.fetchFriends(this.profile?.id);
+              await this.checkFriendStatus();
+            }
+        )
+        .subscribe();
   }
 
   async ngOnInit(): Promise<void> {
@@ -176,7 +184,12 @@ export class CommonComponent implements OnInit{
     }
   }
 
-
+  limitUsernameLength(username: string, maxLength: number): string {
+    if (username.length > maxLength) {
+      return `${username.slice(0, maxLength)}...`;
+    }
+    return username;
+  }
 
   async sortPreference(preference: Preference): Promise<void> {
     if (preference.favorite_club) {
@@ -359,9 +372,7 @@ export class CommonComponent implements OnInit{
 
   async onFriendClick(friendId: string | undefined): Promise<void> {
     if (friendId === undefined) throw new Error('Friend ID is undefined');
-    await this.router.navigate(['/profile', friendId]).then(() => {
-      window.location.reload();
-    });
+    await this.router.navigate(['/profile', friendId]);
   }
 
 
