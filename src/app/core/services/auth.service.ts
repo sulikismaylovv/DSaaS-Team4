@@ -52,6 +52,11 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
 
+
+    isLogged(): boolean {
+        return this._session != null;
+    }
+
   checkEmailExists(email: string): Observable<boolean> {
     return from(this.supabase.supabaseClient
       .from('users')

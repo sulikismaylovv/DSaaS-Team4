@@ -1,11 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {addDays, compareAsc, endOfWeek, startOfWeek, subDays,} from "date-fns";
-import {Fixture} from "../../../core/models/fixtures.model";
 import {ApiService} from "../../../core/services/api.service";
 import {Router} from "@angular/router";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
 import {SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
+import {AuthService} from "../../../core/services/auth.service";
+import {Club} from "../../shop/shop.component";
+import {PreferencesService} from "../../../core/services/preference.service";
+
 
 @Component({
   selector: "app-matches",
@@ -22,31 +25,37 @@ export class MatchesComponent implements OnInit {
   groupedFixtures: { [key: string]: SupabaseFixture[] } = {}; //grouped by date
   groupedFixtureKeys: string[] = [];
 
+  favoriteClubId?: number;
+  followedClubIds: number[] = [];
+
   constructor(
     private apiService: ApiService,
     private datePipe: DatePipe,
     private router: Router,
+    private authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
+    private preferenceService: PreferencesService
   ) {
     this.currentDate = new Date();
     this.stringDate = this.currentDate.toISOString().split("T")[0];
   }
 
-  onGameSelect(fixture: SupabaseFixture) {
-    this.fixtureTransferService.changeFixture(fixture);
-    this.router.navigateByUrl("/game/" + fixture.fixtureID, {
-      state: { fixture: fixture },
-    });
-  }
-  ngOnInit() {
-    this.setWeek(new Date());
-    this.fetchFixturesForWeek();
+    async onGameSelect(fixture: SupabaseFixture) {
+        if (this.authService.isLogged()) {
+            console.log("Authenticated");
+            this.fixtureTransferService.changeFixture(fixture);
+            await this.router.navigateByUrl("/game/" + fixture.fixtureID, {
+                state: {fixture: fixture},
+            });
+        } else {
+            await this.router.navigateByUrl("/login");
+        }
   }
 
-  goToGamePage(fixture: Fixture) {
-    this.router.navigateByUrl("/game/" + fixture.fixture.id, {
-      state: { fixture: fixture },
-    });
+    async ngOnInit() {
+      await this.loadUserPreferences();
+        this.setWeek(new Date());
+        await this.fetchFixturesForWeek();
   }
 
   // Set the start of the week to Friday and end to next Thursday
@@ -55,24 +64,40 @@ export class MatchesComponent implements OnInit {
     this.endDate = endOfWeek(date, { weekStartsOn: 5 });
   }
 
+  async loadUserPreferences() {
+    // Replace with your actual preference fetching logic
+    const preferences = await this.preferenceService.getPreferences(<string>this.authService.session?.user?.id);
+
+    // Parse the favorite club ID as a number, if it exists
+    const favoritePreference = preferences.find(p => p.favorite_club);
+    this.favoriteClubId = favoritePreference ? parseInt(favoritePreference.club_id) : undefined;
+
+    // Parse the followed club IDs as numbers
+    this.followedClubIds = preferences
+        .filter(p => p.followed_club)
+        .map(p => parseInt(p.club_id))
+        .filter(id => !isNaN(id)); // Filter out any NaN results from parseInt
+
+  }
+
+  isClubRelevantToUserPreferences(club: Club): boolean {
+    return club.id === this.favoriteClubId || this.followedClubIds.includes(<number>club.id);
+  }
+
   async fetchFixturesForWeek() {
     const startDateString = this.getDateAsString(this.startDate);
     const endDateString = this.getDateAsString(this.endDate);
     try {
-      const fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
-        startDateString,
-        endDateString,
+      this.fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
+          startDateString,
+          endDateString,
       );
-      this.fixtures = fixtures;
+
       this.groupFixturesByDate();
       console.log(this.fixtures);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  getGroupedFixtureKeys(): string[] {
-    return Object.keys(this.groupedFixtures);
   }
 
   groupFixturesByDate(): void {
