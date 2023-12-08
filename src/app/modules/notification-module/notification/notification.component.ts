@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
@@ -31,7 +31,7 @@ export class NotificationComponent implements OnInit {
       .on(
       'postgres_changes',
       {
-        event: 'UPDATE',
+        event: '*',
         schema: 'public',
         table: 'friendships',
       },
