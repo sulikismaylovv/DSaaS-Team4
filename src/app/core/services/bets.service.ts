@@ -112,11 +112,11 @@ export class BetsService {
   async updateCredits(userID: string, creditsOffset: number): Promise<boolean> {
     try {
       // Fetch current credits and activeCredits
-      const { data, error: fetchError } = await this.supabase.supabaseClient
-        .from('usersinbetting')
-        .select('credits, activeCredits')
-        .eq('userID', userID)
-        .single();
+      const {data: currentData, error: fetchError} = await this.supabase.supabaseClient
+          .from('usersinbetting')
+          .select('credits, activeCredits')
+          .eq('userID', userID)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!currentData) {
@@ -125,24 +125,24 @@ export class BetsService {
       }
 
       // Calculate new values
-      const newCredits = data.credits - creditsOffset;
-      const newActiveCredits = data.activeCredits + creditsOffset;
+      const newCredits = currentData.credits - creditsOffset;
+      const newActiveCredits = currentData.activeCredits + creditsOffset;
+
+      console.log('New credits:', newCredits);
 
       // Update both credits and activeCredits
-      const { error: updateError } = await this.supabase.supabaseClient
-        .from('usersinbetting')
-        .update({ credits: newCredits, activeCredits: newActiveCredits })
-        .eq('userID', userID);
+      const {data: updateData, error: updateError} = await this.supabase.supabaseClient
+          .from('usersinbetting')
+          .update({credits: newCredits, activeCredits: newActiveCredits})
+          .eq('userID', userID);
 
       if (updateError) throw updateError;
-
       return true;
     } catch (error) {
       console.error('Error updating user credits:', error);
       throw error;
     }
   }
-
 
   async checkIfUserIsRegistered(userID: string): Promise<boolean> {
     try {
