@@ -28,7 +28,7 @@ export class GameComponent implements OnInit {
   lineupAway: { [key: number]: { name: string; number: number }[] } = {};
   isLoading = true;
   // bet: BetModel = null!;
-  teamChosen: string | null = null;
+  teamChosen = "";
   betAmount = 200;
   availableCredits = 0;
   betCanBePlaced = true;
@@ -36,8 +36,9 @@ export class GameComponent implements OnInit {
   showNewContent = false;
   credits = 100;
   testingdata: any;
+  betAlreadyPlaced = false;
 
-  time = "fsdsd";
+  time = "";
   timeLeft = "";
   date = "";
 
@@ -55,20 +56,23 @@ export class GameComponent implements OnInit {
   ) {
     this.supabase.supabaseClient.channel('realtime-bettingrecord')
       .on('postgres_changes', {
-        event: 'UPDATE',
+        event: '*',
         schema: 'public',
         table: 'bettingrecord',
-      }, async (payload) => {
-        this.testingdata = payload.old['credits'];
-        const betterID = (payload.new as { betterID: number }).betterID;
-        const fixtureID = (payload.new as { fixtureID: number }).fixtureID;
-        const credits = (payload.new as { credits: number }).credits;
-        const betExists =  await this.betsService.checkIfBetExists(betterID,fixtureID);
-        if(betExists) {
-          this.betCanBePlaced=false;
-          this.credits -= credits;
-        } else this.betCanBePlaced=true;
-
+      }, async () => {
+        // this.testingdata = payload.old['credits'];
+        // const betterID = (payload.new as { betterID: number }).betterID;
+        // const fixtureID = (payload.new as { fixtureID: number }).fixtureID;
+        // const credits = (payload.new as { credits: number }).credits;
+        // const betExists =  await this.betsService.checkIfBetExists(betterID,fixtureID);
+        // if(betExists) {
+        //   this.betCanBePlaced=false;
+        //   this.credits -= credits;
+        // } else this.betCanBePlaced=true;
+        console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
+        this.betAlreadyPlaced = await this.betsService.checkIfBetExists(await this.getBetterID(), this.fixture.fixtureID);
+        console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
+        this.cdr.detectChanges();
       }).subscribe();
     }
 
@@ -86,20 +90,22 @@ export class GameComponent implements OnInit {
       this.cdr.detectChanges();
     }
   ngOnInit(): void {
-      this.navbarService.setShowNavbar(true);
-      this.route.paramMap.subscribe((params) => {
-        const id = +params.get("id")!;
+    this.route.paramMap.subscribe((params) => {
+      const id = +params.get("id")!;
         this.fixtureTransferService.currentFixture.subscribe((fixture) => {
           if (fixture?.fixtureID === id) {
             this.fixture = fixture;
+            console.log("fetchFixture() called");
+            console.log("date.time: ", fixture.time)
+
             this.updateTheTime();
           } else {
             // this.fetchFixture(id).then(() => this.updateTheTime());
             this.fetchFixture(id);
-            this.updateTheTime();
           }
         });
       });
+      this.navbarService.setShowNavbar(true);
       this.time = "test";
       // this.fetchLineup(this.fixture.fixtureID);
       // this.initializeLineups();
@@ -114,14 +120,18 @@ export class GameComponent implements OnInit {
       // Convert fixture time to UTC+1
       const fixtureTimeUTC1 = new Date(
         fixtureTimeUTC0.getTime() + (60 * 60 * 1000),
-      );
-      const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
+        );
+        const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
       this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
     }
 
   async fetchFixture(fixtureID: number) {
       const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
+      console.log("fetchFixture() called");
+      console.log("date.time: ",data.time)
       this.fixture = data; // Ensure that this.fixture is updated with the fetched data
+      this.updateTheTime();
+
       // this.time = this.formatDateToHHMM(this.fixture.time);
     }
 
@@ -187,6 +197,7 @@ export class GameComponent implements OnInit {
   }
 
   async placeBet() {
+    console.log("placeBet() called");
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
     if (!user || !user.id) throw new Error("User ID is undefined");
@@ -194,7 +205,7 @@ export class GameComponent implements OnInit {
       betterID: betterID,
       fixtureID: this.fixture.fixtureID,
       time_placed: new Date(),
-      team_chosen: this.teamChosen!,
+      team_chosen: this.teamChosen,
       credits: this.betAmount,
     };
     const checkIfBetExists = await this.betsService.checkIfBetExists(
@@ -212,6 +223,7 @@ export class GameComponent implements OnInit {
       this.handleBetAlreadyExists();
       throw new Error("Bet already exists");
     }
+    console.log("placeBet() finished. betCanBePlaced: ", this.betCanBePlaced);
   }
 
   handleBetAlreadyExists() {
@@ -335,7 +347,7 @@ export class GameComponent implements OnInit {
       // If the same team is clicked again, reset everything
       this.showContent = false;
       this.clickedImage = null;
-      this.teamChosen = null; // Reset teamToWin as well
+      this.teamChosen = ""; // Reset teamToWin as well
     } else {
       // Otherwise, show content and set the clicked team
       this.showContent = true;
