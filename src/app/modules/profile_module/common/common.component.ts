@@ -68,7 +68,6 @@ export class CommonComponent implements OnInit{
 
   infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
-  leagueList: string[]= ['League 1','League 2','League 3','League 4','League 5','League 6','League 7','League 8','League 9'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
   friendActions: string[] = ['3683211.png','add-friend-24.png'];
   selectedLink = 'link1';
