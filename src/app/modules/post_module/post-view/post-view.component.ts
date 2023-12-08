@@ -281,7 +281,7 @@ export class PostViewComponent implements OnInit {
             else{
                 if (postId === undefined) throw new Error('Post ID is undefined');
                 await this.router.navigate(['/post', postId]);
-                window.location.reload();
+              //window.location.reload();
             }
         }
         )
