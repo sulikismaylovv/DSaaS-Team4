@@ -177,7 +177,7 @@ jobs:
 
 
   Deploy-Production:
-    needs: build_and_test
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
