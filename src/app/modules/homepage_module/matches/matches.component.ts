@@ -6,6 +6,9 @@ import {Router} from "@angular/router";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
 import {SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
 import {AuthService} from "../../../core/services/auth.service";
+import {Club} from "../../shop/shop.component";
+import {PreferencesService} from "../../../core/services/preference.service";
+
 
 @Component({
   selector: "app-matches",
@@ -22,12 +25,16 @@ export class MatchesComponent implements OnInit {
   groupedFixtures: { [key: string]: SupabaseFixture[] } = {}; //grouped by date
   groupedFixtureKeys: string[] = [];
 
+  favoriteClubId?: number;
+  followedClubIds: number[] = [];
+
   constructor(
     private apiService: ApiService,
     private datePipe: DatePipe,
     private router: Router,
     private authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
+    private preferenceService: PreferencesService
   ) {
     this.currentDate = new Date();
     this.stringDate = this.currentDate.toISOString().split("T")[0];
@@ -46,6 +53,7 @@ export class MatchesComponent implements OnInit {
   }
 
     async ngOnInit() {
+      await this.loadUserPreferences();
         this.setWeek(new Date());
         await this.fetchFixturesForWeek();
   }
@@ -56,15 +64,38 @@ export class MatchesComponent implements OnInit {
     this.endDate = endOfWeek(date, { weekStartsOn: 5 });
   }
 
+  async loadUserPreferences() {
+    // Replace with your actual preference fetching logic
+    const preferences = await this.preferenceService.getPreferences(<string>this.authService.session?.user?.id);
+
+    // Parse the favorite club ID as a number, if it exists
+    const favoritePreference = preferences.find(p => p.favorite_club);
+    this.favoriteClubId = favoritePreference ? parseInt(favoritePreference.club_id) : undefined;
+
+    // Parse the followed club IDs as numbers
+    this.followedClubIds = preferences
+        .filter(p => p.followed_club)
+        .map(p => parseInt(p.club_id))
+        .filter(id => !isNaN(id)); // Filter out any NaN results from parseInt
+
+  }
+
+  isClubRelevantToUserPreferences(club: Club): boolean {
+    return club.id === this.favoriteClubId || this.followedClubIds.includes(<number>club.id);
+  }
+
   async fetchFixturesForWeek() {
     const startDateString = this.getDateAsString(this.startDate);
     const endDateString = this.getDateAsString(this.endDate);
     try {
-      const fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
-        startDateString,
-        endDateString,
+      this.fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
+          startDateString,
+          endDateString,
       );
-      this.fixtures = fixtures;
+      this.fixtures = this.fixtures.filter(fixture =>
+          this.isClubRelevantToUserPreferences(fixture.club0) ||
+          this.isClubRelevantToUserPreferences(fixture.club1)
+      );
       this.groupFixturesByDate();
       console.log(this.fixtures);
     } catch (error) {
