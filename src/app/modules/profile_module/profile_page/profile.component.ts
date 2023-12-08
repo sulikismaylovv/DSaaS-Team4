@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import { CommonComponent} from "../common/common.component";
 import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
 import {BgImageSelectorComponent} from "../bg-image-selector/bg-image-selector.component";
@@ -18,7 +18,7 @@ export class ProfileComponent extends CommonComponent {
       data: 0
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
   }
@@ -30,7 +30,7 @@ export class ProfileComponent extends CommonComponent {
       panelClass: 'mat-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
   }
