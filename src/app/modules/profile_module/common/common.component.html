@@ -80,7 +80,7 @@
                         <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md p-1">
                           <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'" (click)="onFriendClick(friend.profile.id)" alt="{{friend.profile.username}}" class="w-6 h-6 md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full object-cover">
                           <span class="mx-1 text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{ limitUsernameLength(friend.profile.username, 20) }}</span>
-                          <img [src]="'../assets/icons/' + friendActions[1]" class="w-4 h-4 xl:w-6 xl:h-6">
+                            <img [src]="'../assets/icons/' + (friendRequestStatus === 'friends' ? friendActions[1] : friendActions[0])"class="w-4 h-4 xl:w-6 xl:h-6">
                         </div>
                       </li>
                     </ng-container>
@@ -102,7 +102,7 @@
                       <div (click)="onFriendClick(friend.profile.id)" class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
                         <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'" alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
                         <span class=" mx-8 text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
-                        <img [src]="'../assets/icons/' + friendActions[1]" class="w-6 h-6">
+                        <img [src]="'../assets/icons/' + (friendRequestStatus === 'friends' ? friendActions[1] : friendActions[0])" class="w-6 h-6">
                       </div>
                     </li>
                   </ul>
@@ -234,8 +234,8 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center items-center absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode">
-            <h1 class="text-white md:text-xl lg:text-3xl">Coming Soon</h1>
+          <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode p-1">
+            <h1 class="text-white md:text-xl lg:text-2xl">Coming Soon</h1>
           </div>
         </div>
       </div>
