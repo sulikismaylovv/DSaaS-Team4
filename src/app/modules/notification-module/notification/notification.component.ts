@@ -57,9 +57,22 @@ export class NotificationComponent implements OnInit {
       },
         () => {
           this.fetchRequests().then(r =>
-          window.location.reload());
-        }
-      ).subscribe()
+            this.categorizeNotifications())
+          window.location.reload();}
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notifications',
+        },
+        () => {
+          this.fetchNotifications().then(r =>
+            this.categorizeNotifications())
+          window.location.reload();}
+      )
+      .subscribe()
 
   }
 
@@ -119,7 +132,7 @@ export class NotificationComponent implements OnInit {
     yesterday.setDate(yesterday.getDate() - 1);
 
     for (const notification of this.allNotifications) {
-      const createdAt = new Date(notification.createdAt); // Make sure createdAt is a Date object
+      const createdAt = new Date(notification.createdAt);
       const category = createdAt >= today ? 'today'
         : createdAt >= yesterday ? 'yesterday' : 'older';
 
@@ -127,6 +140,13 @@ export class NotificationComponent implements OnInit {
         this.categorizedNotifications[category] = [];
       }
       this.categorizedNotifications[category].push(notification);
+    }
+
+    // Sort notifications within each category by createdAt in descending order
+    for (const category in this.categorizedNotifications) {
+      this.categorizedNotifications[category].sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
     }
   }
 
