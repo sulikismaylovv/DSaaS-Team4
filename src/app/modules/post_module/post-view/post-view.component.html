@@ -39,25 +39,28 @@
 
   <!-- Normal Post Content -->
   <ng-template #originalContent>
-      <div class="flex items-center mb-4 w-full">
-        <!-- Display poster's avatar -->
-        <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
-        <div>
-          <!-- Display poster's username -->
-          <p class="font-bold text-xl text-gray-800 dark:text-white " (click)="onAvatarClick(post.user_id)">{{ username }}</p>
-          <!-- Display post date -->
-          <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
-        </div>
+    <div class="flex items-center mb-4 w-full">
+      <!-- Display poster's avatar -->
+      <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <div>
+        <!-- Display poster's username -->
+        <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+        <!-- Display post date -->
+        <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
-      <!-- Display post content -->
-      <p class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)" >{{ post.content }}</p>
-      <!-- Display post image if exists -->
-      <div *ngIf="post.image_url" class="mt-4"  (click)="onPostClick(post.id)">
-        <img [src]="postSafeUrl" alt="Post image" class="rounded-lg sm:w-80 lg:w-fit lg:h-auto mx-auto"/>
-      </div>
+    </div>
+
+    <!-- Display post content -->
+    <p class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
+
+    <!-- Display post image if exists -->
+    <div *ngIf="post.image_url" class="mt-4" (click)="onPostClick(post.id)">
+      <img [src]="postSafeUrl" alt="Post image" class="rounded-lg sm:w-80 lg:w-fit lg:h-auto mx-auto"/>
+    </div>
   </ng-template>
 
-    <!-- Interaction buttons like, comment, etc. -->
+
+  <!-- Interaction buttons like, comment, etc. -->
   <div class="flex items-center mt-4">
     <!-- Like Button -->
     <button (click)="toggleLike(this.post.id)" class="flex flex-col items-center">
