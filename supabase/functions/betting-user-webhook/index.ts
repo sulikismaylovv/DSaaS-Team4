@@ -6,31 +6,21 @@ import {
   SupabaseClient,
 } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
-interface User {
-  id: string;
-  updated_at?: Date | string;
-  birthdate?: Date | string;
-  password?: string;
-  first_name?: string;
-  last_name?: string;
-  username?: string;
-  email: string;
-  avatar_url?: string;
-  bg_url?: string;
-  is_recently_logged?: boolean;
-}
+import { Database } from "./types.ts";
+type User = Database['auth']['Tables']['users']['Row'];
+
 interface WebhookPayload {
-  type: "INSERT" | "UPDATE" | "DELETE";
+  type: "INSERT";
   table: string;
   record: User;
   schema: "public";
   old_record: null | User;
 }
 
-async function addUser(SupabaseClient: SupabaseClient, user:User) {
-  const { data, error } = await SupabaseClient
+async function addUser(supabase: SupabaseClient, user:User) {
+  const { data, error } = await supabase
     .from("usersinbetting")
-    .upsert([
+    .insert([
       {
         userID: user.id,
         credits: 1000,
@@ -39,6 +29,7 @@ async function addUser(SupabaseClient: SupabaseClient, user:User) {
     ]);
   if (error) {
     console.error(error);
+    throw error;
   }
   console.log(data);
 }
