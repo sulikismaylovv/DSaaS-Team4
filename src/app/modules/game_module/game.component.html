@@ -127,7 +127,7 @@
       </div>
     </div>
     <!--Betting widget abdo-->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
+    <div *ngIf="betCanBePlaced" class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
       <ng-container *ngIf="!betAlreadyPlaced">
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Place your bets!</p>
         <p class="text-sm mt-1 ml-6 text-black dark:text-white font-bold">Who's taking home the victory?</p>
@@ -227,14 +227,14 @@
       </ng-container>
       <!--After betting-->
       <!--Abdoooo change this :D-->
-      <ng-container *ngIf="betAlreadyPlaced" >
+      <ng-container *ngIf="true" >
         <button (click)="logData()"> TESTTTTT</button>
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
         <div class="flex flex-col items-center justify-center">
           <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Chosen team:</p>
-          <div *ngIf="true" class="mt-4">
+          <div *ngIf="betCanBePlaced" class="mt-4">
             <img *ngIf="teamChosen === 'home'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}" class="w-36 h-36">
             <p *ngIf="teamChosen === 'home'" class="text-white text-center"> {{fixture.club0?.name}} </p>
 
