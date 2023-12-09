@@ -146,11 +146,11 @@
       <div class="mb-2 border-b border-transparent ">
         <ul class="flex flex-wrap -mb-px text-lg font-bold text-center text-black dark:text-white" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
           <li class="me-2" role="presentation">
-            <button (click)="showMatchesContent()" class="inline-block rounded-t-lg border-b-2 p-4 hover:border-gray-300 hover:text-gray-600"
-                    id="profile-tab" data-tabs-target="#matches" type="button" role="tab" aria-controls="profile" aria-selected="false">Matches</button>
+            <button (click)="showMatchesContent()"  [ngClass]="{'text-purple-700': activeContent === 'matches' , 'border-purple-700': activeContent==='matches', 'dark:text-purple-600': activeContent==='matches', 'dark:border-purple-700':activeContent==='matches'}" class="inline-block rounded-t-lg border-b-2 p-4 hover:border-purple-500 hover:text-purple-500 dark:hover:border-purple-500 dark:hover:text-purple-500"
+                    id="profile-tab" data-tabs-target="#matches" type="button" role="tab" aria-controls="matches" aria-selected="false">Matches</button>
           </li>
           <li class="me-2" role="presentation">
-            <button (click)="showPostsContent()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="dashboard-tab" data-tabs-target="#posts" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Posts</button>
+            <button (click)="showPostsContent()" [ngClass]="{'text-purple-700': activeContent === 'posts' , 'border-purple-700': activeContent==='posts', 'dark:text-purple-600': activeContent==='posts', 'dark:border-purple-700':activeContent==='posts'}" class="inline-block rounded-t-lg border-b-2 p-4 hover:border-purple-500 hover:text-purple-500 dark:hover:border-purple-500 dark:hover:text-purple-500" data-tabs-target="#posts" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Posts</button>
           </li>
         </ul>
       </div>
