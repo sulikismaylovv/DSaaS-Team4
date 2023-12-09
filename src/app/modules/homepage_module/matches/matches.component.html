@@ -32,10 +32,12 @@
       <div class="relative">
         <span class="relative bottom-2 text-lg font-bold text-white">Following</span>
       </div>
+      <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
+
 
       <ng-container *ngFor="let date of groupedFixtureKeys">
         <ng-container *ngIf="hasFollowedFixtureforDate(date)">
-          <div class="text-white text-lg font-bold mb-4">{{ formatShortDateString(date) }}</div>
+          <div class="text-white text-lg font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
           <ng-container *ngFor="let fixture of groupedFixtures[date]">
             <ng-container
               *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
@@ -85,7 +87,7 @@
   <div class="bg-gray-800 rounded-lg p-4 overflow-y-auto h-fit w-full mt-6">
     <ng-container *ngFor="let date of groupedFixtureKeys">
       <ng-container *ngIf="hasNonFollowedFixtureforDate(date)">
-        <div class="text-white text-lg font-bold mb-4">{{ formatShortDateString(date) }}</div>
+        <div class="text-white text-lg font-bold mb-1 mt-4">{{ formatShortDateString(date) }}</div>
         <ng-container *ngFor="let fixture of groupedFixtures[date]">
           <ng-container
             *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
