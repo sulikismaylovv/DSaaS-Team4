@@ -92,10 +92,12 @@
                   <ng-container *ngIf="friendsList.length === 0">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You don't have any friends</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't added any friends</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't made any friends yet.You can search for friends by pressing the search button in the sidebar</p>
                       </div>
-                      <img src="assets/icons/FriendsIcon.svg" class="mx-auto w-96 h-80">
+                      <div class="h-72 p-4">
+                        <img src="assets/icons/FriendsIcon.svg" class="mx-auto w-96 h-full">
+                      </div>
                     </div>
                   </ng-container>
                 </div>
@@ -157,10 +159,10 @@
                   <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You don't have any Leagues</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't joined any Leagues</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't joined any leagues yet.You can create leagues by pressing the League button in the sidebar</p>
                       </div>
-                      <div class="h-72 p-4">
+                      <div class="h-64 p-4">
                         <img src="assets/icons/League_EmptyState.svg" class="mx-auto w-full h-full">
                       </div>
                       <p class="text-light-mode-text dark:text-primary-100 font-normal text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">League</a></p>
@@ -220,10 +222,10 @@
                   <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You don't own any players</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't bought any players</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't bought any players yet.You can buy players in the Point Shop</p>
                       </div>
-                      <div class="h-72 p-4">
+                      <div class="h-64 p-4">
                         <img src="assets/icons/PointsShop_EmptyState.svg" class="mx-auto w-full h-full">
                       </div>
                       <p class="text-light-mode-text dark:text-primary-100 font-normal text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">Points Shop</a></p>
