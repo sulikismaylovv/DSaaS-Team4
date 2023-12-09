@@ -31,6 +31,7 @@ module.exports = {
         'navbar-hover-light':"#c2c2ac",
       },
       scale:{
+        '130': '1.3',
         '150': '1.5',
         '175': '1.75',
         '185': '1.85',
@@ -42,6 +43,7 @@ module.exports = {
         '700': '7',
       },
       margin:{
+        '84': '21rem',
         '100': '25rem',
         '121': '30.25rem',
       },

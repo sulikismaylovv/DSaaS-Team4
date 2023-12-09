@@ -1,0 +1,40 @@
+  /* Style for the drop-down container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style for the drop-down button */
+.dropdown-btn {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style for the drop-down content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Style for each item in the drop-down */
+.dropdown-content img {
+  width: 50px; /* Adjust the image size as needed */
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Style for the text beside the image */
+.dropdown-content p {
+  display: inline;
+}
+
+/* Show the drop-down content when the button is hovered over */
+.dropdown:hover .dropdown-content {
+  display: block;
+}

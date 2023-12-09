@@ -154,11 +154,6 @@ h2 {
     font-size: 24px; /* Adjust size as needed */
 }
 
-
-.team-card:hover {
-    transform: translateY(-5px); /* Lift card on hover */
-}
-
 .team-logo {
    /* width: 100%; !* Use a percentage to make it responsive *!
     height: auto;*/
@@ -170,6 +165,16 @@ h2 {
     font-size: 1rem; /* Adjust the font size as needed */
     text-align: center;
 }
+@keyframes zoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.zoom-animation {
+  animation: zoom 2s ease-in-out;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

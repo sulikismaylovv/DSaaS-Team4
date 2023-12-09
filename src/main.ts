@@ -30,7 +30,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
       // Set a global variable with the user id
       window.userId = session?.user?.id || null;
 
-      console.log('Session:', window.userId);
     });
   })
   .catch(err => console.error(err));

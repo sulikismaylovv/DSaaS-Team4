@@ -9,7 +9,8 @@
 
   <!-- Upload Button -->
   <div>
-    <label class="cursor-pointer button primary block w-[130px] text-purple-500 font-medium text-sm py-1 text-center" for="single">
+    <label class="button primary block w-[130px]  text-purple-500  font-medium text-sm px-5 py-2 text-center cursor-pointer hover:underline"
+           for="single">
       {{ uploading ? 'Uploading ...' : 'Edit' }}
     </label>
     <input (change)="uploadAvatar($event)" [disabled]="uploading" accept="image/*" id="single"

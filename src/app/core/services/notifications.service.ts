@@ -12,7 +12,7 @@ export interface Notification {
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class NotificationsService {
   constructor(private supabase: SupabaseService) {}
 
   async createNotification(userId: string, text: string, title: string): Promise<Notification | null> {

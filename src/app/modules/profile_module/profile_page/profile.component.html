@@ -14,6 +14,7 @@
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl px-1">{{ friendRequestStatus === 'none' ? 'Add Friend' : (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}</span>
       </button>
     </div>
+
     <div   *ngIf="isOwnProfile">
       <a href="/settings" class="flex items-center my-3 px-1">
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl">Edit Profile</span>

@@ -4,7 +4,8 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {NotificationService , Notification} from "../../../core/services/notifications.service";
+import {NotificationsService , Notification} from "../../../core/services/notifications.service";
+import {NavbarService} from "../../../core/services/navbar.service";
 
 
 interface FriendRequest {
@@ -37,6 +38,7 @@ export class NotificationComponent implements OnInit {
   currentUserId: string | undefined = this.authService.session?.user.id;
   allNotifications: CombinedNotification[] = [];
   categorizedNotifications: { [key: string]: CombinedNotification[] } = {};
+  public notificationsCount: number = 0;
 
 
   constructor(
@@ -44,7 +46,8 @@ export class NotificationComponent implements OnInit {
     private readonly friendshipService: FriendshipService,
     private readonly imageService: ImageDownloadService,
     private readonly supabase: SupabaseService,
-    private readonly notificationService: NotificationService,
+    private readonly notificationService: NotificationsService,
+    private readonly navbarService: NavbarService
   ) {
     this.supabase.supabaseClient
       .channel('realtime-friendships')
@@ -81,7 +84,7 @@ export class NotificationComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.currentUserId = this.authService.session?.user.id;
     await Promise.all([this.fetchNotifications(), this.fetchRequests()]);
-    this.categorizeNotifications();
+    await this.categorizeNotifications();
   }
 
   async fetchNotifications(): Promise<void> {
@@ -124,7 +127,7 @@ export class NotificationComponent implements OnInit {
     }
   }
 
-  categorizeNotifications(): void {
+  async categorizeNotifications(): Promise<void> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -134,7 +137,7 @@ export class NotificationComponent implements OnInit {
     for (const notification of this.allNotifications) {
       const createdAt = new Date(notification.createdAt);
       const category = createdAt >= today ? 'today'
-        : createdAt >= yesterday ? 'yesterday' : 'older';
+          : createdAt >= yesterday ? 'yesterday' : 'older';
 
       if (!this.categorizedNotifications[category]) {
         this.categorizedNotifications[category] = [];
@@ -148,6 +151,15 @@ export class NotificationComponent implements OnInit {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
     }
+
+    this.notificationsCount = this.allNotifications.length;
+    this.navbarService.changeNotificationCount(this.notificationsCount);
+    await new Promise<void>((resolve) => {
+      this.navbarService.currentNotificationCount$.subscribe((count) => {
+        this.notificationsCount = count;
+        resolve();
+      });
+    });
   }
 
   async acceptRequest(userId: string | undefined): Promise<void> {
