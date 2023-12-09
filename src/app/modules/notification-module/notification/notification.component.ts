@@ -78,7 +78,7 @@ export class NotificationComponent implements OnInit {
         id: notification.id,
         title: notification.title,
         text: notification.text,
-        createdAt: notification.created_at || new Date(),
+        createdAt: new Date(notification.created_at || Date.now()),
         type: 'bettingNotification' as 'bettingNotification'
       }));
       this.allNotifications.push(...formattedNotifications);
@@ -102,7 +102,7 @@ export class NotificationComponent implements OnInit {
           text: `${requestProfile.data.username} wants to be your friend`,
           title: 'Friend Request',
           avatarSafeUrl: avatarUrl || '/assets/default-avatar.png', // Fallback to default image if loadAvatarImage fails
-          createdAt: request.created_at, // Ensure createdAt is a Date object
+          createdAt: new Date(request.created_at), // Ensure createdAt is a Date object
           type: 'friendRequest',
           profile: requestProfile.data, // Include the profile data
         };
@@ -119,7 +119,7 @@ export class NotificationComponent implements OnInit {
     yesterday.setDate(yesterday.getDate() - 1);
 
     for (const notification of this.allNotifications) {
-      const createdAt = notification.createdAt;
+      const createdAt = new Date(notification.createdAt); // Make sure createdAt is a Date object
       const category = createdAt >= today ? 'today'
         : createdAt >= yesterday ? 'yesterday' : 'older';
 
