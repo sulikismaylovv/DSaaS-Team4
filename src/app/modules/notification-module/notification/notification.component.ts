@@ -4,12 +4,26 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
+import {NotificationService , Notification} from "../../../core/services/notifications.service";
+
 
 interface FriendRequest {
   profile: Profile;
   avatarSafeUrl: SafeResourceUrl;
-  createdAt?: Date;
+  createdAt: Date;
 }
+
+interface CombinedNotification {
+  id?: number | string;
+  title?: string;
+  text?: string;
+  avatarSafeUrl?: SafeResourceUrl;
+  createdAt: Date ;
+  type: 'friendRequest' | 'bettingNotification'; // Add more types as necessary
+  profile?: Profile;
+}
+
+
 
 
 @Component({
@@ -19,14 +33,18 @@ interface FriendRequest {
 })
 
 export class NotificationComponent implements OnInit {
-  currentUserId: string | undefined = this.authService.session?.user.id;
   friendRequests: FriendRequest[] = []; // Example data, replace with actual friend request data
+  currentUserId: string | undefined = this.authService.session?.user.id;
+  allNotifications: CombinedNotification[] = [];
+  categorizedNotifications: { [key: string]: CombinedNotification[] } = {};
+
 
   constructor(
     private readonly authService: AuthService,
     private readonly friendshipService: FriendshipService,
     private readonly imageService: ImageDownloadService,
-    private readonly supabase: SupabaseService
+    private readonly supabase: SupabaseService,
+    private readonly notificationService: NotificationService,
   ) {
     this.supabase.supabaseClient
       .channel('realtime-friendships')
@@ -38,16 +56,78 @@ export class NotificationComponent implements OnInit {
         table: 'friendships',
       },
         () => {
-          this.fetchRequests(this.currentUserId).then(r =>
+          this.fetchRequests().then(r =>
           window.location.reload());
         }
       ).subscribe()
 
   }
 
+
+  // Fetch all types of notifications for the user
   async ngOnInit(): Promise<void> {
     this.currentUserId = this.authService.session?.user.id;
-    await this.fetchRequests(this.currentUserId);
+    await Promise.all([this.fetchNotifications(), this.fetchRequests()]);
+    this.categorizeNotifications();
+  }
+
+  async fetchNotifications(): Promise<void> {
+    if (this.currentUserId) {
+      const notifications = await this.notificationService.getNotificationsForUser(this.currentUserId);
+      const formattedNotifications = notifications.map(notification => ({
+        id: notification.id,
+        title: notification.title,
+        text: notification.text,
+        createdAt: notification.created_at || new Date(),
+        type: 'bettingNotification' as 'bettingNotification'
+      }));
+      this.allNotifications.push(...formattedNotifications);
+    }
+  }
+
+  async fetchRequests(): Promise<void> {
+    if (!this.currentUserId) {
+      throw new Error('User ID is undefined');
+    }
+
+    const requests = await this.friendshipService.getFriendRequests(this.currentUserId);
+
+    // Process each friend request and add to the allNotifications list
+    for (const request of requests) {
+      const requestProfile = await this.authService.profileById(request.user1_id);
+      if (requestProfile.data) {
+        const avatarUrl = await this.imageService.loadAvatarImage(requestProfile.data.id);
+        const formattedRequest: CombinedNotification = {
+          id: 'fr' + requestProfile.data.id, // Use a unique prefix
+          text: `${requestProfile.data.username} wants to be your friend`,
+          title: 'Friend Request',
+          avatarSafeUrl: avatarUrl || '/assets/default-avatar.png', // Fallback to default image if loadAvatarImage fails
+          createdAt: request.created_at, // Ensure createdAt is a Date object
+          type: 'friendRequest',
+          profile: requestProfile.data, // Include the profile data
+        };
+        this.allNotifications.push(formattedRequest);
+      }
+    }
+  }
+
+  categorizeNotifications(): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    for (const notification of this.allNotifications) {
+      const createdAt = notification.createdAt;
+      const category = createdAt >= today ? 'today'
+        : createdAt >= yesterday ? 'yesterday' : 'older';
+
+      if (!this.categorizedNotifications[category]) {
+        this.categorizedNotifications[category] = [];
+      }
+      this.categorizedNotifications[category].push(notification);
+    }
   }
 
   async acceptRequest(userId: string | undefined): Promise<void> {
@@ -66,22 +146,22 @@ export class NotificationComponent implements OnInit {
     window.location.reload();
 
   }
-  async fetchRequests(userId: string | undefined): Promise<void> {
-    if (userId === undefined) throw new Error('User ID is undefined');
-    if (userId) {
-      const requests = await this.friendshipService.getFriendRequests(userId);
-      for (const request of requests) {
-        const requestProfile = await this.authService.profileById(request.user1_id);
-        if (requestProfile.data) {
-          const avatarSafeUrl = await this.imageService.loadAvatarImage(requestProfile.data.id);
-          this.friendRequests.push({
-            profile: requestProfile.data,
-            avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png', // Fallback to default image
-            createdAt: request.created_at
-          });
-        }
-      }
-    }
-  }
+  // async fetchRequests(userId: string | undefined): Promise<void> {
+  //   if (userId === undefined) throw new Error('User ID is undefined');
+  //   if (userId) {
+  //     const requests = await this.friendshipService.getFriendRequests(userId);
+  //     for (const request of requests) {
+  //       const requestProfile = await this.authService.profileById(request.user1_id);
+  //       if (requestProfile.data) {
+  //         const avatarSafeUrl = await this.imageService.loadAvatarImage(requestProfile.data.id);
+  //         this.friendRequests.push({
+  //           profile: requestProfile.data,
+  //           avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png', // Fallback to default image
+  //           createdAt: request.created_at
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
 }
