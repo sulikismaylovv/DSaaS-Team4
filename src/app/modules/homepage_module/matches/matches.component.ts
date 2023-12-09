@@ -68,6 +68,10 @@ export class MatchesComponent implements OnInit {
     return this.groupedFixtures[date]?.length > 0;
   }
 
+  hasFollowingClubs(): boolean {
+    return this.followedClubIds.length > 0;
+  }
+
   hasFollowedFixtureforDate(date: string): boolean {
     return this.groupedFixtures[date]?.some(fixture => this.isClubRelevantToUserPreferences(fixture.club0) || this.isClubRelevantToUserPreferences(fixture.club1));
   }
