@@ -15,12 +15,6 @@ import {NavbarService} from "../../../core/services/navbar.service";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 declare let gtag: Function;
-
-
-
-
-
-
 interface Team {
     id: number;
     name: string;
@@ -48,6 +42,8 @@ export class MultistepformComponent implements OnInit {
   total = 9;
   showSummary = true;
   isSubmitting = false;
+  showModal: boolean = true;
+
 
   teams = [
     {
@@ -197,8 +193,15 @@ export class MultistepformComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
     });
+    if (!localStorage.getItem('firstVisit')) {
+      this.showModal = true;
+      localStorage.setItem('firstVisit', 'true');
+    }
 
     await this.fetch();
+  }
+  closeModal(): void {
+    this.showModal = false;
   }
 
   usernameValidator(): AsyncValidatorFn {

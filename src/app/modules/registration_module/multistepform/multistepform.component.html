@@ -1,71 +1,129 @@
-<div class="p-4">
-  <div class=" border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+<div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+  <div class="bg-white dark:bg-[#394151] p-6 rounded-lg shadow-lg text-black dark:text-white">
+    <h2 class="text-xl font-bold mb-4">Welcome!</h2>
+    <p class="mb-4">Here's a quick guide to get you started:</p>
+    <ul class="list-disc list-inside mb-4">
+      <li>Step 1: Complete your profile.</li>
+      <li>Step 2: Select your favorite team.</li>
+      <li>Step 3: Choose clubs you want to follow.</li>
+      <li>Step 4: Confirm your registration.</li>
+    </ul>
+    <p class="mb-4">You can always change your preferences later.</p>
+    <button (click)="closeModal()" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">      Let's get started
+    </button>
+  </div>
+</div>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-fit mx-auto">
     <div class="flex flex-col items-center justify-center h-fit">
-      <div class="bg-white dark:bg-[#394151] rounded-lg shadow-lg p-8 w-fit">
+      <div class="bg-white dark:bg-[#394151] rounded-lg shadow-lg p-8 w-full">
         <div #topOfPage></div> <!-- Place this at the top of your component or where you want to scroll to -->
         <app-stepper [currentStep]="currentStep" *ngIf="!lastPage"></app-stepper>
         <form (ngSubmit)="onSubmit()" [formGroup]="updateProfileForm" class="mt-4">
           <section *ngIf="currentStep === 1">
             <h1 class="text-2xl mb-2 font-bold xl:text-3xl text-black dark:text-white">Complete profile</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <div class>
               <!-- First Name -->
               <label class="xl:text-base text-black dark:text-white">First Name</label>
-              <div class="flex">
-                <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md  xl:py-4" formControlName="first_name" placeholder="e.g. John" type="text"/>
-                <button [class.bg-green-700]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched" [class.bg-red-700]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
-                        data-tooltip-target="tooltip-firstname" data-tooltip-placement="right"
-                        type="button"
-                        class="rounded-full focus:outline-none p-2.5">
-                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-                </button>
+              <div class="relative flex">
+                <!-- First Name Input -->
+                <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
+                       [class.bg-green-50]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched"
+                       [class.bg-red-50]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
+                       [class.border-green-500]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched"
+                       [class.border-red-500]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
+                       [class.text-green-900]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched"
+                       [class.text-red-900]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
+                       formControlName="first_name" placeholder="e.g. John" type="text"/>
               </div>
-              <!-- Last Name -->
+              <!-- Validation Message -->
+              <p class="mt-2 text-sm"
+                 [class.text-green-600]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched"
+                 [class.text-red-600]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)"
+                 [class.dark:text-green-500]="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched"
+                 [class.dark:text-red-500]="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)">
+                <span class="font-medium" *ngIf="updateProfileForm.controls['first_name'].valid && updateProfileForm.controls['first_name'].touched">Looks good!</span>
+                <span *ngIf="updateProfileForm.controls['first_name'].invalid && (updateProfileForm.controls['first_name'].dirty || updateProfileForm.controls['first_name'].touched)">
+                  <span *ngIf="updateProfileForm.controls['first_name'].errors?.['required']">First name is required.</span>
+                  <!-- Add other specific error messages here -->
+                </span>
+              </p>
+              <!--Last name-->
               <label class="xl:text-base text-black dark:text-white">Last Name</label>
-              <div class="flex">
-                <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-primary-blue-500 rounded-md xl:py-4" formControlName="last_name" placeholder="e.g. Doe" type="text"/>
-                <button [class.bg-green-700]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched" [class.bg-red-700]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
-                        data-tooltip-target="tooltip-lastname" data-tooltip-placement="right"
-                        type="button"
-                        class="rounded-full focus:outline-none p-2.5">
-                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-                </button>
+              <div class="relative flex">
+                <!-- Last Name Input -->
+                <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
+                       [class.bg-green-50]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched"
+                       [class.bg-red-50]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
+                       [class.border-green-500]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched"
+                       [class.border-red-500]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
+                       [class.text-green-900]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched"
+                       [class.text-red-900]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
+                       formControlName="last_name" placeholder="e.g. Doe" type="text"/>
               </div>
-              <!-- Username -->
+              <!-- Validation Message -->
+              <p class="mt-2 text-sm"
+                 [class.text-green-600]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched"
+                 [class.text-red-600]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)"
+                 [class.dark:text-green-500]="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched"
+                 [class.dark:text-red-500]="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)">
+                <span class="font-medium" *ngIf="updateProfileForm.controls['last_name'].valid && updateProfileForm.controls['last_name'].touched">Looks good!</span>
+                <span *ngIf="updateProfileForm.controls['last_name'].invalid && (updateProfileForm.controls['last_name'].dirty || updateProfileForm.controls['last_name'].touched)">
+                  <span *ngIf="updateProfileForm.controls['last_name'].errors?.['required']">Last name is required.</span>
+                  <!-- Add other specific error messages here -->
+                </span>
+              </p>
+              <!--Last name-->
               <label class="xl:text-base text-black dark:text-white">Username</label>
-              <div class="flex">
-                <div class="flex flex-col">
-                  <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="username" placeholder="e.g. johndoe123" type="text"/>
-                  <div *ngIf="updateProfileForm.controls['username'].errors?.['usernameExists']" class="text-red-600 text-xs">
-                    This username is already in use.
-                  </div>
-                </div>
-                <button [class.bg-green-700]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
-                        [class.bg-red-700]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
-                        data-tooltip-target="tooltip-username" data-tooltip-placement="right"
-                        type="button"
-                        class="rounded-full focus:outline-none p-2.5">
-                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-                </button>
+              <div class="relative flex">
+                <!-- Last Name Input -->
+                <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
+                       [class.bg-green-50]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                       [class.bg-red-50]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                       [class.border-green-500]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                       [class.border-red-500]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                       [class.text-green-900]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                       [class.text-red-900]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                       formControlName="username" placeholder="e.g. johndoe123" type="text"/>
               </div>
+              <!-- Validation Message -->
+              <p class="mt-2 text-sm"
+                 [class.text-green-600]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                 [class.text-red-600]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)"
+                 [class.dark:text-green-500]="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched"
+                 [class.dark:text-red-500]="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)">
+                <span class="font-medium" *ngIf="updateProfileForm.controls['username'].valid && updateProfileForm.controls['username'].touched">Looks good!</span>
+                <span *ngIf="updateProfileForm.controls['username'].invalid && (updateProfileForm.controls['username'].dirty || updateProfileForm.controls['username'].touched)">
+                  <span *ngIf="updateProfileForm.controls['username'].errors?.['required']">Username is required.</span>
+                  <!-- Add other specific error messages here -->
+                </span>
+              </p>
               <!-- Birthdate -->
               <label class="xl:text-base text-black dark:text-white">Birthdate</label>
-              <div class="flex">
-                <input class="h-10 border border-neutral-light-gray text-gray focus:outline-none focus:border-blue-500 rounded-md xl:py-4" formControlName="birthdate" type="date"/>
-                <button [class.bg-green-700]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched" [class.bg-red-700]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
-                        data-tooltip-target="tooltip-birthday" data-tooltip-placement="right"
-                        type="button"
-                        class="rounded-full focus:outline-none p-2.5">
-                  <svg class="w-6 h-6 text-dark-gray dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
-                </button>
+              <div class="relative flex">
+                <!-- Birthdate Input -->
+                <input class="h-10 border text-gray rounded-md xl:py-4 w-full"
+                       [class.bg-green-50]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched"
+                       [class.bg-red-50]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
+                       [class.border-green-500]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched"
+                       [class.border-red-500]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
+                       [class.text-green-900]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched"
+                       [class.text-red-900]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
+                       formControlName="birthdate" type="date"/>
               </div>
+              <!-- Validation Message -->
+              <p class="mt-2 text-sm"
+                 [class.text-green-600]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched"
+                 [class.text-red-600]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)"
+                 [class.dark:text-green-500]="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched"
+                 [class.dark:text-red-500]="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)">
+                <span class="font-medium" *ngIf="updateProfileForm.controls['birthdate'].valid && updateProfileForm.controls['birthdate'].touched">Looks good!</span>
+                <span *ngIf="updateProfileForm.controls['birthdate'].invalid && (updateProfileForm.controls['birthdate'].dirty || updateProfileForm.controls['birthdate'].touched)">
+                  <span *ngIf="updateProfileForm.controls['birthdate'].errors?.['required']">Birthdate is required.</span>
+                  <!-- Add other specific error messages here -->
+                </span>
+              </p>
             </div>
           </section>
           <section *ngIf="currentStep === 2">
