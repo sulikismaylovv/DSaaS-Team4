@@ -1,5 +1,10 @@
-<aside id="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" aria-label="Sidebar"  class="fixed top-0 left-0 z-40 w-fit 2xl:w-64 h-screen hidden lg:block ">
-<div class="h-screen px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">
+<aside id="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" aria-label="Sidebar" class="fixed top-0 left-0 z-40 w-fit 2xl:w-64 h-screen hidden lg:block">
+  <div class="flex flex-col h-full">
+
+    <div class="flex-grow overflow-y-auto bg-light-mode p-2 dark:bg-dark-mode no-scrollbar">
+
+
+<!--    <div class="h-screen px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">-->
     <a class="flex items-center justify-center 2xl:justify-start mb-3" href="/home">
       <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg" class="fill-current text-black dark:text-white w-16 h-16">
         <g transform="translate(0.000000,3200.000000) scale(0.100000,-0.100000)">
@@ -154,17 +159,25 @@
           </span>
         </a>
       </li>
-      <li *ngIf="authService.isAuthenticated$ | async">
-        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
-          <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
-          <div class="flex flex-col">
-            <span class="ms-3 hidden 2xl:inline">{{username}}</span>
-            <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
-          </div>
-        </a>
-      </li>
     </ul>
   </div>
+
+    <div class="pt-4 mb-4 space-y-2 font-medium border-t border-black dark:border-[#8c99c5] no-scrollbar">
+      <!-- Profile links and other elements here -->
+      <ul>
+        <li *ngIf="authService.isAuthenticated$ | async">
+          <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
+            <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
+            <div class="flex flex-col">
+              <span class="ms-3 hidden 2xl:inline">{{username}}</span>
+              <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 </aside>
 
 <!-- Bottom Navigation for Mobile (Hidden on larger screens) -->
@@ -222,7 +235,9 @@
         <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
       </a>
     </li>
-    <!--Profile not signed in-->
+
+
+<!--Profile not signed in-->
     <li *ngIf="(authService.isAuthenticated$ | async) ===false">
       <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/profile">
         <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

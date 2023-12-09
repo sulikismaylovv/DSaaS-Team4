@@ -11,8 +11,24 @@
       <button class="focus:outline-none text-white transition-colors duration-300 bg-purple-800 hover:bg-purple-900 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-6 py-3" type="submit">Buy more</button>
     </div>
 
-    <!-- Favorite Club Player Display -->
-    <p class="text-black dark:text-white font-semibold text-2xl mb-4">Add players to your collection:</p>
+
+    <div class="flex flex-row justify-between items-center w-full px-4 py-2">
+
+            <div>
+            <!-- Title Section -->
+            <p class="text-black dark:text-white font-semibold text-2xl mt-4">Today's Player Selection</p>
+            <p class="text-black dark:text-white text-2xl mb-2 mt-2">Add these players to your collection before midnight </p>
+            </div>
+
+      <!-- Countdown Timer Section -->
+            <div class="bg-gray-100 shadow-inner shadow-2xl rounded-2xl rounded-lg flex justify-center items-center p-4 shadow-lg">
+              <p class="text-black  dark:text-white text-4xl" id="countdown">
+                <!-- Countdown Timer will be displayed here -->
+              </p>
+            </div>
+
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
       <ng-container *ngIf="randomPlayerFavoriteClub">
         <div class="relative"> <!-- Added a relative container -->
@@ -43,10 +59,7 @@
           </div>
         </div>
       </ng-container>
-
-
-
-    <ng-container *ngIf="randomPlayer1">
+      <ng-container *ngIf="randomPlayer1">
         <div [ngClass]="{'border-2 border-purple-400': !randomPlayer1.owned, 'rounded-xl': !randomPlayer1.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="player-card-container">
           <div class="w-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
                [class.opacity-50]="randomPlayer1.owned"
@@ -67,8 +80,6 @@
           </div>
         </div>
       </ng-container>
-
-      <!-- Display randomPlayer2 -->
       <ng-container *ngIf="randomPlayer2">
         <div [ngClass]="{'border-2 border-purple-400': !randomPlayer2.owned, 'rounded-xl': !randomPlayer2.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="player-card-container">
           <div [class.opacity-50]="randomPlayer2.owned" [class.pointer-events-none]="randomPlayer2.owned" class="w-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700">
@@ -88,7 +99,6 @@
           </div>
         </div>
       </ng-container>
-
       <ng-container *ngIf="surprisePlayer">
         <div [ngClass]="{'player-card-container': true, 'border-2 border-purple-400': !surprisePlayer.owned, 'rounded-xl': !surprisePlayer.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="sm:mx-auto md:mx-0 2xl:mx-0">
           <div class="w-full h-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:bg-test border-gray-700"
@@ -113,8 +123,7 @@
           </div>
         </div>
       </ng-container>
-
-
+<!--modal1-->
       <ng-container *ngIf="randomPlayerFavoriteClub || randomPlayer1 || randomPlayer2">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showPlayerModal">
           <div class="flex items-center justify-center min-h-screen">
@@ -134,7 +143,7 @@
           </div>
         </div>
       </ng-container>
-
+<!--modal2-->
       <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showSurpriseModal">
         <!-- Center the modal more effectively on the screen -->
         <div class="flex items-center justify-center min-h-screen">
@@ -158,12 +167,19 @@
         </div>
       </div>
     </div>
+  </div>
+      <!-- Favorite Club Player Display -->
     <!--4-grid column containing boosters-->
-    <p class="text-black dark:text-white font-semibold text-2xl mb-4">Boosters</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+  <div class="flex flex-row justify-between items-center w-full px-4 py-2">
+    <div>
+      <p class="text-black dark:text-white font-semibold text-2xl mt-4">Boosters</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
       <!--First card x2 Boost-->
-      <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-test">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
+      <div class="flex items-center justify-center h-fit rounded ">
+        <div class="w-full max-w-sm bg-white border-2 border-purple-400 rounded-lg shadow dark:bg-test ">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_1.webp" alt="product image" />
           <div class="px-5 pb-5">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x2</h5>
@@ -179,8 +195,8 @@
         </div>
       </div>
       <!--Second card x4 boost-->
-      <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
+    <div class="flex items-center justify-center h-fit rounded ">
+      <div class="w-full max-w-sm bg-white border-2 border-purple-400 rounded-lg shadow dark:bg-test ">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_2.webp" alt="product image" />
           <div class="px-5 pb-5">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x4</h5>
@@ -196,8 +212,8 @@
         </div>
       </div>
       <!--Third card x8 boost-->
-      <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
+    <div class="flex items-center justify-center h-fit rounded ">
+      <div class="w-full max-w-sm bg-white border-2 border-purple-400 rounded-lg shadow dark:bg-test ">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_3.webp" alt="product image" />
           <div class="px-5 pb-5">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x8</h5>
@@ -213,8 +229,8 @@
         </div>
       </div>
       <!--Fourth card x16 boost-->
-      <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-gray-800">
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
+    <div class="flex items-center justify-center h-fit rounded ">
+      <div class="w-full max-w-sm bg-white border-2 border-purple-400 rounded-lg shadow dark:bg-test ">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_3.webp" alt="product image" />
           <div class="px-5 pb-5">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x16</h5>
@@ -235,4 +251,3 @@
   </div>
 
 
-</div>
