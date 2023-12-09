@@ -1,6 +1,6 @@
 <div class="w-full">
   <div class="flex justify-center py-4 h-full">
-    <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
+    <div class="flex rounded-full shadow-xl dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
               class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
         <svg aria-hidden="true" class="w-6 h-6 text-gray-800 dark:text-white" fill="none"
@@ -28,21 +28,20 @@
   <!-- matches.component.html -->
   <div class="w-full">
     <div *ngIf="authService.isLogged() && hasFollowingClubs()"
-         class="bg-light-mode-acc dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+         class="bg-gray bg-opacity-10 shadow-xl  dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
       <div class="relative">
-        <span class="relative bottom-2 text-lg font-bold text-white">Following</span>
+        <span class="relative bottom-2 text-lg font-bold text-dark-gray dark:text-light-mode">Following</span>
       </div>
       <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
 
 
       <ng-container *ngFor="let date of groupedFixtureKeys">
         <ng-container *ngIf="hasFollowedFixtureforDate(date)">
-          <div class="text-white text-lg font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
+          <div class=" text-lg text-dark-gray dark:text-light-mode font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
           <ng-container *ngFor="let fixture of groupedFixtures[date]">
             <ng-container
               *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
-              <div
-                class="mt-4 bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4">
+              <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
                 <!-- Fixture details for followed clubs -->
                 <div class="mt-4">
                   <button (click)="onGameSelect(fixture)" class="text-white  w-full">
@@ -87,12 +86,11 @@
   <div class="bg-gray-800 rounded-lg p-4 overflow-y-auto h-fit w-full mt-6">
     <ng-container *ngFor="let date of groupedFixtureKeys">
       <ng-container *ngIf="hasNonFollowedFixtureforDate(date)">
-        <div class="text-white text-lg font-bold mb-1 mt-4">{{ formatShortDateString(date) }}</div>
+        <div class="ext-dark-gray dark:text-light-mode text-lg font-bold mb-1 mt-4">{{ formatShortDateString(date) }}</div>
         <ng-container *ngFor="let fixture of groupedFixtures[date]">
           <ng-container
             *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
-            <div
-              class="mt-4 bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4">
+            <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
               <!-- Fixture details for non-followed clubs -->
               <div class="mt-4">
                 <button (click)="onGameSelect(fixture)" class="text-white  w-full">
