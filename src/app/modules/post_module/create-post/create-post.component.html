@@ -1,7 +1,7 @@
 <div class="p-4 mb-4 h-144">
   <form (ngSubmit)="onSubmit()">
     <!-- component -->
-    <div class="editor mx-auto flex flex-col border bg-light-mode-acc border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
+    <div class="editor mx-auto flex flex-col border bg-light-mode border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
       <div class="flex flex-row">
         <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4 mb-4 border border-gray-500 "/>
         <p class="font-bold text-md dark:text-white" >{{ profile?.username }}</p>
@@ -9,7 +9,7 @@
       </div>
       <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg ">
         <p class="font-bold text-black dark:text-light-mode mb-2">Retweeting:</p>
-        <div class="flex items-center">
+        <div class="flex items-center border-purple-400">
           <!-- Optionally display the original poster's avatar -->
           <img *ngIf="originalPostAvatar" [src]="originalPostAvatar" alt="Original poster's avatar" class="h-10 w-10 rounded-full mr-4"/>
           <div>
@@ -21,7 +21,7 @@
         <img *ngIf="originalPostImage" [src]="originalPostImage" alt="Original post's image" class="mt-4 rounded-lg"/>
       </div>
 
-      <textarea [(ngModel)]="postContent" name="postContent" class="text-black dark:text-white placeholder:text-black dark:placeholder:text-[#8a8e9d] description bg-[#e5e6e9] dark:bg-[#3a4151] sec p-3 h-60 border border-gray-300 outline-none rounded-2xl" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
+      <textarea [(ngModel)]="postContent" name="postContent" class="text-black dark:text-white placeholder:text-black dark:placeholder:text-[#8a8e9d] description bg-light-mode dark:bg-[#3a4151] sec p-3 h-60 border focus:border-purple-500 border-purple-400 outline-none rounded-2xl" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
       <input type="file" #fileInput class="hidden" (change)="onImageSelected($event)" accept="image/*"/>
       <img *ngIf="imagePreview" [src]="imagePreview" alt="Image preview" class="mt-4 rounded-lg"/>
       <!-- icons -->

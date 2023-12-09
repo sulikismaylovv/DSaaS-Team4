@@ -41,6 +41,7 @@ import 'hammerjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
 import {TermsAndConditionsComponent} from "./modules/registration_module/terms-and-conditions/terms-and-conditions.component";
+import {MomentModule} from "ngx-moment";
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
@@ -51,7 +52,7 @@ import {TermsAndConditionsComponent} from "./modules/registration_module/terms-a
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule,
       FormsModule, CommonModule, HttpClientModule, NgOptimizedImage ,
-      MatDialogModule, ImageCropperModule, BrowserAnimationsModule
+      MatDialogModule, ImageCropperModule, BrowserAnimationsModule, MomentModule
     ],
     providers: [],
     bootstrap: [AppComponent],
