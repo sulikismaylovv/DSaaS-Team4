@@ -32,18 +32,23 @@ export class NavigationComponent {
     }
 
   async ngOnInit() {
-    this.subscription = this.navbarService.currentNotificationCount.subscribe(count => {
-      this.notificationCount = count;
-    });
-
     await this.authService.restoreSession();
 
     if(this.authService.session?.user.id) {
       await this.getProfile().then(async r =>
         this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id));
+        await this.navbarService.refreshNotificationCount(this.profile?.id);
       console.log(this.avatarSafeUrl);
       console.log(this.profile);
     }
+
+    await new Promise<void>((resolve) => {
+      this.navbarService.currentNotificationCount$.subscribe((count) => {
+        this.notificationCount = count;
+        console.log(this.notificationCount);
+        resolve();
+      });
+    });
   }
 
   async getProfile() {

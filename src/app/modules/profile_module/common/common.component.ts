@@ -485,22 +485,22 @@ export class CommonComponent implements OnInit{
   async loadUserLeagues(userId: string | undefined): Promise<void> {
     if(userId === undefined) throw new Error("Error");
     try {
-      console.log("Loading leagues for user ID:", userId);
+      //console.log("Loading leagues for user ID:", userId);
 
       const leagueIds = await this.friendsLeague.getLeaguesIDForUser(userId);
-      console.log("Fetched league IDs:", leagueIds);
+      //console.log("Fetched league IDs:", leagueIds);
       const leagues = await this.friendsLeague.getLeaguesByIds(leagueIds);
-      console.log("Fetched league details:", leagues);
+      //console.log("Fetched league details:", leagues);
 
       const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
-      console.log("Fetched league members:", leagueMembers);
+      //console.log("Fetched league members:", leagueMembers);
 
       let userLeaguesTemp: UserLeague[] = [];
 
       for (const league of leagues) {
         if (league.id !== undefined) {
           let members = leagueMembers[league.id] || [];
-          console.log(`Processing league: ${league.name}, Members:`, members);
+          //console.log(`Processing league: ${league.name}, Members:`, members);
 
           // Fetch usernames for each member
           members = await Promise.all(members.map(async (member) => {
@@ -531,12 +531,12 @@ export class CommonComponent implements OnInit{
             isCurrentUserInTop: isUserInTop,
             currentUserInLeague: isUserInTop ? sortedMembers.find(member => member.userid === userId) || null : null
           });
-          console.log(`Processed league: ${league.name}`, userLeaguesTemp[userLeaguesTemp.length - 1]);
+          //console.log(`Processed league: ${league.name}`, userLeaguesTemp[userLeaguesTemp.length - 1]);
         }
       }
 
       this.userLeagues = userLeaguesTemp;
-      console.log("Final userLeagues data:", this.userLeagues);
+      //console.log("Final userLeagues data:", this.userLeagues);
 
     } catch (error) {
       console.error("Error loading leagues for user:", error);
