@@ -197,7 +197,7 @@ export class NotificationComponent implements OnInit {
     // Remove the deleted notifications from the local state
     this.allNotifications = this.allNotifications.filter(notification => notification.type === 'friendRequest');
     // Re-categorize the remaining notifications
-    this.categorizeNotifications();
+    window.location.reload();
   }
 
 }

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Session} from "@supabase/supabase-js";
 import {NavbarService} from "../../core/services/navbar.service";
+import {ThemeService} from "../../core/services/theme.service";
 
 @Component({
     selector: 'app-login',
@@ -17,10 +18,11 @@ export class LoginComponent implements OnInit {
     private session: Session | null | undefined;
 
     constructor(
-        protected readonly authService: AuthService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        public navbarService: NavbarService
+      public themeService: ThemeService,
+      protected readonly authService: AuthService,
+      private router: Router,
+      private formBuilder: FormBuilder,
+      public navbarService: NavbarService
     ) {
         this.signInForm = this.formBuilder.group({
             usernameOrEmail: '',

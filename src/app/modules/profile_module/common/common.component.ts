@@ -458,7 +458,7 @@ export class CommonComponent implements OnInit{
   }
 
   async updateOwnedPlayers() {
-    const ownedPlayerIds = await this.getPurchasedPlayerIds(this.currentUserID);
+    const ownedPlayerIds = await this.getPurchasedPlayerIds(this.profile?.id);
     await this.fetchOwnedPlayersDetails(ownedPlayerIds);
   }
 
