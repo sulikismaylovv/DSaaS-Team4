@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     this.navbarService.setShowNavbar(true);
     // Subscribe to the auth state changes
     this.authService.authChanges((_, session) => (this.session = session));
+
   }
 
   async navigateToLogin() {

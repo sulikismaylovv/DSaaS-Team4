@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {NotificationsService} from "./notifications.service";
 
 @Injectable({
     providedIn: 'root'
@@ -10,18 +11,26 @@ export class NavbarService {
   // Observable to be used with the async pipe
   public showNavbar$ = this.showNavbarSubject.asObservable();
 
-  private notificationCountSource = new BehaviorSubject<number>(0);
-  currentNotificationCount = this.notificationCountSource.asObservable();
+  public notificationCountSubject = new BehaviorSubject<number>(0);
+  currentNotificationCount$: Observable<number> = this.notificationCountSubject.asObservable();
 
-  constructor() {}
+  constructor( private notificationsService: NotificationsService ) {}
 
   public setShowNavbar(show: boolean): void {
     this.showNavbarSubject.next(show);
   }
 
   public changeNotificationCount(count: number) {
-    this.notificationCountSource.next(count);
+    this.notificationCountSubject.next(count);
+    this.currentNotificationCount$ = this.notificationCountSubject.asObservable();
   }
+
+  public async refreshNotificationCount(userId: string| undefined): Promise<void> {
+    if(!userId) return;
+    const notifications = await this.notificationsService.getNotificationsForUser(userId);
+    this.notificationCountSubject.next(notifications.length);
+  }
+
 
 
 }
