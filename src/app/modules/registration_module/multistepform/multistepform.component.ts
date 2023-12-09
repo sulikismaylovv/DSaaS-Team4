@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ElementRef,
-  ViewChild,
-
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, ViewChild,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";

@@ -18,6 +18,7 @@ import {SettingsComponent} from "./modules/settings/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
 import {FirstSignGuard} from "./core/guards/first-sign.guard";
+import {ErrorComponent} from "./modules/error/error.component";
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard, FirstSignGuard]},
     {path: 'profile/:userId', component: ProfileComponent, canActivate: [ProfileGuard]},
     { path: 'notifications', component: NotificationComponent, canActivate: [ProfileGuard]},
+    { path: '**', component: ErrorComponent, pathMatch: 'full'},
 
 ];
 
