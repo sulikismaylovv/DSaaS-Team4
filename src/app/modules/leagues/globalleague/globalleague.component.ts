@@ -124,19 +124,34 @@ export class GloballeagueComponent implements OnInit {
 
   addAndClear(username: string, inputElement: HTMLInputElement): void {
     if (username.trim()) {
-      // Add the friend to the friends list
-      this.friends.push(this.createFriendGroup(username));
-      // Clear the search results array
-      this.userSearchResults = [];
+      // Check if the username is in the userSearchResults and not already added
+      const userExists = this.userSearchResults.some(user => user.username === username);
+      const isAlreadyAdded = this.friends.value.some((f: Friend) => f.username === username);
+
+      if (userExists && !isAlreadyAdded) {
+        // Add the friend to the friends list
+        this.friends.push(this.createFriendGroup(username));
+        // Clear the search results array
+        this.userSearchResults = [];
+      } else {
+        // Handle the case where the username is not in userSearchResults
+        // or already added to the friends list
+        // For example, show an error message or do nothing
+      }
+
       // Clear the input field
       inputElement.value = '';
     }
   }
 
+  // Optional: Add a method for user search if you have an input field for it
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      this.userSearchResults = await this.userService.searchFriendsByUsername(searchTerm);
+      let results = await this.userService.searchFriendsByUsername(searchTerm);
+      // Filter out usernames that have already been added
+      const addedUsernames = this.friends.value.map((f: Friend) => f.username);
+      this.userSearchResults = results.filter((user: { username: any; }) => !addedUsernames.includes(user.username));
     } else {
       this.userSearchResults = [];
     }

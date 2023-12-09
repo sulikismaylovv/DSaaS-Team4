@@ -1,23 +1,23 @@
-<div class="flex items-center justify-center h-screen bg-gray-100">
-  <div class="bg-white rounded-lg shadow-xl border p-8 w-3xl">
-    <div class="mb-4">
-      <h1 class="font-semibold text-gray-800">Friend Requests</h1>
-    </div>
-    <div *ngFor="let request of friendRequests" class="flex justify-center items-center mb-8">
-      <div class="w-1/5">
-        <img class="w-12 h-12 rounded-full border border-gray-100 shadow-sm" [src]="request.avatarSafeUrl" alt="user image" />
-      </div>
-      <div class="w-4/5">
-        <div>
-          <span class="font-semibold text-gray-800">{{ request.profile.username }}</span>
-          <span class="text-gray-400"> wants to be your friend</span>
-        </div>
-        <div class="font-semibold">
-          <button (click)="acceptRequest(request.profile.id)" class="text-blue-600 mr-2">Accept</button>
-          <button (click)="declineRequest(request.profile.id)" class="text-gray-400">Decline</button>
+<div class="mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <p class="text-center font-bold text-xl text-black dark:text-white">Notifications</p>
+    <!--Friend request card-->
+    <div *ngFor="let request of friendRequests" class="flex justify-center mt-2">
+      <div class="mb-4 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-[#3a4153] dark:border-gray-700">
+        <div class="flex flex-col items-center pb-10">
+          <img class="w-24 h-24 mb-3 mt-3 rounded-full shadow-lg" [src]="request.avatarSafeUrl" alt="user image"/>
+          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ request.profile.username }}</h5>
+          <span class="text-sm text-black dark:text-white">{{ request.profile.username }} wants to be your friend</span>
+
+          <div class="flex mt-4 md:mt-6">
+            <a (click)="acceptRequest(request.profile.id)" class="cursor-pointer mr-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Accept</a>
+            <a (click)="declineRequest(request.profile.id)" class="cursor-pointer text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Decline</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 

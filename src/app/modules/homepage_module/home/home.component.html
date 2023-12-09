@@ -121,7 +121,7 @@
                  class="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-[#394151] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-20"
                  placeholder="Search..." required>
           <button type="submit"
-                  class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  class="text-white absolute end-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
             Search</button>
         </div>
       </form>
@@ -140,22 +140,24 @@
         </li>
       </ul>
     </div>
+
     <!--Links for posts/matches-->
     <div class="flex items-center justify-center h-fit mb-4 rounded">
-      <nav class="flex justify-center py-4 space-x-4">
-        <button (click)="showMatchesContent()"
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-          <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-light-mode dark:bg-dark-mode rounded-md group-hover:bg-opacity-0">
-            Matches
-          </span>
-        </button>
-        <button (click)="showPostsContent()"
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-          <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-light-mode dark:bg-dark-mode rounded-md group-hover:bg-opacity-0">
-            Posts
-          </span>
-        </button>
-      </nav>
+      <div class="mb-2 border-b border-transparent ">
+        <ul class="flex flex-wrap -mb-px text-lg font-bold text-center text-black dark:text-white" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+          <li class="me-2" role="presentation">
+            <button (click)="showMatchesContent()" class="inline-block rounded-t-lg border-b-2 p-4 hover:border-gray-300 hover:text-gray-600"
+                    id="profile-tab" data-tabs-target="#matches" type="button" role="tab" aria-controls="profile" aria-selected="false">Matches</button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button (click)="showPostsContent()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="dashboard-tab" data-tabs-target="#posts" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Posts</button>
+          </li>
+        </ul>
+      </div>
+      <div id="default-tab-content">
+        <div class="hidden" id="matches" role="tabpanel" aria-labelledby="profile-tab"></div>
+        <div class="hidden" id="posts" role="tabpanel" aria-labelledby="dashboard-tab"></div>
+      </div>
     </div>
     <!--Posts and Matches come here-->
     <div class="flex mx-auto items-center justify-center h-fit w-full mb-4 rounded">

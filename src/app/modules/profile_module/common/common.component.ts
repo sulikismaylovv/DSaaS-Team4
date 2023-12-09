@@ -12,9 +12,7 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
 import {
   FriendsLeagueInterface,
-  FriendsLeague,
-  EnhancedUserInFriendsLeague, UserInFriendsLeague
-} from "../../../core/services/friends-league.service";
+  FriendsLeague} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 
 
@@ -28,6 +26,11 @@ interface UserLeague {
   leagueId: number | undefined;
   leagueName: string;
   userPosition: number | string;
+  topMembers: UserInFriendsLeague[];
+  currentUserPosition: number | undefined;
+  isCurrentUserInTop: boolean;
+  currentUserInLeague: UserInFriendsLeague | null;
+
 }
 type LeagueMembers = { [key: number]: UserInFriendsLeague[] };
 
@@ -40,6 +43,15 @@ interface FriendInfo {
 export interface PlayerWithClubDetails extends Player {
   clubname: string;
   owned?: boolean;
+}
+
+export interface UserInFriendsLeague {
+  id?: number;
+  userid: string;
+  leagueid: number;
+  xp: number;
+  username?: string; // Include username
+  position?: number; // Include position
 }
 
 
@@ -95,7 +107,7 @@ export class CommonComponent implements OnInit{
 
   ) {
     this.supabase.supabaseClient
-      .channel('realtime-posts')
+      .channel('realtime-updates')
       .on(
         'postgres_changes',
         {
@@ -107,11 +119,6 @@ export class CommonComponent implements OnInit{
           await this.loadPosts(this.profile?.id);
         }
       )
-      .subscribe();
-
-
-    this.supabase.supabaseClient
-      .channel('realtime-preferences')
       .on(
         'postgres_changes',
         {
@@ -123,8 +130,21 @@ export class CommonComponent implements OnInit{
           this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
         }
       )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'friendships',
+        },
+        async () => {
+          //await this.fetchFriends(this.profile?.id);
+          await this.checkFriendStatus();
+        }
+      )
       .subscribe();
   }
+
 
   async ngOnInit(): Promise<void> {
     this.loading = true; // Start with loading set to true
@@ -158,8 +178,9 @@ export class CommonComponent implements OnInit{
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
 
+      await this.loadUserLeagues(this.profile?.id);
       await this.updateOwnedPlayers();
-      await this.getLeaguesForUser();
+
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
@@ -461,47 +482,70 @@ export class CommonComponent implements OnInit{
     }));
   }
 
-
-  //league section
-  async getLeaguesForUser() {
+  async loadUserLeagues(userId: string | undefined): Promise<void> {
+    if(userId === undefined) throw new Error("Error");
     try {
-      // Get the league IDs for the current user
-      this.leagueIds = await this.friendsLeague.getLeaguesIDForCurrentUser();
+      console.log("Loading leagues for user ID:", userId);
 
-      // Get the details of these leagues
-      this.leagues = await this.friendsLeague.getLeaguesByIds(this.leagueIds);
+      const leagueIds = await this.friendsLeague.getLeaguesIDForUser(userId);
+      console.log("Fetched league IDs:", leagueIds);
+      const leagues = await this.friendsLeague.getLeaguesByIds(leagueIds);
+      console.log("Fetched league details:", leagues);
 
-      // Get the members for each league
-      const leagueMembers = await this.friendsLeague.getMembersForLeagues(this.leagueIds);
+      const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
+      console.log("Fetched league members:", leagueMembers);
 
-      // Initialize an array to hold league details and user positions
+      let userLeaguesTemp: UserLeague[] = [];
 
-      this.userLeagues = this.leagues.map(league => {
-        // Check if league.id is not undefined
-        if (typeof league.id !== 'undefined') {
-          const members = leagueMembers[league.id];
-          // Ensure member is typed
-          const userPosition = members.findIndex((member: UserInFriendsLeague) => member.userid === this.authService.session?.user?.id) + 1;
+      for (const league of leagues) {
+        if (league.id !== undefined) {
+          let members = leagueMembers[league.id] || [];
+          console.log(`Processing league: ${league.name}, Members:`, members);
 
-          return {
+          // Fetch usernames for each member
+          members = await Promise.all(members.map(async (member) => {
+            const username = await this.userService.getUsernameByID(member.userid);
+            return { ...member, username };
+          }));
+
+          const sortedMembers = [...members].sort((a, b) => b.xp - a.xp);
+          const topMembers = sortedMembers.slice(0, 3);
+
+          const isUserInTop = topMembers.some(member => member.userid === userId);
+          let currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
+          let userPosition: number | string = "Not in league";
+
+          if (!isUserInTop) {
+            const userIndex = sortedMembers.findIndex(member => member.userid === userId);
+            if (userIndex >= 0) {
+              userPosition = userIndex + 1;
+            }
+          }
+
+          userLeaguesTemp.push({
             leagueId: league.id,
             leagueName: league.name,
-            userPosition: userPosition > 0 ? userPosition : 'N/A'
-          };
-        } else {
-          return {
-            leagueId: undefined,
-            leagueName: league.name,
-            userPosition: 'N/A'
-          };
+            userPosition,
+            topMembers,
+            currentUserPosition,
+            isCurrentUserInTop: isUserInTop,
+            currentUserInLeague: isUserInTop ? sortedMembers.find(member => member.userid === userId) || null : null
+          });
+          console.log(`Processed league: ${league.name}`, userLeaguesTemp[userLeaguesTemp.length - 1]);
         }
-      });
+      }
 
+      this.userLeagues = userLeaguesTemp;
+      console.log("Final userLeagues data:", this.userLeagues);
 
-      console.log("User Leagues with Positions: ", this.userLeagues);
     } catch (error) {
-      console.error("Error fetching leagues for user: ", error);
+      console.error("Error loading leagues for user:", error);
     }
+  }
+
+
+  isCurrentUser(memberUserID: string): boolean {
+    return this.currentUserID === memberUserID;
   }
 
 

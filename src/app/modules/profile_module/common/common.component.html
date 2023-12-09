@@ -11,8 +11,7 @@
 </div>
 
 <ng-template #loadedContent>
-<section class="bg-light-mode dark:bg-red-600 lg:dark:bg-dark-mode" >
-
+<section class="bg-light-mode dark:bg-dark-mode" >
   <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
     <div class="flex items-center dark:bg-dark-gray max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
@@ -123,15 +122,31 @@
             <!-- Content for Link 2 -->
             <ng-container *ngIf="selectedLink === 'link2'">
               <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
-                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
-                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2">
+                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-64">
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg:text-xl mb-2">
                     {{ profile?.first_name }}'s Leagues
                   </h1>
-                  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                  <!-- Horizontally Scrollable Container -->
+                  <div class="flex flex-row flex-nowrap overflow-x-auto hide-scrollbar py-2" style="max-width: 100%; width: 100%;">
                     <ng-container *ngFor="let league of userLeagues">
-                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
+                      <div class="flex-shrink-0 flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 mx-2" style="min-width: 33%;">
                         <p class="text-center text-dark-mode dark:text-light-mode">{{ league.leagueName }}</p>
-                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.userPosition }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.currentUserPosition }}</p>
+                        <!-- Leaderboard Section -->
+                        <div class="leaderboard mt-2">
+                          <ul class="text-xs">
+                            <li *ngFor="let member of league.topMembers; let i = index"
+                                [ngClass]="{'bg-lighter-purple': isCurrentUser(member.userid), 'border-purple-500 border-2': !isCurrentUser(member.userid)}"
+                                class="user-card rounded-lg p-2 flex items-center justify-between shadow-lg relative">
+                              <!-- Medal Icons -->
+                              <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
+                              <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
+                              <span *ngIf="i === 2" class="text-bronze mr-2">🥉</span>
+                              <!-- Member Details -->
+                              <span>{{ member.username }}</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </ng-container>
                   </div>

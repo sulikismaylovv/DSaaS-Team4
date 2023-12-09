@@ -13,7 +13,7 @@ export class UserServiceService {
     }
 
     async searchUserByUsername(username: string): Promise<any> {
-      console.log('searchUserByUsername:', username);
+      //console.log('searchUserByUsername:', username);
         const currentUserId = this.authService.session?.user?.id; // Get the current user's ID from the AuthService
         if (!currentUserId) {
             console.error('No current user ID found');
@@ -34,7 +34,7 @@ export class UserServiceService {
 
 
     async searchUsersByFirstThreeLetters(term: string): Promise<any[]> {
-        console.log('searchUsersByFirstThreeLetters:', term);
+        //console.log('searchUsersByFirstThreeLetters:', term);
         const currentUserId = this.authService.session?.user?.id;
         if (!currentUserId) {
             console.error('No current user ID found');
@@ -93,7 +93,7 @@ export class UserServiceService {
     }
 
   async searchFriendsByUsername(username: string): Promise<any> {
-      console.log('searchFriendsByUsername:', username);
+      //console.log('searchFriendsByUsername:', username);
     const currentUserId = this.authService.session?.user?.id;
     if (!currentUserId) {
       console.error('No current user ID found');
@@ -103,7 +103,7 @@ export class UserServiceService {
     try {
       // First, get the list of friend IDs
       const friendIds = await this.friendshipService.getFriends(currentUserId);
-      console.log('friendIds:', friendIds);
+      //console.log('friendIds:', friendIds);
 
       // Then, search for friends by username using the list of friend IDs
       const { data, error } = await this.supabase.supabaseClient

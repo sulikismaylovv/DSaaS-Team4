@@ -9,9 +9,9 @@
   margin-right: 10px; /* Add some space between the tabs */
 }
 
-.active {
+/*.active {
   border-bottom: 2px solid white;
-}
+}*/
 
 .modal {
   display: none; /* Hidden by default */
