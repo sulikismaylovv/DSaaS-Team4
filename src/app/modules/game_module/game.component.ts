@@ -118,6 +118,7 @@ export class GameComponent implements OnInit {
 
         this.navbarService.setShowNavbar(true);
         this.time = "test";
+        this.updateTheTime();
         async () => await this.updateTheTime();
         // this.fetchLineup(this.fixture.fixtureID);
         // this.initializeLineups();

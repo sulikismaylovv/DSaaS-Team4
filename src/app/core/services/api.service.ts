@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {SupabaseService} from "./supabase.service";
 import {SupabaseFixture} from "../models/supabase-fixtures.model";
 import {Club} from "../models/club.model";
+import { List } from "lodash";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +31,31 @@ export class ApiService {
       }));
     } catch (error) {
       console.error("Error fetching standings:", error);
+      throw error;
+    }
+  }
+
+  async fetchSquad(clubID: number): Promise<> {
+    try {
+      // Fetch data from Supabase with club information
+      const { data, error } = await this.supabase.supabaseClient
+        .from("players")
+        .select("id, name, position, age, number")
+        .eq("club", clubID)
+        .order(`case
+                  when position = 'Goalkeeper' then 1
+                  when position = 'Defender' then 2
+                  when position = 'Midfielder' then 3
+                  when position = 'Attacker' then 4
+                  else 5
+                end`, { ascending: true })
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching squad:", error);
       throw error;
     }
   }
