@@ -44,10 +44,7 @@ export class NavigationComponent {
         this.avatarSafeUrl = this.imageService.loadAvatarImage(this.profile?.id));
       console.log(this.avatarSafeUrl);
       console.log(this.profile);
-
     }
-
-
   }
 
   async getProfile() {
