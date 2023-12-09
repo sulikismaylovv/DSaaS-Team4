@@ -1,9 +1,8 @@
 <div class="p-4  2xl:ml-64 lg:ml-28">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-    <p class="text-start text-black dark:text-white font-bold text-4xl mb-4">Shop</p>
+  <div class="p-4  rounded-lg">
     <div class="flex items-center justify-between mb-4 p-4 rounded-lg shadow-lg bg-gradient-to-r from-purple-600 to-purple-400 dark:from-purple-800 dark:to-purple-600">
       <div class="flex items-center">
-        <img src="assets/logos/r-coin.svg" class="w-12 h-12">
+        <img src="assets/logos/r-coin.svg" class="w-12 h-12 m-4" alt="r-coin img">
         <div class="text-left">
           <p class="text-xl font-bold text-white">Your Credits:</p>
           <p class="text-xl text-white">{{ userCredits }} credits</p>
@@ -14,37 +13,44 @@
 
     <!-- Favorite Club Player Display -->
     <p class="text-black dark:text-white font-semibold text-2xl mb-4">Add players to your collection:</p>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
       <ng-container *ngIf="randomPlayerFavoriteClub">
-        <div class="player-card-container">
-          <!-- Add Tailwind opacity class based on ownership -->
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
-               [class.opacity-50]="randomPlayerFavoriteClub.owned"
-               [class.pointer-events-none]="randomPlayerFavoriteClub.owned">
-            <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayerFavoriteClub.photo" alt="player image" />
-            <div class="px-5 pb-5">
-              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayerFavoriteClub.name }}</h5>
-              <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayerFavoriteClub.clubname}}</p>
-              <div class="flex items-center justify-between">
-                <span class="text-3xl font-bold text-gray-900 dark:text-white">100 credits</span>
-                <button (click)="makePurchase(currentUserID, randomPlayerFavoriteClub,false)"
-                        [disabled]="randomPlayerFavoriteClub.owned"
-                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                  Buy
-                </button>
+        <div class="relative"> <!-- Added a relative container -->
+          <svg class="absolute top-4 right-4 m-2 w-6 h-6  text-gold" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+
+          <!-- Existing card structure -->
+          <div [ngClass]="{'border-2 border-purple-400': !randomPlayerFavoriteClub.owned, 'rounded-xl': !randomPlayerFavoriteClub.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="player-card-container">
+            <!-- Add Tailwind opacity class based on ownership -->
+            <div class="w-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
+                 [class.opacity-50]="randomPlayerFavoriteClub.owned"
+                 [class.pointer-events-none]="randomPlayerFavoriteClub.owned">
+              <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayerFavoriteClub.photo" alt="player image" />
+              <div class="px-5 pb-5">
+                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayerFavoriteClub.name }}</h5>
+                <p class="text-gray-600 dark:text-gray-300 dark:text-white">{{ randomPlayerFavoriteClub.clubname}}</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-3xl font-bold text-gray-900 dark:text-white">100 credits</span>
+                  <button (click)="makePurchase(currentUserID, randomPlayerFavoriteClub,false)"
+                          [disabled]="randomPlayerFavoriteClub.owned"
+                          class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                    Buy
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </ng-container>
 
-    <!-- Display randomPlayer1 -->
-      <ng-container *ngIf="randomPlayer1">
-        <div class="player-card-container">
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
+
+
+    <ng-container *ngIf="randomPlayer1">
+        <div [ngClass]="{'border-2 border-purple-400': !randomPlayer1.owned, 'rounded-xl': !randomPlayer1.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="player-card-container">
+          <div class="w-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
                [class.opacity-50]="randomPlayer1.owned"
                [class.pointer-events-none]="randomPlayer1.owned">
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700">
             <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer1.photo" alt="player image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer1.name }}</h5>
@@ -60,15 +66,12 @@
             </div>
           </div>
         </div>
-        </div>
       </ng-container>
 
       <!-- Display randomPlayer2 -->
       <ng-container *ngIf="randomPlayer2">
-        <div class="player-card-container">
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700"
-               [class.opacity-50]="randomPlayer2.owned"
-               [class.pointer-events-none]="randomPlayer2.owned">          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700">
+        <div [ngClass]="{'border-2 border-purple-400': !randomPlayer2.owned, 'rounded-xl': !randomPlayer2.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="player-card-container">
+          <div [class.opacity-50]="randomPlayer2.owned" [class.pointer-events-none]="randomPlayer2.owned" class="w-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:bg-test border-gray-700">
             <img class="p-8 rounded-t-lg mx-auto" [src]="randomPlayer2.photo" alt="player image" />
             <div class="px-5 pb-5">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ randomPlayer2.name }}</h5>
@@ -82,49 +85,48 @@
                 </button>
               </div>
             </div>
-            </div>
           </div>
         </div>
       </ng-container>
-
 
       <ng-container *ngIf="surprisePlayer">
-        <div class="player-card-container">
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:bg-test border-gray-700"
+        <div [ngClass]="{'player-card-container': true, 'border-2 border-purple-400': !surprisePlayer.owned, 'rounded-xl': !surprisePlayer.owned, 'sm:mx-auto md:mx-0 2xl:mx-0': true }" class="sm:mx-auto md:mx-0 2xl:mx-0">
+          <div class="w-full h-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:bg-test border-gray-700"
                [class.opacity-50]="surprisePlayer.owned"
                [class.pointer-events-none]="surprisePlayer.owned">
-          <!-- Surprise Player Card -->
-          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:bg-test border-gray-700">
-            <img class="p-8 rounded-t-lg mx-auto" src="assets/images/surprise-image.jpg" alt="Mystery player image" />
-            <div class="px-5 pb-5">
-              <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-center">Mystery Player</h5>
-              <p class="text-gray-600 dark:text-gray-300 text-center dark:text-white">For half the price</p>
-              <div class="flex items-center justify-between">
-                <span class="text-3xl font-bold text-gray-900 dark:text-white">50 credits</span>
-                <button (click)="!surprisePlayer.owned && makePurchase(currentUserID, surprisePlayer, true)"
-                        [disabled]="surprisePlayer.owned"
-                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:focus:ring-purple-900">
-                  Buy
-                </button>
+            <!-- Surprise Player Card -->
+            <div class="w-full h-full max-w-sm bg-white border-0 border-gray-200 rounded-lg shadow-md dark:bg-test border-gray-700">
+              <img class="p-8 w-52 h-52 rounded-t-lg mx-auto" src="assets/images/surprise-image.jpg" alt="Mystery player image" />
+              <div class="px-5 pb-5">
+                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Mystery Player</h5>
+                <p class="text-gray-600 dark:text-gray-300 dark:text-white">For half the price</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-3xl font-bold text-gray-900 dark:text-white">50 credits</span>
+                  <button (click)="!surprisePlayer.owned && makePurchase(currentUserID, surprisePlayer, true)"
+                          [disabled]="surprisePlayer.owned"
+                          class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:focus:ring-purple-900">
+                    Buy
+                  </button>
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
       </ng-container>
+
 
       <ng-container *ngIf="randomPlayerFavoriteClub || randomPlayer1 || randomPlayer2">
         <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showPlayerModal">
           <div class="flex items-center justify-center min-h-screen">
             <div class="relative p-5 border w-96 h-auto shadow-lg rounded-md bg-white dark:bg-dark-gray">
               <div class="mt-3 text-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">You have purchased</h3>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ viewedPlayer?.name }}</h3>
-                <div class="mt-2 px-7 py-3">
+                <h3 class="text-xl p-4 text-gray-500 dark:text-white">You have purchased</h3>
+                <h3 class="text-lg p-4 leading-6 font-medium text-gray-900 dark:text-white">{{ viewedPlayer?.name }}</h3>
+                <div class="mt-2 p-2 px-7 py-3">
                   <img src="{{ viewedPlayer.photo }}" alt="{{ viewedPlayer.name }}" class="w-24 h-24 rounded-full object-cover mx-auto" *ngIf="viewedPlayer">
-                  <p class="text-md text-gray-500 dark:text-white">{{ viewedPlayer?.clubname }}</p>
+                  <p class="text-md p-2 text-gray-500 dark:text-white"> Player at {{ viewedPlayer?.clubname }}</p>
                 </div>
-                <div class="items-center px-4 pb-3">
+                <div class="items-center p-4 px-4 pb-3">
                   <button class="bg-purple-600 text-white rounded-md px-4 py-2 dark:bg-purple-800" (click)="closePlayerModal()">Close</button>
                 </div>
               </div>
@@ -138,43 +140,41 @@
         <div class="flex items-center justify-center min-h-screen">
           <div class="relative p-5 border w-96 h-auto shadow-lg rounded-md bg-white dark:bg-dark-gray">
             <div class="mt-3 text-center">
-              <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Congratulations!</h3>
+              <h3 class="text-xl font-bold leading-6 font-medium text-gray-900 dark:text-white">Congratulations!</h3>
               <div class="mt-2 px-7 py-3">
-                <p class="text-sm text-gray-500 dark:text-white">You've revealed the mystery player:</p>
-                <div class="flex flex-col items-center justify-center">
-                  <img src="{{ surprisePlayer.photo }}" alt="Mystery Player" class="w-24 h-24 rounded-full object-cover bg-gray-300" *ngIf="surprisePlayer">
+                <p class="text-md text-gray-500 dark:text-white">You've revealed the mystery player:</p>
+                <div class="flex flex-col items-center justify-center p-4">
+                  <h3 class="text-lg leading-6 font-medium p-2 text-gray-900 dark:text-white">{{ surprisePlayer?.name }}</h3>
+                  <img src="{{ surprisePlayer.photo }}" alt="Mystery Player" class="w-24 h-24 p-2 rounded-full object-cover bg-gray-300" *ngIf="surprisePlayer">
 <!--                  <p class="text-lg font-semibold mt-3 text-gray-500  dark:text-white">{{ surprisePlayer?.name }}</p>-->
 <!--                  <p class="text-md text-gray-500 dark:text-white">{{ surprisePlayer?.clubname }}</p>-->
                 </div>
               </div>
-              <div class="items-center px-4 pb-3">
+              <div class="items-center p-4 px-4 pb-3">
                 <button class="bg-purple-600 text-white rounded-md px-4 py-2 dark:bg-purple-800" (click)="closeSurpriseModal()">Close</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
     <!--4-grid column containing boosters-->
     <p class="text-black dark:text-white font-semibold text-2xl mb-4">Boosters</p>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
       <!--First card x2 Boost-->
       <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-test">
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_1.webp" alt="product image" />
           <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Point boost x2</h5>
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x2</h5>
             <div class="flex items-center mt-2.5 mb-5">
               <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400 dark:text-white"> Boost your coins with a bang! Our x2 Coin Booster doubles your stash in a snap. Quick, easy, and twice the fun! </p>
+                <p class="text-gray-400 dark:text-white">Our x2 Credit Booster doubles your stash in a snap. Quick, easy, and twice the fun!</p>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">50 credits</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
-            </div>
+              <a class="cursor-default opacity-50 focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900">Soon</a>            </div>
           </div>
         </div>
       </div>
@@ -183,16 +183,15 @@
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_2.webp" alt="product image" />
           <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Point boost x4</h5>
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x4</h5>
             <div class="flex items-center mt-2.5 mb-5">
               <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400 dark:text-white"> Quadruple the thrill with our x4 Coin Booster! It's like hitting the jackpot every time!</p>
+                <p class="text-gray-400 dark:text-white">Quadruple the thrill with our x4 Credit Booster! It's like hitting the jackpot every time!</p>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">150 credits</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
-            </div>
+              <a class="cursor-default opacity-50 focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900">Soon</a>            </div>
           </div>
         </div>
       </div>
@@ -201,16 +200,15 @@
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_3.webp" alt="product image" />
           <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Point boost x8</h5>
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x8</h5>
             <div class="flex items-center mt-2.5 mb-5">
               <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400 dark:text-white"> Eight times the excitement with our x8 Coin Booster! Buckle up for an eight-fold coin explosion!</p>
+                <p class="text-gray-400 dark:text-white">Eight times the excitement with our x8 Credit Booster! Buckle up for a 8x credit rain!</p>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">200 credits</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
-            </div>
+              <a class="cursor-default opacity-50 focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900">Soon</a>            </div>
           </div>
         </div>
       </div>
@@ -219,15 +217,15 @@
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
           <img class="p-8 rounded-t-lg mx-auto" src="assets/shop_icons/Tavern_Coin_Boost_3.webp" alt="product image" />
           <div class="px-5 pb-5">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Point boost x16</h5>
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Credit boost x16</h5>
             <div class="flex items-center mt-2.5 mb-5">
               <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <p class="text-gray-400 dark:text-white"> Supercharge your stash with our ultimate x16 Coin Booster! It's not just a game-changer—it's a game-breaker. </p>
+                <p class="text-gray-400 dark:text-white">Supercharge your stash with our ultimate x16 Credit Booster! It's a game changer!</p>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-3xl font-bold text-gray-900 dark:text-white">200000 credits</span>
-              <a href="#" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Coming Soon</a>
+              <a class="cursor-default opacity-50 focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900">Soon</a>
             </div>
           </div>
         </div>

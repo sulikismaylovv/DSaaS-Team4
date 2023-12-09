@@ -1,9 +1,3 @@
-<!--<button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-  <span class="sr-only">Open sidebar</span>
-  <svg class="w-6 h-6 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <path clip-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" fill-rule="evenodd"></path>
-  </svg>
-</button>-->
 <aside id="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" aria-label="Sidebar"  class="fixed top-0 left-0 z-40 w-fit 2xl:w-64 h-screen hidden lg:block ">
 <div class="h-screen px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">
     <a class="flex items-center justify-center 2xl:justify-start mb-3" href="/home">
@@ -61,12 +55,19 @@
           <span class="ms-3 hidden 2xl:inline" >Home</span>
         </a>
       </li>
-      <li *ngIf="authService.isAuthenticated$ | async">
-        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/notifications">
-          <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
+      <li *ngIf="authService.isAuthenticated$ | async" class="relative">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/notifications">
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-800 dark:text-white relative" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
+            <!-- SVG content -->
             <path d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
           </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline">Notifications</span>
+          <!-- Notification Badge -->
+          <span *ngIf="notificationCount > 0" class="absolute inset-0 object-right-top -mr-1 -mt-1">
+            <div class="inline-flex items-center justify-center px-1 py-1 rounded-full text-xxs font-semibold leading-none bg-red-500 text-white">
+              {{ notificationCount }}
+            </div>
+          </span>
+          <span class="ml-3 hidden 2xl:inline">Notifications</span>
         </a>
       </li>
       <li>
@@ -112,14 +113,6 @@
           <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
         </a>
       </li>
-      <li *ngIf="authService.isAuthenticated$ | async">
-        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/settings">
-          <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 16 3" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-          </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline">Settings</span>
-        </a>
-      </li>
     </ul>
     <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-black dark:border-[#8c99c5]">
       <li *ngIf="authService.isAuthenticated$ | async" class="flex justify-center 2xl:justify-start">
@@ -131,12 +124,12 @@
         </button>
       </li>
       <li *ngIf="!(authService.isAuthenticated$ | async)">
-        <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2" type="button" (click)="navigatetoRegister()">
+        <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigatetoRegister()">
           Register
         </button>
       </li>
       <li *ngIf="!(authService.isAuthenticated$ | async)">
-        <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2" type="button" (click)="navigateToLogin()">
+        <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigateToLogin()">
           Log In
         </button>
       </li>
@@ -159,6 +152,15 @@
           <span class="ms-3 hidden 2xl:inline">
             {{themeService.isDarkModeEnabled() ? "Light" : "Dark"}} Mode
           </span>
+        </a>
+      </li>
+      <li *ngIf="authService.isAuthenticated$ | async">
+        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
+          <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
+          <div class="flex flex-col">
+            <span class="ms-3 hidden 2xl:inline">{{username}}</span>
+            <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
+          </div>
         </a>
       </li>
     </ul>
@@ -220,12 +222,22 @@
         <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
       </a>
     </li>
-    <!--Profile-->
-    <li *ngIf="authService.isAuthenticated$ | async">
+    <!--Profile not signed in-->
+    <li *ngIf="(authService.isAuthenticated$ | async) ===false">
       <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/profile">
         <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         </svg>
+      </a>
+    </li>
+    <!--Profile signed in -->
+    <li *ngIf="authService.isAuthenticated$ | async">
+      <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
+        <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
+        <div class="flex flex-col">
+          <span class="ms-3 hidden 2xl:inline">{{username}}</span>
+          <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
+        </div>
       </a>
     </li>
   </ul>
