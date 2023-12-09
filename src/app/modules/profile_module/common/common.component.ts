@@ -35,6 +35,7 @@ type LeagueMembers = { [key: number]: UserInFriendsLeague[] };
 interface FriendInfo {
   profile: Profile;
   avatarSafeUrl: SafeResourceUrl;
+  commonFriend?: boolean;
 }
 export interface PlayerWithClubDetails extends Player {
   clubname: string;
@@ -78,10 +79,6 @@ export class CommonComponent implements OnInit{
 
   leagues: FriendsLeagueInterface[] = [];
   userLeagues: UserLeague[] = [];
-
-
-
-
 
   constructor(
     protected readonly authService: AuthService,
@@ -193,13 +190,15 @@ export class CommonComponent implements OnInit{
     }
   }
 
-
-
+  checkVisitor(friendId: string|undefined):boolean{
+    if(this.currentUserID==friendId){
+      return false;
+    }
+    else{return true;}
+  }
   getFollowingTeams(): string {
     return this.followingClub.map(club => club.name).join(', ');
   }
-
-
 
   async getProfile() {
     try {
@@ -271,7 +270,6 @@ export class CommonComponent implements OnInit{
     const modal = document.getElementById('friendListModal');
     if (modal) {
       modal.classList.add('active');
-      console.log(this.friendsList);
     }
   }
 
@@ -296,7 +294,6 @@ export class CommonComponent implements OnInit{
       }
       this.friendshipService.addFriend(currentUserId, finalTargetUserId)
         .then(() => {
-          console.log('Friend request sent');
           this.friendRequestStatus = FriendRequestStatus.Requested;
           // You can update the UI accordingly
         })
@@ -309,6 +306,7 @@ export class CommonComponent implements OnInit{
       // Handle the case where the user is not logged in
     }
   }
+
 
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
@@ -326,18 +324,31 @@ export class CommonComponent implements OnInit{
     }
   }
 
+  handleFriendShips(targetUserId?: string | undefined): void {
+    // Assuming you have the target user's ID and the current user's ID available
+    const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
 
- /*
-  this.userRefId = this.isOwnProfile ? null : urlUserId;
-  const urlUserId = this.route.snapshot.paramMap.get('userId');
-*/
+    if (currentUserId) {
+      const finalTargetUserId = targetUserId || this.userRefId;
+      if (finalTargetUserId == null) {
+        console.warn('Target user ID is undefined');
+        // Handle the case where target user ID is not provided or undefined
+        return;
+      }
+      const status = this.friendshipService.checkIfFriends(currentUserId, finalTargetUserId)
+        .catch(error => {
+          console.error('Error removing friend:', error);
+          // Handle errors, perhaps show a message to the user
+        });
 
-test():void{
-  console.log("tried")
-}
+    } else {
+      console.error('User is not logged in');
+      // Handle the case where the user is not logged in
+    }
+  }
+
 
   removeFriend(targetUserId?:string|undefined): void {
-    console.log("pressed");
     // Assuming you have the target user's ID and the current user's ID available
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
 
@@ -350,7 +361,7 @@ test():void{
       }
       this.friendshipService.removeFriend(currentUserId, finalTargetUserId)
           .then(() => {
-            console.log('Friend removed');
+            //console.log('Friend removed');
             this.friendRequestStatus = FriendRequestStatus.None;
             // You can update the UI accordingly
           })
@@ -364,7 +375,7 @@ test():void{
     }
   }
 
-  async fetchFriends(userId: string | undefined): Promise<void> {
+  async fetchFriendships(userId: string | undefined): Promise<void> {
     if(userId === undefined) throw new Error('User ID is undefined');
     if (userId) {
       const friendIds = await this.friendshipService.getFriends(userId);
@@ -375,6 +386,27 @@ test():void{
           this.friendsList.push({
             profile: friendProfile.data,
             avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png' // Fallback to default image
+          });
+        }
+      }
+    }
+  }
+
+  async fetchFriends(userId: string | undefined): Promise<void> {
+    const visitorId=  this.authService.session?.user?.id;
+    if(userId === undefined) throw new Error('User ID is undefined');
+    if(visitorId === undefined) throw new Error('User ID is undefined');
+    if (userId) {
+      const friendIds = await this.friendshipService.getFriends(userId);
+      for (const friendId of friendIds) {
+        const friendProfile = await this.authService.profileById(friendId);
+        if (friendProfile.data) {
+          const avatarSafeUrl = await this.imageService.loadAvatarImage(friendProfile.data.id);
+          const friendBool = await this.friendshipService.checkIfFriends(friendId,visitorId);
+          this.friendsList.push({
+            profile: friendProfile.data,
+            avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png', // Fallback to default image
+            commonFriend: friendBool
           });
         }
       }
