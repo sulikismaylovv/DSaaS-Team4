@@ -22,11 +22,6 @@
   border-bottom: solid;
   margin-left: 3rem; /* Adjust the left margin based on your design */
   margin-right: 3rem;
-  /* Add any other styling for the selected button */
-  @media (prefers-color-scheme: dark) {
-    color: #f3e8ff;
-    /* Add other dark mode styles here */
-  }
 }
 
 #friendListModal {
@@ -36,3 +31,14 @@
 #friendListModal.active {
   display: flex;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+

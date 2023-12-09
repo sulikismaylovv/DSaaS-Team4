@@ -19,7 +19,8 @@ export class AvatarComponent {
     @Input()
     set avatarUrl(url: string | null) {
         if (url) {
-            this.downloadImage(url)
+            this.downloadImage(url).then(r => {
+            });
         }
     }
 

@@ -1,54 +1,131 @@
 <div class="w-full">
   <div class="flex justify-center py-4 h-full">
-    <div class="flex rounded-full shadow-lg dark:bg-[#3a4151]" role="group">
+    <div class="flex rounded-full shadow-xl dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
-              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Previous</button>
+              class="font-medium rounded-l-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg aria-hidden="true" class="w-6 h-6 text-gray-800 dark:text-white" fill="none"
+             viewBox="0 0 8 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"/>
+        </svg>
+      </button>
       <button
         class="text-black dark:text-white font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
         - {{formatShortDate(endDate)}}</button>
       <button (click)="goToNextWeek()"
-              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">Next</button>
+              class="font-medium rounded-r-full px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
+        <svg aria-hidden="true" class="w-6 h-6 text-gray-800 dark:text-white" fill="none"
+             viewBox="0 0 8 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <div class="bg-gray-800 rounded-lg p-4 overflow-y-auto h-fit w-full">
-    <div class="w-full">
-      <!-- Outer loop for grouped fixtures by date -->
-      <div *ngFor="let date of groupedFixtureKeys" class="date-group mb-4">
-        <!-- Display Date -->
-        <div class="text-black dark:text-white text-lg font-bold mb-4">
-          {{ formatShortDateString(date) }}
-        </div>
-        <!-- Inner loop for fixtures on a particular date -->
-        <div *ngFor="let fixture of groupedFixtures[date]"
-             class="bg-gradient-to-r from-[#ce0fd5] to-[#3f25a2] dark:bg-indigo-800 text-dark-mode-text rounded-lg shadow-lg p-4 mt-4">
-          <button (click)="onGameSelect(fixture)" class="text-white underline w-full">
-            <div class="flex justify-between w-full">
-              <!-- Team 1 -->
-              <div class="flex flex-col items-center justify-center w-full">
-                <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
-                <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
-              </div>
-              <!-- Score -->
-              <div class="flex items-center justify-center font-bold text-xl w-full">
-                {{ fixture.home_goals }} - {{ fixture.away_goals }}
-              </div>
-              <!-- Team 2 -->
-              <div class="flex flex-col items-center justify-center w-full">
-                <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
-                <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
-              </div>
-            </div>
-          </button>
-        </div>
+  <!-- matches.component.html -->
+  <div class="w-full">
+    <div *ngIf="authService.isLogged() && hasFollowingClubs()"
+         class="bg-gray bg-opacity-10 shadow-xl  dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+      <div class="relative">
+        <span class="relative bottom-2 text-lg font-bold text-dark-gray dark:text-light-mode">Following</span>
       </div>
+      <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
+
+
+      <ng-container *ngFor="let date of groupedFixtureKeys">
+        <ng-container *ngIf="hasFollowedFixtureforDate(date)">
+          <div class=" text-lg text-dark-gray dark:text-light-mode font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
+          <ng-container *ngFor="let fixture of groupedFixtures[date]">
+            <ng-container
+              *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
+              <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+                <!-- Fixture details for followed clubs -->
+                <div class="mt-4">
+                  <button (click)="onGameSelect(fixture)" class="text-white  w-full">
+                    <div class="flex justify-between w-full">
+                      <!-- Team 1 -->
+                      <div class="flex flex-row items-center w-full">
+                        <span *ngIf="fixture.club0?.id === favoriteClubId"
+                              class="text-yellow-400 text-2xl -mr-6">&#9733;</span>
+                        <div class="flex flex-col items-center justify-center w-full">
+                          <img [src]="fixture.club0?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                          <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                        </div>
+
+                      </div>
+                      <!-- Score -->
+                      <div class="flex items-center justify-center font-bold text-xl w-full">
+                        {{ fixture.home_goals }} - {{ fixture.away_goals }}
+                      </div>
+                      <!-- Team 2 -->
+                      <div class="flex flex-row items-center w-full">
+                        <div class="flex flex-col items-center justify-center w-full">
+                          <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                          <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                        </div>
+                        <span *ngIf="fixture.club1?.id === favoriteClubId"
+                              class="text-yellow-400 text-2xl -ml-12">&#9733;</span>
+
+                      </div>
+
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
+
+  <!-- All Fixtures Section -->
+  <div class="bg-gray-800 rounded-lg p-4 overflow-y-auto h-fit w-full mt-6">
+    <ng-container *ngFor="let date of groupedFixtureKeys">
+      <ng-container *ngIf="hasNonFollowedFixtureforDate(date)">
+        <div class="ext-dark-gray dark:text-light-mode text-lg font-bold mb-1 mt-4">{{ formatShortDateString(date) }}</div>
+        <ng-container *ngFor="let fixture of groupedFixtures[date]">
+          <ng-container
+            *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
+            <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+              <!-- Fixture details for non-followed clubs -->
+              <div class="mt-4">
+                <button (click)="onGameSelect(fixture)" class="text-white  w-full">
+                  <div class="flex justify-between w-full">
+                    <!-- Team 1 -->
+                    <div class="flex flex-col items-center justify-center w-full">
+                      <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
+                      <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                    </div>
+                    <!-- Score -->
+                    <div class="flex items-center justify-center font-bold text-xl w-full">
+                      {{ fixture.home_goals }} - {{ fixture.away_goals }}
+                    </div>
+                    <!-- Team 2 -->
+                    <div class="flex flex-col items-center justify-center w-full">
+                      <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                      <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
-<a class="opacity-0 cursor-default flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+
+<a class="opacity-0 cursor-default">
   <div class="flex flex-col justify-between p-4 leading-normal">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+    <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions
+      2021</h5>
+    <p class=" font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of
+      2021 so far, in reverse chronological order.</p>
   </div>
 </a>
 

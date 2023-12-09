@@ -1,0 +1,38 @@
+h1{
+  font-size: x-large;
+  font-weight: 500
+}
+
+h2{
+  font-size: medium;
+  margin-top: 8px;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+p{
+  font-size:small;
+  margin-left:18px;
+}
+
+li{
+  font-size:small;
+}
+
+h4{
+  font-size:x-small;
+
+}
+
+ol.a{
+  font-size:small;
+  list-style-type:lower-alpha;
+  margin-left:32px;
+  margin-bottom:8px;
+}
+
+ol.b{
+  font-size:x-small;
+  list-style-type:lower-roman;
+  margin-left:24px;
+}

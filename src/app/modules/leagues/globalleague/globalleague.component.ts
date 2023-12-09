@@ -6,7 +6,6 @@ import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
 
 
-
 interface Friend {
   username: string;
 }
@@ -18,11 +17,11 @@ interface Friend {
 export class GloballeagueComponent implements OnInit {
   currentView: 'regional' | 'friends' = 'friends';
   private session: Session | null | undefined;
-  showModal: boolean = false;
+  showModal = false;
 
   leagueForm: FormGroup;
-  showModalConfirm: boolean = false;
-  submittedLeagueName: string = '';
+  showModalConfirm = false;
+  submittedLeagueName = '';
   submittedFriendsUsernames: string[] = [];
   userSearchResults: any[] = [];
 
@@ -44,15 +43,13 @@ export class GloballeagueComponent implements OnInit {
   }
 
 
-
-
-  createFriendGroup(username: string = ''): FormGroup {
+  createFriendGroup(username = ''): FormGroup {
     return this.fb.group({
       username: [username, Validators.required]
     });
   }
 
-  addFriend(username: string = ''): void {
+  addFriend(username = ''): void {
     this.friends.push(this.createFriendGroup(username));
   }
 
@@ -127,19 +124,34 @@ export class GloballeagueComponent implements OnInit {
 
   addAndClear(username: string, inputElement: HTMLInputElement): void {
     if (username.trim()) {
-      // Add the friend to the friends list
-      this.friends.push(this.createFriendGroup(username));
-      // Clear the search results array
-      this.userSearchResults = [];
+      // Check if the username is in the userSearchResults and not already added
+      const userExists = this.userSearchResults.some(user => user.username === username);
+      const isAlreadyAdded = this.friends.value.some((f: Friend) => f.username === username);
+
+      if (userExists && !isAlreadyAdded) {
+        // Add the friend to the friends list
+        this.friends.push(this.createFriendGroup(username));
+        // Clear the search results array
+        this.userSearchResults = [];
+      } else {
+        // Handle the case where the username is not in userSearchResults
+        // or already added to the friends list
+        // For example, show an error message or do nothing
+      }
+
       // Clear the input field
       inputElement.value = '';
     }
   }
 
+  // Optional: Add a method for user search if you have an input field for it
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      this.userSearchResults = await this.userService.searchUserByUsername(searchTerm);
+      let results = await this.userService.searchFriendsByUsername(searchTerm);
+      // Filter out usernames that have already been added
+      const addedUsernames = this.friends.value.map((f: Friend) => f.username);
+      this.userSearchResults = results.filter((user: { username: any; }) => !addedUsernames.includes(user.username));
     } else {
       this.userSearchResults = [];
     }

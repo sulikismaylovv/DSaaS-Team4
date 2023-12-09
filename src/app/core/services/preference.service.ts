@@ -124,50 +124,43 @@ export class PreferencesService {
         }
     }
 
-    private async checkAndUpdatePreferences(userId: string, clubId: bigint, isFavorite: boolean, isFollowed: boolean): Promise<void> {
-        // Fetch existing preferences
-        const {data: existingPreferences, error} = await this.supabase.supabaseClient
-            .from('preferences')
-            .select('*')
-            .eq('user_id', userId);
+  private async checkAndUpdatePreferences(userId: string, clubId: bigint, isFavorite: boolean, isFollowed: boolean): Promise<void> {
+    // Fetch existing preferences
+    const {data: existingPreferences, error} = await this.supabase.supabaseClient
+      .from('preferences')
+      .select('*')
+      .eq('user_id', userId);
 
-        if (error) {
-            console.error('Error fetching existing preferences:', error);
-            throw error;
-        }
-
-        // Check 1: User can have only 1 favorite team
-        if (isFavorite && existingPreferences.some(pref => pref.favorite_club)) {
-          const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
-          if (favoritePreference) {
-            await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
-          }
-        }
-
-        // Check 2 and 4: If the team is already followed, it cannot be added again
-        else if (isFollowed && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
-            throw new Error('This team is already followed. Try again.');
-        }
-
-        // Check 3: If user wants to change the preferred team, the old favorite team will be updated
-        else if (isFavorite) {
-            const favoritePreference = existingPreferences.find(pref => pref.favorite_club);
-            if (favoritePreference) {
-                await this.upsertPreference({...favoritePreference, favorite_club: false , followed_club: true});
-            }
-        }
-
-      // Additional Check: If a team is set as favorite, it should also be followed
-      else if (isFavorite && !existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)) {
-        await this.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
-      }
-
-      else if(!isFavorite && existingPreferences.some(pref => pref.club_id === clubId && pref.followed_club)){
-          await this.deletePreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
-        }
+    if (error) {
+      console.error('Error fetching existing preferences:', error);
+      throw error;
     }
 
-    async getPreferences(userId: string): Promise<Preference[]> {
+    // Check if the team is already followed
+    const isAlreadyFollowed = existingPreferences.some(pref => pref.club_id === clubId.toString() && pref.followed_club);
+
+    // If the team is already followed and is being set to followed again, throw an error
+    if (isFollowed && isAlreadyFollowed) {
+      throw new Error('This team is already followed. Try again.');
+    }
+
+    // If setting a new favorite team
+    if (isFavorite) {
+      // Find and update the old favorite team, if it exists
+      const oldFavorite = existingPreferences.find(pref => pref.favorite_club);
+      if (oldFavorite) {
+        await this.upsertPreference({...oldFavorite, favorite_club: false});
+      }
+
+      // If the new favorite team is not already followed, set it as followed
+      if (!isAlreadyFollowed) {
+        await this.upsertPreference({ user_id: userId, club_id: clubId.toString(), favorite_club: false, followed_club: true });
+      }
+    }
+  }
+
+
+  async getPreferences(userId: string): Promise<Preference[]> {
         try {
             const {data, error} = await this.supabase.supabaseClient
                 .from('preferences')

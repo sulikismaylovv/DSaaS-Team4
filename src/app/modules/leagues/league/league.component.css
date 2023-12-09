@@ -21,10 +21,10 @@
 
 .league-container {
   display: flex;
-  justify-content: space-around; /* This will space out the crests evenly */
+  justify-content: normal; /* This will space out the crests evenly */
   align-items: flex-end; /* Aligns the badges at the bottom */
   flex-wrap: wrap; /* Allows the badges to wrap onto the next line if necessary */
-  gap: 5px; /* Adjust the gap between crests as needed */
+  gap: 2px; /* Adjust the gap between crests as needed */
 }
 
 .crest {
@@ -34,13 +34,14 @@
   width: 80px;
   height: auto;
   margin-bottom: 1rem; /* Adds space below each crest */
-
-
+  transform: scale(0.7);
+  padding: 1px;
 }
+
 .league-info {
   text-align: center;
-  margin-top: 8px; /* Spacing between crests and text, adjust as needed */
-  padding: 5px;
+  margin-top: 4px; /* Spacing between crests and text, adjust as needed */
+  padding: 1px;
 }
 
 
@@ -51,20 +52,18 @@
   background-position: center;
   background-size: cover;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
-  padding: 5px;
+  padding: 2px;
   margin-bottom: 0.5rem; /* Adds space below the badge */
 
 }
 
-/* Replace the background-color with actual images for crests */
 .bronze { background-image: url('src/assets/crests/bronzecrest.svg');}
 .silver { background-image: url('src/assets/crests/silvercrest.svg');}
 .gold {background-image: url('src/assets/crests/goldencrest.svg');}
 .platinum { background-image: url('src/assets/crests/platinumcrest.svg');}
 
-/* Optional: Add a hover effect */
 .league-badge:hover {
-  transform: scale(1.1);
+  transform: scale(0.9);
 }
 
 .coming-soon-overlay {
@@ -78,11 +77,9 @@
 
 .coming-soon-title {
   font-size: 2.5rem;
-  color: #a855f7; /* Golden color */
+  color: #a855f7;
   margin-bottom: 30px;
-  text-shadow: 0px 0px 10px rgba(168, 85, 247, 0.7); /* Slight glow effect */
-  animation: beep 1s linear infinite; /* Blink every second */
-
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
 }
 
 .countdown {
@@ -94,22 +91,22 @@
   padding: 20px;
   border: 3px solid #a855f7; /* Golden border */
   border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
 }
 
 .countdown span {
   font-weight: bold;
-  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7); /* White text glow for readability */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* White text glow for readability */
 }
 
 /* Animation for the countdown to mimic alarm beeping */
 @keyframes beep {
   0%, 100% {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
     color: #FFFFFF;
   }
   50% {
-    text-shadow: 0px 0px 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.7); /* Slight glow effect */
     color: #a855f7; /* Alarm red color */
   }
 }
@@ -143,10 +140,14 @@
 }
 
 .icon-container {
+  display: flex;
+  justify-content: center; /* Center the icon */
+  align-items: center;
   text-align: center; /* Center the icon */
   background-color: #848CA9; /* Light gray background for the icon area */
   padding: 20px; /* Space around the icon */
   width: 100%; /* Ensure icon container fills card width */
+
 }
 
 .icon {

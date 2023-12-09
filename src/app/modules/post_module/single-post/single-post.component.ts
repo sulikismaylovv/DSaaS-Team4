@@ -1,16 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Post, Comment } from "../../../core/models/posts.model";
-import { PostsService } from "../../../core/services/posts.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {Comment, Post} from "../../../core/models/posts.model";
+import {PostsService} from "../../../core/services/posts.service";
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SupabaseService} from "../../../core/services/supabase.service";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-single-post',
   templateUrl: './single-post.component.html',
   styleUrls: ['./single-post.component.css']
 })
+
 export class SinglePostComponent implements OnInit {
   @Input() post!: Post; // The post to which the comments belong
   @Input() originalPost?: Post; // The original post
@@ -18,7 +20,7 @@ export class SinglePostComponent implements OnInit {
   avatarSafeUrl: SafeResourceUrl | undefined;
   loading = true;
   profile: Profile | undefined;
-  commentContent: string = '';
+  commentContent = '';
   constructor(
     private route: ActivatedRoute,
     private readonly postsService: PostsService,
@@ -26,6 +28,7 @@ export class SinglePostComponent implements OnInit {
     private readonly sanitizer: DomSanitizer,
     private readonly supabase: SupabaseService,
     private readonly router: Router,
+    private location: Location
   ) {
     this.supabase.supabaseClient
       .channel('realtime-comments')
@@ -135,5 +138,8 @@ export class SinglePostComponent implements OnInit {
   async onAvatarClick(userId: string | undefined) {
     if (userId === undefined) throw new Error('User ID is undefined');
     await this.router.navigate(['/profile', userId]);
+  }
+  goBack(): void {
+    this.location.back(); // This will navigate back to the previous location in the browser history
   }
 }

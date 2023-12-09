@@ -60,7 +60,6 @@ export class ImageDownloadService {
       const backgroundUrl = await this.getBackgroundUrlByID(userId);
       if (backgroundUrl) {
         const {data} = await this.authService.downLoadBackground(backgroundUrl);
-        console.log(data);
 
         if (data instanceof Blob) {
           // If an avatar image is downloaded, use it

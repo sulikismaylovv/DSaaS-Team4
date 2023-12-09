@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthChangeEvent, AuthSession, Session, User} from '@supabase/supabase-js';
-import {BehaviorSubject, from, Observable} from "rxjs";
+import {BehaviorSubject, catchError, from, Observable, of} from "rxjs";
 import {SupabaseService} from 'src/app/core/services/supabase.service';
 import {ConfigService} from "./config.service";
 import {Router} from "@angular/router";
@@ -17,12 +17,6 @@ export interface Profile {
     avatar_url?: string;
     bg_url?: string;
 }
-
-interface RegisterResponse {
-    dataProfile?: Profile;
-    error?: any;
-}
-
 @Injectable({
     providedIn: 'root'
 })
@@ -58,11 +52,22 @@ export class AuthService {
         return this.supabase.supabaseClient.auth.getSession() != null;
     }
 
-  checkEmailExists(email: string): boolean {
-      const data = this.supabase.supabaseClient.from(
-        'users'
-      ).select('email').eq('email', email).single();
-      return data != null;
+
+    isLogged(): boolean {
+        return this._session != null;
+    }
+
+  checkEmailExists(email: string): Observable<boolean> {
+    return from(this.supabase.supabaseClient
+      .from('users')
+      .select('email', { count: 'exact' })
+      .eq('email', email)
+      .limit(1) // Limit the response to 1 row
+    ).pipe(
+      map(response => response.data && response.data.length > 0),
+      catchError(() => of(false)), // Return false in case of any error
+      map(result => !!result) // Ensure the result is a boolean
+    );
   }
 
   checkUsernameExists(username: string, currentUserId: string): Observable<boolean> {

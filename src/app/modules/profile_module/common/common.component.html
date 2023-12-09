@@ -12,232 +12,222 @@
 
 <ng-template #loadedContent>
 <section class="bg-light-mode dark:bg-dark-mode" >
-
-  <div class="bg-light-mode dark:bg-dark-mode my-8 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+  <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
-    <div class="flex items-center max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
-      <img class="object-cover min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl"  [src]="bgImageSafeUrl">
-        <div>
-          <ng-content select=".edit-bg"></ng-content>
+    <div class="flex items-center dark:bg-dark-gray max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+      <img class="object-contain min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" [src]="bgImageSafeUrl" alt="None">
+      <div>
+        <ng-content select=".edit-bg"></ng-content>
       </div>
     </div>
 
 
-    <!-- Profile Info -->
-    <div class=" bg-white dark:bg-test shadow-sm w-full xl:rounded-br-lg">
-      <div class="flex justify-between">
-        <div class="flex p-4 z-10">
-          <div class="flex items-center h-28 w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
-            <img [src]="avatarSafeUrl" alt="Avatar" class="h-full w-full object-cover border-primary">
-          </div>
-
-          <div class="flex-col justify-center xl:ml-4">
-            <p class="text-light-mode-text dark:text-primary-100 text-lg md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl">{{username}}</p>
-            <div class="flex justify-start -ml-20">
-              <div class="bg-white p-2 my-2 w-8 h-8 lg:w-12 lg:h-12 xl:w-16 xl:h-16 rounded-full">
-                <img class="w-full h-full" [src]="favClub?.logo">
-              </div>
+      <!-- Profile Info -->
+      <div class=" bg-white dark:bg-test shadow-sm w-full">
+        <div class="flex justify-between">
+          <div class="flex px-2 py-4 z-10">
+            <div class="flex items-center h-20 w-20 md:h-28 md:w-28 lg:h-32 lg:w-32 xl:h-40 xl:w-40 2xl:h-44 2xl:w-44 lg: -mt-12 xl:-mt-16 bg-white dark:bg-test rounded-full overflow-hidden">
+              <img [src]="avatarSafeUrl" alt="Avatar" class="h-full w-full object-cover border-primary">
             </div>
-          </div>
-        </div>
 
-        <!-- Start: Own profile only -->
-        <div>
-          <ng-content select=".first-code"></ng-content>
-        </div>
-        <!-- End: Own profile only -->
-      </div>
-
-      <div class="px-8 pt-2">
-        <ul class="flex justify-around border-y-1 dark:border-dark-mode-text xl:w-3/5 2xl:w-2/3">
-          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
-            <button (click)="changeContent('link1')">{{infoString[0]}}</button>
-          </li>
-          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
-            <button (click)="changeContent('link2')">{{infoString[1]}}</button>
-          </li>
-          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
-            <button (click)="changeContent('link3')">{{infoString[2]}}</button>
-          </li>
-          <li class="text-light-mode-text dark:text-primary-100 text-lg sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-4 ">
-            <button (click)="changeContent('link4')">{{infoString[3]}}</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Content for Link 1 -->
-    <div class="flex flex-col xl:flex-row">
-      <div class="flex-1 h-[460px] mb-4">
-        <ng-container *ngIf="selectedLink === 'link1'">
-          <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg px-4 2xl:p-8 p-4 h-full">
-            <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
-              <ul class="grid grid-cols-2 md:grid-cols-3">
-                <ng-container>
-                  <li *ngFor="let friend of friendsList.slice(0,12)" class="xl:mb-2 mx-1 xl:mx-2">
-                    <div
-                         class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
-                      <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'"
-                        alt="{{friend.profile.username}}" class="w-6 h-6 md:w-8 md:w-8 xl:w-10 xl:h-10 rounded-full object-cover">
-                      <span
-                        class="mx-4 sm:mx-2 lg:mx-4 xl:mx-6 2xl:mx-8 text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{friend.profile.username}}</span>
-                      <img [src]="'../assets/icons/' + friendActions[1]" class="w-4 h-4 xl:w-6 xl:h-6">
-                    </div>
-                  </li>
-                </ng-container>
-              </ul>
-              <div class="flex justify-center">
-                <!-- Show More button -->
-                <button (click)="openModal()" class="text-light-mode-text dark:text-primary-100 rounded-2xl p-1">Show
-                  More
-                </button>
+            <div class="flex-col justify-center -mt-4 md:-mt-2 xl:ml-4">
+              <p class="text-light-mode-text dark:text-primary-100 text-sm sm:text-md md:text-2xl 2xl:text-3xl pl-2 mt-1">{{username}}</p>
+              <div class="flex justify-start -ml-8 md:-ml-12 xl:-ml-16 2xl:-ml-20">
+                <div class="bg-white p-1 w-6 h-6 md:w-10 md:h-10
+                lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 rounded-full">
+                  <img class="w-full h-full" [src]="favClub?.logo">
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30" id="friendListModal">
-            <div class="flex flex-col bg-light-mode dark:bg-dark-mode p-4 rounded-lg h-4/5 ">
-              <h1 class="text-2xl text-light-mode-text dark:text-primary-100 font-bold mb-4">Friends List</h1>
-              <ul class="flex-grow p-4 dark:bg-dark-gray rounded-lg overflow-y-auto overscroll-contain">
-                <li *ngFor="let friend of friendsList" class="mb-2">
-                  <div (click)="onFriendClick(friend.profile.id)"
-                       class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
-                    <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'"
-                         alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
-                    <span
-                      class="font-bold mx-8 text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
-                    <img [src]="'../assets/icons/' + friendActions[1]" class="w-6 h-6">
+          <!-- Start: Own profile only -->
+          <div class="md:p-4 -mt-2 md:-mt-3">
+            <ng-content select=".first-code"></ng-content>
+          </div>
+          <!-- End: Own profile only -->
+        </div>
+      </div>
+
+      <!-- Content for Link 1 -->
+      <div class="flex flex-col bg-white dark:bg-test rounded-b-lg xl:flex-row">
+        <div class="flex flex-col flex-1 h-[510px] ">
+          <div class="px-8 bg-white dark:bg-test shadow-sm">
+            <ul class="flex justify-around border-y-1 dark:border-dark-mode-text w-full">
+              <li class="text-light-mode-text dark:text-primary-100 font-light text-xs sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-3 ">
+                <button (click)="changeContent('link1')">{{infoString[0]}}</button>
+              </li>
+              <li class="text-light-mode-text dark:text-primary-100 font-light text-xs sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-3 ">
+                <button (click)="changeContent('link2')">{{infoString[1]}}</button>
+              </li>
+              <li class="text-light-mode-text dark:text-primary-100 font-light text-xs sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-3 ">
+                <button (click)="changeContent('link3')">{{infoString[2]}}</button>
+              </li>
+              <li class="text-light-mode-text dark:text-primary-100 font-light text-xs sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-3 ">
+                <button (click)="changeContent('link4')">{{infoString[3]}}</button>
+              </li>
+            </ul>
+          </div>
+          <div class="flex-grow">
+
+            <!-- Friends -->
+            <ng-container *ngIf="selectedLink === 'link1'">
+              <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 2xl:p-8  h-full">
+                <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
+                  <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-2">
+                    <ng-container>
+                      <li *ngFor="let friend of friendsList.slice(0,12)" class="xl:mb-2 xl:mx-2">
+                        <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md md:p-1">
+                          <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'" alt="{{friend.profile.username}}" class="w-4 h-4 md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full object-cover">
+                          <span (click)="onFriendClick(friend.profile.id)" class="cursor-pointer mx-1 xl:mx-2 font-light text-xs sm:text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{ limitUsernameLength(friend.profile.username, 16) }}</span>
+                          <div *ngIf="checkVisitor(friend.profile.id)">
+                            <img [src]="'../assets/icons/' + (friend.commonFriend === true ? friendActions[0] : friendActions[1] )" (click)="friend.commonFriend === true ? removeFriend(friend.profile.id) : addFriend(friend.profile.id)" class="w-3 h-3 md:w-6 md:h-6 xl:w-6 xl:h-6 cursor-pointer">
+                          </div>
+                          <div *ngIf="!checkVisitor(friend.profile.id)"></div>
+                        </div>
+                      </li>
+                    </ng-container>
+                  </ul>
+                  <div class="flex justify-center transform hover:scale-105 ">
+                    <!-- Show More button -->
+                    <button (click)="openModal()" class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl rounded-2xl pt-1">Show
+                      More
+                    </button>
                   </div>
-                </li>
-              </ul>
-              <div class="flex justify-center items-center mt-4">
-                <button (click)="closeModal()" class="bg-very-light-purple text-light-mode-text px-4 py-2 rounded">
-                  Close
-                </button>
+                </div>
               </div>
-            </div>
+
+              <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30" id="friendListModal">
+                <div class="flex flex-col bg-light-mode dark:bg-dark-mode p-4 rounded-lg h-4/5 ">
+                  <h1 class="text-2xl text-light-mode-text dark:text-primary-100 font-bold mb-4">Friends List</h1>
+                  <ul class="flex-grow p-4 dark:bg-dark-gray rounded-lg overflow-y-auto overscroll-contain">
+                    <li *ngFor="let friend of friendsList" class="mb-2">
+                      <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
+                        <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'" alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
+                        <span (click)="onFriendClick(friend.profile.id)" class="cursor-pointer mx-8 font-light text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
+                        <img  [src]="'../assets/icons/' + (friend.commonFriend === true ? friendActions[0] : friendActions[1] )" (click)="friend.commonFriend === true ? removeFriend(friend.profile.id) : addFriend(friend.profile.id)" class="cursor-pointer w-6 h-6">
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="flex justify-center items-center mt-4">
+                    <button (click)="closeModal()" class="bg-very-light-purple text-light-mode-text px-4 py-2 rounded">
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+
+            <!-- Content for Link 2 -->
+            <ng-container *ngIf="selectedLink === 'link2'">
+              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
+                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-64">
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg:text-xl mb-2">
+                    {{ profile?.first_name }}'s Leagues
+                  </h1>
+                  <!-- Horizontally Scrollable Container -->
+                  <div class="flex flex-row flex-nowrap overflow-x-auto hide-scrollbar py-2" style="max-width: 100%; width: 100%;">
+                    <ng-container *ngFor="let league of userLeagues">
+                      <div class="flex-shrink-0 flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 mx-2" style="min-width: 33%;">
+                        <p class="text-center text-dark-mode dark:text-light-mode">{{ league.leagueName }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.currentUserPosition }}</p>
+                        <!-- Leaderboard Section -->
+                        <div class="leaderboard mt-2">
+                          <ul class="text-xs">
+                            <li *ngFor="let member of league.topMembers; let i = index"
+                                [ngClass]="{'bg-lighter-purple': isCurrentUser(member.userid), 'border-purple-500 border-2': !isCurrentUser(member.userid)}"
+                                class="user-card rounded-lg p-2 flex items-center justify-between shadow-lg relative">
+                              <!-- Medal Icons -->
+                              <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
+                              <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
+                              <span *ngIf="i === 2" class="text-bronze mr-2">🥉</span>
+                              <!-- Member Details -->
+                              <span>{{ member.username }}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- Link 3 -->
+            <ng-container *ngIf="selectedLink === 'link3'">
+              <!-- Content for Link 3 -->
+              <div *ngIf="!isOwnProfile">
+                <div class="bg-white dark:bg-test rounded-b-lg p-4 md:p-8 h-full">
+                  <div>
+                    <h2 class="text-light-mode-text dark:text-primary-300 text-lg md:text-3xl">
+                      <a class="">About</a>
+                    </h2>
+                    <ul>
+                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">Full
+                        name: {{profile?.first_name}} {{profile?.last_name}}</p></li>
+                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">
+                        Birthdate: {{profile?.birthdate}}</p></li>
+                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">Favorite
+                        Team: {{favoriteClub}} </p></li>
+                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">
+                        Following Teams: {{getFollowingTeams()}}</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- Bettinglist -->
+              <div *ngIf="isOwnProfile">
+
+              </div>
+            </ng-container>
+
+            <!-- Link 4 -->
+            <ng-container *ngIf="selectedLink === 'link4'">
+              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
+                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
+                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
+                  <div class="flex flex-row justify-around"><div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                    <ng-container *ngFor="let player of ownedPlayersDetails">
+                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-full">
+                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
+                        <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
+                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p> <!-- Display club name -->
+                      </div>
+                    </ng-container>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
           </div>
-        </ng-container>
+        </div>
 
-
-        <!-- Content for Link 2 -->
-        <ng-container *ngIf="selectedLink === 'link2'" class="h-full">
-          <div class="flex justify-around bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-2 md:px-4 lg:px-8 py-4 h-full">
-            <div class=" bg-light-mode-acc dark:bg-dark-mode mx-1 px-2 lg:px-4 py-2 rounded-lg">
-              <div class="flex justify-center">
-                <span class="text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl">Remontada League</span>
-              </div>
-              <div class="flex items-center justify-center py-2">
-                <img alt="Remontada League" class="w-24 h-24 lg:w-32 lg:h-32 rounded-full my-2" src="../assets/img.png">
-              </div>
-
-              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1</span>
-              </div>
-              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#2</span>
-              </div>
-              <div class="flex items-center justify-center">
-                <span class="text-light-mode-text dark:text-primary-100 -mt-1 px-2">...</span>
-              </div>
-              <div class="flex items-center justify-between bg-white dark:bg-test shadow-sm rounded-md my-1 p-1">
-                <img alt="Team 1" class="w-6 h-6 xl:w-10 xl:h-10 rounded-full object-cover" src="/assets/User-Profile-PNG-Image.png">
-                <span class="font-bold ml-1 text-lg text-light-mode-text dark:text-light-mode">{{ username }}</span>
-                <span class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm lg:text-lg">#1054</span>
-              </div>
-            </div>
-
-            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 rounded-lg">
-              <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xlmb-2">Joined
-                Leagues</h1>
-              <div class="grid grid-cols-3 grid-rows-3 gap-2 lg:gap-4">
-                <ng-container *ngFor="let league of leagueList; let i = index">
-                  <div *ngIf="i < 9" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
-                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg xl:text-xl"> {{league}} </h1>
+        <div class="border-4 dark:border-dark-mode rounded-xl p-1 mb-4 mx-4">
+        <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg p-2 xl:p-4 m-2 relative">
+          <div class="opacity-30 p-6 ">
+            <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Achievements</h1>
+            <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 lg:py-4 rounded-lg">
+              <div class="flex flex-col gap-2 lg:gap-4">
+                <ng-container *ngFor="let achievement of achievementList; let i = index">
+                  <div *ngIf="i < 3" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
                     <img class="w-12 h-12 md:w-14 md:h-14 xl:w-16 xl:h-16" src="../assets/img.png">
+                    <h1 class="text-light-mode-text dark:text-primary-100 text-xs md:text-sm lg:text-lg"> {{achievement}} </h1>
                   </div>
                 </ng-container>
                 <!-- Additional items if needed -->
               </div>
-
             </div>
           </div>
-        </ng-container>
-
-        <!-- Link 3 -->
-        <ng-container *ngIf="selectedLink === 'link3'">
-          <!-- Content for Link 3 -->
-          <div class="bg-white dark:bg-test shadow rounded-b-lg p-4">
-            <div class="mb-2">
-              <h2 class="text-light-mode-text dark:text-primary-300 text-3xl">
-                <a class="">About</a>
-              </h2>
-              <ul>
-                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Full
-                  name: {{profile?.first_name}} {{profile?.last_name}}</p></li>
-                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">
-                  Birthdate: {{profile?.birthdate}}</p></li>
-                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">Favorite
-                  Team: {{favoriteClub}} </p></li>
-                <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-xl">
-                  Following Teams: {{getFollowingTeams()}}</p></li>
-              </ul>
-            </div>
+          <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode p-1">
+            <h1 class="text-white md:text-xl lg:text-2xl">Coming Soon</h1>
           </div>
-        </ng-container>
-
-        <!-- Link 4 -->
-        <ng-container *ngIf="selectedLink === 'link4'">
-          <div class="bg-white dark:bg-test shadow-sm rounded-b-lg sm:px-1 px-2 md:px-4 lg:px-8 py-4 h-full">
-            <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
-              <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s badges</h1>
-              <div class="flex flex-row justify-around">
-                <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
-                  <ng-container *ngFor="let badge of badgeList;">
-                    <div (click)="badgeDisplayed(badge)" class="flex flex-col items-center bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
-                      <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl-w16" [src]="'../assets/logos/' + badge">
-                    </div>
-                  </ng-container>
-                </div>
-                <div class="flex items-center justify-center rounded bg-gray-50 h-fit dark:bg-gray-800 pl-2 xl:pl-4">
-                  <div class="w-60 sm:w-48 md:w-60 lg:w-full xl:w-56 2xl:w-full max-w-sm bg-white dark:bg-test border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <img class="p-8 rounded-t-lg mx-auto w-40 h-40 xl:w-32 xl:h-32 2xl:w-44 2xl:h-44" [src]="'assets/logos/' + selectedBadge" alt="product image" />
-                    <div class="px-5 pb-5">
-                      <h5 class="md:text-lg lg:text-xl tracking-tight text-gray-900 dark:text-primary-100">Club Brugge badge</h5>
-                      <div class="flex items-center mt-2.5 mb-5">
-                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                          <p class="text-gray-400 dark:text-primary-100 md:text-sm lg:text-md xl:text-sm 2xl-text-lg"> Show your colors with the Club Brugge badge! Compact, bold, and brimming with team spirit - it's the perfect way to cheer on your favorite team. </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-
-      <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg p-2 xl:p-4 xl:mt-2 mb-4 xl:ml-2 ">
-        <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Photo's of {{username}}</h1>
-        <div class="bg-light-mode-acc dark:bg-dark-mode  p-2 rounded-lg grid grid-cols-2 gap-2">
-          <ng-container *ngFor="let image of imageList; let i = index">
-            <div class=" xl:h-40 xl:w-40 2xl:w-44 2xl:h-44">
-              <!-- Use string interpolation to concatenate the paths -->
-              <img class="p-1 xl:p-0 w-full h-full object-cover" [src]="'assets/random/' + image ">
-            </div>
-            <!-- Add more images as needed -->
-          </ng-container>
+        </div>
         </div>
       </div>
-    </div>
 
     <!-- Start: Own profile only -->
-    <div *ngIf="isOwnProfile">
+    <div *ngIf="isOwnProfile" class=" my-4">
       <ng-content select=".second-code">
 
       </ng-content>
@@ -245,7 +235,7 @@
     <!-- End: Own profile only-->
 
     <!-- Posts -->
-    <div class="bg-white dark:bg-test shadow px-4 py-2 rounded-lg">
+    <div class="bg-white dark:bg-test shadow my-4 px-4 py-2 rounded-lg">
 
       <!-- Post Navbar -->
       <div class="px-4 bg-white dark:bg-test rounded-t-lg">
@@ -257,13 +247,13 @@
       </div>
 
       <!-- User Posts -->
-      <div class=" p-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
+      <div class=" px-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
           <!-- Post 1 -->
           <div *ngIf="posts.length > 0; else noPosts">
-            <div *ngFor="let post of posts" class="mb-4">
-              <div>
+            <div *ngFor="let post of posts" class="my-4">
+              <div (click)="onPostClick(post.id)">
                 <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
                                [post]="post"></app-post-view>
               </div>

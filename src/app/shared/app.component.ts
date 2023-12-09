@@ -3,11 +3,12 @@ import {AuthService} from '../core/services/auth.service';
 import {initFlowbite} from 'flowbite';
 import {environment} from '../../environments/environment';
 import {ThemeService} from '../core/services/theme.service';
-import {Router, NavigationEnd} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {GameComponent} from "../modules/game_module/game.component";
 import {FooterService} from "../core/services/footer.service";
 import {filter} from "rxjs/operators";
-declare var gtag: Function; // Declare gtag function
+
+declare let gtag: Function; // Declare gtag function
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

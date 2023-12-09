@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AuthService, Profile} from '../../core/services/auth.service';
-import {Session,} from "@supabase/supabase-js";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AvatarComponent} from "../account_module/avatar/avatar.component";
 import {Club, PreferencesService} from "../../core/services/preference.service";
@@ -19,16 +18,16 @@ interface ClubShow{
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit{
-  showContent: boolean = false;
+  showContent = false;
   profile: Profile | undefined;
   clubs: ClubShow[] = [];
 
   clickedImage: string | null = null;
   @Input() team: any;
-  @Input() selected: boolean = false;
-  @Input() favorite: boolean = false; // Add this line to represent a favorite team
+  @Input() selected = false;
+  @Input() favorite = false; // Add this line to represent a favorite team
   @Output() selectTeam = new EventEmitter<any>();
-  hover: boolean = false;
+  hover = false;
   updateSettingsForm!: FormGroup;
   favoriteClub: ClubShow | undefined;
   followedClubs: ClubShow[] = [];
@@ -118,7 +117,6 @@ export class SettingsComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 
@@ -152,7 +150,6 @@ export class SettingsComponent implements OnInit{
       if (error instanceof Error) {
         alert(error.message);
       }
-    } finally {
     }
   }
 
@@ -171,9 +168,9 @@ export class SettingsComponent implements OnInit{
   }
 
   private async fetchAllClubs(): Promise<ClubShow[]>{
-    let clubs: ClubShow[] = [];
+    const clubs: ClubShow[] = [];
     const Club = await this.preferencesService.fetchAllClubs();
-    for (let club of Club){
+    for (const club of Club) {
       const clubLogo = undefined;
       const clubShow: ClubShow = {club: club, clubLogo: clubLogo};
       clubs.push(clubShow);
@@ -184,11 +181,11 @@ export class SettingsComponent implements OnInit{
 
 
   private async fetchFollowedClubs(): Promise<ClubShow[]>{
-    let clubs: ClubShow[] = [];
+    const clubs: ClubShow[] = [];
     const userId = this.authService.session?.user?.id;
     if (!userId) throw new Error('User not authenticated');
     const preferences = await this.preferencesService.getFollowedPreferences(userId);
-    for (let preference of preferences){
+    for (const preference of preferences) {
       const club = await this.preferencesService.getClubByClubId(parseInt(preference.club_id));
       const clubLogo = undefined;
       //const clubLogo = await this.imageDownloadService.loadClubImage(club.logo);
