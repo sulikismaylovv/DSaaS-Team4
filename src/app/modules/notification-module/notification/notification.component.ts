@@ -8,6 +8,7 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 interface FriendRequest {
   profile: Profile;
   avatarSafeUrl: SafeResourceUrl;
+  createdAt?: Date;
 }
 
 
@@ -16,6 +17,7 @@ interface FriendRequest {
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
+
 export class NotificationComponent implements OnInit {
   currentUserId: string | undefined = this.authService.session?.user.id;
   friendRequests: FriendRequest[] = []; // Example data, replace with actual friend request data
@@ -74,7 +76,8 @@ export class NotificationComponent implements OnInit {
           const avatarSafeUrl = await this.imageService.loadAvatarImage(requestProfile.data.id);
           this.friendRequests.push({
             profile: requestProfile.data,
-            avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png' // Fallback to default image
+            avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png', // Fallback to default image
+            createdAt: request.created_at
           });
         }
       }

@@ -1,23 +1,30 @@
 <div class="mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto">
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
     <p class="text-center font-bold text-xl text-black dark:text-white">Notifications</p>
-    <!--Friend request card-->
-    <div *ngFor="let request of friendRequests" class="flex justify-center mt-2">
-      <div class="mb-4 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-[#3a4153] dark:border-gray-700">
-        <div class="flex flex-col items-center pb-10">
-          <img class="w-24 h-24 mb-3 mt-3 rounded-full shadow-lg" [src]="request.avatarSafeUrl" alt="user image"/>
-          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ request.profile.username }}</h5>
-          <span class="text-sm text-black dark:text-white">{{ request.profile.username }} wants to be your friend</span>
-
-          <div class="flex mt-4 md:mt-6">
-            <a (click)="acceptRequest(request.profile.id)" class="cursor-pointer mr-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Accept</a>
-            <a (click)="declineRequest(request.profile.id)" class="cursor-pointer text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Decline</a>
+    <!-- Friend request card -->
+    <div *ngFor="let request of friendRequests" class="flex justify-center mt-4">
+      <div class="mb-4 w-full max-w-md bg-white rounded-lg shadow-md dark:bg-[#3a4153]">
+        <div class="p-4 flex items-center justify-between">
+          <!-- User avatar -->
+          <div class="flex items-center">
+            <img class="w-12 h-12 rounded-full shadow" [src]="request.avatarSafeUrl" alt="user image"/>
+          </div>
+          <!-- Friend request message and timestamp -->
+          <div class="flex flex-col">
+            <span class="text-lg font-medium text-gray-900 dark:text-white"> Friend Request</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ request.createdAt | amTimeAgo }}</span>
+          </div>
+          <!-- Friend request message -->
+          <div class="flex-grow text-center px-3">
+            <span class="text-sm text-gray-600 dark:text-gray-300">{{ request.profile.username }} wants to be your friend</span>
+          </div>
+          <!-- Accept and decline buttons -->
+          <div class="flex-shrink-0">
+            <button (click)="acceptRequest(request.profile.id)" class="mr-2 text-sm px-4 py-2 text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300 dark:focus:ring-purple-800">Accept</button>
+            <button (click)="declineRequest(request.profile.id)" class="text-sm px-4 py-2 text-red-600 border border-red-600 rounded-md hover:text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 dark:focus:ring-red-800">Decline</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
