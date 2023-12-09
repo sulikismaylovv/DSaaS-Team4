@@ -1,6 +1,6 @@
-<div class="p-4 sm:ml-64">
+<div class="p-4  2xl:ml-64 lg:ml-28">
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-    <p class="text-start text-white font-bold text-4xl mb-4">Shop</p>
+    <p class="text-start text-black dark:text-white font-bold text-4xl mb-4">Shop</p>
     <div class="flex items-center justify-between mb-4 p-4 rounded-lg shadow-lg bg-gradient-to-r from-purple-600 to-purple-400 dark:from-purple-800 dark:to-purple-600">
       <div class="flex items-center">
         <img src="assets/logos/r-coin.svg" class="w-12 h-12">
@@ -12,11 +12,9 @@
       <button class="focus:outline-none text-white transition-colors duration-300 bg-purple-800 hover:bg-purple-900 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-6 py-3" type="submit">Buy more</button>
     </div>
 
-
-
     <!-- Favorite Club Player Display -->
-    <p class="text-white font-semibold text-2xl mb-4">Add players to your collection:</p>
-    <div class="grid grid-cols-4 gap-4 mb-4">
+    <p class="text-black dark:text-white font-semibold text-2xl mb-4">Add players to your collection:</p>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
       <ng-container *ngIf="randomPlayerFavoriteClub">
         <div class="player-card-container">
           <!-- Add Tailwind opacity class based on ownership -->
@@ -160,8 +158,8 @@
 
     </div>
     <!--4-grid column containing boosters-->
-    <p class="text-white font-semibold text-2xl mb-4">Boosters</p>
-    <div class="grid grid-cols-4 gap-4 mb-4">
+    <p class="text-black dark:text-white font-semibold text-2xl mb-4">Boosters</p>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
       <!--First card x2 Boost-->
       <div class="flex items-center justify-center h-fit rounded bg-gray-50 dark:bg-test">
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-test border-gray-700">
