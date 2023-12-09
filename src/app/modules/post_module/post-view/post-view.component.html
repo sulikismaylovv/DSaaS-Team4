@@ -54,7 +54,7 @@
     <p class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
 
     <!-- Display post image if exists -->
-    <div *ngIf="post.image_url" class="mt-4" (click)="onPostClick(post.id)">
+    <div *ngIf="post.image_url && !post.is_official" class="mt-4" (click)="onPostClick(post.id)">
       <img [src]="postSafeUrl" alt="Post image" class="rounded-lg sm:w-80 lg:w-fit lg:h-auto mx-auto"/>
     </div>
   </ng-template>

@@ -5,7 +5,7 @@ export interface Post {
     image_url?: string; // Optional since not all posts have images
     created_at: Date;
     original_post_id?: number;
-    isOfficial?: boolean;
+    is_official?: boolean;
 }
 
 export interface Like {
