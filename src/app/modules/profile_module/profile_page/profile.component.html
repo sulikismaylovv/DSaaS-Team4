@@ -3,22 +3,21 @@
   <div class="edit-bg"  *ngIf="isOwnProfile">
     <div class="absolute top-0 right-0 sm:p-4">
       <button class="m-2 bg-white bg-opacity-50 rounded-lg transform hover:scale-105 w-8 h-8">
-        <img (click)="openBgImageSelectorModal()" alt="edit icon" class="transition-transform w-full h-full" src="assets/icons/edit-pencil.svg">
+        <img (click)="openBgImageSelectorModal()" alt="edit icon" class="transition-transform w-full h-full" src="assets/icons/Edit_Cover_Photo.svg">
       </button>
     </div>
   </div>
 
   <div class="first-code">
     <div class="flex items-start" *ngIf="!isOwnProfile">
-      <button (click)="friendRequestStatus === 'friends' ? removeFriend() : addFriend()" class="flex items-center border-very-light-purple dark:border-lighter-purple border-2 rounded-lg focus:outline-none my-3 mx-1">
+      <button (click)="friendRequestStatus === 'friends' ? removeFriend() : addFriend()" class="flex items-center focus:outline-none my-3 mx-1">
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl px-1">{{ friendRequestStatus === 'none' ? 'Add Friend' : (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}</span>
       </button>
     </div>
-
     <div   *ngIf="isOwnProfile">
-      <a href="/settings" class="flex items-center border-very-light-purple dark:border-lighter-purple border-2 my-3 px-1 rounded-lg">
-        <img class="w-6 h-6" src="assets/icons/settings-96.svg">
-        <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl">Settings</span>
+      <a href="/settings" class="flex items-center my-3 px-1">
+        <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl">Edit Profile</span>
+        <img class="w-8 h-8" src="../../../../assets/icons/edit-pencil-primary-100.svg">
       </a>
     </div>
   </div>
