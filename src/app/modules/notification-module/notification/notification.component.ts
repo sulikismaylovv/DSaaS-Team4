@@ -5,6 +5,7 @@ import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
 import {NotificationService , Notification} from "../../../core/services/notifications.service";
+import {NavbarService} from "../../../core/services/navbar.service";
 
 
 interface FriendRequest {
@@ -37,6 +38,7 @@ export class NotificationComponent implements OnInit {
   currentUserId: string | undefined = this.authService.session?.user.id;
   allNotifications: CombinedNotification[] = [];
   categorizedNotifications: { [key: string]: CombinedNotification[] } = {};
+  notificationsCount: number = 0;
 
 
   constructor(
@@ -45,6 +47,7 @@ export class NotificationComponent implements OnInit {
     private readonly imageService: ImageDownloadService,
     private readonly supabase: SupabaseService,
     private readonly notificationService: NotificationService,
+    private readonly navbarService: NavbarService
   ) {
     this.supabase.supabaseClient
       .channel('realtime-friendships')
@@ -148,6 +151,9 @@ export class NotificationComponent implements OnInit {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
     }
+
+    this.notificationsCount = this.allNotifications.length;
+    this.navbarService.changeNotificationCount(this.notificationsCount);
   }
 
   async acceptRequest(userId: string | undefined): Promise<void> {
