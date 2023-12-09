@@ -33,9 +33,6 @@
             Team
           </th>
           <th scope="col" class="px-6 py-3">
-            PL
-          </th>
-          <th scope="col" class="px-6 py-3">
             GD
           </th>
           <th scope="col" class="px-6 py-3">
@@ -44,55 +41,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+        <tr *ngFor="let team of league; let i = index" class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
           <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
+            {{i+1}}
           </th>
           <td class="px-6 py-4">
-            A.S OOST...
+            {{team.name}}
           </td>
           <td class="px-6 py-4">
-            10
+            {{team.goalDifference}}
           </td>
           <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
-          </td>
-        </tr>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
-          </th>
-          <td class="px-6 py-4">
-            A.S OOST...
-          </td>
-          <td class="px-6 py-4">
-            10
-          </td>
-          <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
-          </td>
-        </tr>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
-          </th>
-          <td class="px-6 py-4">
-            A.S OOST...
-          </td>
-          <td class="px-6 py-4">
-            10
-          </td>
-          <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
+          {{team.points}}
           </td>
         </tr>
         </tbody>
