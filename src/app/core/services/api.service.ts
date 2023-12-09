@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {SupabaseService} from "./supabase.service";
-import {SupabaseFixture} from "../models/supabase-fixtures.model";
-import {Club} from "../models/club.model";
-import { List } from "lodash";
+import { Injectable } from "@angular/core";
+import { SupabaseService } from "./supabase.service";
+import { SupabaseFixture } from "../models/supabase-fixtures.model";
+import { Club } from "../models/club.model";
+import { Player } from "../models/player.model";
 
 @Injectable({
   providedIn: "root",
@@ -35,30 +35,55 @@ export class ApiService {
     }
   }
 
-  async fetchSquad(clubID: number): Promise<> {
+  async fetchSquad(clubID: number): Promise<Player[]> {
     try {
       // Fetch data from Supabase with club information
       const { data, error } = await this.supabase.supabaseClient
         .from("players")
-        .select("id, name, position, age, number")
+        .select("*")
         .eq("club", clubID)
-        .order(`case
-                  when position = 'Goalkeeper' then 1
-                  when position = 'Defender' then 2
-                  when position = 'Midfielder' then 3
-                  when position = 'Attacker' then 4
-                  else 5
-                end`, { ascending: true })
+        .order("number", { ascending: true });
+
       if (error) {
         throw error;
       }
 
-      return data;
+      // Define a type for the position order
+      type PositionOrder = {
+        [key: string]: number;
+      };
+
+      const positionOrder: PositionOrder = { 'Goalkeeper': 1, 'Defender': 2, 'Midfielder': 3, 'Attacker': 4 };
+
+      // Sort the data in the desired order
+      const sortedData = data.sort((a, b) => {
+        const positionA = positionOrder[a.position as keyof PositionOrder] || 5;
+        const positionB = positionOrder[b.position as keyof PositionOrder] || 5;
+
+        if (positionA !== positionB) {
+          return positionA - positionB;
+        }
+
+        // If positions are the same, sort by number ascending
+        return a.number - b.number;
+      });
+
+      return data.map((player: any) => ({
+        id: player.id,
+        name: player.name,
+        club: clubID,
+        age: player.age,
+        number: player.number,
+        position: player.position,
+        photo: player.photo,
+      }));
     } catch (error) {
       console.error("Error fetching squad:", error);
       throw error;
     }
   }
+
+
 
   async fetchSupabaseFixturesDateRange(
     startDate: string,
@@ -100,7 +125,9 @@ export class ApiService {
     }
   }
 
-  async fetchSingleSupabaseFixture(fixtureID: number): Promise<SupabaseFixture> {
+  async fetchSingleSupabaseFixture(
+    fixtureID: number,
+  ): Promise<SupabaseFixture> {
     try {
       // Fetch data from Supabase with club information
       const { data, error } = await this.supabase.supabaseClient
@@ -130,6 +157,4 @@ export class ApiService {
       throw error;
     }
   }
-
-
 }

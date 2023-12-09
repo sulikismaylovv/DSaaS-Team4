@@ -14,6 +14,7 @@ import { SupabaseFixture, SupabaseFixtureModel, } from "src/app/core/models/supa
 import { SupabaseService } from "src/app/core/services/supabase.service";
 import { Observable } from "rxjs";
 import { from } from "rxjs";
+import { Player } from "src/app/core/models/player.model";
 
 @Component({
   selector: "app-game",
@@ -40,6 +41,8 @@ export class GameComponent implements OnInit {
   testingdata: any;
   betAlreadyPlaced = false;
   betInfo$: Observable<{ betAmount: number, teamChosen: string }> = new Observable<{ betAmount: number, teamChosen: string }>();
+  squadHome: Player[] = [];
+  squadAway: Player[] = [];
 
   time = "";
   timeLeft = "";
@@ -102,17 +105,13 @@ export class GameComponent implements OnInit {
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
           this.fixture = fixture;
-          //console.log("fetchFixture() called");
-          //console.log("date.time: ", fixture.time)
-
+          this.fetchSquads();
           this.updateTheTime();
           this.checkIfBetCanBePlaced();
           if(this.betAlreadyPlaced) {
-            //console.log("getBetInfo() called");
             this.getBetInfo().then(() => this.logData());
           }
         } else {
-          // this.fetchFixture(id).then(() => this.updateTheTime());
           this.fetchFixture(id);
         }
 
@@ -140,16 +139,20 @@ export class GameComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  async fetchSquads() {
+    const clubID0 = this.fixture.club0?.id ?? 260 ;
+    const clubID1 = this.fixture.club1?.id ?? 260;
+    this.squadHome = await this.apiService.fetchSquad(clubID0);
+    this.squadAway = await this.apiService.fetchSquad(clubID1);
+  }
+
   fetchBetInfoObservable(betterID: number, fixtureID: number): Observable<Bet> {
     return from(this.betsService.fetchBetInfo(betterID, fixtureID));
   }
 
-
-
-
   logData(){
-    console.log("team chosen: ", this.teamChosen);
-    console.log("bet amount: ", this.betAmount);
+    console.log("home: ", this.squadHome);
+    console.log("away: ", this.squadAway);
   }
 
   async checkIfBetCanBePlaced() {
@@ -172,6 +175,7 @@ export class GameComponent implements OnInit {
     console.log("fetchFixture() called");
     console.log("date.time: ", data.time)
     this.fixture = data; // Ensure that this.fixture is updated with the fetched data
+    await this.fetchSquads();
     await this.updateTheTime();
     this.checkIfBetCanBePlaced();
 
