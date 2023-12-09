@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'light-gradient': 'linear-gradient(to right, #805ad5, #b794f4)',
+        'dark-gradient': 'linear-gradient(to right, #ce0fd5, #3f25a2)'
+      },
+
       colors: {
         primary: {"50":"#faf5ff","100":"#f3e8ff","200":"#e9d5ff","300":"#d8b4fe","400":"#c084fc","500":"#a855f7","600":"#9333ea","700":"#7e22ce","800":"#6b21a8","900":"#581c87","950":"#3b0764"},
         'dark-mode': "#1c2632",
@@ -23,9 +28,10 @@ module.exports = {
         'lighter-purple':'#6F44C8',
         'very-light-purple':'#D2C7EE',
         'search-bar':"rgba(28,38,50,0.59)",
-        'navbar-hover-light':"#c2c2ac",
+        'navbar-hover-light':"#c1bfbb",
       },
       scale:{
+        '130': '1.3',
         '150': '1.5',
         '175': '1.75',
         '185': '1.85',
@@ -37,6 +43,7 @@ module.exports = {
         '700': '7',
       },
       margin:{
+        '84': '21rem',
         '100': '25rem',
         '121': '30.25rem',
       },

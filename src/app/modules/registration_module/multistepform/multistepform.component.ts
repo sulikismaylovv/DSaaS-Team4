@@ -1,13 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, ViewChild} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  ValidatorFn,
-  AsyncValidatorFn,
-  ValidationErrors
-} from '@angular/forms';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, ViewChild,} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {PreferencesService} from "../../../core/services/preference.service";
@@ -15,12 +7,6 @@ import {NavbarService} from "../../../core/services/navbar.service";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 declare let gtag: Function;
-
-
-
-
-
-
 interface Team {
     id: number;
     name: string;
@@ -35,7 +21,9 @@ interface Team {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class MultistepformComponent implements OnInit {
+
   currentStep = 1;
   lastPage = false;
   updateProfileForm!: FormGroup;
@@ -48,6 +36,8 @@ export class MultistepformComponent implements OnInit {
   total = 9;
   showSummary = true;
   isSubmitting = false;
+  showModal: boolean = true;
+
 
   teams = [
     {
@@ -197,8 +187,15 @@ export class MultistepformComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
     });
+    if (!localStorage.getItem('firstVisit')) {
+      this.showModal = true;
+      localStorage.setItem('firstVisit', 'true');
+    }
 
     await this.fetch();
+  }
+  closeModal(): void {
+    this.showModal = false;
   }
 
   usernameValidator(): AsyncValidatorFn {

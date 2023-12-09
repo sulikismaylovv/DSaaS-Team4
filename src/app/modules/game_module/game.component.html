@@ -1,5 +1,6 @@
-<aside class="fixed top-0 right-0 w-fit p-4 hidden 2xl:block">
-  <div class="bg-light-mode-acc dark:bg-[#394151] rounded-lg shadow-md p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+<aside class="fixed overflow-y-auto top-0 right-0 w-fit p-4 hidden 2xl:block flex flex-col h-screen no-scrollbar">
+
+<div class="bg-white  dark:bg-[#394151] rounded-lg shadow-md p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
         <p class="text-3xl font-bold text-black dark:text-white">Your Credits: {{availableCredits}}</p>
@@ -13,12 +14,14 @@
       </div>
     </div>
   </div>
-  <div class="rounded-lg bg-light-mode-acc dark:bg-[#394151] shadow-md mt-5 mb-8 p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
-    <div class="h-fit flex flex-col">
-      <div class="flex items-center justify-between">
-        <div class="flex flex-col items-start">
+
+  <div class="flex-grow overflow-y-auto">
+
+    <div class="rounded-lg bg-white dark:bg-[#394151] shadow-lg mt-5 mb-8 p-4">
+    <div class="h-fit bg-white dark:bg-[#394151] flex flex-col">
+      <div class="flex items-center justify-between bg-white dark:bg-[#394151] ">
+        <div class="flex flex-col  items-start">
           <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
-          <p class="text-lg mt-1 ml-4 text-black dark:text-white font-bold"> Belgium</p>
         </div>
         <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
              class="ml-4 mr-4 mt-1 w-16 h-16" />
@@ -33,72 +36,29 @@
             Team
           </th>
           <th scope="col" class="px-6 py-3">
-            PL
-          </th>
-          <th scope="col" class="px-6 py-3">
-            GD
-          </th>
-          <th scope="col" class="px-6 py-3">
             PTS
           </th>
         </tr>
         </thead>
         <tbody>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+        <tr *ngFor="let team of league; let i = index" class="bg-gray bg-opacity-10 border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
           <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
+            {{i+1}}
           </th>
           <td class="px-6 py-4">
-            A.S OOST...
+            {{team.name}}
           </td>
           <td class="px-6 py-4">
-            10
-          </td>
-          <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
-          </td>
-        </tr>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
-          </th>
-          <td class="px-6 py-4">
-            A.S OOST...
-          </td>
-          <td class="px-6 py-4">
-            10
-          </td>
-          <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
-          </td>
-        </tr>
-        <tr class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            1"
-          </th>
-          <td class="px-6 py-4">
-            A.S OOST...
-          </td>
-          <td class="px-6 py-4">
-            10
-          </td>
-          <td class="px-6 py-4">
-            20
-          </td>
-          <td class="px-6 py-4">
-            100
+            {{team.points}}
           </td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+  </div>
+
 </aside>
 
 <div class="p-4 2xl:ml-64 lg:ml-28 sm:mx-auto 2xl:mr-121">

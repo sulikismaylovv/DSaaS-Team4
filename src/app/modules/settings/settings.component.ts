@@ -83,6 +83,20 @@ export class SettingsComponent implements OnInit{
     await this.initializeData();
   }
 
+   openModal() {
+    const modal = document.getElementById("myModal")
+     if(modal) {
+       modal.classList.remove("hidden");
+     }
+  }
+
+  closeModal() {
+    const modal= document.getElementById("myModal")
+    if(modal){
+      modal.classList.add("hidden");
+    }
+  }
+
   private async initializeData(): Promise<void> {
     await this.getProfile();
     this.clubs = await this.fetchAllClubs();

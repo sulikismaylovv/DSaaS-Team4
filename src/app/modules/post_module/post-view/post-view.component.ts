@@ -57,7 +57,7 @@ export class PostViewComponent implements OnInit {
         }
 
         // Load post image
-        if (this.post.image_url) {
+        if (this.post.image_url && !this.post.is_official) {
             this.postSafeUrl = await this.imageDownloadService.loadPostImage(this.post.image_url);
         }
 

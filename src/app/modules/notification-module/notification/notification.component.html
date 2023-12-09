@@ -1,23 +1,57 @@
 <div class="mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+  <!-- Categorized notifications -->
+  <div class="mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto">
     <p class="text-center font-bold text-xl text-black dark:text-white">Notifications</p>
-    <!--Friend request card-->
-    <div *ngFor="let request of friendRequests" class="flex justify-center mt-2">
-      <div class="mb-4 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-[#3a4153] dark:border-gray-700">
-        <div class="flex flex-col items-center pb-10">
-          <img class="w-24 h-24 mb-3 mt-3 rounded-full shadow-lg" [src]="request.avatarSafeUrl" alt="user image"/>
-          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ request.profile.username }}</h5>
-          <span class="text-sm text-black dark:text-white">{{ request.profile.username }} wants to be your friend</span>
+    <button *ngIf="allNotifications.length > 0 "
+            (click)="clearNotifications()"
+            class="inline-flex text-sm justify-center px-4 py-2 mt-12 w-full text-red-500 items-center rounded font-medium
+                  shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-red-500
+                  hover:text-white hover:-translate-y-1 hover:scale-110 dark:border-gray-700 dark:bg-[#3a4153] dark:hover:bg-red-600 dark:text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 sm:mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2 2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Clear all notifications
+    </button>
 
-          <div class="flex mt-4 md:mt-6">
-            <a (click)="acceptRequest(request.profile.id)" class="cursor-pointer mr-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Accept</a>
-            <a (click)="declineRequest(request.profile.id)" class="cursor-pointer text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Decline</a>
+    <div *ngIf="allNotifications.length === 0" class="text-center my-10">
+      <p class="text-gray-600 dark:text-gray-400">No notifications</p>
+    </div>
+
+    <!-- Categorized notifications -->
+    <div *ngFor="let category of ['today', 'yesterday', 'older']">
+      <p *ngIf="categorizedNotifications[category]?.length"
+         class="mt-8 font-medium text-gray-500 text-sm sm:text-base dark:text-white">{{ category | titlecase }}</p>
+      <div *ngFor="let notification of categorizedNotifications[category]"
+           class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full dark:bg-[#3a4153]">
+        <div class="flex items-center justify-between w-full">
+          <!-- Conditional display based on notification type -->
+          <div class="inline-flex items-center">
+            <img *ngIf="notification.type === 'friendRequest'" [src]="notification.avatarSafeUrl" alt="user image"
+                 class="w-6 h-6 mr-3"/>
+            <img *ngIf="notification.type === 'bettingNotification'" alt="Betting Icon"
+                 class="w-6 h-6 mr-3" src="https://cdn-icons-png.flaticon.com/128/763/763812.png"/>
+            <!-- Add more img tags for different notification types with corresponding icons -->
+            <h3 class="font-bold text-base text-gray-800 dark:text-white">{{ notification.title }}</h3>
           </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            {{ notification.createdAt | amTimeAgo }}
+          </p>
+        </div>
+        <p class="mt-1 text-sm dark:text-gray-300">
+          {{ notification.text }}
+        </p>
+        <!-- Buttons for friend request -->
+        <div *ngIf="notification.type === 'friendRequest'" class="flex justify-end mt-2">
+          <button (click)="acceptRequest(notification.profile?.id)"
+                  class="mr-2 text-sm px-4 py-2 text-white bg-purple-600 rounded-md hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300 dark:focus:ring-purple-800">
+            Accept
+          </button>
+          <button (click)="declineRequest(notification.profile?.id)"
+                  class="text-sm px-4 py-2 text-red-600 border border-red-600 rounded-md hover:text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 dark:focus:ring-red-800">
+            Decline
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-

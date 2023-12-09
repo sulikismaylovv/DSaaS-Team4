@@ -80,7 +80,30 @@ export class ShopComponent implements OnInit {
 
   async ngOnInit() {
     await this.initializeUser();
+    this.startCountdown();
+
   }
+
+  startCountdown() {
+    setInterval(() => {
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const diff = tomorrow.getTime() - now.getTime();
+
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      const countdownElement = document.getElementById('countdown');
+
+      if (countdownElement) {
+        countdownElement.innerText = formattedTime;
+      }
+    }, 1000);
+  }
+
+
 
   async initializeUser() {
     this.currentUserID = this.authService.session?.user?.id;
