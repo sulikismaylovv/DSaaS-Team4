@@ -165,6 +165,7 @@ export class GameComponent implements OnInit {
       console.log("Lineup is not available");
       return;
     }
+    this.isLineupAvailable = true;
     const numbers = numbersRaw.split("|");
     console.log("numbers: ", numbers);
     const listHome = numbers[0].split(",").map(Number);

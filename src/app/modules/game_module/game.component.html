@@ -201,8 +201,8 @@
                       </svg>
                     </button>
                     <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
-                      class="p-0 w-12 bg-transparent border-0 text-gray-800 text-center focus:ring-0 dark:text-white" readonly
-                      type="text" value="0" data-hs-input-number-input >
+                      class="p-0 w-12 bg-transparent border-0 text-gray-800 text-center focus:ring-0 dark:text-white"
+                      readonly type="text" value="0" data-hs-input-number-input>
                     <button type="button" (click)="addAmount(50)"
                       class="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                       data-hs-input-number-increment>
@@ -223,7 +223,7 @@
             </div>
             <!-- End Input Number -->
             <!--Button group smartphones-tablets-->
-            
+
           </form>
         </div>
       </ng-container>
@@ -294,7 +294,8 @@
     </div>
     <!--Third widget-->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-      <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Squad</p>
+      <p *ngIf="isLineupAvailable" class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Lineup</p>
+      <p *ngIf="!isLineupAvailable" class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Squad</p>
       <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
       <!--Add the team images to the left and right-->
       <div class="flex justify-between">
@@ -307,9 +308,8 @@
           <img src={{fixture.club1?.logo}} alt="bla bla" class="mr-10 w-16 h-16">
         </div>
       </div>
-      <!--Lineup teams-->
       <!-- Lineup Teams -->
-      <div class="grid grid-cols-2 gap-4">
+      <div *ngIf="!isLineupAvailable" class="grid grid-cols-2 gap-4">
         <!-- Team Left Lineup -->
         <div class="flex flex-col ml-10 mt-5">
           <ul class="space-y-4">
@@ -329,6 +329,38 @@
         <div class="flex flex-col mr-10 mt-5">
           <ul class="space-y-4">
             <li *ngFor="let player of squadAway" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex flex-col flex-grow">
+                  <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                </div>
+                <img class="w-10 h-10 rounded-full border-2 border-gray-300" src="{{player.photo}}" alt="Player image">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Lineup Teams -->
+      <div *ngIf="isLineupAvailable" class="grid grid-cols-2 gap-4">
+        <!-- Team Left Lineup -->
+        <div class="flex flex-col ml-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of lineupHome" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+              <div class="flex items-center space-x-4">
+                <img class="w-10 h-10 rounded-full border-2 border-gray-300" src="{{player.photo}}" alt="Player image">
+                <div class="flex flex-col flex-grow">
+                  <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Team Right Lineup -->
+        <div class="flex flex-col mr-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of lineupAway" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
               <div class="flex items-center space-x-4 rtl:space-x-reverse">
                 <div class="flex flex-col flex-grow">
                   <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
