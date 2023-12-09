@@ -4,9 +4,8 @@ import {addDays, compareAsc, endOfWeek, startOfWeek, subDays,} from "date-fns";
 import {ApiService} from "../../../core/services/api.service";
 import {Router} from "@angular/router";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
-import {SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
+import {SupabaseFixture , club} from "../../../core/models/supabase-fixtures.model";
 import {AuthService} from "../../../core/services/auth.service";
-import {Club} from "../../shop/shop.component";
 import {PreferencesService} from "../../../core/services/preference.service";
 
 
@@ -32,7 +31,7 @@ export class MatchesComponent implements OnInit {
     private apiService: ApiService,
     private datePipe: DatePipe,
     private router: Router,
-    private authService: AuthService,
+    protected authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
     private preferenceService: PreferencesService
   ) {
@@ -52,12 +51,21 @@ export class MatchesComponent implements OnInit {
         }
   }
 
-    async ngOnInit() {
-        this.setWeek(new Date());
-        await this.fetchFixturesForWeek();
-      if (this.authService.isLogged()) {
-        await this.loadUserPreferences();
-      }
+  async ngOnInit() {
+    this.groupFixturesByDate(); // Call this method at the end to ensure fixtures are grouped after filtering
+    this.setWeek(new Date());
+    await this.fetchFixturesForWeek();
+    if (this.authService.isLogged()) {
+      await this.loadUserPreferences();
+      this.filterFixturesForUserPreferences();
+    }
+
+    console.log(this.fixtures);
+
+  }
+
+  hasFixturesForDate(date: string): boolean {
+    return this.groupedFixtures[date]?.length > 0;
   }
 
   // Set the start of the week to Friday and end to next Thursday
@@ -82,24 +90,44 @@ export class MatchesComponent implements OnInit {
 
   }
 
-  isClubRelevantToUserPreferences(club: Club): boolean {
-    return club.id === this.favoriteClubId || this.followedClubIds.includes(<number>club.id);
-  }
-
   async fetchFixturesForWeek() {
     const startDateString = this.getDateAsString(this.startDate);
     const endDateString = this.getDateAsString(this.endDate);
-    try {
-      this.fixtures = await this.apiService.fetchSupabaseFixturesDateRange(
-          startDateString,
-          endDateString,
-      );
 
+    try {
+      this.fixtures = await this.apiService.fetchSupabaseFixturesDateRange(startDateString, endDateString);
       this.groupFixturesByDate();
-      console.log(this.fixtures);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching fixtures:", error);
     }
+  }
+
+  filterFixturesForUserPreferences() {
+    // Ensure we only filter if the user is logged in
+    const isLoggedIn = this.authService.isLogged() || false;
+    if (isLoggedIn) {
+      this.fixtures = this.fixtures.filter(fixture =>
+        this.isClubRelevantToUserPreferences(fixture.club0) ||
+        this.isClubRelevantToUserPreferences(fixture.club1)
+      );
+    }
+  }
+
+  // This method must ensure club is not undefined before it proceeds
+  isClubRelevantToUserPreferences(club: club | undefined): boolean {
+    if (!club) return false; // Return false immediately if club is undefined
+    const isLoggedIn = this.authService.isLogged() || false;
+    return isLoggedIn && (club.id === this.favoriteClubId || this.followedClubIds.includes(club.id));
+  }
+
+  isFavoriteClubFixture(fixture: SupabaseFixture): boolean {
+    if (this.authService.isLogged()) {
+      const isFavorite = (fixture.club0 && fixture.club0.id === this.favoriteClubId) ||
+        (fixture.club1 && fixture.club1.id === this.favoriteClubId);
+
+      return <boolean>isFavorite;
+    }
+    return false;
   }
 
   groupFixturesByDate(): void {

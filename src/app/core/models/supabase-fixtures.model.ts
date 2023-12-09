@@ -18,11 +18,12 @@ export interface SupabaseFixture {
   club1?: club;
 }
 
-interface club {
+export interface club {
   id: number;
   name: string;
   logo: string;
 }
+
 export class SupabaseFixtureModel implements SupabaseFixture{
   fixtureID: number;
   team0: number;
