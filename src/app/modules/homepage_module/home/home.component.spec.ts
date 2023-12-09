@@ -13,17 +13,18 @@ describe('HomeComponent', () => {
   let mockUserService: jasmine.SpyObj<UserServiceService>;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['authChanges']);
+    mockAuthService = jasmine.createSpyObj('AuthService', ['authChanges', 'isLogged']);
     mockUserService = jasmine.createSpyObj('UserServiceService', ['searchUsersByFirstThreeLetters']);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [HomeComponent , MatchesComponent , ],
+      declarations: [HomeComponent, MatchesComponent],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: UserServiceService, useValue: mockUserService }
       ]
     });
+
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
