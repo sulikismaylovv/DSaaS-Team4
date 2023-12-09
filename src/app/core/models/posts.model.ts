@@ -6,6 +6,8 @@ export interface Post {
     created_at: Date;
     original_post_id?: number;
     is_official?: boolean;
+    club0?: number;
+    club1?: number;
 }
 
 export interface Like {
