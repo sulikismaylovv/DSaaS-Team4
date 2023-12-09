@@ -49,7 +49,7 @@
             <span *ngIf="i >= 3" class="">{{ i + 1 }}</span>
           </span>
                 <!-- Profile Picture -->
-                <img src="assets/images/user_profile_img.png" alt="Profile Picture" class="w-10 h-10 rounded-full">
+                <img [src]="member.avatarSafeUrl" alt="Profile Picture" class="w-10 h-10 rounded-full">
                 <!-- Username -->
                 <span class="username text-black p-4 dark:text-white">{{ member.username }}</span>
               </div>
