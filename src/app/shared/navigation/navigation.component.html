@@ -119,14 +119,7 @@
           <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
         </a>
       </li>
-      <li *ngIf="authService.isAuthenticated$ | async">
-        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/settings">
-          <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 16 3" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-          </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline">Settings</span>
-        </a>
-      </li>
+
     </ul>
     <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-black dark:border-[#8c99c5]">
       <li *ngIf="authService.isAuthenticated$ | async" class="flex justify-center 2xl:justify-start">
