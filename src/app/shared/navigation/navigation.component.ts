@@ -39,9 +39,8 @@ export class NavigationComponent {
     await this.authService.restoreSession();
 
     if(this.authService.session?.user.id) {
-      await
-      this.getProfile().then(r =>
-        this.avatarSafeUrl = this.imageService.loadAvatarImage(this.profile?.id));
+      await this.getProfile().then(async r =>
+        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id));
       console.log(this.avatarSafeUrl);
       console.log(this.profile);
     }
