@@ -83,7 +83,45 @@ export class ApiService {
     }
   }
 
+  async fetchPlayer(playerID: number): Promise<Player> {
+    try {
+      // Fetch data from Supabase with club information
+      const { data, error } = await this.supabase.supabaseClient
+        .from("players")
+        .select("*")
+        .eq("id", playerID)
+        .single();
 
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching player:", error);
+      throw error;
+    }
+  }
+
+async fetchLineup(fixtureID: number): Promise<string>{
+  try {
+    // Fetch data from Supabase with club information
+    const { data, error } = await this.supabase.supabaseClient
+      .from("fixtures")
+      .select("lineup")
+      .eq("fixtureID", fixtureID)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.lineup;
+  } catch (error) {
+    console.error("Error fetching lineup:", error);
+    throw error;
+  }
+}
 
   async fetchSupabaseFixturesDateRange(
     startDate: string,

@@ -10,7 +10,10 @@ import { Bet } from "src/app/core/models/bets.model";
 import { BetsService } from "src/app/core/services/bets.service";
 import { AuthService } from "src/app/core/services/auth.service";
 import { Club } from "src/app/core/models/club.model";
-import { SupabaseFixture, SupabaseFixtureModel, } from "src/app/core/models/supabase-fixtures.model";
+import {
+  SupabaseFixture,
+  SupabaseFixtureModel,
+} from "src/app/core/models/supabase-fixtures.model";
 import { SupabaseService } from "src/app/core/services/supabase.service";
 import { Observable } from "rxjs";
 import { from } from "rxjs";
@@ -27,8 +30,6 @@ export class GameComponent implements OnInit {
   clickedImage: string | null = null;
   fixture: SupabaseFixture = new SupabaseFixtureModel();
   lineups: Lineup[] = [];
-  lineupHome: { [key: number]: { name: string; number: number }[] } = {};
-  lineupAway: { [key: number]: { name: string; number: number }[] } = {};
   isLoading = true;
   // bet: BetModel = null!;
   teamChosen = "";
@@ -40,9 +41,13 @@ export class GameComponent implements OnInit {
   credits = 100;
   testingdata: any;
   betAlreadyPlaced = false;
-  betInfo$: Observable<{ betAmount: number, teamChosen: string }> = new Observable<{ betAmount: number, teamChosen: string }>();
+  isLineupAvailable = false;
+  betInfo$: Observable<{ betAmount: number; teamChosen: string }> =
+    new Observable<{ betAmount: number; teamChosen: string }>();
   squadHome: Player[] = [];
   squadAway: Player[] = [];
+  lineupHome: Player[] = [];
+  lineupAway: Player[] = [];
 
   time = "";
   timeLeft = "";
@@ -60,11 +65,11 @@ export class GameComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private readonly supabase: SupabaseService,
   ) {
-    this.supabase.supabaseClient.channel('realtime-bettingrecord')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'bettingrecord',
+    this.supabase.supabaseClient.channel("realtime-bettingrecord")
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "bettingrecord",
       }, async () => {
         // this.testingdata = payload.old['credits'];
         // const betterID = (payload.new as { betterID: number }).betterID;
@@ -76,10 +81,13 @@ export class GameComponent implements OnInit {
         //   this.credits -= credits;
         // } else this.betCanBePlaced=true;
         console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
-        this.betAlreadyPlaced = await this.betsService.checkIfBetExists(await this.getBetterID(), this.fixture.fixtureID);
+        this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
+          await this.getBetterID(),
+          this.fixture.fixtureID,
+        );
         console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
         this.cdr.detectChanges();
-        if(this.betAlreadyPlaced) {
+        if (this.betAlreadyPlaced) {
           console.log("getBetInfo() called");
           this.getBetInfo();
         }
@@ -97,18 +105,17 @@ export class GameComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-
-
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id")!;
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
           this.fixture = fixture;
           this.fetchSquads();
+          this.fetchLineups();
           this.updateTheTime();
           this.checkIfBetCanBePlaced();
-          if(this.betAlreadyPlaced) {
+          if (this.betAlreadyPlaced) {
             this.getBetInfo().then(() => this.logData());
           }
         } else {
@@ -118,21 +125,23 @@ export class GameComponent implements OnInit {
         this.navbarService.setShowNavbar(true);
         this.time = "test";
         this.updateTheTime();
-        async () => await this.updateTheTime();
+        (async () => await this.updateTheTime());
         // this.fetchLineup(this.fixture.fixtureID);
         // this.initializeLineups();
         this.getUserCredits();
         this.getStanding();
       });
     });
-
   }
 
   async getBetInfo() {
     const user = this.authService.session?.user;
     if (user) {
       const betterID = await this.betsService.getBetterID(user.id);
-      const bet = await this.betsService.fetchBetInfo(betterID, this.fixture.fixtureID);
+      const bet = await this.betsService.fetchBetInfo(
+        betterID,
+        this.fixture.fixtureID,
+      );
       this.betAmount = bet.credits;
       this.teamChosen = bet.team_chosen;
     }
@@ -140,19 +149,51 @@ export class GameComponent implements OnInit {
   }
 
   async fetchSquads() {
-    const clubID0 = this.fixture.club0?.id ?? 260 ;
+    const clubID0 = this.fixture.club0?.id ?? 260;
     const clubID1 = this.fixture.club1?.id ?? 260;
     this.squadHome = await this.apiService.fetchSquad(clubID0);
     this.squadAway = await this.apiService.fetchSquad(clubID1);
+  }
+
+  async fetchLineups() { //if its there
+    // const numbers = this.fixture.lineups?.split("|");
+    // console.log("numbers: ", numbers);  
+    // console.log("fixture.lineups: ", this.fixture.lineups);
+    const numbersRaw = await this.apiService.fetchLineup(this.fixture.fixtureID);
+    if (numbersRaw === null) {
+      this.isLineupAvailable = false;
+      console.log("Lineup is not available");
+      return;
+    }
+    const numbers = numbersRaw.split("|");
+    console.log("numbers: ", numbers);
+    const listHome = numbers[0].split(",").map(Number);
+    const listAway = numbers[1].split(",").map(Number);
+
+    for (const playerId of listHome) {
+      const player = this.squadHome.find(p => p.id === playerId);
+      if (player) {
+        this.lineupHome.push(player);
+      }
+    }
+    for (const playerId of listAway) {
+      const player = this.squadAway.find(p => p.id === playerId);
+      if (player) {
+        this.lineupAway.push(player);
+      }
+    }
+
   }
 
   fetchBetInfoObservable(betterID: number, fixtureID: number): Observable<Bet> {
     return from(this.betsService.fetchBetInfo(betterID, fixtureID));
   }
 
-  logData(){
-    console.log("home: ", this.squadHome);
-    console.log("away: ", this.squadAway);
+  logData() {
+    console.log("homeSquad: ", this.squadHome);
+    console.log("awaySquad: ", this.squadAway);
+    console.log("home: ", this.lineupHome);
+    console.log("away: ", this.lineupAway);
   }
 
   async checkIfBetCanBePlaced() {
@@ -163,8 +204,11 @@ export class GameComponent implements OnInit {
     );
     const currentTimeUTC1 = new Date(new Date().getTime() + (60 * 60 * 1000));
     this.betCanBePlaced = currentTimeUTC1 < fixtureTimeUTC1;
-    this.betAlreadyPlaced = await this.betsService.checkIfBetExists(await this.getBetterID(), this.fixture.fixtureID);
-    if(this.betAlreadyPlaced) {
+    this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
+      await this.getBetterID(),
+      this.fixture.fixtureID,
+    );
+    if (this.betAlreadyPlaced) {
       console.log("getBetInfo() called");
       this.getBetInfo();
     }
@@ -173,12 +217,12 @@ export class GameComponent implements OnInit {
   async fetchFixture(fixtureID: number) {
     const data = await this.apiService.fetchSingleSupabaseFixture(fixtureID);
     console.log("fetchFixture() called");
-    console.log("date.time: ", data.time)
+    console.log("date.time: ", data.time);
     this.fixture = data; // Ensure that this.fixture is updated with the fetched data
     await this.fetchSquads();
+    await this.fetchLineups();
     await this.updateTheTime();
     this.checkIfBetCanBePlaced();
-
 
     // this.time = this.formatDateToHHMM(this.fixture.time);
   }
@@ -197,7 +241,7 @@ export class GameComponent implements OnInit {
       this.betAmount + number <= this.availableCredits
     ) {
       this.betAmount += number;
-      console.log(this.betAmount)
+      console.log(this.betAmount);
     }
   }
 
@@ -210,18 +254,6 @@ export class GameComponent implements OnInit {
     }
   }
 
-  private initializeLineups(): void {
-    // Initialize lineupHome and lineupAway with empty arrays for each position
-    for (let i = 0; i <= 5; i++) {
-      this.lineupHome[i] = [];
-      this.lineupAway[i] = [];
-    }
-  }
-
-  // getBetterID(): number {
-  //     const user = this.authService.session?.user;
-  //     if(this.betsService.checkIfUserIsRegistered(user.id)){}
-  // }
   async getBetterID(): Promise<number> {
     const user = this.authService.session?.user;
     if (user) {
@@ -237,7 +269,6 @@ export class GameComponent implements OnInit {
     }
     throw new Error("User is not registered or session is not available");
   }
-
 
   async getStanding() {
     const data = await this.apiService.fetchStandings();
@@ -276,49 +307,6 @@ export class GameComponent implements OnInit {
   handleBetAlreadyExists() {
     //something needs to be done here
   }
-
-  categorizePlayers(): void {
-    this.initializeLineups();
-
-    this.lineups.forEach((lineup, index) => {
-      // Determine if it's the home or away lineup
-      const currentLineup = index === 0 ? this.lineupHome : this.lineupAway;
-
-      // Parse formation to get the count of players in each category
-      const formationParts = [1, ...lineup.formation.split("-").map(Number)]; // Prepend '1' for the goalkeeper
-      if (formationParts.length < 3 || formationParts.length > 6) {
-        throw new Error(
-          "Invalid formation. Formation should have 2 to 5 parts, plus the goalkeeper.",
-        );
-      }
-
-      // Reset current lineup
-      Object.keys(currentLineup).forEach((key) =>
-        currentLineup[Number(key)] = []
-      );
-
-      // Assign players to their positions based on formation
-      let positionIndex = 0;
-      lineup.startXI.forEach((player) => {
-        if (
-          currentLineup[positionIndex].length >= formationParts[positionIndex]
-        ) {
-          positionIndex++;
-        }
-
-        if (positionIndex < formationParts.length) {
-          currentLineup[positionIndex].push({
-            name: player.player.name,
-            number: player.player.number,
-          });
-        } else {
-          console.warn(`Extra player in formation: ${player.player.name}`);
-        }
-      });
-    });
-  }
-
-
 
   convertToLocaleTimeString(dateString: string): string {
     if (this.fixture.is_finished) {
