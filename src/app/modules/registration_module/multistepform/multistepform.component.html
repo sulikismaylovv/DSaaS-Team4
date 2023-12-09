@@ -1,14 +1,10 @@
 <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
   <div class="bg-white dark:bg-[#394151] p-6 rounded-lg shadow-lg text-black dark:text-white">
     <h2 class="text-xl font-bold mb-4">Welcome!</h2>
-    <p class="mb-4">Here's a quick guide to get you started:</p>
-    <ul class="list-disc list-inside mb-4">
-      <li>Step 1: Complete your profile.</li>
-      <li>Step 2: Select your favorite team.</li>
-      <li>Step 3: Choose clubs you want to follow.</li>
-      <li>Step 4: Confirm your registration.</li>
-    </ul>
-    <p class="mb-4">You can always change your preferences later.</p>
+    <div class="w-64">
+      <p class="mb-4">Well, look who's here! You're just a fabulous stride away from basking  in the glory of Remontada. Get ready to be dazzled!</p>
+      <p class="mb-4"><span class="underline"> Note:</span> You can always change your preferences later.</p>
+    </div>
     <button (click)="closeModal()" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">      Let's get started
     </button>
   </div>
