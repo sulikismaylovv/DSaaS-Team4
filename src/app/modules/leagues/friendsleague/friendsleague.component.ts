@@ -7,6 +7,7 @@ import {
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {Session} from "@supabase/supabase-js";
+import {SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-friendsleague',
@@ -17,7 +18,7 @@ export class FriendsleagueComponent implements OnInit{
 
 
   currentUserID: string | undefined;
-
+  avatarSafeUrl: SafeResourceUrl | undefined;
   leagueIds: number[] = [];
 
   leagues: FriendsLeagueInterface[] = [];
