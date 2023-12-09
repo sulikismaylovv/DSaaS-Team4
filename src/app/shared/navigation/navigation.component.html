@@ -63,10 +63,10 @@
           </svg>
           <!-- Notification Badge -->
           <span *ngIf="notificationCount > 0" class="absolute inset-0 object-right-top -mr-1 -mt-1">
-      <div class="inline-flex items-center justify-center px-1 py-1 rounded-full text-xxs font-semibold leading-none bg-red-500 text-white">
-        {{ notificationCount }}
-      </div>
-    </span>
+            <div class="inline-flex items-center justify-center px-1 py-1 rounded-full text-xxs font-semibold leading-none bg-red-500 text-white">
+              {{ notificationCount }}
+            </div>
+          </span>
           <span class="ml-3 hidden 2xl:inline">Notifications</span>
         </a>
       </li>
@@ -124,12 +124,12 @@
         </button>
       </li>
       <li *ngIf="!(authService.isAuthenticated$ | async)">
-        <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2" type="button" (click)="navigatetoRegister()">
+        <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigatetoRegister()">
           Register
         </button>
       </li>
       <li *ngIf="!(authService.isAuthenticated$ | async)">
-        <button class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ml-18 mt-8 mb-2" type="button" (click)="navigateToLogin()">
+        <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigateToLogin()">
           Log In
         </button>
       </li>
