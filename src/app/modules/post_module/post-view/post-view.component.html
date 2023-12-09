@@ -7,13 +7,13 @@
       <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Retweeter's Username -->
-        <p (click)="onAvatarClick(post.user_id)" class="font-bold text-md dark:text-white">{{ username }}</p>
+        <p (click)="onAvatarClick(post.user_id)" class="font-bold text-xl text-gray-800 dark:text-white">{{ username }}</p>
         <!-- Retweet Date -->
-        <p class="text-sm text-gray-600 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
+        <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
     </div>
     <!-- Retweeter's Comment (if any) -->
-    <p *ngIf="post.content" class="text-gray-800 dark:text-white mt-3">{{ post.content }}</p>
+    <p *ngIf="post.content" class="text-gray-800 dark:text-white mt-3 p-4">{{ post.content }}</p>
   </div>
 
   <!-- Original Post Content -->
@@ -24,9 +24,9 @@
       <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Original Poster's Username -->
-        <p class="font-bold text-md dark:text-white">{{ usernameRetweeted }}</p>
+        <p class="font-bold text-xl text-gray-800 dark:text-white ">{{ usernameRetweeted }}</p>
         <!-- Original Post Date -->
-        <p class="text-sm text-gray-600 dark:text-white"  >{{ originalPost.created_at | date: 'medium' }}</p>
+        <p class="text-sm text-light-gray"  >{{ originalPost.created_at | date: 'medium' }}</p>
       </div>
     </div>
     <!-- Original Post Content -->
@@ -44,9 +44,9 @@
         <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
         <div>
           <!-- Display poster's username -->
-          <p class="font-bold text-md text-gray-800 dark:text-white " (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+          <p class="font-bold text-xl text-gray-800 dark:text-white " (click)="onAvatarClick(post.user_id)">{{ username }}</p>
           <!-- Display post date -->
-          <p class="text-sm text-gray-600 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
+          <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
         </div>
       </div>
       <!-- Display post content -->
