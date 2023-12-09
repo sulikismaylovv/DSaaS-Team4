@@ -49,9 +49,9 @@
     <div class="w-full bg-white dark:bg-[#3b4153] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8 dark:text-white">
         <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
-          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-white rounded-lg hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150 dark:border" >
-            <img alt="google logo" class="w-6 h-6" loading="lazy" src="https://www.svgrepo.com/show/475656/google-color.svg">
-            <span class="dark:text-white">Sign up with with Google</span>
+          <button class="flex items-center justify-center text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900 transition duration-150">
+            <img alt="google logo" class="w-6 h-6 mr-2" loading="lazy" src="https://www.svgrepo.com/show/475656/google-color.svg">
+            <span>Login with Google</span>
           </button>
         </div>
         <div class="flex items-center justify-center space-x-2 dark:text-white">
@@ -196,17 +196,17 @@
               <input id="terms" aria-describedby="terms" type="checkbox" (change)="termsAcceptedChange()" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required>
             </div>
             <div class="ml-3 text-sm">
-              <label for="terms" class="font-light text-gray-500 dark:text-white">I accept the <a (click)="openTCModal()" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
+              <label for="terms" class="text-sm text-gray-600 dark:text-white">I accept the <a (click)="openTCModal()" class="cursor-pointer text-purple-600 hover:text-purple-700 hover:underline font-medium">Terms and Conditions</a></label>
             </div>
           </div>
           <button [disabled]="loading || !termsAccepted"
                   [class.opacity-50]="loading || !termsAccepted"
-                  class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                   type="submit">
             {{ loading ? 'Loading...' : 'Create your account' }}
           </button>
-          <p class="text-sm font-light text-gray-500 dark:text-white">
-            Already have an account? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+          <p class="text-sm text-gray-600 dark:text-white">
+            Already have an account? <a href="#" class="text-purple-600 hover:text-purple-700 hover:underline font-medium">Login here</a>
           </p>
         </form>
       </div>
