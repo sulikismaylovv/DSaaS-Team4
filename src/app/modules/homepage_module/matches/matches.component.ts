@@ -68,6 +68,14 @@ export class MatchesComponent implements OnInit {
     return this.groupedFixtures[date]?.length > 0;
   }
 
+  hasFollowedFixtureforDate(date: string): boolean {
+    return this.groupedFixtures[date]?.some(fixture => this.isClubRelevantToUserPreferences(fixture.club0) || this.isClubRelevantToUserPreferences(fixture.club1));
+  }
+
+  hasNonFollowedFixtureforDate(date: string): boolean {
+    return this.groupedFixtures[date]?.some(fixture => !this.isClubRelevantToUserPreferences(fixture.club0) && !this.isClubRelevantToUserPreferences(fixture.club1));
+  }
+
   // Set the start of the week to Friday and end to next Thursday
   setWeek(date: Date) {
     this.startDate = startOfWeek(date, { weekStartsOn: 5 });
