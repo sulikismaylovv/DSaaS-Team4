@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {ThemeService} from "../../../core/services/theme.service";
 import {NavbarService} from "../../../core/services/navbar.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
+import {SupabaseFixture, SupabaseFixtureModel} from "../../../core/models/supabase-fixtures.model";
+import {Club} from "../../../core/models/club.model";
+import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
+import {ApiService} from "../../../core/services/api.service";
 
 @Component({
     selector: 'app-home',
@@ -12,6 +16,10 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  fixture: SupabaseFixture = new SupabaseFixtureModel();
+  league: Club[] = [];
+
+
   session: any; // Adjust the type based on your session object
   hideForm = false;
   showPosts = false;
@@ -25,14 +33,24 @@ export class HomeComponent implements OnInit {
     private router: Router,
     protected readonly authService: AuthService,
     protected readonly userService: UserServiceService,
-    protected readonly imageDownloadService: ImageDownloadService
-    ) {
+    protected readonly imageDownloadService: ImageDownloadService,
+    private fixtureTransferService: FixtureTransferService,
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+
+
+
+  ) {
   }
   ngOnInit() {
     this.navbarService.setShowNavbar(true);
-    // Subscribe to the auth state changes
-    this.authService.authChanges((_, session) => (this.session = session));
+    this.getStanding();
+  }
 
+  async getStanding() {
+    const data = await this.apiService.fetchStandings();
+    this.league = data;
+    console.log(this.league);
   }
 
   async navigateToLogin() {
