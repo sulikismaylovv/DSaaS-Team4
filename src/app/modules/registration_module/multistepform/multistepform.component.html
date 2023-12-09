@@ -151,18 +151,16 @@
             <h2 class="text-3xl font-bold text-center mb-6 text-black dark:text-white">Registration Summary</h2>
 
             <div class="bg-neutral-alabaster dark:bg-gray-700 py-5 px-4 rounded-lg shadow-lg text-black dark:text-white">
-              <div class="mb-6">
+              <div class="mb-6 text-black dark:text-[#f2f2f2]">
                 <h3 class="text-2xl font-semibold mb-3">Your Information</h3>
-                <p class="text-lg mb-2 font-normal text-gray-600 dark:text-gray-400"><strong>Name:</strong> <span class="ml-2">{{ updateProfileForm.get('first_name')?.value }} {{ updateProfileForm.get('last_name')?.value }}</span></p>
-                <p class="text-lg mb-2 font-normal text-gray-600 dark:text-gray-400"><strong>Email:</strong> <span class="ml-2">{{ profile?.email }}</span></p>
-                <p class="text-lg font-normal text-gray-600 dark:text-gray-400"><strong>Username:</strong> <span class="ml-2">{{ updateProfileForm.get('username')?.value }}</span></p>
+                <p class="text-lg mb-2 font-normal"><strong>Name:</strong> <span class="ml-2">{{ updateProfileForm.get('first_name')?.value }} {{ updateProfileForm.get('last_name')?.value }}</span></p>
+                <p class="text-lg mb-2 font-normal"><strong>Email:</strong> <span class="ml-2">{{ profile?.email }}</span></p>
+                <p class="text-lg font-normal"><strong>Username:</strong> <span class="ml-2">{{ updateProfileForm.get('username')?.value }}</span></p>
               </div>
-
               <hr class="border-neutral-cool-gray my-4">
-
-              <div class="mb-6 text-black dark:text-white">
+              <div class="mb-6 text-black dark:text-[#f2f2f2]">
                 <h3 class="text-2xl font-semibold mb-3">Account Details</h3>
-                <p class="text-lg  mb-2font-normal text-gray-600 dark:text-gray-400">
+                <p class="text-lg  mb-2font-normal">
                   <strong class="mr-2">Favorite Team:</strong>
                   <span class="ml-2" *ngIf="favoriteTeam">{{ favoriteTeam.name }}</span>
                   <span *ngIf="!favoriteTeam">Not selected</span>
@@ -175,7 +173,6 @@
               </div>
             </div>
           </section>
-
 
           <section *ngIf="lastPage" class="flex flex-col py-14 items-center text-center xl:mt-16 text-black dark:text-white">
             <img alt="" class="w-fit h-fit mb-4 xl:w-[5.25rem] xl:mb-8" src="assets/success.gif"/>
