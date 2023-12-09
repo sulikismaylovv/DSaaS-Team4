@@ -2,6 +2,16 @@
   <!-- Categorized notifications -->
   <div class="mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto">
     <p class="text-center font-bold text-xl text-black dark:text-white">Notifications</p>
+    <button (click)="clearNotifications()"
+            class="inline-flex text-sm justify-center px-4 py-2 mt-12 w-full text-red-500 items-center rounded font-medium
+                  shadow border focus:outline-none transform active:scale-75 transition-transform duration-700 hover:bg-red-500
+                  hover:text-white hover:-translate-y-1 hover:scale-110 dark:border-gray-700 dark:bg-[#3a4153] dark:hover:bg-red-600 dark:text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 sm:mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2 2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Clear all notifications
+    </button>
+
     <!-- Categorized notifications -->
     <div *ngFor="let category of ['today', 'yesterday', 'older']">
       <p *ngIf="categorizedNotifications[category]?.length"

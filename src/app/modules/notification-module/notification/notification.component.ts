@@ -166,22 +166,26 @@ export class NotificationComponent implements OnInit {
     window.location.reload();
 
   }
-  // async fetchRequests(userId: string | undefined): Promise<void> {
-  //   if (userId === undefined) throw new Error('User ID is undefined');
-  //   if (userId) {
-  //     const requests = await this.friendshipService.getFriendRequests(userId);
-  //     for (const request of requests) {
-  //       const requestProfile = await this.authService.profileById(request.user1_id);
-  //       if (requestProfile.data) {
-  //         const avatarSafeUrl = await this.imageService.loadAvatarImage(requestProfile.data.id);
-  //         this.friendRequests.push({
-  //           profile: requestProfile.data,
-  //           avatarSafeUrl: avatarSafeUrl || '/assets/default-avatar.png', // Fallback to default image
-  //           createdAt: request.created_at
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
+
+  async clearNotifications() {
+    // Get all non-friend request notifications
+    const nonFriendRequestNotifications = this.allNotifications.filter(notification => notification.type !== 'friendRequest');
+
+    // Attempt to delete each notification from the database
+    for (const notification of nonFriendRequestNotifications) {
+      if (notification.id) { // Ensure the notification has an ID before attempting to delete
+        const success = await this.notificationService.deleteNotification(<number>notification.id);
+        if (!success) {
+          console.error('Failed to delete notification with ID:', notification.id);
+          // Optionally handle the error, e.g., by showing an error message to the user
+        }
+      }
+    }
+
+    // Remove the deleted notifications from the local state
+    this.allNotifications = this.allNotifications.filter(notification => notification.type === 'friendRequest');
+    // Re-categorize the remaining notifications
+    this.categorizeNotifications();
+  }
 
 }
