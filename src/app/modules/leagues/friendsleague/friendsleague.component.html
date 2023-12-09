@@ -20,7 +20,7 @@
         </ng-template>
 
         <!-- League Name -->
-        <h2 class="text-2xl font-bold text-black dark:text-white text-center flex-1">{{ leagues[currentLeagueIndex]?.name }}</h2>
+        <h2 class="text-2xl font-bold text-black dark:text-white text-center flex-1">{{ leagues[currentLeagueIndex].name }}</h2>
 
         <!-- Right Arrow for Next League or Invisible Placeholder -->
         <div *ngIf="currentLeagueIndex < leagues.length - 1; else invisiblePlaceholder">
