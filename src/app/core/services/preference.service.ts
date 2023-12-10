@@ -78,6 +78,29 @@ export class PreferencesService {
         }
     }
 
+    async getFavoriteClub(userId: string): Promise<number>{
+        try {
+            const {data, error} = await this.supabase.supabaseClient
+                .from('preferences')
+                .select('club_id')
+                .eq('user_id', userId)
+                .eq('favorite_club', true);
+
+            if (error) {
+                console.error('Error fetching favorite club:', error);
+                throw error;
+            }
+
+            return data[0].club_id;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+                alert(error.message); // Alert the user with the error message
+            }
+            throw error; // Re-throw the error to be handled by the caller
+        }
+    }
+
     async getFavoritePreferences(userId: string): Promise<Preference> {
         try {
             const {data, error} = await this.supabase.supabaseClient

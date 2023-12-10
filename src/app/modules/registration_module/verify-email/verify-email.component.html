@@ -55,9 +55,15 @@
       Click the link provided to finalize your account setup and dive into the Remontada experience.
     </p>
     <div class="text-center">
-      <a class="inline-block focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" href="/verify-email">
-        Re-send Verification Email
-      </a>
+      <button [disabled]="!canResendEmail" (click)="resendEmail()"
+              [class.bg-purple-700]="canResendEmail"
+              [class.bg-purple-300]="!canResendEmail"
+              [class.cursor-not-allowed]="!canResendEmail"
+              [class.text-white]="canResendEmail"
+              [class.text-gray-400]="!canResendEmail"
+              class="inline-block focus:outline-none hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 transition-colors duration-300 ease-in-out dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+        {{ canResendEmail ? 'Re-send Verification Email' : 'Please wait ' + secondsCounter + ' seconds' }}
+      </button>
     </div>
 
 

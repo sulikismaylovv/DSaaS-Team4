@@ -4,10 +4,11 @@
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
         <p class="text-3xl font-bold text-black dark:text-white">Your Credits: {{availableCredits}}</p>
-        <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending your credits</p>
+        <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending
+          your credits</p>
         <div class="flex justify-center">
           <button type="button"
-                  class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To
+            class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To
             the shop
           </button>
         </div>
@@ -24,7 +25,7 @@
           <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
         </div>
         <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
-             class="ml-4 mr-4 mt-1 w-16 h-16" />
+          class="ml-4 mr-4 mt-1 w-16 h-16" />
       </div>
       <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
@@ -62,54 +63,56 @@
 </aside>
 
 <div class="p-4 2xl:ml-64 lg:ml-28 sm:mx-auto 2xl:mr-121">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+  <div class="p-2">
+    <button (click)="goBack()" type="button"
+            class="ml-2 mb-4 p-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+      <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+           viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 5H1m0 0 4 4M1 5l4-4" />
+      </svg>
+    </button>
     <!--top modal -->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153]">
+    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] rounded-lg">
       <div class="flex items-center">
-        <button type="button"
-                class="ml-2 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-          <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-               fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 5H1m0 0 4 4M1 5l4-4" />
-          </svg>
-        </button>
-        <p class="text-black text-center mt-2 ml-100 dark:text-white font-bold">Belgian League</p>
+
+        <p class="text-black p-4 mt-2 dark:text-white font-semibold text-xl">Matches</p>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
       <div class="flex items-start justify-between p-4">
         <div class="flex items-center">
-          <img src={{fixture.club0?.logo}} alt="team-left" class="w-16 h-16">
-          <p class="ml-2 text-black dark:text-white"> {{fixture.club0?.name}} </p>
+          <img src={{fixture.club0?.logo}} alt="team-left" class="w-22 h-22">
+          <p class="ml-2 font-medium text-black dark:text-white "> {{fixture.club0?.name}} </p>
         </div>
-          <div class="flex flex-col items-center">
-            <p class="text-black dark:text-white font-bold">{{time}}</p>
-            <p class="text-black dark:text-white font-semibold">{{timeLeft}}</p>
-          </div>
-          <div class="flex items-center">
-            <p class="truncate mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
-            <img src={{fixture.club1?.logo}} alt="team-right" class="w-16 h-16">
-          </div>
+        <div class="flex flex-col items-center">
+          <p class="text-black dark:text-white font-bold">{{time}}</p>
+          <p class="text-black dark:text-white font-semibold">{{timeLeft}}</p>
         </div>
+        <div class="flex items-center">
+          <p class="truncate font-medium mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
+          <img src={{fixture.club1?.logo}} alt="team-right" class="w-22 h-22">
+        </div>
+      </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
       <div class="flex justify-between pl-6 pr-6">
         <div class="flex mb-4 items-center">
-          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
+          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 20 20">
+            <path fill="currentColor"
+              d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z" />
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white">{{ date }}</p>
+          <p class="ml-2 text-black dark:text-white">{{ date }}</p>
         </div>
-        <div class="flex mb-4 items-center">
-          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+
+        <div class="ml-4 flex mb-4 items-center">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 25 25" class="text-gray-800 dark:text-white">
+            <g id="ic_venue_24px" transform="translate(-168 -1536)">
+              <path id="Rectangle_2928" fill="none" d="M0 0H25V25H0z" transform="translate(168 1536)"></path>
+              <g fill="currentColor" id="Group_2069" transform="translate(169.501 1538.187)">
+                <path id="Path_807" d="M13.762 8.936h3.423l-1.308-3.524-.2-.4A2.6 2.6 0 0 0 13.561 3.7H8.426A2.586 2.586 0 0 0 6.11 5.311L4.7 8.936h3.524a2.967 2.967 0 0 1 2.819-1.712 2.923 2.923 0 0 1 2.719 1.712z" class="cls-2" transform="translate(.032 .026)"></path><path id="Path_808" d="M21.447 8.156l-2.819-6.142-.3-.5A3.588 3.588 0 0 0 15.3 0H6.646a3.725 3.725 0 0 0-3.223 1.913L.7 7.753a6.346 6.346 0 0 0-.7 3.021v4.833a4.834 4.834 0 0 0 4.833 4.833h12.385a4.834 4.834 0 0 0 4.833-4.833v-4.733a6.307 6.307 0 0 0-.604-2.718zm-1.41 3.121v.4A2.739 2.739 0 0 1 17.52 14.4a4.517 4.517 0 0 0 .5-1.913v-.6a2.788 2.788 0 0 0-.1-.906H13.9a2.967 2.967 0 0 1-2.819 1.712 3.072 3.072 0 0 1-2.819-1.712H4.128c0 .3-.1.6-.1.906v.6a4.165 4.165 0 0 0 .5 1.913 2.739 2.739 0 0 1-2.514-2.72v-.906a5.892 5.892 0 0 1 .5-2.215l2.722-5.74a1.607 1.607 0 0 1 1.41-.806H15.3a2 2 0 0 1 1.309.6l3.021 6.444a3.949 3.949 0 0 1 .4 1.812z" class=></path>              </g>
+            </g>
           </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white "> {{fixture.venue}} </p>
-        </div>
-        <div class="flex mb-4 items-center">
-          <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.656 12.115a3 3 0 0 1 5.682-.015M13 5h3m-3 3h3m-3 3h3M2 1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm6.5 4.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-          </svg>
-          <p class="font-semibold ml-2 text-black dark:text-white ">Referee</p>
+          <p class=" ml-2 text-gray-800 dark:text-white ">{{fixture.venue}}</p>
         </div>
       </div>
     </div>
@@ -117,168 +120,167 @@
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
       <div class="justify-start">
         <p class="text-3xl font-bold ml-4 mt-4 m text-white">Your Credits: {{availableCredits}}</p>
-        <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending your credits</p>
+        <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending
+          your credits</p>
         <div class="flex justify-center">
           <button type="button"
-                  class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To
+            class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">To
             the shop
           </button>
         </div>
       </div>
     </div>
     <!--Betting widget abdo-->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
+    <div *ngIf="betCanBePlaced" class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
       <ng-container *ngIf="!betAlreadyPlaced">
-        <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Place your bets!</p>
-        <p class="text-sm mt-1 ml-6 text-black dark:text-white font-bold">Who's taking home the victory?</p>
+
+        <p class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Place your bets!</p>
+        <p class="text-black  ml-3 p-1 dark:text-white  text-md">Who's taking home the victory?</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <div class="flex items-center justify-evenly pb-3 pt-3">
           <!--Team 1-->
           <div class="flex flex-col items-center pr-3 cursor-pointer">
             <img src={{fixture.club0?.logo}} alt="bla bla" class="w-24 h-24 hover:-translate-y-1 transition"
-                 [class.opacity-50]="clickedImage && clickedImage!=='team1'"  [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team1'" (click)="toggleContent('team1')">
+              [class.opacity-50]="clickedImage && clickedImage!=='team1'"
+              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team1'" (click)="toggleContent('team1')">
             <p class="text-white"> {{fixture.club0?.name}} </p>
             <p class="text-black dark:text-white font-semibold"> {{fixture.odds_home}} </p>
           </div>
           <!--Draw-->
           <div class="flex flex-col items-center cursor-pointer">
-            <svg  [class.opacity-50]="clickedImage && clickedImage!=='draw'"  [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'draw'" (click)="toggleContent('draw')" class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            <svg [class.opacity-50]="clickedImage && clickedImage!=='draw'"
+              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'draw'" (click)="toggleContent('draw')"
+              class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15" />
             </svg>
             <p class="text-white"> Draw </p>
             <p class="text-black dark:text-white font-semibold"> {{fixture.odds_draw}} </p>
           </div>
           <!--Team 2-->
           <div class="flex flex-col items-center pl-3 cursor-pointer">
-            <img src="{{fixture.club1?.logo}}" alt="Team Logo"
-                 class="w-24 h-24 transition"
-                 [class.opacity-50]="clickedImage && clickedImage!=='team2'"
-                 [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team2'"
-                 (click)="toggleContent('team2')">
+            <img src="{{fixture.club1?.logo}}" alt="Team Logo" class="w-24 h-24 transition"
+              [class.opacity-50]="clickedImage && clickedImage!=='team2'"
+              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team2'" (click)="toggleContent('team2')">
             <p class="truncate ml-2 text-white">{{fixture.club1?.name}}</p>
             <p class="text-black dark:text-white font-semibold"> {{fixture.odds_away}} </p>
           </div>
         </div>
         <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
-             [class.pointer-events-none]="!showContent">
-          <p class="ml-6 text-black dark:text-white text-sm font-semibold"> You have {{availableCredits}} Credits </p>
+          [class.pointer-events-none]="!showContent">
           <form class="flex  sm:flex-row items-center justify-center mt-2 ml-2 mb-4">
             <!--Button group for the rest-->
-            <div class="flex hidden sm:inline-flex">
-              <!--Min button-->
-              <button (click)="setMinBetAmount()" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Min</button>
-              <!--Minus button-->
-              <button (click)="addAmount(-50)" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
-                <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                </svg>
-              </button>
-              <!--Input field-->
-              <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
-                     class="ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                     placeholder="Enter number of credits" required
-              >
-              <!--Plus button-->
-              <button (click)="addAmount(50)" type="button" class=" ml-4 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
-                <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                </svg>
-              </button>
-              <!--Max button-->
-              <button (click)="setMaxBetAmount()" type="button" class=" text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Max</button>
-              <!--Bet button-->
-              <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                Bet
+            <!-- Input Number -->
+            <div class="flex flex-col space-y-4 > * + *">
+              <!-- number selecter -->
+              <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-slate-900 dark:border-gray-700"
+                data-hs-input-number>
+                <div class="w-full flex justify-between items-center gap-x-3">
+                  <div>
+                    <span class="block font-normal text-xl text-gray-800 dark:text-white">
+                      How much do you want to bet?
+                    </span>
+                    <span class="block text-md text-gray-200 dark:text-white font-light ">
+                      You have {{availableCredits}} Credits
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-x-1.5 p-2 m-2">
+                    <button type="button" (click)="addAmount(-50)"
+                      class="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                      data-hs-input-number-decrement>
+                      <svg class="flex-shrink-0 w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14" />
+                      </svg>
+                    </button>
+                    <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
+                      class="p-0 w-12 bg-transparent border-0 text-gray-800 text-center focus:ring-0 dark:text-white"
+                      readonly type="text" value="0" data-hs-input-number-input>
+                    <button type="button" (click)="addAmount(50)"
+                      class="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                      data-hs-input-number-increment>
+                      <svg class="flex-shrink-0 w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14" />
+                        <path d="M12 5v14" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" (click)="placeBet()"
+                class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                BET!
               </button>
             </div>
-          <!--Button group smartphones-tablets-->
-            <div class="flex flex-col sm:hidden items-start">
-              <div class="flex items-center justify-center mt-2">
-                <!--Plus button-->
-                <button (click)="addAmount(50)" type="button" class="ml-4 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
-                  <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                  </svg>
-                </button>
-                <!--Minus button-->
-                <button (click)="addAmount(-50)" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
-                  <svg class="w-6 h-6 text-purple-700 dark:text-purple-400 dark:hover:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                  </svg>
-                </button>
-                <input [(ngModel)]="betAmount" name="credits" type="number" id="betPoints"
-                       class="ml-2 mb-2 mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       placeholder="Enter number of credits" required
-                >
-                <!--Bet button-->
-                <button (click)="placeBet()"  type="button"  data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" ml-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                  Bet
-                </button>
-              </div>
-              <div class="flex items-center justify-center ml-4 mt-1">
-                <!--Max button-->
-                <button (click)="setMaxBetAmount()" type="button" class=" text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Max</button>
-                <!--Min button-->
-                <button (click)="setMinBetAmount()" type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Min</button>
-              </div>
-            </div>
+            <!-- End Input Number -->
+            <!--Button group smartphones-tablets-->
+
           </form>
         </div>
       </ng-container>
       <!--After betting-->
       <!--Abdoooo change this :D-->
-      <ng-container *ngIf="betAlreadyPlaced" >
-        <button (click)="logData()"> TESTTTTT</button>
+      <ng-container *ngIf="betAlreadyPlaced">
+        <!-- <button (click)="logData()"> TESTTTTT</button> -->
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
         <div class="flex flex-col items-center justify-center">
           <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Chosen team:</p>
-          <div *ngIf="true" class="mt-4">
-            <img *ngIf="teamChosen === 'home'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}" class="w-36 h-36">
+          <div *ngIf="betCanBePlaced" class="mt-4">
+            <img *ngIf="teamChosen === 'home'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}"
+              class="w-36 h-36">
             <p *ngIf="teamChosen === 'home'" class="text-white text-center"> {{fixture.club0?.name}} </p>
 
-            <img *ngIf="teamChosen === 'away'" [src]="fixture.club1?.logo" alt="{{fixture.club1?.name}}" class="w-24 h-24">
+            <img *ngIf="teamChosen === 'away'" [src]="fixture.club1?.logo" alt="{{fixture.club1?.name}}"
+              class="w-24 h-24">
             <p *ngIf="teamChosen === 'away'" class="text-white text-center "> {{fixture.club1?.name}} </p>
-            <svg  *ngIf="teamChosen ==='draw'" class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            <svg *ngIf="teamChosen ==='draw'"
+              class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15" />
             </svg>
             <p *ngIf="teamChosen === 'draw'" class="text-white text-center "> Draw </p>
           </div>
         </div>
         <div class="flex items-center justify-start ml-6 mb-4">
-          <p class="text-2xl text-black dark:text-white font-bold">Number of credits at stake: {{credits}}</p>
+          <p class="text-2xl text-black dark:text-white font-bold">Number of credits at stake: {{betAmount}}</p>
         </div>
       </ng-container>
       <!--Modal for bet confirmation-->
       <div id="popup-modal" data-modal-backdrop="static" tabindex="-1"
-           class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button (click)="toggleNewContent()" type="button"
-                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="popup-modal">
+              class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="popup-modal">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                   viewBox="0 0 14 14">
+                viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
               </svg>
               <span class="sr-only">Close modal</span>
             </button>
             <div class="p-4 md:p-5 text-center">
               <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
-                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M1 5.917 5.724 10.5 15 1.5" />
+                  d="M1 5.917 5.724 10.5 15 1.5" />
               </svg>
               <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Congratulations! May the force
                 be with you </h3>
               <button (click)="toggleNewContent()" data-modal-hide="popup-modal" type="button"
-                      class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                 Amen
               </button>
               <button (click)="toggleNewContent()" data-modal-hide="popup-modal" type="button"
-                      class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What
+                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">What
                 have I done?</button>
             </div>
           </div>
@@ -287,202 +289,145 @@
     </div>
     <!--Third widget-->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-      <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Predicted lineup</p>
+
+      <p *ngIf="isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Lineup</p>
+      <p *ngIf="!isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Squad</p>
       <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
       <!--Add the team images to the left and right-->
-      <div class="flex justify-between">
-        <div class="flex items-center">
-          <img src={{fixture.club0?.logo}} alt="bla bla" class="ml-10 w-16 h-16">
-          <p class="ml-4 text-black dark:text-white"> {{fixture.club0?.name}} </p>
-        </div>
-        <div class="flex items-center">
-          <p class="mr-2 text-black dark:text-white"> {{fixture.club1?.name}} </p>
-          <img src={{fixture.club1?.logo}} alt="bla bla" class="mr-10 w-16 h-16">
-        </div>
-      </div>
-      <!--Lineup teams-->
-      <div class="grid grid-cols-2 gap-4">
-        <!--team left lineup-->
-        <div class="flex flex-row ml-10 mt-5">
-          <!--List idk really-->
-          <ul class="max-w-md divide-gray-200 dark:divide-gray-700">
-            <li class="pb-2 sm:pb-3">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/158425.png" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-              </div>
-            </li>
-            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
-            <li class="py-1 sm:py-2">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/20994.png" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-              </div>
-            </li>
-            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
-            <li class="py-1 sm:py-2">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/154870.png" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!--Team right-->
-        <div class="flex flex-row justify-end mr-10 mt-5">
-          <ul class="max-w-md divide-gray-200 dark:divide-gray-700">
-            <li class="pb-2 sm:pb-3">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/158425.png" alt="Neil image">
-                </div>
-              </div>
-            </li>
-            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
-            <li class="py-1 sm:py-2">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/20994.png" alt="Neil image">
-                </div>
-              </div>
-            </li>
-            <hr class="h-px bg-gray-200 border-0 bg-dark-mode">
-            <li class="py-1 sm:py-2">
-              <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                <div class="inline-flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Enter player position
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-xl font-bold text-gray-900 truncate dark:text-white">
-                    Enter player name
-                  </p>
-                  <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-                    Enter player number
-                  </p>
-                </div>
-                <div class="flex-shrink-0">
-                  <img class="w-8 h-8 rounded-full" src="https://media-4.api-sports.io/football/players/154870.png" alt="Neil image">
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!--Only for smartphone screens-->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
-      <div class="">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col items-start">
-            <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
-            <p class="text-lg mt-1 ml-4 text-black dark:text-white font-bold"> Belgium</p>
-          </div>
-          <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
-               class="ml-4 mr-4 mt-1 w-16 h-16" />
-        </div>
-        <table class="h-fit w-full mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              #
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Team
-            </th>
-            <th scope="col" class="px-6 py-3">
-              GD
-            </th>
-            <th scope="col" class="px-6 py-3">
-              PTS
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let team of league; let i = index" class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap ">
-              {{i+1}}
-            </th>
-            <td class="px-6 py-4">
-              {{team.name}}
-            </td>
-            <td class="px-6 py-4">
-              {{ team.goalDifference }}
-            </td>
-            <td class="px-6 py-4">
-              {{team.points}}
-            </td>
-          </tr>
 
-          </tbody>
-        </table>
+      <!-- Lineup Teams -->
+      <div *ngIf="!isLineupAvailable" class="grid grid-cols-2 gap-4">
+        <!-- Team Left Lineup -->
+        <div class="flex flex-col ml-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of squadHome" class="bg-white dark:bg-[#3a4153] p-4 ">
+              <div class="flex items-center space-x-4">
+                <img class="w-10 h-10 rounded-full border-2 border-purple-400" src="{{player.photo}}" alt="Player image">
+                <div class="flex flex-col flex-grow">
+                  <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                  <p class="text-md text-black dark:text-white">{{player.number}} - {{player.position}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Team Right Lineup -->
+        <div class="flex flex-col mr-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of squadAway" class=" bg-white dark:bg-[#3a4153] p-4 ">
+              <div class="flex items-center justify-end space-x-4 rtl:space-x-reverse">
+                <div class="flex flex-col text-right">
+                <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                <p class="text-black dark:text-white">{{player.number}} - {{player.position}}</p>
+              </div>
+                <img class="w-10 h-10 rounded-full border-2 border-purple-400" src="{{player.photo}}" alt="Player image">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+
+      <!-- Lineup Teams -->
+      <div *ngIf="isLineupAvailable" class="grid grid-cols-2 gap-4">
+        <!-- Team Left Lineup -->
+        <div class="flex flex-col ml-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of lineupHome" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+              <div class="flex items-center space-x-4">
+                <img class="w-10 h-10 rounded-full border-2 border-purple-400" src="{{player.photo}}" alt="Player image">
+                <div class="flex flex-col flex-grow">
+                  <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Team Right Lineup -->
+        <!-- Team Right Lineup -->
+        <div class="flex flex-col mr-10 mt-5">
+          <ul class="space-y-4">
+            <li *ngFor="let player of lineupAway" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+              <div class="flex items-center justify-end space-x-4 rtl:space-x-reverse">
+                <!-- Player Info -->
+                <div class="flex flex-col text-right">
+                  <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
+                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                </div>
+
+                <!-- Avatar -->
+                <img class="w-10 h-10 rounded-full border-2 border-purple-400" src="{{player.photo}}" alt="Player image">
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+
+        <!--Only for smartphone screens-->
+      <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
+        <div class="">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col items-start">
+              <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
+              <p class="text-lg mt-1 ml-4 text-black dark:text-white font-bold"> Belgium</p>
+            </div>
+            <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
+              class="ml-4 mr-4 mt-1 w-16 h-16" />
+          </div>
+          <table class="h-fit w-full mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Team
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  GD
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  PTS
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let team of league; let i = index"
+                class="bg-white border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap ">
+                  {{i+1}}
+                </th>
+                <td class="px-6 py-4">
+                  {{team.name}}
+                </td>
+                <td class="px-6 py-4">
+                  {{ team.goalDifference }}
+                </td>
+                <td class="px-6 py-4">
+                  {{team.points}}
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--TBA widget-->
+      <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
+        <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Live chat</p>
+        <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
+        <div class=" ps-10 pe-10 pb-10 mt-10 mb-10 flex flex-col mx-auto bg-[#565e79] rounded-lg justify-center">
+          <p class="text-4xl text-center mt-2 ml-2 text-black dark:text-white font-bold">To be added</p>
+          <p class="text-2xl mt-2 ml-2 text-black dark:text-white font-bold"> This feature is still under development
+            and will be added as soon as it is ready</p>
+        </div>
       </div>
     </div>
-    <!--TBA widget-->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-      <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Live chat</p>
-      <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
-      <div class=" ps-10 pe-10 pb-10 mt-10 mb-10 flex flex-col mx-auto bg-[#565e79] rounded-lg justify-center">
-        <p class="text-4xl text-center mt-2 ml-2 text-black dark:text-white font-bold">To be added</p>
-        <p class="text-2xl mt-2 ml-2 text-black dark:text-white font-bold"> This feature is still under development and will be added as soon as it is ready</p>
-      </div>
-    </div>
+  </div>
   </div>
 </div>

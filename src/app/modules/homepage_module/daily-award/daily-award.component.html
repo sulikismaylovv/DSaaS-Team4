@@ -1,0 +1,15 @@
+<div *ngIf="!isRecentlyLogged" class="fixed inset-0 bg-gray-600 overflow-y-auto h-full w-full">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="relative p-3 border w-96 h-auto shadow-lg rounded-md bg-white dark:bg-dark-gray">
+      <div class="text-center">
+        <h3 class="text-xl p-4 text-gray-500 font-medium dark:text-white">Daily reward earned</h3>
+        <div class="flex items-center justify-center flex-row">
+          <img src="assets/logos/r-coin.svg" class="w-12 h-12" alt="r-coin img">
+          <p class="text-lg leading-6 text-gray-900 dark:text-white">+200</p>
+        </div>
+        <h3 class="text-lg p-4 leading-6 text-gray-900 dark:text-white">Come back every day to receive points</h3>
+        <button (click)="close()" class="bg-purple-600 text-white rounded-md px-4 py-2 dark:bg-purple-800">Get Reward</button>
+      </div>
+    </div>
+  </div>
+</div>

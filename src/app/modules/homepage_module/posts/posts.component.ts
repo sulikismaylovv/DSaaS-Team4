@@ -97,32 +97,36 @@ export class PostsComponent implements OnInit {
         }
     }
 
-    async loadPosts() {
-        await this.loadUserPreferences();
-        console.log(this.followedClubIds);
-
-        try {
-            let posts = await this.postsService.getPosts();
-
-            // Filter and sort posts
-            this.posts = posts
-                .filter(post => {
-                    // Keep the post if it's not official
-                    if (!post.is_official) return true;
-
-                    // If the post is official, ensure club0 and club1 are not null
-                    if (post.club0 == null || post.club1 == null) return false;
-
-                    // Keep the post if club0 or club1 matches any id from followedClubIds
-                    return this.followedClubIds.includes(post.club0) || this.followedClubIds.includes(post.club1);
-                })
-                .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        } catch (error) {
-            console.error('Error loading posts:', error);
-        }
+  async loadPosts() {
+    // Load user preferences if profile.id is defined
+    if (this.profile?.id) {
+      await this.loadUserPreferences();
+      // console.log('Followed Club IDs:', this.followedClubIds);
+      //console.log('Favorite Club ID:', this.favoriteClubId);
     }
 
-    openCreatePostModal(): void {
+    try {
+      let posts = await this.postsService.getPosts();
+
+      // Filter and sort posts
+      this.posts = posts
+        .filter(post => {
+          // Keep non-official posts or when profile.id is not defined
+          if (!post.is_official || !this.profile?.id) return true;
+
+          // If the post is official, ensure club0 and club1 are not null
+          if (post.club0 == null || post.club1 == null) return false;
+
+          return this.followedClubIds.includes(post.club0) || this.followedClubIds.includes(post.club1);
+        })
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    } catch (error) {
+      console.error('Error loading posts:', error);
+    }
+  }
+
+
+  openCreatePostModal(): void {
         const dialogRef = this.dialog.open(CreatePostComponent,
         {
             panelClass: 'mat-dialog-container',
@@ -151,5 +155,7 @@ export class PostsComponent implements OnInit {
         // If authenticated, you can perform other actions, such as opening the post details
     });
     }
+
+
 
 }

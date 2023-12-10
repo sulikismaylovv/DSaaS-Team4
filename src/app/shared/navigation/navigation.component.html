@@ -1,9 +1,6 @@
-<aside id="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" aria-label="Sidebar" class="fixed top-0 left-0 z-40 w-fit 2xl:w-64 h-screen hidden lg:block">
+<aside id="logo-sidebar" *ngIf="navbarService.showNavbar$ | async" aria-label="Sidebar" class="fixed top-0 left-0 z-10 w-fit 2xl:w-64 h-screen hidden lg:block">
   <div class="flex flex-col h-full">
-
-    <div class="flex-grow overflow-y-auto bg-light-mode p-2 dark:bg-dark-mode no-scrollbar">
-
-
+    <div class="flex-grow overflow-y-auto p-2 no-scrollbar">
 <!--    <div class="h-screen px-3 py-4 overflow-y-auto bg-light-mode dark:bg-dark-mode">-->
     <a class="flex items-center justify-center 2xl:justify-start mb-3" href="/home">
       <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg" class="fill-current text-black dark:text-white w-16 h-16">
@@ -60,18 +57,19 @@
           <span class="ms-3 hidden 2xl:inline" >Home</span>
         </a>
       </li>
+      <!--Test-->
       <li *ngIf="authService.isAuthenticated$ | async" class="relative">
-        <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/notifications">
-          <svg aria-hidden="true" class="w-5 h-5 text-gray-800 dark:text-white relative" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
+        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/notifications">
+          <div class="relative flex items-center">
             <!-- SVG content -->
-            <path d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-          </svg>
-          <!-- Notification Badge -->
-          <span *ngIf="notificationCount > 0" class="absolute inset-0 object-right-top -mr-1 -mt-1">
-            <div class="inline-flex items-center justify-center px-1 py-1 rounded-full text-xxs font-semibold leading-none bg-red-500 text-white">
+            <svg aria-hidden="true" class="w-5 h-5 text-gray-800 dark:text-white" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            </svg>
+            <!-- Notification Badge -->
+            <span *ngIf="notificationCount > 0" class="absolute -top-3 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-purple-600 border-2 border-white rounded-full dark:border-gray-900">
               {{ notificationCount }}
-            </div>
-          </span>
+            </span>
+          </div>
           <span class="ml-3 hidden 2xl:inline">Notifications</span>
         </a>
       </li>
@@ -115,7 +113,7 @@
           <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 9V4a3 3 0 0 0-6 0v5m9.92 10H2.08a1 1 0 0 1-1-1.077L2 6h14l.917 11.923A1 1 0 0 1 15.92 19Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
           </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
+          <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Shop</span>
         </a>
       </li>
     </ul>
@@ -139,7 +137,7 @@
         </button>
       </li>
       <li>
-        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/home">
+        <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/help">
           <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
             <path d="m12.46 7.291 3.849-3.849a1.5 1.5 0 0 1 2.122 0l.127.127a1.5 1.5 0 0 1 0 2.122l-3.839 3.838a4 4 0 0 0-2.259-2.238Zm0 0a4 4 0 0 1 2.263 2.238l3.662-3.662a8.96 8.96 0 0 1 0 10.27l-3.676-3.676m-2.249-5.17 3.677-3.676a8.96 8.96 0 0 0-10.27 0l3.662 3.662a4 4 0 0 0-2.238 2.258L3.615 5.863a8.961 8.961 0 0 0 0 10.27l3.662-3.662a4 4 0 0 0 2.258 2.238l-3.672 3.676a8.96 8.96 0 0 0 10.27 0l-3.662-3.662a4 4 0 0 0 2.238-2.262m0 0 3.849 3.848a1.499 1.499 0 0 1 0 2.122l-.127.126a1.5 1.5 0 0 1-2.122 0l-3.838-3.838a4 4 0 0 0 2.238-2.258ZM15 11a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm-7.719 1.471-3.839 3.838a1.5 1.5 0 0 0 0 2.122l.127.126a1.5 1.5 0 0 0 2.122 0l3.848-3.848a4 4 0 0 1-2.258-2.238Zm2.248-5.19L5.691 3.442a1.5 1.5 0 0 0-2.122 0l-.127.127a1.5 1.5 0 0 0 0 2.122l3.849 3.848a4 4 0 0 1 2.238-2.258Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -161,7 +159,6 @@
       </li>
     </ul>
   </div>
-
     <div class="pt-4 mb-4 space-y-2 font-medium border-t border-black dark:border-[#8c99c5] no-scrollbar">
       <!-- Profile links and other elements here -->
       <ul>
@@ -177,7 +174,6 @@
       </ul>
     </div>
   </div>
-
 </aside>
 
 <!-- Bottom Navigation for Mobile (Hidden on larger screens) -->
@@ -192,11 +188,19 @@
       </a>
     </li>
     <!--Notifications-->
-    <li *ngIf="authService.isAuthenticated$ | async">
+    <li *ngIf="authService.isAuthenticated$ | async" class="relative">
       <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/notifications">
-        <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-        </svg>
+        <div class="relative flex items-center">
+          <!-- SVG content -->
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-800 dark:text-white" fill="none" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <!-- Notification Badge -->
+          <span *ngIf="notificationCount > 0" class="absolute -top-3 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-purple-600 border-2 border-white rounded-full dark:border-gray-900">
+              {{ notificationCount }}
+            </span>
+        </div>
+        <span class="ml-3 hidden 2xl:inline">Notifications</span>
       </a>
     </li>
       <!--League-->
@@ -235,9 +239,15 @@
         <span class="flex-1 ms-3 whitespace-nowrap hidden 2xl:inline ">Points shop</span>
       </a>
     </li>
-
-
-<!--Profile not signed in-->
+    <li *ngIf="authService.isAuthenticated$ | async" class="flex justify-center 2xl:justify-start">
+      <button (click)="authService.logout()" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group">
+        <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 18 15" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 7.5h11m0 0L8 3.786M12 7.5l-4 3.714M12 1h3c.53 0 1.04.196 1.414.544.375.348.586.82.586 1.313v9.286c0 .492-.21.965-.586 1.313A2.081 2.081 0 0 1 15 14h-3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </svg>
+        <span class="ms-3 hidden 2xl:inline">Sign out</span>
+      </button>
+    </li>
+    <!--Profile not signed in-->
     <li *ngIf="(authService.isAuthenticated$ | async) ===false">
       <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-navbar-hover-light dark:hover:bg-dark-gray group" href="/profile">
         <svg aria-hidden="true" class="w-[19px] h-[19px] text-gray-800 dark:text-white" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
