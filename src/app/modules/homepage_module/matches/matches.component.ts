@@ -113,6 +113,39 @@ export class MatchesComponent implements OnInit {
       console.error("Error fetching fixtures:", error);
     }
   }
+  
+   formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const today = new Date();
+
+    // Remove the time part for accurate comparison of dates
+    const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (dateWithoutTime.getTime() === todayWithoutTime.getTime()) {
+        // Format the time as "6:00 PM"
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    } else {
+        // Check if the date is tomorrow
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowWithoutTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
+
+        if (dateWithoutTime.getTime() === tomorrowWithoutTime.getTime()) {
+            return 'Tomorrow';
+        } else {
+            // Format the date as "Dec 16"
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+    }
+}
+
+  
+  didFixtureStart(fixture: SupabaseFixture): boolean {
+    const fixtureDate = new Date(fixture.time);
+    const currentDate = new Date();
+    return currentDate > fixtureDate;
+  }
 
   filterFixturesForUserPreferences() {
     // Ensure we only filter if the user is logged in

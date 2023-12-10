@@ -120,23 +120,29 @@ export class HomeComponent implements OnInit {
    formatDate(dateString: string): string {
     const date = new Date(dateString);
     const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-  
-    // Remove the time part for accurate comparison
-    today.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-    tomorrow.setHours(0, 0, 0, 0);
-  
-    if (date.getTime() === today.getTime()) {
-      return 'Today';
-    } else if (date.getTime() === tomorrow.getTime()) {
-      return 'Tomorrow';
+
+    // Remove the time part for accurate comparison of dates
+    const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (dateWithoutTime.getTime() === todayWithoutTime.getTime()) {
+        // Format the time as "6:00 PM"
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     } else {
-      // Format the date as "Dec 16"
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        // Check if the date is tomorrow
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowWithoutTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
+
+        if (dateWithoutTime.getTime() === tomorrowWithoutTime.getTime()) {
+            return 'Tomorrow';
+        } else {
+            // Format the date as "Dec 16"
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
     }
-  }
+}
+
 
   async getNextFixture(clubID: number) {
     try {
