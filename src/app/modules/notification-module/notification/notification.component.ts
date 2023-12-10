@@ -153,7 +153,7 @@ export class NotificationComponent implements OnInit {
     }
 
     this.notificationsCount = this.allNotifications.length;
-    this.navbarService.changeNotificationCount(this.notificationsCount);
+    this.navbarService.changeNotificationCount(0);
     await new Promise<void>((resolve) => {
       this.navbarService.currentNotificationCount$.subscribe((count) => {
         this.notificationsCount = count;

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {NotificationsService} from "./notifications.service";
+import {SupabaseService} from "./supabase.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,9 @@ export class NavbarService {
   public notificationCountSubject = new BehaviorSubject<number>(0);
   currentNotificationCount$: Observable<number> = this.notificationCountSubject.asObservable();
 
-  constructor( private notificationsService: NotificationsService ) {}
+  constructor( private notificationsService: NotificationsService) {
+
+  }
 
   public setShowNavbar(show: boolean): void {
     this.showNavbarSubject.next(show);
@@ -30,6 +33,21 @@ export class NavbarService {
     const notifications = await this.notificationsService.getNotificationsForUser(userId);
     this.notificationCountSubject.next(notifications.length);
   }
+
+  public async setNotificationCount(userId: string | undefined): Promise<void> {
+    if (!userId) {
+      throw new Error('User ID is undefined');
+    }
+
+    // Fetch notifications
+    const notifications = await this.notificationsService.getNotificationsForUser(userId);
+
+
+    // Update the notification count
+    const totalNotifications = notifications.length;
+    this.changeNotificationCount(totalNotifications);
+  }
+
 
 
 

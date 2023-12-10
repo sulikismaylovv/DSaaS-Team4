@@ -7,6 +7,7 @@ import {Subscription} from "rxjs";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../core/services/imageDownload.service";
 import {data} from "autoprefixer";
+import {SupabaseService} from "../../core/services/supabase.service";
 
 @Component({
     selector: 'app-navigation',
@@ -27,8 +28,25 @@ export class NavigationComponent {
         public themeService: ThemeService,
         protected readonly authService: AuthService,
         private readonly imageService: ImageDownloadService,
+        private readonly supabase: SupabaseService,
         private router: Router
     ) {
+    this.supabase.supabaseClient
+      .channel('realtime-friendships')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notifications',
+        },
+        async () => {
+          await this.navbarService.setNotificationCount(this.profile?.id);
+          await this.navbarService.refreshNotificationCount(this.profile?.id);
+        }
+      )
+      .subscribe()
+
     }
 
   async ngOnInit() {
@@ -37,6 +55,7 @@ export class NavigationComponent {
     if(this.authService.session?.user.id) {
       await this.getProfile().then(async r =>
         this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id));
+        await this.navbarService.setNotificationCount(this.profile?.id);
         await this.navbarService.refreshNotificationCount(this.profile?.id);
       console.log(this.avatarSafeUrl);
       console.log(this.profile);
