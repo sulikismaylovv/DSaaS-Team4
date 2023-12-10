@@ -50,6 +50,7 @@ async function getBetsForFixture(record: WebhookPayload, supabaseClient: Supabas
     .from("bettingrecord")
     .select("*")
     .eq("fixtureID", record.record.fixtureID)
+    .eq("is_settled", false);
     if (error) {
       throw error;
   }
