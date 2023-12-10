@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   activeContent = 'matches';
   userSearchResults: any[] = [];
   nextFixture: SupabaseFixture = new SupabaseFixtureModel();
+  nextClub: Club = new Club();
+  myClub: Club = new Club();
   clubID: number = 0;
 
   constructor(
@@ -52,13 +54,49 @@ export class HomeComponent implements OnInit {
       .then(() => this.getNextFixture(this.clubID));
   }
 
-  // checkHomeorAway(fixture: SupabaseFixture): SupabaseFixture {
-  //   if(this.nextFixture?.club0 === null) {return null}
-  //   if (this.nextFixture.?club0 === this.clubID) {
-  //     fixture.homeOrAway = 'home';
-  //   }
-  //   return fixture;
-  // }
+  bindClubData(clubData: any): Club {
+    // Assuming clubData has properties that match those in your Club model
+    let club = new Club();
+    club.id = clubData.id;
+    club.name = clubData.name;
+    club.logo = clubData.logo;
+    // ... assign other properties as necessary
+
+    return club;
+  }
+
+  getNextOpponentClub(): Club {
+    if (!this.nextFixture) {
+      console.error('Next fixture is not set');
+      return new Club(); // or handle this case as per your application's logic
+    }
+
+    if (this.nextFixture.club0?.id === this.clubID) {
+      return this.bindClubData(this.nextFixture.club1);
+    } else if (this.nextFixture.club1?.id === this.clubID) {
+      return this.bindClubData(this.nextFixture.club0);
+    } else {
+      console.error('Favorite club is not part of the next fixture');
+      return new Club(); // or handle this case as per your application's logic
+    }
+  }
+
+  getMyClub(): Club {
+    if (!this.nextFixture) {
+      console.error('Next fixture is not set');
+      return new Club(); // or handle this case as per your application's logic
+    }
+
+    if (this.nextFixture.club0?.id === this.clubID) {
+      return this.bindClubData(this.nextFixture.club0);
+    } else if (this.nextFixture.club1?.id === this.clubID) {
+      return this.bindClubData(this.nextFixture.club1);
+    } else {
+      console.error('Favorite club is not part of the next fixture');
+      return new Club(); // or handle this case as per your application's logic
+    }
+
+  }
 
   async getClubID() {
     try {
@@ -75,6 +113,27 @@ export class HomeComponent implements OnInit {
     }
   }
 
+   formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+  
+    // Remove the time part for accurate comparison
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    tomorrow.setHours(0, 0, 0, 0);
+  
+    if (date.getTime() === today.getTime()) {
+      return 'Today';
+    } else if (date.getTime() === tomorrow.getTime()) {
+      return 'Tomorrow';
+    } else {
+      // Format the date as "Dec 16"
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+  }
+
   async getNextFixture(clubID: number) {
     try {
       this.nextFixture =(await this.apiService.testFunction(clubID))[0];
@@ -82,6 +141,8 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching next fixture:', error);
     }
+    this.nextClub = this.getNextOpponentClub();
+    this.myClub = this.getMyClub();
   }
 
   async getStanding() {
