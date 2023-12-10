@@ -9,6 +9,7 @@ import {SupabaseFixture, SupabaseFixtureModel} from "../../../core/models/supaba
 import {Club} from "../../../core/models/club.model";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
 import {ApiService} from "../../../core/services/api.service";
+import {DailyAwardService} from "../../../core/services/daily-award.service";
 
 @Component({
     selector: 'app-home',
@@ -38,12 +39,12 @@ export class HomeComponent implements OnInit {
     private fixtureTransferService: FixtureTransferService,
     private route: ActivatedRoute,
     private apiService: ApiService,
-
-
+    private dailyAwardService: DailyAwardService
 
   ) {
   }
   ngOnInit() {
+    this.dailyAwardService.openPopup();
     this.navbarService.setShowNavbar(true);
     this.getStanding();
   }
