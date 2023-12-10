@@ -17,8 +17,11 @@ export class DailyAwardComponent {
     private authService: AuthService,
   ) {}
 
-  ngOnInit(): void {
-    this.updateRecentlyLoggedStatus();
+  async ngOnInit(): Promise<void> {
+    await this.updateRecentlyLoggedStatus();
+    if(this.isRecentlyLogged) {
+      this.close();
+    }
   }
 
   close(): void {
@@ -27,7 +30,7 @@ export class DailyAwardComponent {
 
   private async updateRecentlyLoggedStatus(): Promise<void> {
     const userId = this.authService.session?.user?.id;
-    
+
     if (!userId) {
       console.log("User ID is undefined.");
       return;

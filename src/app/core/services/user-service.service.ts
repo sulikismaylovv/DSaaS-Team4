@@ -4,121 +4,121 @@ import {AuthService} from "./auth.service";
 import { FriendshipService } from './friendship.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserServiceService {
-    constructor(private supabase: SupabaseService, private authService: AuthService,
-                private friendshipService: FriendshipService
-    ) {
+  constructor(private supabase: SupabaseService, private authService: AuthService,
+              private friendshipService: FriendshipService
+  ) {
+  }
+
+  async searchUserByUsername(username: string): Promise<any> {
+    //console.log('searchUserByUsername:', username);
+    const currentUserId = this.authService.session?.user?.id; // Get the current user's ID from the AuthService
+    if (!currentUserId) {
+      console.error('No current user ID found');
+      return [];
+    }
+    const {data, error} = await this.supabase.supabaseClient
+      .from('users')
+      .select('id,username')
+      .ilike('username', `%${username}%`)
+      .not('id', 'eq', currentUserId); // Exclude the current user from the results
+
+    if (error) {
+      console.error('Error searching for user:', error);
+      throw error;
+    }
+    return data;
+  }
+
+  async checkIfRecentlyLogged(id: string): Promise<boolean> {
+    const {data, error} = await this.supabase.supabaseClient
+      .from('users')
+      .select('is_recently_logged')
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error searching for user:', error);
+      throw error;
+    }
+    return data?.at(0)?.is_recently_logged;
+  }
+
+  async setRecentlyLogged(id: string): Promise<void> {
+    const {data, error} = await this.supabase.supabaseClient
+      .from('users')
+      .update({is_recently_logged: true})
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error searching for user:', error);
+      throw error;
+    }
+  }
+
+
+  async searchUsersByFirstThreeLetters(term: string): Promise<any[]> {
+    //console.log('searchUsersByFirstThreeLetters:', term);
+    const currentUserId = this.authService.session?.user?.id;
+    if (!currentUserId) {
+      console.error('No current user ID found');
+      return [];
     }
 
-    async searchUserByUsername(username: string): Promise<any> {
-      //console.log('searchUserByUsername:', username);
-        const currentUserId = this.authService.session?.user?.id; // Get the current user's ID from the AuthService
-        if (!currentUserId) {
-            console.error('No current user ID found');
-            return [];
-        }
-        const {data, error} = await this.supabase.supabaseClient
-            .from('users')
-            .select('id,username')
-            .ilike('username', `%${username}%`)
-            .not('id', 'eq', currentUserId); // Exclude the current user from the results
-
-        if (error) {
-            console.error('Error searching for user:', error);
-            throw error;
-        }
-        return data;
+    // Check if the search term is at least 3 characters long
+    if (term.length < 3) {
+      console.warn('Search term must be at least 3 characters');
+      return [];
     }
 
-    async checkIfRecentlyLogged(id: string): Promise<boolean> {
-        const {data, error} = await this.supabase.supabaseClient
-            .from('users')
-            .select('is_recently_logged')
-            .eq('id', id);
+    // Use the `or` functionality of Supabase to search across multiple columns
+    const query = `first_name.ilike.%${term}%,last_name.ilike.%${term}%,username.ilike.%${term}%`;
 
-        if (error) {
-            console.error('Error searching for user:', error);
-            throw error;
-        }
-        return data?.at(0)?.is_recently_logged;
+    const { data, error } = await this.supabase.supabaseClient
+      .from('users')
+      .select('id, first_name, last_name, username')
+      .or(query)
+      .not('id', 'eq', currentUserId); // Exclude the current user from the results
+
+    if (error) {
+      console.error('Error searching for users:', error);
+      throw error;
     }
 
-    async setRecentlyLogged(id: string): Promise<void> {
-        const {data, error} = await this.supabase.supabaseClient
-            .from('users')
-            .update({is_recently_logged: true})
-            .eq('id', id);
+    return data;
+  }
 
-        if (error) {
-            console.error('Error searching for user:', error);
-            throw error;
-        }
+  async getUsernameByID(id: string): Promise<any> {
+    const {data, error} = await this.supabase.supabaseClient
+      .from('users')
+      .select('id,username')
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error searching for user:', error);
+      throw error;
     }
+    return data?.at(0)?.username;
+  }
 
 
-    async searchUsersByFirstThreeLetters(term: string): Promise<any[]> {
-        //console.log('searchUsersByFirstThreeLetters:', term);
-        const currentUserId = this.authService.session?.user?.id;
-        if (!currentUserId) {
-            console.error('No current user ID found');
-            return [];
-        }
+  async getUserByID(id: string): Promise<any> {
+    const data = await this.supabase.supabaseClient
+      .from('users')
+      .select('*')
+      .eq('id', id);
 
-        // Check if the search term is at least 3 characters long
-        if (term.length < 3) {
-            console.warn('Search term must be at least 3 characters');
-            return [];
-        }
-
-        // Use the `or` functionality of Supabase to search across multiple columns
-        const query = `first_name.ilike.%${term}%,last_name.ilike.%${term}%,username.ilike.%${term}%`;
-
-        const { data, error } = await this.supabase.supabaseClient
-            .from('users')
-            .select('id, first_name, last_name, username')
-            .or(query)
-            .not('id', 'eq', currentUserId); // Exclude the current user from the results
-
-        if (error) {
-            console.error('Error searching for users:', error);
-            throw error;
-        }
-
-        return data;
+    if (data.error) {
+      console.error('Error searching for user:', data.error);
+      throw data.error;
     }
+    return data.data?.at(0);
 
-    async getUsernameByID(id: string): Promise<any> {
-        const {data, error} = await this.supabase.supabaseClient
-            .from('users')
-            .select('id,username')
-            .eq('id', id);
-
-        if (error) {
-            console.error('Error searching for user:', error);
-            throw error;
-        }
-        return data?.at(0)?.username;
-    }
-
-
-    async getUserByID(id: string): Promise<any> {
-        const data = await this.supabase.supabaseClient
-            .from('users')
-            .select('*')
-            .eq('id', id);
-
-        if (data.error) {
-            console.error('Error searching for user:', data.error);
-            throw data.error;
-        }
-        return data.data?.at(0);
-
-    }
+  }
 
   async searchFriendsByUsername(username: string): Promise<any> {
-      //console.log('searchFriendsByUsername:', username);
+    //console.log('searchFriendsByUsername:', username);
     const currentUserId = this.authService.session?.user?.id;
     if (!currentUserId) {
       console.error('No current user ID found');
