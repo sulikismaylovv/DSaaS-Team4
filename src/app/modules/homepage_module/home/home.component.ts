@@ -98,6 +98,10 @@ export class HomeComponent implements OnInit {
 
   }
 
+  goToFixture(){
+    this.router.navigate(['/game', this.nextFixture.fixtureID]);
+  }
+
   async getClubID() {
     try {
       const userId = this.authService.session?.user?.id;
