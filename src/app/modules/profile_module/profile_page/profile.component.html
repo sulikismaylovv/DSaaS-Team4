@@ -2,7 +2,7 @@
 <app-common>
   <div class="edit-bg"  *ngIf="isOwnProfile">
     <div class="absolute top-0 right-0 sm:p-4">
-      <button class="m-2 bg-white bg-opacity-50 rounded-lg transform hover:scale-105 w-8 h-8">
+      <button class="m-2 bg-white bg-opacity-50 rounded-lg transform hover:scale-105 w-6 h-6 sm:w-8 sm:h-8">
         <img (click)="openBgImageSelectorModal()" alt="edit icon" class="transition-transform w-full h-full" src="assets/icons/Edit_Cover_Photo.svg">
       </button>
     </div>
@@ -14,10 +14,11 @@
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl px-1">{{ friendRequestStatus === 'none' ? 'Add Friend' : (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}</span>
       </button>
     </div>
+
     <div   *ngIf="isOwnProfile">
-      <a href="/settings" class="flex items-center my-3 px-1">
-        <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl">Edit Profile</span>
-        <img class="w-8 h-8" src="../../../../assets/icons/edit-pencil-primary-100.svg">
+      <a href="/settings" class="flex items-center mt-3 md:mt-2 px-1">
+        <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-2xl 2xl:text-3xl px-1">Edit Profile</span>
+        <img class="w-4 h-4 sm: md:w-6 md:h-6  2xl:w-8 2xl:h-8" src="../../../../assets/icons/edit-pencil-primary-100.svg">
       </a>
     </div>
   </div>

@@ -12,7 +12,7 @@
 
 <ng-template #loadedContent>
 <section class="bg-light-mode dark:bg-dark-mode" >
-  <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 lg:ml-64 mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+  <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 lg:ml-64 sm:mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
     <!-- Cover photo -->
     <div class="flex items-center dark:bg-dark-gray max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
       <img class="object-contain min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" [src]="bgImageSafeUrl" alt="None">
@@ -32,8 +32,8 @@
 
             <div class="flex-col justify-center -mt-4 md:-mt-2 xl:ml-4">
               <p class="text-light-mode-text dark:text-primary-100 text-sm sm:text-md md:text-2xl 2xl:text-3xl pl-2 mt-1">{{username}}</p>
-              <div class="flex justify-start -ml-8 md:-ml-12 xl:-ml-16 2xl:-ml-20">
-                <div class="bg-white p-1 w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 rounded-full">
+              <div class="flex justify-start  -ml-8  md:-ml-10 md:t-1   lg:-ml-12 lg:mt-3  xl:-ml-20 xl:mt-4  2xl:-ml-20 xl:mt-6">
+                <div class="bg-white  p-0.5 lg:p-1  w-6 h-6  md:w-9 md:h-9  lg:w-10 lg:h-10  xl:w-12 xl:h-12  2xl:w-14 2xl:h-14  rounded-full">
                   <img class="w-full h-full" [src]="favClub?.logo">
                 </div>
               </div>
@@ -50,8 +50,8 @@
 
       <!-- Content for Link 1 -->
       <div class="flex flex-col bg-white dark:bg-test rounded-b-lg xl:flex-row">
-        <div class="flex flex-col flex-1 h-[510px] ">
-          <div class="px-8 bg-white dark:bg-test shadow-sm">
+        <div class="flex flex-col flex-1 h-[510px] overflow-x-hidden">
+          <div class="px-2 sm:px-8 bg-white dark:bg-test shadow-sm">
             <ul class="flex justify-around border-y-1 dark:border-dark-mode-text w-full">
               <li *ngFor="let link of infoString; let i = index"
                   class="text-light-mode-text dark:text-primary-100 font-light text-xs sm:text-sm md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl py-3">
@@ -62,12 +62,11 @@
               </li>
             </ul>
           </div>
-
           <div class="flex-grow">
 
             <!-- Friends -->
             <ng-container *ngIf="selectedLink === 'link1'">
-              <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 2xl:p-8  h-full">
+              <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-4 2xl:p-8 h-full w-full">
                 <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                   <ng-container *ngIf="friendsList.length !== 0">
                     <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-2">
@@ -92,11 +91,11 @@
                   <ng-container *ngIf="friendsList.length === 0">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't added any friends</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-sm lg:text-lg ">You haven't added any friends</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't made any friends yet.You can search for friends by pressing the search button in the sidebar</p>
                       </div>
-                      <div class="h-72 p-4">
-                        <img src="assets/icons/FriendsIcon.svg" class="mx-auto w-96 h-full">
+                      <div class="h-52 lg:h-72 p-4 lg:m-0.5">
+                        <img src="assets/icons/FriendsIcon.svg" class="mx-auto h-full">
                       </div>
                     </div>
                   </ng-container>
@@ -125,22 +124,24 @@
             </ng-container>
 
 
+
             <!-- Content for Link 2 -->
             <ng-container *ngIf="selectedLink === 'link2'">
-              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg p-2 sm:px-1 md:px-4 lg:px-8 2xl:p-8 py-4 h-full">
+
+              <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 sm:px-1 md:px-4 lg:px-8 2xl:p-8 py-4 h-full ">
                 <ng-container *ngIf="userLeagues.length !== 0">
-                  <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-64">
+                  <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow p-2 lg:py-4 rounded-2xl max-w-full">
                     <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg:text-xl mb-2">{{ profile?.first_name }}'s Leagues</h1>
                     <!-- Horizontally Scrollable Container -->
-                    <div class="flex flex-row flex-nowrap overflow-x-auto hide-scrollbar py-2" style="max-width: 100%; width: 100%;">
-                      <ng-container  *ngFor="let league of userLeagues">
-                        <div class="flex-shrink-0 flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 mx-2" style="min-width: 33%;">
-                          <p class="text-center text-dark-mode dark:text-light-mode">{{ league.leagueName }}</p>
-                          <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ 'Position: #' + league.currentUserPosition }}</p>
+                    <div class="flex flex-row flex-nowrap overflow-x-auto hide-scrollbar py-2">
+                      <ng-container *ngFor="let league of userLeagues">
+                        <div class="flex flex-col items-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 mx-2">
+                          <p class="text-center text-dark-mode dark:text-primary-200 font-medium">{{ limitUsernameLength(league.leagueName, 16) }}</p>
+                          <p class="text-center text-xs text-dark-mode dark:text-primary-100">{{ 'Position: #' + league.currentUserPosition }}</p>
                           <!-- Leaderboard Section -->
                           <div class="leaderboard mt-2">
                             <ul class="text-xs">
-                              <li *ngFor="let member of league.topMembers; let i = index" [ngClass]="{'bg-lighter-purple': isCurrentUser(member.userid), 'border-purple-500 border-2': !isCurrentUser(member.userid)}" class="user-card rounded-lg p-2 flex items-center justify-between shadow-lg relative">
+                              <li *ngFor="let member of league.topMembers; let i = index" [ngClass]="{'bg-lighter-purple': isCurrentUser(member.userid), 'border-purple-500 border-2': !isCurrentUser(member.userid)}" class="user-card rounded-lg p-2 mx-2 flex items-center justify-between shadow-lg relative">
                                 <!-- Medal Icons -->
                                 <span *ngIf="i === 0" class="text-gold mr-2">🥇</span>
                                 <span *ngIf="i === 1" class="text-silver mr-2">🥈</span>
@@ -159,13 +160,13 @@
                   <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't joined any Leagues</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-sm lg:text-lg ">You haven't joined any Leagues</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't joined any leagues yet.You can create leagues by pressing the League button in the sidebar</p>
                       </div>
-                      <div class="h-64 p-4">
+                      <div class="h-44 lg:h-64 p-4">
                         <img src="assets/icons/League_EmptyState.svg" class="mx-auto w-full h-full">
                       </div>
-                      <p class="text-light-mode-text dark:text-primary-100 font-normal text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">League</a></p>
+                      <p class="text-light-mode-text dark:text-primary-100 font-normal text-xs md:text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">League</a></p>
                     </div>
                   </div>
                 </ng-container>
@@ -182,13 +183,13 @@
                       <a class="">About</a>
                     </h2>
                     <ul>
-                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">Full
+                      <li class="py-1 sm:py-2"><p class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm md:text-xl">Full
                         name: {{profile?.first_name}} {{profile?.last_name}}</p></li>
-                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">
+                      <li class="py-1 sm:py-2"><p class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm md:text-xl">
                         Birthdate: {{profile?.birthdate}}</p></li>
-                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">Favorite
+                      <li class="py-1 sm:py-2"><p class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm md:text-xl">Favorite
                         Team: {{favoriteClub}} </p></li>
-                      <li class="py-2"><p class="text-light-mode-text dark:text-primary-100 text-sm md:text-xl">
+                      <li class="py-1 sm:py-2"><p class="text-light-mode-text dark:text-primary-100 text-xs sm:text-sm md:text-xl">
                         Following Teams: {{getFollowingTeams()}}</p></li>
                     </ul>
                   </div>
@@ -202,7 +203,7 @@
 
             <!-- Link 4 -->
             <ng-container *ngIf="selectedLink === 'link4'">
-              <div class="bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full">
+              <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full">
                 <ng-container *ngIf="ownedPlayersDetails.length !== 0">
                 <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
                   <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
@@ -222,13 +223,13 @@
                   <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div class="flex flex-col max-w-sm mx-4">
-                        <h1 class="text-light-mode-text dark:text-primary-200 text-lg ">You haven't bought any players</h1>
+                        <h1 class="text-light-mode-text dark:text-primary-200 text-sm lg:text-lg  ">You haven't bought any players</h1>
                         <p class="text-light-mode-text dark:text-primary-100 font-light text-xs ">It seems like you haven't bought any players yet.You can buy players in the Point Shop</p>
                       </div>
-                      <div class="h-64 p-4">
+                      <div class="h-44 lg:h-64 p-4">
                         <img src="assets/icons/PointsShop_EmptyState.svg" class="mx-auto w-full h-full">
                       </div>
-                      <p class="text-light-mode-text dark:text-primary-100 font-normal text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">Points Shop</a></p>
+                      <p class="text-light-mode-text dark:text-primary-100 font-normal text-xs md:text-sm mx-auto py-2">Head to <a href="/league" class="font-medium dark:text-primary-300">Points Shop</a></p>
                     </div>
                   </div>
                 </ng-container>
