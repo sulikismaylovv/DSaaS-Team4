@@ -17,6 +17,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 })
 export class FriendsleagueComponent implements OnInit{
 
+  loading = true;
 
   currentUserID: string | undefined;
   leagueIds: number[] = [];
@@ -31,7 +32,7 @@ export class FriendsleagueComponent implements OnInit{
               private readonly imageDonwloadService: ImageDownloadService) {}
 
   async ngOnInit() {
-    console.log("Friends League Component");
+    this.loading = true; // Start with loading set to true
     this.authService.authChanges((_, session) => (this.session = session));
     try {
       const user = this.authService.session?.user;
@@ -58,6 +59,8 @@ export class FriendsleagueComponent implements OnInit{
       }
     } catch (error) {
       console.error('There was an error loading the leagues and their members:', error);
+    } finally {
+      this.loading = false; // Set loading to false when the data is loaded
     }
   }
   currentLeagueIndex = 0;
