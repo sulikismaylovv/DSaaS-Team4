@@ -105,12 +105,10 @@
 
     <!-- Display post content -->
     <p *ngIf="!this.post.is_official" class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
-    <div *ngIf="this.post.is_official" class="flex flex-col text-center">
-      <p class="font-semibold text-black text-2xl mt-3 dark:text-white" (click)="onPostClick(post.id)">Update:</p>
+    <div *ngIf="this.post.is_official" (click)="onPostClick(post.id)" class="flex flex-col text-center">
+      <p class="font-semibold text-black text-2xl mt-3 dark:text-white">Update:</p>
       <img src="assets/logos/kvc-westerlo.svg" alt="Post image" class="rounded-lg sm:w-80 lg:w-80 lg:h-auto mx-auto">
-
-      <p class="text-gray-800 text-xl mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
-
+      <p class="text-gray-800 text-xl mt-3 dark:text-white">{{ post.content }}</p>
     </div>
 
     <!-- Display post image if exists -->
