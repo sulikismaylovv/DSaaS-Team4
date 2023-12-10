@@ -14,6 +14,8 @@ import {
   FriendsLeagueInterface,
   FriendsLeague} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
+import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
+import {Bet} from "../../../core/models/bets.model";
 
 
 export enum FriendRequestStatus {
@@ -92,6 +94,10 @@ export class CommonComponent implements OnInit{
   leagues: FriendsLeagueInterface[] = [];
   userLeagues: UserLeague[] = [];
 
+  pendingBets: BetWithFixture[] = [];
+  settledBets: BetWithFixture[] = [];
+
+
   constructor(
     protected readonly authService: AuthService,
     private readonly supabase: SupabaseService,
@@ -104,6 +110,7 @@ export class CommonComponent implements OnInit{
     protected readonly friendshipService: FriendshipService,
     private friendsLeague: FriendsLeague,
     private userService: UserServiceService,
+    private betsService: BetsService
 
   ) {
     this.supabase.supabaseClient
@@ -168,6 +175,8 @@ export class CommonComponent implements OnInit{
       if (this.userRefId) {
         await this.checkFriendStatus();
       }
+
+      this.loadBets();
 
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
@@ -546,6 +555,29 @@ export class CommonComponent implements OnInit{
 
   isCurrentUser(memberUserID: string): boolean {
     return this.currentUserID === memberUserID;
+  }
+
+
+  loadBets(): void {
+    // Fetch Pending Bets
+    this.betsService.fetchAllPendingBets(this.currentUserID)
+      .then(bets => {
+        this.pendingBets = bets;
+        console.log("pending:" , this.pendingBets);
+      })
+      .catch(error => {
+        console.error('Error fetching pending bets:', error);
+      });
+
+    // Fetch Settled Bets
+    this.betsService.fetchSettledBets(this.currentUserID)
+      .then(bets => {
+        this.settledBets = bets;
+        console.log("settled:" , this.settledBets);
+      })
+      .catch(error => {
+        console.error('Error fetching settled bets:', error);
+      });
   }
 
 

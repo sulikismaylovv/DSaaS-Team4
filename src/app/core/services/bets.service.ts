@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Bet, Better } from '../models/bets.model';
+import {Fixture,fixtureInfo} from "../models/fixtures.model";
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
+import {Club} from "../models/club.model";
+
+export interface BetWithFixture {
+  bet: Bet;
+  fixture: Fixture;
+  team0_details: Club;
+  team1_details: Club;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class BetsService {
 
-  constructor(private supabase: SupabaseService) { }
+  constructor(private supabase: SupabaseService) {
+  }
 
   async createBet(bet: Bet, userID: string) {
     try {
       // Check if user is registered and retrieve the betterID
-      const { data: userData, error: userError } = await this.supabase.supabaseClient
+      const {data: userData, error: userError} = await this.supabase.supabaseClient
         .from('usersinbetting')
         .select('betterID')
         .eq('userID', userID)
@@ -38,7 +48,7 @@ export class BetsService {
       bet.betterID = betterID;
 
       // Create the bet in bettingrecord
-      const { error: betError } = await this.supabase.supabaseClient
+      const {error: betError} = await this.supabase.supabaseClient
         .from('bettingrecord')
         .insert([bet]);
       if (betError) throw betError;
@@ -56,7 +66,7 @@ export class BetsService {
 
   async checkIfBetExists(betterID: number, fixtureID: number): Promise<boolean> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('bettingrecord')
         .select('*')
         .eq('betterID', betterID)
@@ -69,9 +79,9 @@ export class BetsService {
     }
   }
 
-  async fetchBetInfo(betterID: number, fixtureID: number): Promise<Bet>{
+  async fetchBetInfo(betterID: number, fixtureID: number): Promise<Bet> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('bettingrecord')
         .select('*')
         .eq('betterID', betterID)
@@ -86,7 +96,7 @@ export class BetsService {
 
   async checkIfUserAffordsBet(userID: string, credits: number): Promise<boolean> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('usersinbetting')
         .select('credits')
         .eq('userID', userID)
@@ -113,10 +123,10 @@ export class BetsService {
     try {
       // Fetch current credits and activeCredits
       const {data: currentData, error: fetchError} = await this.supabase.supabaseClient
-          .from('usersinbetting')
-          .select('credits, activeCredits')
-          .eq('userID', userID)
-          .single();
+        .from('usersinbetting')
+        .select('credits, activeCredits')
+        .eq('userID', userID)
+        .single();
 
       if (fetchError) throw fetchError;
       if (!currentData) {
@@ -132,9 +142,9 @@ export class BetsService {
 
       // Update both credits and activeCredits
       const {data: updateData, error: updateError} = await this.supabase.supabaseClient
-          .from('usersinbetting')
-          .update({credits: newCredits, activeCredits: newActiveCredits})
-          .eq('userID', userID);
+        .from('usersinbetting')
+        .update({credits: newCredits, activeCredits: newActiveCredits})
+        .eq('userID', userID);
 
       if (updateError) throw updateError;
       return true;
@@ -146,7 +156,7 @@ export class BetsService {
 
   async checkIfUserIsRegistered(userID: string): Promise<boolean> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('usersinbetting')
         .select('userID')
         .eq('userID', userID);
@@ -161,7 +171,7 @@ export class BetsService {
 
   async getBetterID(userID: string): Promise<number> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('usersinbetting')
         .select('betterID')
         .eq('userID', userID)
@@ -180,7 +190,7 @@ export class BetsService {
 
   async getUserCredits(userID: string): Promise<number> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('usersinbetting')
         .select('credits')
         .eq('userID', userID)
@@ -197,11 +207,11 @@ export class BetsService {
     }
   }
 
-  async createBetter(userID: string){
+  async createBetter(userID: string) {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('usersinbetting')
-        .insert([{ userID: userID, credits: 1000, activeCredits: 0 }]);
+        .insert([{userID: userID, credits: 1000, activeCredits: 0}]);
       if (error) throw error;
     } catch (error) {
       console.error('Error creating user:', error);
@@ -211,7 +221,7 @@ export class BetsService {
 
   async checkIfUserAlreadyBetted(userID: string, fixtureID: number): Promise<boolean> {
     try {
-      const { data, error } = await this.supabase.supabaseClient
+      const {data, error} = await this.supabase.supabaseClient
         .from('bettingrecord')
         .select('betterID')
         .eq('fixtureID', fixtureID)
@@ -224,6 +234,156 @@ export class BetsService {
     }
   }
 
+  async fetchAllPendingBets(userID: string | undefined): Promise<BetWithFixture[]> {
+    try {
+      // First, get the betterID for the given userID
+      const {data: betterData, error: betterError} = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('betterID')
+        .eq('userID', userID)
+        .single();
 
+      if (betterError) throw betterError;
+      if (!betterData) throw new Error('Better not found');
+      console.log(betterData);
 
+      const response = await this.supabase.supabaseClient
+        .from('bettingrecord')
+        .select(`
+        *,
+        fixture:fixtureID (*,
+            team0_details:team0 (*),
+            team1_details:team1 (*)
+    )
+      `)
+        .eq('betterID', betterData.betterID)
+        .is('outcome', null);
+
+      if (response.error) throw response.error;
+
+      console.log(response.data);
+
+      const betsWithFixtures: BetWithFixture[] = response.data.map(item => {
+        // Destructure your item to access nested fixture and team details directly
+        const {fixtureID, id, betterID, time_placed, team_chosen, credits, outcome, time_settled, fixture} = item;
+        const {team0_details, team1_details} = fixture;
+
+        return {
+          bet: {
+            id,
+            betterID,
+            fixtureID,
+            time_placed,
+            team_chosen,
+            credits,
+            outcome,
+            time_settled
+          },
+          fixture: {
+            fixture: fixture.fixture,
+            league: fixture.league,
+            teams: fixture.teams,
+            goals: fixture.goals,
+            score: fixture.score
+          },
+          team0_details: {
+            id: team0_details.id,
+            name: team0_details.name,
+            points: team0_details.points,
+            goalDifference: team0_details.goalDifference
+          },
+          team1_details: {
+            id: team1_details.id,
+            name: team1_details.name,
+            points: team1_details.points,
+            goalDifference: team1_details.goalDifference
+          }
+        };
+      });
+
+      return betsWithFixtures;
+    } catch (error) {
+      console.error('Error fetching pending bets:', error);
+      throw error;
+    }
+  }
+
+  async fetchSettledBets(userID: string | undefined): Promise<BetWithFixture[]> {
+    try {
+      // First, get the betterID for the given userID
+      const {data: betterData, error: betterError} = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('betterID')
+        .eq('userID', userID)
+        .single();
+
+      if (betterError) throw betterError;
+      if (!betterData) throw new Error('Better not found');
+      console.log(betterData);
+
+      const response = await this.supabase.supabaseClient
+        .from('bettingrecord')
+        .select(`
+        *,
+        fixture:fixtureID (*,
+            team0_details:team0 (*),
+            team1_details:team1 (*)
+    )
+      `)
+        .eq('betterID', betterData.betterID)
+        .not('outcome', 'is', null)  // Adjust this based on how you determine a bet is settled
+        .or('time_settled.not.is.null');
+
+      if (response.error) throw response.error;
+
+      console.log(response.data);
+
+      const betsWithFixtures: BetWithFixture[] = response.data.map(item => {
+        // Destructure your item to access nested fixture and team details directly
+        const {fixtureID, id, betterID, time_placed, team_chosen, credits, outcome, time_settled, fixture} = item;
+        const {team0_details, team1_details} = fixture;
+
+        return {
+          bet: {
+            id,
+            betterID,
+            fixtureID,
+            time_placed,
+            team_chosen,
+            credits,
+            outcome,
+            time_settled
+          },
+          fixture: {
+            fixture: fixture.fixture,
+            league: fixture.league,
+            teams: fixture.teams,
+            goals: fixture.goals,
+            score: fixture.score
+          },
+          team0_details: {
+            id: team0_details.id,
+            name: team0_details.name,
+            points: team0_details.points,
+            goalDifference: team0_details.goalDifference
+          },
+          team1_details: {
+            id: team1_details.id,
+            name: team1_details.name,
+            points: team1_details.points,
+            goalDifference: team1_details.goalDifference
+          }
+        };
+      });
+
+      return betsWithFixtures;
+    } catch (error) {
+      console.error('Error fetching pending bets:', error);
+      throw error;
+    }
+  }
 }
+
+
+
+
