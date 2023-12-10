@@ -80,6 +80,7 @@ export class AuthComponent implements OnInit {
                 await this.authService.register(email, password);
                 // After the alert in the register method, control returns here.
                 // Navigate to the email verification page
+                this.authService.setCurrentUserEmail(email);
                 await this.router.navigate(['/verify-email']);
             } catch (error) {
                 if (error instanceof Error) {

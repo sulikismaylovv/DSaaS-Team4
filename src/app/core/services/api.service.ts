@@ -1,7 +1,8 @@
-import {Injectable} from "@angular/core";
-import {SupabaseService} from "./supabase.service";
-import {SupabaseFixture} from "../models/supabase-fixtures.model";
-import {Club} from "../models/club.model";
+import { Injectable } from "@angular/core";
+import { SupabaseService } from "./supabase.service";
+import { SupabaseFixture } from "../models/supabase-fixtures.model";
+import { Club } from "../models/club.model";
+import { Player } from "../models/player.model";
 
 @Injectable({
   providedIn: "root",
@@ -33,6 +34,94 @@ export class ApiService {
       throw error;
     }
   }
+
+  async fetchSquad(clubID: number): Promise<Player[]> {
+    try {
+      // Fetch data from Supabase with club information
+      const { data, error } = await this.supabase.supabaseClient
+        .from("players")
+        .select("*")
+        .eq("club", clubID)
+        .order("number", { ascending: true });
+
+      if (error) {
+        throw error;
+      }
+
+      // Define a type for the position order
+      type PositionOrder = {
+        [key: string]: number;
+      };
+
+      const positionOrder: PositionOrder = { 'Goalkeeper': 1, 'Defender': 2, 'Midfielder': 3, 'Attacker': 4 };
+
+      // Sort the data in the desired order
+      const sortedData = data.sort((a, b) => {
+        const positionA = positionOrder[a.position as keyof PositionOrder] || 5;
+        const positionB = positionOrder[b.position as keyof PositionOrder] || 5;
+
+        if (positionA !== positionB) {
+          return positionA - positionB;
+        }
+
+        // If positions are the same, sort by number ascending
+        return a.number - b.number;
+      });
+
+      return data.map((player: any) => ({
+        id: player.id,
+        name: player.name,
+        club: clubID,
+        age: player.age,
+        number: player.number,
+        position: player.position,
+        photo: player.photo,
+      }));
+    } catch (error) {
+      console.error("Error fetching squad:", error);
+      throw error;
+    }
+  }
+
+  async fetchPlayer(playerID: number): Promise<Player> {
+    try {
+      // Fetch data from Supabase with club information
+      const { data, error } = await this.supabase.supabaseClient
+        .from("players")
+        .select("*")
+        .eq("id", playerID)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching player:", error);
+      throw error;
+    }
+  }
+
+async fetchLineup(fixtureID: number): Promise<string>{
+  try {
+    // Fetch data from Supabase with club information
+    const { data, error } = await this.supabase.supabaseClient
+      .from("fixtures")
+      .select("lineup")
+      .eq("fixtureID", fixtureID)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.lineup;
+  } catch (error) {
+    console.error("Error fetching lineup:", error);
+    throw error;
+  }
+}
 
   async fetchSupabaseFixturesDateRange(
     startDate: string,
@@ -74,7 +163,9 @@ export class ApiService {
     }
   }
 
-  async fetchSingleSupabaseFixture(fixtureID: number): Promise<SupabaseFixture> {
+  async fetchSingleSupabaseFixture(
+    fixtureID: number,
+  ): Promise<SupabaseFixture> {
     try {
       // Fetch data from Supabase with club information
       const { data, error } = await this.supabase.supabaseClient
@@ -104,6 +195,4 @@ export class ApiService {
       throw error;
     }
   }
-
-
 }

@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   league: Club[] = [];
 
 
+
   session: any; // Adjust the type based on your session object
   hideForm = false;
   showPosts = false;
