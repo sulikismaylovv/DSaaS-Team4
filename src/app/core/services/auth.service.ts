@@ -22,6 +22,7 @@ export interface Profile {
 })
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private currentUserEmail = new BehaviorSubject<string | null>(null);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
@@ -41,7 +42,16 @@ export class AuthService {
 
     private _session: AuthSession | null = null;
 
-    get session() {
+  setCurrentUserEmail(email: string): void {
+    this.currentUserEmail.next(email);
+  }
+
+  getCurrentUserEmail(): Observable<string | null> {
+    return this.currentUserEmail.asObservable();
+  }
+
+
+  get session() {
         this.supabase.supabaseClient.auth.getSession().then(({data}) => {
             this._session = data.session
         })
@@ -258,6 +268,24 @@ export class AuthService {
     };
     console.log(update);
     return this.supabase.supabaseClient.from('users').upsert(update);
+
+  }
+
+  async resendVerificationEmail() {
+      const email = this.currentUserEmail.value;
+      console.log(email);
+      if (email){
+        return this.supabase.supabaseClient.auth.resend(
+          {
+            type: 'signup',
+            email: email
+          }
+        )
+      }
+      else {
+        throw new Error('Email not found');
+      }
+
 
   }
 }
