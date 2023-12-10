@@ -57,6 +57,7 @@ jobs:
             appTitle: 'Remontada (preview)'
           };
           EOF
+          cat src/environments/environment.ts
 
       - name: Create Production Environment File
         run: |
@@ -69,6 +70,7 @@ jobs:
             appTitle: ''
           };
           EOF
+          cat src/environments/environment.prod.ts
 
 
 
