@@ -32,6 +32,31 @@ export class UserServiceService {
         return data;
     }
 
+    async checkIfRecentlyLogged(id: string): Promise<boolean> {
+        const {data, error} = await this.supabase.supabaseClient
+            .from('users')
+            .select('is_recently_logged')
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error searching for user:', error);
+            throw error;
+        }
+        return data?.at(0)?.is_recently_logged;
+    }
+
+    async setRecentlyLogged(id: string): Promise<void> {
+        const {data, error} = await this.supabase.supabaseClient
+            .from('users')
+            .update({is_recently_logged: true})
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error searching for user:', error);
+            throw error;
+        }
+    }
+
 
     async searchUsersByFirstThreeLetters(term: string): Promise<any[]> {
         //console.log('searchUsersByFirstThreeLetters:', term);

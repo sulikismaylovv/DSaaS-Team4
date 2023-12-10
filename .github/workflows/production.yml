@@ -46,6 +46,18 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm install
 
+      - name: Create Development Environment File
+        run: |
+          cat << EOF > src/environments/environment.ts
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+            baseUrl: 'http://localhost:4200/',
+            appTitle: 'Remontada (preview)'
+          };
+          EOF
+
       - name: Create Production Environment File
         run: |
           cat << EOF > src/environments/environment.prod.ts
