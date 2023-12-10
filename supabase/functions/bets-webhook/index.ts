@@ -173,6 +173,7 @@ Deno.serve(async (req) => {
     const bets = await getBetsForFixture(payload, supabaseClient);
     const settledBets = await settleBets(bets, payload.record, supabaseClient);
     for (const bet of settledBets) {
+      console.log("Rewarding user");
       await rewardUser(bet, supabaseClient, payload);
     }
   } 
