@@ -113,31 +113,46 @@ export class MatchesComponent implements OnInit {
       console.error("Error fetching fixtures:", error);
     }
   }
-  
-   formatDate(dateString: string): string {
+
+   formatDateTitle(dateString: string): string {
     const date = new Date(dateString);
     const today = new Date();
 
-    // Remove the time part for accurate comparison of dates
+    // Create dates for comparison without time component
     const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
+    // Checking for today
     if (dateWithoutTime.getTime() === todayWithoutTime.getTime()) {
-        // Format the time as "6:00 PM"
-        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-    } else {
-        // Check if the date is tomorrow
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowWithoutTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
-
-        if (dateWithoutTime.getTime() === tomorrowWithoutTime.getTime()) {
-            return 'Tomorrow';
-        } else {
-            // Format the date as "Dec 16"
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        }
+        return 'Today';
     }
+
+    // Checking for tomorrow
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowWithoutTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
+    if (dateWithoutTime.getTime() === tomorrowWithoutTime.getTime()) {
+        return 'Tomorrow';
+    }
+
+    // Checking for yesterday
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayWithoutTime = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
+    if (dateWithoutTime.getTime() === yesterdayWithoutTime.getTime()) {
+        return 'Yesterday';
+    }
+
+    // Formatting for any other date
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+
+ formatDate(dateString: string): string {
+  const date = new Date(dateString);
+
+  // Return the time part only in the format "6:00 PM"
+  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 }
 
   

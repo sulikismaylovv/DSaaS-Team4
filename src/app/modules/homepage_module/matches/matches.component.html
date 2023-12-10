@@ -35,7 +35,7 @@
       <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
       <ng-container *ngFor="let date of groupedFixtureKeys">
         <ng-container *ngIf="hasFollowedFixtureforDate(date)">
-          <div class=" text-lg text-dark-gray left-1 dark:text-light-mode font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
+          <div class=" text-lg text-dark-gray left-1 dark:text-light-mode font-medium mb-1 mt-4 ">{{ formatDateTitle(date) }}</div>
           <ng-container *ngFor="let fixture of groupedFixtures[date]">
             <ng-container
               *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
@@ -109,7 +109,7 @@
     <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
     <ng-container *ngFor="let date of groupedFixtureKeys">
       <ng-container *ngIf="hasNonFollowedFixtureforDate(date)">
-        <div class="ext-dark-gray dark:text-light-mode left-1 text-lg font-bold mb-1 mt-2">{{ formatShortDateString(date) }}</div>
+        <div class="ext-dark-gray dark:text-light-mode left-1 text-lg font-medium mb-1 mt-2">{{ formatDateTitle(date) }}</div>
         <ng-container *ngFor="let fixture of groupedFixtures[date]">
           <ng-container
             *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
@@ -149,7 +149,7 @@
                     </div>
                     <!-- Score -->
                     <div class="flex items-center justify-center font-bold text-xl w-full">
-                      {{ fixture.home_goals }} - {{ fixture.away_goals }}
+                      {{ formatDate(fixture.time) }}
                     </div>
                     <!-- Team 2 -->
                     <div class="flex flex-col items-center justify-center w-full">
