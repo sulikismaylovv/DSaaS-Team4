@@ -63,11 +63,15 @@ import {SupabaseService} from "./core/services/supabase.service";
 import {ThemeService} from "./core/services/theme.service";
 import {UserServiceService} from "./core/services/user-service.service";
 import { DailyAwardComponent } from './modules/homepage_module/daily-award/daily-award.component';
+import { HelppageComponent } from './modules/helppage_module/helppage/helppage.component';
+import { FAQPageComponentComponent } from './modules/helppage_module/faqpage-component/faqpage-component.component';
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
+      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,
+        TermsAndConditionsComponent, ErrorComponent, HelppageComponent, FAQPageComponentComponent,
       LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,TermsAndConditionsComponent, ErrorComponent, DailyAwardComponent
     ],
     imports: [
