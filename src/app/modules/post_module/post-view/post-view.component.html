@@ -42,7 +42,7 @@
     <div class="flex items-center mb-4 w-full">
       <!-- Display poster's avatar -->
       <img *ngIf="!this.post.is_official" [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
-      <svg *ngIf="this.post.is_official" preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg" class="fill-current text-black dark:text-white w-16 h-16">
+      <svg *ngIf="this.post.is_official" preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg" class="fill-current text-black dark:text-white w-12 h-12 lg:w-16 lg:h-16">
         <g transform="translate(0.000000,3200.000000) scale(0.100000,-0.100000)">
           <path d="M12782 24605 c-115 -21 -210 -53 -312 -106 -282 -145 -473 -385 -562-706 -21 -75 -22 -99 -26 -604 l-3 -527 43 8 c106 20 308 41 478 50 498 26 1025 -51 1515 -224 l129 -46 1457 0 c921 0 1495 -4 1560 -10 1143 -113 2120-849 2543 -1915 142 -359 208 -711 209 -1110 0 -443 -79 -823 -254 -1224 -391
                   -893 -1211 -1560 -2160 -1755 -264 -55 -317 -59 -890 -63 l-537 -5 -83 -140 c-205 -349 -449 -651 -764 -945 -572 -537 -1301 -902 -2085 -1047 -277 -51-401 -61 -760 -61 -184 0 -350 3 -367 7 l-33 8 0 -2304 c0 -2531 -4 -2378 61
@@ -89,9 +89,9 @@
         <!-- Display poster's username -->
         <p *ngIf="!this.post.is_official" class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
         <div *ngIf="this.post.is_official" class="flex items-center">
-          <p  class="font-bold text-xl text-gray-800 dark:text-white">Remontada live</p>
-          <span class="inline-flex items-center justify-center w-6 h-6 me-2  ml-2 text-sm font-semibold bg-purple-300 rounded-full">
-            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <p  class="font-bold text-md lg:text-xl text-gray-800 dark:text-white">Remontada live</p>
+          <span class="inline-flex items-center justify-center w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 text-sm font-semibold bg-purple-300 rounded-full">
+            <svg class="w-2 h-2 lg:w-4 lg:h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path fill="currentColor" class="text-purple-600" d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"/>
               <path fill="#fff" d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"/>
             </svg>
@@ -99,16 +99,18 @@
           </span>
         </div>
         <!-- Display post date -->
-        <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
+        <p class="text-xs lg:text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
     </div>
 
     <!-- Display post content -->
     <p *ngIf="!this.post.is_official" class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
-    <div *ngIf="this.post.is_official" (click)="onPostClick(post.id)" class="flex flex-col text-center">
-      <p class="font-semibold text-black text-2xl mt-3 dark:text-white">Update:</p>
-      <img src="assets/logos/kvc-westerlo.svg" alt="Post image" class="rounded-lg sm:w-80 lg:w-80 lg:h-auto mx-auto">
-      <p class="text-gray-800 text-xl mt-3 dark:text-white">{{ post.content }}</p>
+    <div *ngIf="this.post.is_official" (click)="onPostClick(post.id)" class="flex flex-row items-center justify-between">
+      <div class="flex flex-col 2xl:flex-row">
+        <p class="text-gray-800 dark:text-white text-sm md:text-lg lg:text-2xl  lg:mx-2  2xl:mr-1 2xl:ml-4">{{ splitTextAtSecondHyphen(post.content)[0] }} </p>
+        <p class="text-gray-800 dark:text-white text-sm md:text-lg lg:text-2xl  lg:mx-2  2xl:ml-1 2xl:mr-4 font-medium">{{ splitTextAtSecondHyphen(post.content)[1] }}</p>
+      </div>
+      <img src="assets/logos/kvc-westerlo.svg" alt="Post image" class="rounded-lg w-20 h-20 md:w-28 md:h-28 lg:w-40 lg:h-40 mx-1 lg:mx-6">
     </div>
 
     <!-- Display post image if exists -->
