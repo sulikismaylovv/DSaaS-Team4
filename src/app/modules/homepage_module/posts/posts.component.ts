@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {Router} from "@angular/router";
+import {PreferencesService} from "../../../core/services/preference.service";
 
 @Component({
     selector: 'app-posts',
@@ -17,13 +18,16 @@ export class PostsComponent implements OnInit {
     posts: Post[] = [];
     avataUrl: SafeResourceUrl | undefined;
     profile: Profile | undefined;
+    followedClubIds: number[] = [];
 
-    constructor(
+
+  constructor(
         private readonly postsService: PostsService,
         private readonly supabase: SupabaseService,
         protected readonly authService: AuthService,
         private readonly sanitizer: DomSanitizer,
         protected readonly router: Router,
+        private readonly preferenceService: PreferencesService,
         public dialog: MatDialog
 
     ) {
@@ -62,7 +66,17 @@ export class PostsComponent implements OnInit {
     }
 
 
+  async loadUserPreferences() {
+    // Replace with your actual preference fetching logic
+    const preferences = await this.preferenceService.getPreferences(<string>this.authService.session?.user?.id);
 
+    // Parse the followed club IDs as numbers
+    this.followedClubIds = preferences
+      .filter(p => p.followed_club)
+      .map(p => parseInt(p.club_id))
+      .filter(id => !isNaN(id)); // Filter out any NaN results from parseInt
+
+  }
     async getProfile() {
         try {
             await this.authService.restoreSession();
@@ -84,12 +98,25 @@ export class PostsComponent implements OnInit {
     }
 
     async loadPosts() {
-        try {
-          const posts = await this.postsService.getPosts();
+        await this.loadUserPreferences();
+        console.log(this.followedClubIds);
 
-            // Sort posts based on sortDate
-            this.posts = posts.sort((a, b) =>
-                new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        try {
+            let posts = await this.postsService.getPosts();
+
+            // Filter and sort posts
+            this.posts = posts
+                .filter(post => {
+                    // Keep the post if it's not official
+                    if (!post.is_official) return true;
+
+                    // If the post is official, ensure club0 and club1 are not null
+                    if (post.club0 == null || post.club1 == null) return false;
+
+                    // Keep the post if club0 or club1 matches any id from followedClubIds
+                    return this.followedClubIds.includes(post.club0) || this.followedClubIds.includes(post.club1);
+                })
+                .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         } catch (error) {
             console.error('Error loading posts:', error);
         }

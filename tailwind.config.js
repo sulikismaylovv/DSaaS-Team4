@@ -28,7 +28,7 @@ module.exports = {
         'lighter-purple':'#6F44C8',
         'very-light-purple':'#D2C7EE',
         'search-bar':"rgba(28,38,50,0.59)",
-        'navbar-hover-light':"#c2c2ac",
+        'navbar-hover-light':"#c1bfbb",
       },
       scale:{
         '130': '1.3',

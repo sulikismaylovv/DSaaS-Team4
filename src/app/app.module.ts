@@ -43,19 +43,40 @@ import {CreateleagueComponent} from "./modules/leagues/createleague/createleague
 import {TermsAndConditionsComponent} from "./modules/registration_module/terms-and-conditions/terms-and-conditions.component";
 import {MomentModule} from "ngx-moment";
 import {NavbarService} from "./core/services/navbar.service";
+import { ErrorComponent } from './modules/error/error.component';
+import {AuthService} from "./core/services/auth.service";
+import {ApiService} from "./core/services/api.service";
+import {BetsService} from "./core/services/bets.service";
+import {ConfigService} from "./core/services/config.service";
+import {CreatefriendsleagueService} from "./core/services/createfriendsleague.service";
+import {FixtureTransferService} from "./core/services/fixture-transfer.service";
+import {FooterService} from "./core/services/footer.service";
+import {FriendsLeagueServiceService} from "./core/services/friends-league.service";
+import {FriendshipService} from "./core/services/friendship.service";
+import {ImageDownloadService} from "./core/services/imageDownload.service";
+import {NotificationsService} from "./core/services/notifications.service";
+import {PlayerService} from "./core/services/player.service";
+import {PostsService} from "./core/services/posts.service";
+import {PreferencesService} from "./core/services/preference.service";
+import {PurchaseplayerService} from "./core/services/purchaseplayer.service";
+import {SupabaseService} from "./core/services/supabase.service";
+import {ThemeService} from "./core/services/theme.service";
+import {UserServiceService} from "./core/services/user-service.service";
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
         , TeamComponent, MultistepformComponent, StepperComponent, GameComponent, VerifyEmailComponent, PostsComponent, MatchesComponent, FooterComponent, NavigationComponent, AvatarComponent,
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
-      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,TermsAndConditionsComponent
+      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,TermsAndConditionsComponent, ErrorComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule,
       FormsModule, CommonModule, HttpClientModule, NgOptimizedImage ,
       MatDialogModule, ImageCropperModule, BrowserAnimationsModule, MomentModule
     ],
-    providers: [NavbarService],
+    providers: [NavbarService, AuthService , ApiService , BetsService , ConfigService , CreatefriendsleagueService,
+    FixtureTransferService, FooterService, FriendsLeagueServiceService , FriendshipService , ImageDownloadService,
+    NotificationsService, PlayerService, PostsService, PreferencesService, PurchaseplayerService, SupabaseService, ThemeService, UserServiceService],
     bootstrap: [AppComponent],
 })
 export class AppModule {

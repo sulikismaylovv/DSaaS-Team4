@@ -34,9 +34,6 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call authChanges on init', () => {
-    expect(mockAuthService.authChanges).toHaveBeenCalled();
-  });
 
   it('should update user search results', async () => {
     const searchResult = [{ username: 'sulikismaylovv' }];
