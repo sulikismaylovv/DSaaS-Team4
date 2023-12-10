@@ -47,10 +47,18 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
     this.navbarService.setShowNavbar(true);
-    this.getStanding();
-    this.getClubID();
-    this.getNextFixture(this.clubID);
+    this.getStanding()
+      .then(() => this.getClubID())
+      .then(() => this.getNextFixture(this.clubID));
   }
+
+  // checkHomeorAway(fixture: SupabaseFixture): SupabaseFixture {
+  //   if(this.nextFixture?.club0 === null) {return null}
+  //   if (this.nextFixture.?club0 === this.clubID) {
+  //     fixture.homeOrAway = 'home';
+  //   }
+  //   return fixture;
+  // }
 
   async getClubID() {
     try {
@@ -61,7 +69,7 @@ export class HomeComponent implements OnInit {
       }
 
       this.clubID = await this.preferencesService.getFavoriteClub(userId);
-
+      console.log("Club ID", this.clubID);
     } catch (error) {
       console.error('Error', error);
     }
@@ -69,7 +77,8 @@ export class HomeComponent implements OnInit {
 
   async getNextFixture(clubID: number) {
     try {
-      this.nextFixture =await this.apiService.testFunction(clubID);
+      this.nextFixture =(await this.apiService.testFunction(clubID))[0];
+      console.log("This. nect ficture", this.nextFixture);
     } catch (error) {
       console.error('Error fetching next fixture:', error);
     }

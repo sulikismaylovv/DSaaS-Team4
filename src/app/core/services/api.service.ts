@@ -203,7 +203,7 @@ export class ApiService {
 
   async testFunction(
     clubID: number,
-  ): Promise<SupabaseFixture> {
+  ): Promise<SupabaseFixture[]> {
     try {
       // Fetch data from Supabase with club information
       const { data, error } = await this.supabase.supabaseClient
@@ -222,7 +222,6 @@ export class ApiService {
           )        `)
         .eq("team0", clubID)
         .gte("time", new Date().toISOString())
-        .single();
 
       if (error) {
         throw error;
