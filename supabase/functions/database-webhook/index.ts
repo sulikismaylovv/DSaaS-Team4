@@ -31,28 +31,34 @@ interface WebhookPayload {
   old_record: null | FixtureRecord;
 }
 
-function whoScored(record: FixtureRecord, oldRecord: FixtureRecord): string { 
+function whoScored(record: FixtureRecord, oldRecord: FixtureRecord): string {
   // Determine which team scored
   if (record.home_goals !== oldRecord.home_goals) {
-    return 'home';
+    return "home";
   } else if (record.away_goals !== oldRecord.away_goals) {
-    return 'away';
+    return "away";
   } else {
-    return 'none'; // In case no team scored
+    return "none"; // In case no team scored
   }
 }
-
 function isGoalScored(
   record: FixtureRecord,
   oldRecord: FixtureRecord,
 ): boolean {
   return (
-    record.home_goals !== oldRecord.home_goals ||
-    record.away_goals !== oldRecord.away_goals
+    (oldRecord.home_goals !== null &&
+      record.home_goals !== oldRecord.home_goals) ||
+    (oldRecord.away_goals !== null &&
+      record.away_goals !== oldRecord.away_goals)
   );
 }
 
-async function addPost(SupabaseClient: SupabaseClient, newInfo: string, club0: number, club1: number) {
+async function addPost(
+  SupabaseClient: SupabaseClient,
+  newInfo: string,
+  club0: number,
+  club1: number,
+) {
   const { data, error } = await SupabaseClient
     .from("posts")
     .insert([
@@ -90,7 +96,6 @@ async function addPost(SupabaseClient: SupabaseClient, newInfo: string, club0: n
 //   return { homeTeam: data[0]?.name, awayTeam: data[1]?.name };
 // }
 
-
 async function getClubName(supabaseClient: SupabaseClient, clubID: number) {
   const { data, error } = await supabaseClient
     .from("clubs")
@@ -103,7 +108,6 @@ async function getClubName(supabaseClient: SupabaseClient, clubID: number) {
 
   return data[0]?.name;
 }
-
 
 async function getClubPictures(
   supabaseClient: SupabaseClient,
@@ -158,23 +162,24 @@ Deno.serve(async (req) => {
   //     score.concat(" ", message),
   //   );
   // }
-  
+
   if (isGoalScored(payload.record, payload.old_record!)) {
-    const score = `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
+    const score =
+      `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
     const whoScoredResult = whoScored(payload.record, payload.old_record!);
 
     let scoringTeam = "";
 
-    if (whoScoredResult === 'home') {
+    if (whoScoredResult === "home") {
       scoringTeam = homeTeam;
-    } else if (whoScoredResult === 'away') {
+    } else if (whoScoredResult === "away") {
       scoringTeam = awayTeam;
     }
 
     const message = scoringTeam ? `${scoringTeam} just scored!` : "";
-    console.log("message: ",message);
-    console.log("payload.record.team0: ",payload.record.team0);
-    console.log("payload.record.team1: ",payload.record.team1);
+    console.log("message: ", message);
+    console.log("payload.record.team0: ", payload.record.team0);
+    console.log("payload.record.team1: ", payload.record.team1);
 
     if (message) {
       addPost(
@@ -187,7 +192,6 @@ Deno.serve(async (req) => {
   } else {
     console.log("No goal scored");
   }
-
 
   const data = {
     message: "Request processed successfully",
