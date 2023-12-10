@@ -6,6 +6,8 @@ import {enableProdMode} from '@angular/core';
 import {environment} from './environments/environment';
 import {AuthService} from './app/core/services/auth.service';
 
+
+
 // Extend the Window interface with the custom property
 interface CustomWindow extends Window {
   userId: string | null;
