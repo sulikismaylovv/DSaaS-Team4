@@ -133,7 +133,9 @@ export class GameComponent implements OnInit {
       });
     });
   }
-
+  goBack(){
+    this.router.navigate(['/home']);
+  }
   async getBetInfo() {
     const user = this.authService.session?.user;
     if (user) {
@@ -157,7 +159,7 @@ export class GameComponent implements OnInit {
 
   async fetchLineups() { //if its there
     // const numbers = this.fixture.lineups?.split("|");
-    // console.log("numbers: ", numbers);  
+    // console.log("numbers: ", numbers);
     // console.log("fixture.lineups: ", this.fixture.lineups);
     const numbersRaw = await this.apiService.fetchLineup(this.fixture.fixtureID);
     if (numbersRaw === null) {
