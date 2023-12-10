@@ -110,9 +110,10 @@ export class GameComponent implements OnInit {
       const id = +params.get("id")!;
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
+      
           this.fixture = fixture;
           this.fetchSquads();
-          this.fetchLineups();
+          // this.fetchLineups();
           this.updateTheTime();
           this.checkIfBetCanBePlaced();
           if (this.betAlreadyPlaced) {
@@ -155,6 +156,9 @@ export class GameComponent implements OnInit {
     const clubID1 = this.fixture.club1?.id ?? 260;
     this.squadHome = await this.apiService.fetchSquad(clubID0);
     this.squadAway = await this.apiService.fetchSquad(clubID1);
+
+    await this.fetchLineups();
+    this.cdr.detectChanges();
   }
 
   async fetchLineups() { //if its there
@@ -185,6 +189,7 @@ export class GameComponent implements OnInit {
         this.lineupAway.push(player);
       }
     }
+    this.cdr.detectChanges();
 
   }
 
@@ -223,7 +228,7 @@ export class GameComponent implements OnInit {
     console.log("date.time: ", data.time);
     this.fixture = data; // Ensure that this.fixture is updated with the fetched data
     await this.fetchSquads();
-    await this.fetchLineups();
+    // await this.fetchLineups();
     await this.updateTheTime();
     this.checkIfBetCanBePlaced();
 
