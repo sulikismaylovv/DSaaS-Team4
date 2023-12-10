@@ -1,4 +1,4 @@
-name: Vercel Preview(Develop) Deployment
+name: Vercel Production Deployment
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -11,15 +11,23 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
-  build_and_test:
+  setup:
     runs-on: ubuntu-latest
-
-
+    outputs:
+      cache-key: ${{ steps.cache-npm.outputs.cache-key }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
       # Get the npm cache directory.
       - name: Get npm cache directory
@@ -41,34 +49,21 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      # Install dependencies.
       - name: Install dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm install
-
-      - name: Create Development Environment File
-        run: |
-          cat << EOF > src/environments/environment.ts
-          export const environment = {
-            production: false,
-            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
-            baseUrl: 'http://localhost:4200/',
-            appTitle: 'Remontada (preview)'
-          };
-          EOF
+        run: npm ci
 
       - name: Create Production Environment File
         run: |
-          cat << EOF > src/environments/environment.prod.ts
-          export const environment = {
-            production: true,
-            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
-            baseUrl: 'https://remontada.live/',
-            appTitle: ''
-          };
-          EOF
+            cat << EOF > src/environments/environment.prod.ts
+            export const environment = {
+              production: true,
+              supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+              supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+              baseUrl: 'https://remontada.live/',
+              appTitle: ''
+            };
+            EOF
 
       - name: Create Development Environment File
         run: |
@@ -82,18 +77,134 @@ jobs:
           };
           EOF
 
-      #Build
-      - name: Build
-        run: npm run ng build --configuration=development
+  code_analysis:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      # Cache dependencies.
+      - name: Cache dependencies
+        id: npm-cache
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Lint Code
+        run: npm run lint
+        continue-on-error: true
+
+  unit_tests:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      # Cache dependencies.
+      - name: Cache dependencies
+        id: npm-cache
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
+
+      - name: Check Code Coverage
+        run: |
+          COVERAGE=$(npx nyc report --reporter=text-summary | grep 'Lines' | awk '{print $2}' | tr -d '%')
+          if (( $(echo "$COVERAGE < 10" | bc -l) )); then
+            echo "Code coverage is below 50%. Failing build."
+            exit 1
+          fi
+
+  build:
+    needs: [ setup, unit_tests, code_analysis ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Get the npm cache directory.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      # Cache dependencies.
+      - name: Cache dependencies
+        id: npm-cache
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the project
+        run: npm run build --prod
 
 
-
-
-      #- name: Test
-      #  run: npm run test --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-
-  Deploy-Preview:
-    needs: build_and_test
+  Deploy-Production:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -103,11 +214,10 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
