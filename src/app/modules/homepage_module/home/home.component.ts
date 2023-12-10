@@ -9,6 +9,8 @@ import {SupabaseFixture, SupabaseFixtureModel} from "../../../core/models/supaba
 import {Club} from "../../../core/models/club.model";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
 import {ApiService} from "../../../core/services/api.service";
+import {PreferencesService} from "../../../core/services/preference.service";
+import {Preference} from "../../../core/services/preference.service";
 
 @Component({
     selector: 'app-home',
@@ -27,25 +29,50 @@ export class HomeComponent implements OnInit {
   showMatches = true;
   activeContent = 'matches';
   userSearchResults: any[] = [];
+  nextFixture: SupabaseFixture = new SupabaseFixtureModel();
+  clubID: number = 0;
 
   constructor(
     public themeService: ThemeService,
     public navbarService: NavbarService,
     private router: Router,
     protected readonly authService: AuthService,
+    private preferencesService: PreferencesService,
     protected readonly userService: UserServiceService,
     protected readonly imageDownloadService: ImageDownloadService,
     private fixtureTransferService: FixtureTransferService,
     private route: ActivatedRoute,
     private apiService: ApiService,
-
-
-
   ) {
   }
   ngOnInit() {
     this.navbarService.setShowNavbar(true);
     this.getStanding();
+    this.getClubID();
+    this.getNextFixture(this.clubID);
+  }
+
+  async getClubID() {
+    try {
+      const userId = this.authService.session?.user?.id;
+      if (!userId) {
+        console.error('User ID is undefined');
+        return;
+      }
+
+      this.clubID = await this.preferencesService.getFavoriteClub(userId);
+
+    } catch (error) {
+      console.error('Error', error);
+    }
+  }
+
+  async getNextFixture(clubID: number) {
+    try {
+      this.nextFixture =await this.apiService.testFunction(clubID);
+    } catch (error) {
+      console.error('Error fetching next fixture:', error);
+    }
   }
 
   async getStanding() {
