@@ -45,6 +45,7 @@ export class FriendsleagueComponent implements OnInit{
       // Get the details of these leagues
       this.leagues = await this.friendsLeague.getLeaguesByIds(this.leagueIds);
       //console.log("Leagues: ", this.leagues);
+        this.loading = false; // Set loading to false when the data is loaded
 
       // Get the members for each league
       for (const leagueId of this.leagueIds) {
@@ -63,6 +64,8 @@ export class FriendsleagueComponent implements OnInit{
       this.loading = false; // Set loading to false when the data is loaded
     }
   }
+
+
   currentLeagueIndex = 0;
   moveToNextLeague() {
     this.currentLeagueIndex = (this.currentLeagueIndex + 1) % this.leagues.length;
