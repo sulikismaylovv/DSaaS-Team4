@@ -7,6 +7,8 @@ import {
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {Session} from "@supabase/supabase-js";
+import {SafeResourceUrl} from "@angular/platform-browser";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
   selector: 'app-friendsleague',
@@ -17,7 +19,6 @@ export class FriendsleagueComponent implements OnInit{
 
 
   currentUserID: string | undefined;
-
   leagueIds: number[] = [];
 
   leagues: FriendsLeagueInterface[] = [];
@@ -26,7 +27,8 @@ export class FriendsleagueComponent implements OnInit{
   protected session: Session | null | undefined;
   constructor(private friendsLeague: FriendsLeague,
               private userService: UserServiceService,
-              private readonly authService: AuthService) {}
+              private readonly authService: AuthService,
+              private readonly imageDonwloadService: ImageDownloadService) {}
 
   async ngOnInit() {
     console.log("Friends League Component");
@@ -34,14 +36,14 @@ export class FriendsleagueComponent implements OnInit{
     try {
       const user = this.authService.session?.user;
       this.currentUserID = user?.id;
-      console.log("current user id : ", this.currentUserID);
+      //console.log("current user id : ", this.currentUserID);
 
       // Get the league IDs for the current user
       this.leagueIds = await this.friendsLeague.getLeaguesIDForCurrentUser();
 
       // Get the details of these leagues
       this.leagues = await this.friendsLeague.getLeaguesByIds(this.leagueIds);
-      console.log("Leagues: ", this.leagues);
+      //console.log("Leagues: ", this.leagues);
 
       // Get the members for each league
       for (const leagueId of this.leagueIds) {
@@ -49,7 +51,9 @@ export class FriendsleagueComponent implements OnInit{
         this.leagueMembers[leagueId] = await Promise.all(members[leagueId].map(async (member) => {
           // Get the username for each user ID
           const username = await this.userService.getUsernameByID(member.userid);
-          return { ...member, username } as EnhancedUserInFriendsLeague;
+          // Get the avatar for each user ID
+          const avatarSafeUrl: SafeResourceUrl | undefined = await this.imageDonwloadService.loadAvatarImage(member.userid);
+          return { ...member, username , avatarSafeUrl} as EnhancedUserInFriendsLeague;
         }));
       }
     } catch (error) {

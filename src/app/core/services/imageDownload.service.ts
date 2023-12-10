@@ -21,7 +21,7 @@ export class ImageDownloadService {
 
   async loadAvatarImage(userId: string | undefined): Promise<SafeResourceUrl> {
     // Define the path to the standard user logo
-    const defaultAvatarPath = '../../assets/icons/user-alt-3profile.png'; // Adjust the path as necessary
+    const defaultAvatarPath = '../../assets/icons/Default_pfp.svg'; // Adjust the path as necessary
 
     if (userId === undefined) {
       // If userId is undefined, return the standard logo

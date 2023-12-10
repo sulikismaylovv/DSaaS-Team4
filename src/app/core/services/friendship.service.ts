@@ -153,9 +153,6 @@ export class FriendshipService {
         throw error;
       }
 
-      // Log the data for debugging purposes
-      //console.log('Friend request status:', data);
-
       // Determine the friendship status
       if (data && data.length > 0) {
         // Assuming the status field holds the friendship status
