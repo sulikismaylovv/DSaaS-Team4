@@ -62,6 +62,7 @@
               </li>
             </ul>
           </div>
+
           <div class="flex-grow">
 
             <!-- Friends -->
@@ -197,7 +198,77 @@
               </div>
               <!-- Bettinglist -->
               <div *ngIf="isOwnProfile">
-
+                <div class="bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full overflow-y-auto">
+                  <div class="flex flex-col bg-light-mode-acc h-full overflow-y-auto dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl">
+                    <h1 class="flex text-light-mode-text dark:text-primary-100 h-full overflow-y-auto font-semibold text-sm md:text-md md:text-lg lg-text-xl mt-4 mb-1 ml-2 p-2 ">Pending Bets</h1>
+                    <ng-container *ngFor="let betWithFixture of pendingBets">
+                      <div class="flex m-2 rounded-l-lg">
+                        <!-- Column 1: Colored status bar -->
+                        <div class="w-2 rounded-l-lg " [ngStyle]="{
+                                       'background-color': betWithFixture.bet.time_settled ?
+                                       (betWithFixture.bet.outcome ? 'green' : 'red') :
+                                       'yellow'
+                                       }"></div>
+                        <!-- Column 2: Bet card content -->
+                        <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow  rounded-r-lg p-1 lg:p-2 flex-grow">
+                          <!-- Your existing bet card content -->
+                          <p class="flex items-center">
+                            Betted on
+                            <strong class="m-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}</strong>
+                            to win against
+                            <strong class="mr-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }} </strong>
+                            by
+                            <span class="flex items-center space-x-1 ml-2">
+                                                <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                                                <strong> {{ betWithFixture.bet.credits }}</strong>
+                                                </span>
+                          </p>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <!-- Container for when there are no pending bets -->
+                    <ng-container *ngIf="pendingBets.length === 0">
+                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 p-2 m-2">
+                        <p>No pending bets</p>
+                      </div>
+                    </ng-container>
+                    <h1 class="flex text-light-mode-text dark:text-primary-100 font-semibold text-sm md:text-md md:text-lg lg-text-xl mt-4 mb-1 ml-2 p-2">Settled Bets</h1>
+                    <ng-container *ngIf="settledBets.length !== 0">
+                      <div class="flex flex-col justify-around">
+                        <ng-container *ngFor="let betWithFixture of settledBets">
+                          <div class="flex m-2 rounded-l-lg">
+                            <!-- Column 1: Colored status bar -->
+                            <div class="w-2 rounded-l-lg" [ngStyle]="{
+                                             'background-color': betWithFixture.bet.time_settled ?
+                                             (betWithFixture.bet.outcome ? 'rgba(0, 255, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)') :
+                                             'rgba(255, 255, 0, 0.8)'
+                                             }"></div>
+                            <!-- Column 2: Bet card content -->
+                            <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-r-lg p-1 lg:p-2 flex-grow">
+                              <p class="flex items-center">
+                                Betted on
+                                <strong class="m-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}</strong>
+                                to win against
+                                <strong class="mr-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }} </strong>
+                                by
+                                <span class="flex items-center space-x-1 ml-2">
+                                                <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                                                <strong> {{ betWithFixture.bet.credits }}</strong>
+                                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                    <!-- Container for when there are no settled bets -->
+                    <ng-container *ngIf="settledBets.length === 0">
+                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 p-2 m-2">
+                        <p>No settled bets</p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
               </div>
             </ng-container>
 
@@ -205,19 +276,21 @@
             <ng-container *ngIf="selectedLink === 'link4'">
               <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full">
                 <ng-container *ngIf="ownedPlayersDetails.length !== 0">
-                <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
-                  <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
-                  <div class="flex flex-row justify-around"><div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
-                    <ng-container *ngFor="let player of ownedPlayersDetails">
-                      <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-full">
-                        <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
-                        <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
-                        <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p> <!-- Display club name -->
+                  <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full">
+                    <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
+                    <div class="flex flex-row justify-around">
+                      <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                        <ng-container *ngFor="let player of ownedPlayersDetails">
+                          <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-full">
+                            <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
+                            <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
+                            <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p>
+                            <!-- Display club name -->
+                          </div>
+                        </ng-container>
                       </div>
-                    </ng-container>
+                    </div>
                   </div>
-                  </div>
-                </div>
                 </ng-container>
                 <ng-container *ngIf="ownedPlayersDetails.length === 0">
                   <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">

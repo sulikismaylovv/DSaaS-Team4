@@ -32,6 +32,8 @@ export class SettingsComponent implements OnInit{
   favoriteClub: ClubShow | undefined;
   followedClubs: ClubShow[] = [];
   selectedFavoriteClubId: number | undefined;  // Temporary state for selected favorite club
+  showModal: boolean = false;
+
 
 
   constructor(
@@ -84,17 +86,11 @@ export class SettingsComponent implements OnInit{
   }
 
    openModal() {
-    const modal = document.getElementById("myModal")
-     if(modal) {
-       modal.classList.remove("hidden");
-     }
+    this.showModal = true;
   }
 
   closeModal() {
-    const modal= document.getElementById("myModal")
-    if(modal){
-      modal.classList.add("hidden");
-    }
+    this.showModal = false;
   }
 
   private async initializeData(): Promise<void> {

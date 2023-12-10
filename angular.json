@@ -15,7 +15,9 @@
           "options": {
             "allowedCommonJsDependencies": [
               "@supabase/node-fetch",
-              "websocket"
+              "websocket",
+              "moment",
+              "seedrandom"
             ],
             "outputPath": "dist/dsaa-s",
             "index": "src/index.html",
