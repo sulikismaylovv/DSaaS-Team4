@@ -11,6 +11,7 @@ import {FixtureTransferService} from "../../../core/services/fixture-transfer.se
 import {ApiService} from "../../../core/services/api.service";
 import {PreferencesService} from "../../../core/services/preference.service";
 import {Preference} from "../../../core/services/preference.service";
+import {DailyAwardService} from "../../../core/services/daily-award.service";
 
 @Component({
     selector: 'app-home',
@@ -45,9 +46,12 @@ export class HomeComponent implements OnInit {
     private fixtureTransferService: FixtureTransferService,
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private dailyAwardService: DailyAwardService
+
   ) {
   }
   ngOnInit() {
+    this.dailyAwardService.openPopup();
     this.navbarService.setShowNavbar(true);
     this.getStanding()
       .then(() => this.getClubID())

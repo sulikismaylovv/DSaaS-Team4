@@ -80,7 +80,7 @@ export class GameComponent implements OnInit {
         //   this.betCanBePlaced=false;
         //   this.credits -= credits;
         // } else this.betCanBePlaced=true;
-        console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
+        //console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
         this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
           await this.getBetterID(),
           this.fixture.fixtureID,
@@ -88,8 +88,9 @@ export class GameComponent implements OnInit {
         console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
         this.cdr.detectChanges();
         if (this.betAlreadyPlaced) {
-          console.log("getBetInfo() called");
+          //console.log("getBetInfo() called");
           this.getBetInfo();
+          this.availableCredits = await this.betsService.getUserCredits(this.authService.session?.user?.id!);
         }
       }).subscribe();
   }
@@ -110,7 +111,7 @@ export class GameComponent implements OnInit {
       const id = +params.get("id")!;
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
-      
+
           this.fixture = fixture;
           this.fetchSquads();
           // this.fetchLineups();
