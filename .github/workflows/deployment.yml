@@ -53,29 +53,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Create Production Environment File
-        run: |
-            cat << EOF > src/environments/environment.prod.ts
-            export const environment = {
-              production: true,
-              supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-              supabaseKey: '${{ secrets.SUPABASE_KEY }}',
-              baseUrl: 'https://remontada.live/',
-              appTitle: ''
-            };
-            EOF
 
-      - name: Create Development Environment File
-        run: |
-          cat << EOF > src/environments/environment.development.ts
-          export const environment = {
-            production: false,
-            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
-            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
-            baseUrl: 'http://localhost:4200/',
-            appTitle: 'Remontada (preview)'
-          };
-          EOF
 
   code_analysis:
     needs: setup
