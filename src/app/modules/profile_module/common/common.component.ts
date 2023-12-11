@@ -189,10 +189,12 @@ export class CommonComponent implements OnInit{
       const postsPromise = this.loadPosts(this.profile?.id || '');
 
       // Wait for all promises to resolve
+      await Promise.all([friendsPromise]);
+      this.loading = false;
+
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
 
-      this.loading = false;
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
