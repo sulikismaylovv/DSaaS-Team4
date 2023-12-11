@@ -14,11 +14,11 @@
 
 <div class="rankings-section rounded-lg w-full max-w-md mx-auto mt-16 text-white">
   <!-- Carousel Content -->
-  <div class="flex flex-col items-center bg-white dark:bg-[#3a4153] rounded-lg">
+  <div class="flex flex-col items-center  rounded-lg">
     <ng-container *ngIf="leagues && leagues.length > 0; else noLeaguesTemplate">
 
       <!-- League Header with Navigation Arrows -->
-      <div class="flex items-center justify-between w-full px-4 py-2">
+      <div class="flex items-center bg-white dark:bg-[#3a4153] rounded-lg ustify-between w-full px-4 py-2">
         <!-- Left Arrow for Previous League or Invisible Placeholder -->
         <div *ngIf="currentLeagueIndex > 0; else invisiblePlaceholder">
           <button (click)="moveToPreviousLeague()" class="focus:outline-none">
@@ -47,10 +47,10 @@
       <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId">
         <!-- Ensure league members are defined for the current league -->
         <ng-container *ngIf="leagueMembers[currentLeagueId]">
-          <div class="grid grid-cols-1 p-2 gap-4"> <!-- Cards will be stacked on top of each other -->
+          <div class="grid w-full m-0.5 grid-cols-1 p-2 gap-4"> <!-- Cards will be stacked on top of each other -->
             <div *ngFor="let member of leagueMembers[currentLeagueId]; let i = index"
                  [ngClass]="{'bg-lighter-purple': isCurrentUser(member.userid), 'bg-your-color': !isCurrentUser(member.userid)}"
-                 class="user-card rounded-lg p-4 flex items-center justify-between shadow-lg relative">
+                 class="user-card w-full rounded-lg p-4 flex items-center justify-between shadow-lg relative">
               <!-- Member Details -->
               <div class="flex items-center space-x-4">
                 <!-- Medal Icons or Position Number -->
