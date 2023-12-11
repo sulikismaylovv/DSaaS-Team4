@@ -127,8 +127,16 @@ export class PostViewComponent implements OnInit {
         }
 
         this.loadLikeCount(this.post.id).then(r => console.log('Like count:', r));
-
     }
+
+    splitTextAtSecondHyphen(text: string): string[] {
+        const hyphenIndex: number = text.indexOf('-');
+        const secondHyphenIndex: number = text.indexOf('-', hyphenIndex + 1);
+        const part1: string = text.substring(0, secondHyphenIndex).trim();
+        const part2: string = text.substring(secondHyphenIndex + 1).trim();
+        return [part1, part2];
+    }
+
 
     isLiked(postId: number | undefined): boolean {
         return this.likedPosts.has(<number>postId);

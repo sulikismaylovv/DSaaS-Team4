@@ -70,45 +70,42 @@
             <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
           </div>
           <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
-            class="ml-4 mr-4 mt-1 w-16 h-16" />
+               class="ml-4 mr-4 mt-1 w-16 h-16" />
         </div>
         <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-            <tr>
-              <th scope="col" class="px-6 py-3">
-                #
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Team
-              </th>
-              <th scope="col" class="px-6 py-3">
-                PTS
-              </th>
-            </tr>
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              #
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Team
+            </th>
+            <th scope="col" class="px-6 py-3">
+              PTS
+            </th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let team of league; let i = index"
-              class="bg-gray bg-opacity-10 border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                {{i+1}}
-              </th>
-              <td class="px-6 py-4">
-                {{team.name}}
-              </td>
-              <td class="px-6 py-4">
-                {{team.points}}
-              </td>
-            </tr>
+          <tr *ngFor="let team of league; let i = index" class="bg-gray bg-opacity-10 border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+              {{i+1}}
+            </th>
+            <td class="px-6 py-4">
+              {{team.name}}
+            </td>
+            <td class="px-6 py-4">
+              {{team.points}}
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </aside>
-
-
 <div class="mx-auto p-4 2xl:ml-64 lg:ml-28 lg:mr-84 sm:mx-auto">
-  <div class="p-4 rounded-lg ">
+  <div class="lg:p-4 rounded-lg ">
     <!--Logo and name-->
     <div class="flex items-center justify-center h-fit mb-4 rounded block lg:hidden">
       <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg"
