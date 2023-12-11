@@ -139,22 +139,23 @@ export class FriendsleagueComponent implements OnInit {
       console.log("Found user in search results:", user);
 
       const currentLeague = this.leagues[this.currentLeagueIndex];
-      console.log("Current league:", currentLeague);
+      //console.log("Current league:", currentLeague);
+      //console.log('isAlreadyAdded:', this.isAlreadyAdded(user.id));
 
       if (user && currentLeague?.id !== undefined && !this.isAlreadyAdded(user.id)) {
         try {
-          console.log("Fetching betterID for userID:", user.id);
+          //console.log("Fetching betterID for userID:", user.id);
           const betterID = await this.betsService.getBetterID(user.id);
-          console.log("Retrieved betterID:", betterID);
+          //console.log("Retrieved betterID:", betterID);
 
           if (betterID !== 0) {
-            console.log("Fetching XP for betterID:", betterID);
+            //console.log("Fetching XP for betterID:", betterID);
             const userXP = await this.betsService.getUserXP(user.id);
             console.log("Retrieved XP:", userXP);
 
             if (userXP !== null) {
               console.log("Adding user to league:", currentLeague.id, "with XP:", userXP);
-              await this.leagueService.addUserToLeague(user.id, currentLeague.id);
+              await this.leagueService.addUserToLeague(user.id, currentLeague.id, userXP);
 
               const updatedMember = { ...user, username: user.username, xp: userXP };
               this.leagueMembers[currentLeague.id].push(updatedMember);
@@ -168,10 +169,13 @@ export class FriendsleagueComponent implements OnInit {
         }
       } else {
         console.log("User is either not found, already added, or currentLeagueId is undefined");
+        alert("User is either not found, already added, or currentLeagueId is undefined");
+        this.userSearchResults = [];
+        inputElement.value = '';
       }
       inputElement.value = '';
     } else {
-      console.log("Username is empty after trimming");
+      //console.log("Username is empty after trimming");
     }
   }
 

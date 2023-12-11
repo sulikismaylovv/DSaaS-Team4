@@ -51,10 +51,15 @@ export class CreatefriendsleagueService {
     }
   }
 
-  async addUserToLeague(userId: string, leagueId: number): Promise<any> {
+  async addUserToLeague(userId: string, leagueId: number , xp?: number): Promise<any> {
+    // Create the object to upsert. xp is included only if it's provided.
+    const record = xp !== undefined
+      ? { userid: userId, leagueid: leagueId, xp: xp }
+      : { userid: userId, leagueid: leagueId };
+
     const { data, error } = await this.supabase.supabaseClient
       .from('usersinfriendsleague')
-      .upsert([{ userid: userId, leagueid: leagueId }]);
+      .upsert([record]);
 
     if (error) {
       console.error('Error adding user to league:', error);
