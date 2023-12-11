@@ -61,6 +61,21 @@ export class FriendsleagueComponent implements OnInit {
         }
       )
       .subscribe();
+
+
+    this.supabaseService.supabaseClient
+      .channel('league_updates2')
+      .on('postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'friendsleagues',
+        },
+        async () => {
+          await this.ngOnInit();
+        }
+      )
+      .subscribe();
   }
 
   async ngOnInit() {

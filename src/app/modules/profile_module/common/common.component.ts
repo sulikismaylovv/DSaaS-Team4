@@ -120,12 +120,31 @@ export class CommonComponent implements OnInit{
         {
           event: '*',
           schema: 'public',
+          table: 'friendships',
+        },
+        async () => {
+          //await this.fetchFriends(this.profile?.id);
+          await this.checkFriendStatus();
+        }
+      )
+      .subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates2')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
           table: 'posts',
         },
         async () => {
           await this.loadPosts(this.profile?.id);
         }
-      )
+      ).subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates3')
       .on(
         'postgres_changes',
         {
@@ -136,20 +155,7 @@ export class CommonComponent implements OnInit{
         async (payload) => {
           this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
         }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'friendships',
-        },
-        async () => {
-          //await this.fetchFriends(this.profile?.id);
-          await this.checkFriendStatus();
-        }
-      )
-      .subscribe();
+      ).subscribe();
   }
 
 
