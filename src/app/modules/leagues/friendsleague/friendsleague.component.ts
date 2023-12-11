@@ -9,6 +9,7 @@ import { SafeResourceUrl } from "@angular/platform-browser";
 import { CreatefriendsleagueService } from "../../../core/services/createfriendsleague.service";
 import { Bet, BetModel, Better, BetterModel } from "../../../core/models/bets.model";
 import {BetsService} from "../../../core/services/bets.service";
+import {SupabaseService} from "../../../core/services/supabase.service";
 
 interface Friend {
   username: string;
@@ -38,13 +39,28 @@ export class FriendsleagueComponent implements OnInit {
     private readonly imageDownloadService: ImageDownloadService,
     private leagueService: CreatefriendsleagueService,
     private fb: FormBuilder,
-    private betsService: BetsService
+    private betsService: BetsService,
+    private readonly supabaseService: SupabaseService
 
   ) {
     this.leagueForm = this.fb.group({
       leagueName: ['', Validators.required],
       friends: this.fb.array([])
     });
+
+    this.supabaseService.supabaseClient
+      .channel('league_updates')
+      .on('postgres_changes',
+        {
+        event: '*',
+        schema: 'public',
+        table: 'usersinfriendsleague',
+        },
+        async () => {
+          await this.ngOnInit();
+        }
+      )
+      .subscribe();
   }
 
   async ngOnInit() {
@@ -207,4 +223,7 @@ export class FriendsleagueComponent implements OnInit {
   isCurrentUser(memberUserID: string): boolean {
     return this.currentUserID === memberUserID;
   }
+
+
+
 }

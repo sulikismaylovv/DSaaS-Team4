@@ -30,7 +30,9 @@ export class GloballeagueComponent implements OnInit {
     private fb: FormBuilder,
     private  authService: AuthService,
     private userService: UserServiceService,
-    private leagueService: CreatefriendsleagueService ){  this.leagueForm = this.fb.group({
+    private leagueService: CreatefriendsleagueService )
+
+  {  this.leagueForm = this.fb.group({
     leagueName: ['', Validators.required],
     friends: this.fb.array([])
   });
@@ -39,7 +41,7 @@ export class GloballeagueComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.authChanges((_, session) => (this.session = session));
-    console.log(this.session);
+    //console.log(this.session);
   }
 
 
@@ -60,6 +62,7 @@ export class GloballeagueComponent implements OnInit {
   removeFriend(index: number): void {
     this.friends.removeAt(index);
   }
+
   async onSubmit(): Promise<void> {
     let leagueId;
     if (this.leagueForm.valid) {
@@ -83,7 +86,7 @@ export class GloballeagueComponent implements OnInit {
 
         // Create league and get the ID
         leagueId = await this.leagueService.createLeague(league);
-        console.log('leagueId:', leagueId);
+        //console.log('leagueId:', leagueId);
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {
