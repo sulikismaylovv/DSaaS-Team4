@@ -114,6 +114,54 @@ export class MatchesComponent implements OnInit {
     }
   }
 
+   formatDateTitle(dateString: string): string {
+    const date = new Date(dateString);
+    const today = new Date();
+
+    // Create dates for comparison without time component
+    const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    // Checking for today
+    if (dateWithoutTime.getTime() === todayWithoutTime.getTime()) {
+        return 'Today';
+    }
+
+    // Checking for tomorrow
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowWithoutTime = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
+    if (dateWithoutTime.getTime() === tomorrowWithoutTime.getTime()) {
+        return 'Tomorrow';
+    }
+
+    // Checking for yesterday
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayWithoutTime = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
+    if (dateWithoutTime.getTime() === yesterdayWithoutTime.getTime()) {
+        return 'Yesterday';
+    }
+
+    // Formatting for any other date
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+
+ formatDate(dateString: string): string {
+  const date = new Date(dateString);
+
+  // Return the time part only in the format "6:00 PM"
+  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+}
+
+  
+  didFixtureStart(fixture: SupabaseFixture): boolean {
+    const fixtureDate = new Date(fixture.time);
+    const currentDate = new Date();
+    return currentDate > fixtureDate;
+  }
+
   filterFixturesForUserPreferences() {
     // Ensure we only filter if the user is logged in
     const isLoggedIn = this.authService.isLogged() || false;

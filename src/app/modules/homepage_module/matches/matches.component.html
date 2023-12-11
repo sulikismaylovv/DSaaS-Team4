@@ -30,12 +30,12 @@
     <div *ngIf="authService.isLogged() && hasFollowingClubs()"
          class="bg-white shadow-xl  dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
       <div class="relative">
-        <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">Games for clubs you follow</span>
+        <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">Following</span>
       </div>
       <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
       <ng-container *ngFor="let date of groupedFixtureKeys">
         <ng-container *ngIf="hasFollowedFixtureforDate(date)">
-          <div class=" text-lg text-dark-gray left-1 dark:text-light-mode font-bold mb-1 mt-4 ">{{ formatShortDateString(date) }}</div>
+          <div class=" text-lg text-dark-gray left-1 dark:text-light-mode font-medium mb-1 mt-4 ">{{ formatDateTitle(date) }}</div>
           <ng-container *ngFor="let fixture of groupedFixtures[date]">
             <ng-container
               *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
@@ -48,7 +48,8 @@
                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                       </svg>
                     </div>
-                    <div class="flex justify-between w-full">
+                    <!-- --------------------------------------------------- -->                
+                    <div *ngIf="didFixtureStart(fixture)" class="flex justify-between w-full">
                       <!-- Team 1 -->
                       <div class="flex flex-row items-center w-full">
                         <div class="flex flex-col items-center justify-center w-full">
@@ -68,6 +69,29 @@
                         </div>
                       </div>
                     </div>
+                    <!-- --------------------------------------------------- -->
+                    <div *ngIf="!didFixtureStart(fixture)" class="flex justify-between w-full">
+                      <!-- Team 1 -->
+                      <div class="flex flex-row items-center w-full">
+                        <div class="flex flex-col items-center justify-center w-full">
+                          <img [src]="fixture.club0?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                          <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                        </div>
+                      </div>
+                      <!-- Score -->
+                      <div class="flex items-center justify-center font-bold text-xl w-full">
+                        {{ formatDate(fixture.time) }}
+                      </div>
+                      <!-- Team 2 -->
+                      <div class="flex flex-row items-center w-full">
+                        <div class="flex flex-col items-center justify-center w-full">
+                          <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                          <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- --------------------------------------------------- -->
+
                   </button>
                 </div>
               </div>
@@ -85,11 +109,11 @@
     <hr class="my-4 border-t border-gray-300 dark:border-dark-mode-text" />
     <ng-container *ngFor="let date of groupedFixtureKeys">
       <ng-container *ngIf="hasNonFollowedFixtureforDate(date)">
-        <div class="ext-dark-gray dark:text-light-mode left-1 text-lg font-bold mb-1 mt-2">{{ formatShortDateString(date) }}</div>
+        <div class="ext-dark-gray dark:text-light-mode left-1 text-lg font-medium mb-1 mt-2">{{ formatDateTitle(date) }}</div>
         <ng-container *ngFor="let fixture of groupedFixtures[date]">
           <ng-container
             *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
-            <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+            <div *ngIf="didFixtureStart(fixture)" class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
               <!-- Fixture details for non-followed clubs -->
               <div class="mt-4">
                 <button (click)="onGameSelect(fixture)" class="text-white  w-full">
@@ -102,6 +126,30 @@
                     <!-- Score -->
                     <div class="flex items-center justify-center font-bold text-xl w-full">
                       {{ fixture.home_goals }} - {{ fixture.away_goals }}
+                    </div>
+                    <!-- Team 2 -->
+                    <div class="flex flex-col items-center justify-center w-full">
+                      <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
+                      <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+<!-- ------------------------------------- -->
+            <div *ngIf="!didFixtureStart(fixture)" class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+              <!-- Fixture details for non-followed clubs -->
+              <div class="mt-4">
+                <button (click)="onGameSelect(fixture)" class="text-white  w-full">
+                  <div class="flex justify-between w-full">
+                    <!-- Team 1 -->
+                    <div class="flex flex-col items-center justify-center w-full">
+                      <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
+                      <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                    </div>
+                    <!-- Score -->
+                    <div class="flex items-center justify-center font-bold text-xl w-full">
+                      {{ formatDate(fixture.time) }}
                     </div>
                     <!-- Team 2 -->
                     <div class="flex flex-col items-center justify-center w-full">

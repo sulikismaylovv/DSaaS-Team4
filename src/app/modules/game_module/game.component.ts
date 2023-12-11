@@ -317,10 +317,16 @@ export class GameComponent implements OnInit {
     //something needs to be done here
   }
 
+  hasFixtureTimePassed(): boolean {
+    const fixtureDate = new Date(this.fixture.time);
+    const currentDate = new Date();
+    return currentDate > fixtureDate;
+  }
+
   convertToLocaleTimeString(dateString: string): string {
     if (this.fixture.is_finished) {
       return `${this.fixture.home_goals} - ${this.fixture.away_goals}`;
-    } else if (this.fixture.is_finished == false) {
+    } else if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
       return "LIVE";
     } else {
       // Parse the date string into a Date object
@@ -400,7 +406,9 @@ export class GameComponent implements OnInit {
         this.teamChosen = "home";
       } else if (team === "team2") {
         this.teamChosen = "away";
-      }
+      }  else if (team === "draw") {
+        this.teamChosen = "draw";
+      } 
     }
   }
 

@@ -26,6 +26,7 @@
     "@vercel/analytics": "^1.1.1",
     "angular-ga": "^0.3.0",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "flowbite": "^2.2.0",
     "gtag": "^1.0.1",
     "hammerjs": "^2.0.8",
