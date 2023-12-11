@@ -1,6 +1,6 @@
 <div class="w-full">
   <div class="flex justify-center h-full">
-    <div class="flex justify-between items-center p-1 mt-2 mb-4 rounded-lg w-full shadow-xl bg-white dark:bg-[#3a4151]" role="group">
+    <div class="flex justify-between items-center p-1 mt-2 mb-4 rounded-lg w-full  bg-white dark:bg-[#3a4151]" role="group">
       <button (click)="goToPreviousWeek()"
               class="font-medium rounded-l-lg px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
         <svg aria-hidden="true" class="w-6 h-6 text-gray-800 dark:text-white" fill="none"
@@ -29,7 +29,7 @@
   <!-- matches.component.html -->
   <div class="w-full">
     <div *ngIf="authService.isLogged() && hasFollowingClubs()"
-         class="bg-white shadow-xl  dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+         class="bg-white   dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
       <div class="relative">
         <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">Clubs you follow</span>
       </div>
@@ -103,7 +103,7 @@
     </div>
   </div>
   <!-- All Fixtures Section -->
-  <div  class="bg-white mt-4 shadow-xl  dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+  <div  class="bg-white mt-4   dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
     <div class="relative">
       <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">All Games</span>
     </div>
