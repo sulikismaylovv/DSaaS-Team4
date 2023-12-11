@@ -1,111 +1,7 @@
-<aside class="fixed overflow-y-auto top-0 right-0 w-fit p-4 hidden lg:block 2xl:block flex flex-col h-screen no-scrollbar">
-  <div *ngIf="!(authService.isAuthenticated$ | async)" class="mb-4">
-    <button type="button" (click)="navigateToLogin()"
-      class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-      Log In
-    </button>
-  </div>
+<app-aside></app-aside>
 
-<!--  Search bar-->
-  <div *ngIf="(authService.isAuthenticated$ | async)" class="group mb-4 relative w-full rounded-full">
-    <button type="submit" class="absolute text-purple-500 w-auto inset-y-0 left-0 flex items-center ps-3 group-hover:hidden group-focus-within:hidden">
-      <svg class="text-gray-500 w-5 h-5 z-10 pointer-events-none text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-      </svg>
-
-    </button>
-    <input type="search" id="default-search"
-           (input)="onUserSearch($event)"
-           class="w-full p-4 text-sm text-gray-900 border border-purple-600 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-[#394151] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pr-20  group-hover:w-full"
-           placeholder="     Search for users" required>
-  </div>
-
-
-  <!--Search results-->
-      <div class="relative">
-        <!-- ... Other search input HTML code ... -->
-        <ul *ngIf="userSearchResults.length > 0"
-            class="absolute w-full list-none bg-light-mode dark:bg-dark-mode text-black dark:text-light-mode  p-2 mt-1 rounded shadow-lg z-10">
-          <li *ngFor="let user of userSearchResults"
-              (click)="redirectToProfile(user.id)"
-              class="flex items-center cursor-pointer hover:bg-lighter-purple p-2 rounded">
-            <img *ngIf="user.avatarSafeUrl" [src]="user.avatarSafeUrl" alt="Avatar"
-                 class="w-10 h-10 rounded-full object-cover mr-2">
-            <span class="flex-1">{{ user.username }}</span>
-          </li>
-        </ul>
-      </div>
-
-
-
-  <div *ngIf="(authService.isAuthenticated$ | async)"
-    class="bg-white dark:bg-[#394151] rounded-lg p-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
-    <button (click)="goToFixture()">
-
-      <div class=" top-0 left-0 m-0">
-        <svg class="w-6 h-6 text-gold" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-        </svg>
-      </div>
-
-      <div class="flex justify-center">
-        <span class="content-center text-xl font-bold text-black dark:text-white">Next Match</span>
-      </div>
-      <div class="flex items-center justify-center">
-        <img alt="Team 1" class="w-20 h-20 rounded-full mt-2" src={{myClub.logo}}>
-        <p class="text-lg font-semibold text-black dark:text-white text-xl ml-2 mr-2">vs </p>
-        <img alt="Team 1" class="w-20 h-20 rounded-full mt-2" src={{nextClub.logo}}>
-      </div>
-      <div class="flex flex-col items-center justify-center">
-        <span class=" mt-3 text-l font-semibold text-black dark:text-white">{{nextClub.name}}</span>
-        <span class="text-l font-medium text-black dark:text-white">{{formatDate(nextFixture.time)}}</span>
-      </div>
-    </button>
-  </div>
-  <div class="flex-grow overflow-y-auto">
-    <div class="rounded-lg bg-white dark:bg-[#394151] shadow-lg mt-5 mb-8 p-4">
-      <div class="h-fit bg-white dark:bg-[#394151] flex flex-col">
-        <div class="flex items-center justify-between bg-white dark:bg-[#394151] ">
-          <div class="flex flex-col  items-start">
-            <p class="text-2xl mt-2 ml-4 text-black dark:text-white font-bold"> Belgian League</p>
-          </div>
-          <img src="assets/logos/Royal_Belgian_FA_logo_2019.svg" alt="Royal belgian fa"
-               class="ml-4 mr-4 mt-1 w-16 h-16" />
-        </div>
-        <table class="h-fit mt-1 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              #
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Team
-            </th>
-            <th scope="col" class="px-6 py-3">
-              PTS
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let team of league; let i = index" class="bg-gray bg-opacity-10 border-b dark:bg-[#585e78] text-black dark:text-white dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-              {{i+1}}
-            </th>
-            <td class="px-6 py-4">
-              {{team.name}}
-            </td>
-            <td class="px-6 py-4">
-              {{team.points}}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</aside>
-<div class="mx-auto p-4 2xl:ml-64 lg:ml-28 lg:mr-84 sm:mx-auto">
-  <div class="lg:p-4 rounded-lg ">
+<div class="mx-auto  p-4 2xl:ml-64 lg:ml-28 lg:mr-84 sm:mx-auto">
+  <div class="lg:p-4 rounded-lg mt-4">
     <!--Logo and name-->
     <div class="flex items-center justify-center h-fit mb-4 rounded block lg:hidden">
       <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +45,7 @@
 
     <div class="flex items-center justify-center h-fit mb-4 rounded">
       <div class="mb-2 border-b border-transparent ">
-        <ul class="flex flex-wrap -mb-px text-lg font-bold text-center text-black dark:text-white" id="default-tab"
+        <ul class="flex flex-wrap -mb-px text-2xl font-bold text-center text-black dark:text-white" id="default-tab"
           data-tabs-toggle="#default-tab-content" role="tablist">
           <li class="me-2" role="presentation">
             <button (click)="showMatchesContent()"

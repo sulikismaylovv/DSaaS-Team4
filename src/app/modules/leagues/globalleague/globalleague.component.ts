@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../core/services/auth.service";
-import {Session} from "@supabase/supabase-js";
+import {Session, SupabaseClient} from "@supabase/supabase-js";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
+import {SupabaseService} from "../../../core/services/supabase.service";
 
 
 interface Friend {
@@ -30,16 +31,21 @@ export class GloballeagueComponent implements OnInit {
     private fb: FormBuilder,
     private  authService: AuthService,
     private userService: UserServiceService,
-    private leagueService: CreatefriendsleagueService ){  this.leagueForm = this.fb.group({
+    private leagueService: CreatefriendsleagueService
+  )
+  {
+    this.leagueForm = this.fb.group({
     leagueName: ['', Validators.required],
     friends: this.fb.array([])
   });
+
+
     }
 
 
   ngOnInit(): void {
     this.authService.authChanges((_, session) => (this.session = session));
-    console.log(this.session);
+    //console.log(this.session);
   }
 
 
@@ -60,6 +66,7 @@ export class GloballeagueComponent implements OnInit {
   removeFriend(index: number): void {
     this.friends.removeAt(index);
   }
+
   async onSubmit(): Promise<void> {
     let leagueId;
     if (this.leagueForm.valid) {
@@ -83,7 +90,7 @@ export class GloballeagueComponent implements OnInit {
 
         // Create league and get the ID
         leagueId = await this.leagueService.createLeague(league);
-        console.log('leagueId:', leagueId);
+        //console.log('leagueId:', leagueId);
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {

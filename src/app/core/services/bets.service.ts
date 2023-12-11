@@ -382,6 +382,22 @@ export class BetsService {
       throw error;
     }
   }
+
+  async getUserXP(userID: string): Promise<number | null> {
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('xp')
+        .eq('userID', userID)
+        .single();
+
+      if (error) throw error;
+      return data ? data.xp : null;
+    } catch (error) {
+      console.error('Error fetching user XP:', error);
+      return null;
+    }
+  }
 }
 
 

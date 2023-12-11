@@ -1,42 +1,45 @@
+<app-aside></app-aside>
 
+<div class="mx-auto p-4 2xl:ml-64 lg:ml-28 lg:mr-84 sm:mx-auto">
 
-  <div class="mx-auto h-screen p-4 2xl:ml-64 lg:ml-28  sm:mx-auto">
-    <div class="p-8 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <!--Create friends league button-->
-      <div class="flex justify-end">
-        <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button"  class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-          Create Friends League
-        </button>
+<!--  <div class="mx-auto h-screen p-4 2xl:ml-64 lg:ml-28  sm:mx-auto">-->
+    <div class="border-0 rounded-lg">
+      <!-- Overall container -->
+      <div class="flex items-center justify-between h-fit mb-4 rounded w-full ">
+
+        <!-- Placeholder div to balance the button and center the tabs -->
+        <div class="flex-1"></div>
+
+        <!-- Tabs Section -->
+        <div class="flex-1 flex justify-center">
+          <ul class="flex -mb-px text-xl font-bold text-center text-black dark:text-white">
+            <li class="mr-2" role="presentation">
+              <button (click)="currentView = 'friends'"
+                      [ngClass]="{'text-purple-700': currentView === 'friends', 'border-purple-700': currentView === 'friends', 'dark:text-purple-600': currentView === 'friends', 'dark:border-purple-700':currentView === 'friends'}"
+                      class="inline-block rounded-t-lg border-b-2 p-4 hover:border-purple-500 hover:text-purple-500 dark:hover:border-purple-500 dark:hover:text-purple-500"
+                      id="friends-tab" data-tabs-target="#friends" type="button" role="tab" aria-controls="matches"
+                      aria-selected="false">Friends League</button>
+            </li>
+            <li class="mr-2" role="presentation">
+              <button (click)="currentView = 'regional'"
+                      [ngClass]="{'text-purple-700': currentView === 'regional', 'border-purple-700': currentView === 'regional', 'dark:text-purple-600': currentView === 'regional', 'dark:border-purple-700':currentView === 'regional'}"
+                      class="inline-block rounded-t-lg border-b-2 p-4 hover:border-purple-500 hover:text-purple-500 dark:hover:border-purple-500 dark:hover:text-purple-500"
+                      id="regional-tab" data-tabs-target="#regional" type="button" role="tab" aria-controls="dashboard"
+                      aria-selected="false">Regional League</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Placeholder div to balance the button and center the tabs -->
+        <div class="flex-1 flex justify-end">
+          <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button"
+                  class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+            Create Friends League
+          </button>
+        </div>
       </div>
 
-      <div class="mb-4">
-        <ul class="flex flex-wrap justify-center -mb-px text-2xl font-bold text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-          <li class="mr-2" role="presentation">
-            <button (click)="currentView = 'friends'"
-                    class="inline-block py-4 px-8 rounded-t-lg focus:outline-none transition duration-300"
-                    [ngClass]="{
-                'border-b-4 border-purple-500 text-purple-500 dark:text-purple-500': currentView === 'friends',
-                'hover:text-gray-600 dark:hover:text-gray-300': currentView !== 'friends',
-                'text-black dark:text-white': currentView !== 'friends'
-              }"
-                    id="friends-tab" data-tabs-target="#friends" type="button" role="tab" aria-controls="friends" aria-selected="currentView === 'friends'">
-              Friends League
-            </button>
-          </li>
-          <li class="mr-2" role="presentation">
-            <button (click)="currentView = 'regional'"
-                    class="inline-block py-4 px-8 rounded-t-lg focus:outline-none transition duration-300"
-                    [ngClass]="{
-                'border-b-4 border-purple-500 text-purple-500 dark:text-purple-500': currentView === 'regional',
-                'hover:text-gray-600 dark:hover:text-gray-300': currentView !== 'regional',
-                'text-black dark:text-white': currentView !== 'regional'
-              }"
-                    id="regional-tab" data-tabs-target="#regional" type="button" role="tab" aria-controls="regional" aria-selected="currentView === 'regional'">
-              Regional League
-            </button>
-          </li>
-        </ul>
-      </div>
+
 
 
 
@@ -67,7 +70,6 @@
                 </svg>
                 <span class="sr-only">Close modal</span>
               </button>
-
             </div>
             <!-- Modal body -->
             <form [formGroup]="leagueForm" (ngSubmit)="onSubmit()" class="bg-white dark:bg-dark-mode shadow-md rounded px-8 pt-6 pb-8 mb-4">
