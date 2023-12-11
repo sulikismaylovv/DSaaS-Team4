@@ -176,7 +176,6 @@ export class CommonComponent implements OnInit{
         await this.checkFriendStatus();
       }
 
-      this.loadBets();
 
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
@@ -187,19 +186,18 @@ export class CommonComponent implements OnInit{
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
 
-      await this.loadUserLeagues(this.profile?.id);
-      await this.updateOwnedPlayers();
-
+      this.loading = false;
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
       }
 
+      await this.loadUserLeagues(this.profile?.id);
+      this.loadBets();
+      await this.updateOwnedPlayers();
+
     } catch (error) {
       console.error('An error occurred during initialization:', error);
-      // Handle the error properly
-    } finally {
-      this.loading = false; // Ensure loading is set to false after operations complete
     }
   }
 
