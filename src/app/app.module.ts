@@ -65,6 +65,7 @@ import {UserServiceService} from "./core/services/user-service.service";
 import { DailyAwardComponent } from './modules/homepage_module/daily-award/daily-award.component';
 import { HelppageComponent } from './modules/helppage_module/helppage/helppage.component';
 import { FAQPageComponentComponent } from './modules/helppage_module/faqpage-component/faqpage-component.component';
+import { AsideComponent } from './shared/aside/aside.component';
 @NgModule({
     declarations: [
         AppComponent, AuthComponent, LoginComponent, DashboardComponent, HomeComponent
@@ -72,7 +73,7 @@ import { FAQPageComponentComponent } from './modules/helppage_module/faqpage-com
       PostViewComponent, CreatePostComponent, SinglePostComponent, CommentViewComponent, ShopComponent,GloballeagueComponent, FriendsleagueComponent,
       LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,
         TermsAndConditionsComponent, ErrorComponent, HelppageComponent, FAQPageComponentComponent,
-      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,TermsAndConditionsComponent, ErrorComponent, DailyAwardComponent
+      LeagueComponent, SettingsComponent, ProfileComponent, CommonComponent, UserComponent, CustomAlertComponent, NotificationComponent, BgImageSelectorComponent, CreateleagueComponent,TermsAndConditionsComponent, ErrorComponent, DailyAwardComponent, AsideComponent
     ],
     imports: [
         BrowserModule, ReactiveFormsModule, AppRoutingModule,
