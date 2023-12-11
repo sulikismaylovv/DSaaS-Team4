@@ -48,40 +48,50 @@
 
       <ng-container *ngIf="leagues[currentLeagueIndex]?.id as currentLeagueId">
 
-        <div class="col-span-2 flex justify-end items-center space-x-2 w-full">
-          <!-- Plus Icon and Input Field Container -->
-          <div class="col-span-2 flex items-end">
-            <!-- Input Field and Plus Icon Container -->
-            <div class="flex items-end group">
-              <!-- Input Field - Initially hidden, shown on hover -->
-              <input #newFriendInput type="text" (input)="onUserSearch($event)" placeholder="Add users to your league"
-                     class="bg-very-light-purple m-1 p-1 text-black border border-purple-600 rounded-l px-4 py-2 w-full hidden group-hover:block hover:border-purple-600 focus:border-purple-700 focus:outline-none" />
 
-              <!-- Plus Icon - Always visible, on the right side of the input field -->
-              <div class="flex bg-purple-600 rounded-lg p-2 items-end cursor-pointer m-2 p-1 border-purple-400">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                </svg>
-              </div>
+<!--        <div class="col-span-2">-->
+<!--          <input #newFriendInput type="text"-->
+<!--                 (input)="onUserSearch($event)"-->
+<!--                 placeholder="Add users to your league"-->
+<!--                 class="bg-very-light-purple text-black border border-light-gray w-full rounded px-4 py-2 mr-2 flex-grow">-->
+
+<!--          <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">-->
+<!--            <li *ngFor="let user of userSearchResults"-->
+<!--                (click)="addAndClear(user.username, newFriendInput)"-->
+<!--                class="cursor-pointer text-black hover:bg-lighter-purple p-2">-->
+<!--              {{ user.username }}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+
+        <div class="col-span-2 flex flex-col justify-end items-end space-x-2 p-2 m-1 w-full">
+          <!-- Row 1: Input Field and Plus Icon, with Input Field stretched -->
+          <div class="flex w-full group">
+            <!-- Input Field with flex-grow, initially hidden -->
+            <input #newFriendInput type="text" (input)="onUserSearch($event)" placeholder="Add users to your league"
+                   class="flex-grow bg-very-light-purple  text-black border border-purple-600 rounded-lg px-4 py-2 focus:border-purple-700 focus:outline-none hidden group-hover:block" />
+
+            <!-- Plus Icon without flex-grow, remains its natural size -->
+            <div class="bg-purple-600 rounded-lg ml-1 p-2 cursor-pointer border-purple-400">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+              </svg>
             </div>
+          </div>
 
-            <!-- Search Results - Shown when input field is visible -->
-            <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4 hidden group-hover:block absolute mt-10">
+          <!-- Row 2: Search Results -->
+          <div *ngIf="userSearchResults.length > 0" class="w-full mt-1">
+            <ul class="list-none bg-white text-black p-2 rounded">
               <li *ngFor="let user of userSearchResults" (click)="addAndClear(user.username, newFriendInput)"
                   class="cursor-pointer text-black hover:bg-lighter-purple p-2">
                 {{ user.username }}
               </li>
             </ul>
           </div>
-
-          <!-- Search Results - Shown when input field is visible -->
-          <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4 hidden group-hover:block">
-            <li *ngFor="let user of userSearchResults" (click)="addAndClear(user.username, newFriendInput)"
-                class="cursor-pointer text-black hover:bg-lighter-purple p-2">
-              {{ user.username }}
-            </li>
-          </ul>
         </div>
+
+
+
 
 
         <!-- Ensure league members are defined for the current league -->
