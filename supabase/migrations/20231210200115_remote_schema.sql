@@ -42,7 +42,7 @@ ALTER TYPE "public"."Status of the Frkendship" OWNER TO "postgres";
 CREATE OR REPLACE FUNCTION "public"."call_supabase_function"() RETURNS "json"
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$
-DECLARE 
+DECLARE
     response json;
 BEGIN
     BEGIN
@@ -208,8 +208,8 @@ DECLARE
 BEGIN
     -- Loop through each club
     FOR club_record IN SELECT id FROM clubs LOOP
-        
-        -- Get a random player from the current club
+
+-- Get a random player from the current club
         SELECT * INTO random_player
         FROM players
         WHERE club = club_record.id
