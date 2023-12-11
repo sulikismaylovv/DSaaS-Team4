@@ -11,7 +11,7 @@
 </div>
 <ng-template #loadedContent>
   <section class="bg-light-mode dark:bg-dark-mode" >
-    <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 lg:ml-64 sm:mx-4 rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+    <div class="bg-light-mode dark:bg-dark-mode my-2 md:my-4 mx-auto p-4 2xl:ml-64 lg:ml-28 sm:mx-auto rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
       <!-- Cover photo -->
       <div class="flex items-center dark:bg-dark-gray max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
         <img class="object-contain min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" [src]="bgImageSafeUrl" alt="None">
@@ -56,7 +56,7 @@
               </li>
             </ul>
           </div>
-          <div class="flex-grow">
+          <div class="flex-grow overflow-y-hidden">
             <!-- Friends -->
             <ng-container *ngIf="selectedLink === 'link1'">
               <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-4 2xl:p-8 h-full w-full">
@@ -195,10 +195,11 @@
                 </div>
               </div>
               <!-- Bettinglist -->
-              <div *ngIf="isOwnProfile">
-                <div class="bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full overflow-y-auto">
-                  <div class="flex flex-col bg-light-mode-acc h-full overflow-y-auto dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl">
-                    <h1 class="flex text-light-mode-text dark:text-primary-100 h-full overflow-y-auto font-semibold text-sm md:text-md md:text-lg lg-text-xl mt-4 mb-1 ml-2 p-2 ">Pending Bets</h1>
+              <div *ngIf="isOwnProfile" class="overflow-y-auto h-full">
+                <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 sm:px-1 md:px-4 lg:px-8 2xl:p-8 py-4 h-full overflow-y-hidden ">
+                  <div class="flex flex-col bg-light-mode-acc h-full dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl">
+                    <div class="overflow-y-auto scrollbar-hide">
+                    <h1 class="flex text-light-mode-text dark:text-primary-100 font-semibold text-sm md:text-md md:text-lg lg-text-xl mt-2 mb-1 ml-2 p-2 ">Pending Bets</h1>
                     <ng-container *ngFor="let betWithFixture of pendingBets">
                       <div class="flex m-2 rounded-l-lg">
                         <!-- Column 1: Colored status bar -->
@@ -294,10 +295,12 @@
                         <p>No settled bets</p>
                       </div>
                     </ng-container>
+                    </div>
                   </div>
                 </div>
               </div>
             </ng-container>
+
             <!-- Link 4 -->
             <ng-container *ngIf="selectedLink === 'link4'">
               <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full">
