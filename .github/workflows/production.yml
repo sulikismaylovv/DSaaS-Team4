@@ -74,7 +74,7 @@ jobs:
 
       - name: Create Development Environment File 2
         run: |
-          cat << EOF > src/environments/environment.ts
+          cat << EOF > src/environments/environment.development.ts
           export const environment = {
             production: false,
             supabaseUrl: '${{ secrets.SUPABASE_URL }}',
