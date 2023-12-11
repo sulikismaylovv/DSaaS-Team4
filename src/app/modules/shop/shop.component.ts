@@ -76,6 +76,17 @@ export class ShopComponent implements OnInit {
               await this.initializeUser();
             }
         )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'randomplayers',
+        },
+        async () => {
+          await this.initializeUser();
+        }
+      )
   }
 
   async ngOnInit() {

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FAQPageComponentComponent } from './faqpage-component.component';
+import {HelppageComponent} from "../helppage/helppage.component";
 
 describe('FAQPageComponentComponent', () => {
   let component: FAQPageComponentComponent;
@@ -8,7 +9,8 @@ describe('FAQPageComponentComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FAQPageComponentComponent]
+      imports: [],
+      declarations: [FAQPageComponentComponent, HelppageComponent]
     });
     fixture = TestBed.createComponent(FAQPageComponentComponent);
     component = fixture.componentInstance;
