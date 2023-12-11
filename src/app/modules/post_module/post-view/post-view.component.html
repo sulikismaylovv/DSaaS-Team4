@@ -4,8 +4,10 @@
     <!-- Retweeter's Info -->
     <div class="flex items-center mb-4">
       <!-- Retweeter's Avatar -->
-      <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
-      <div>
+      <div class=" h-10 w-10">
+        <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-full w-full rounded-full mr-4"/>
+      </div>
+        <div>
         <!-- Retweeter's Username -->
         <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
           <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>

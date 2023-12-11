@@ -81,11 +81,13 @@ export class CommonComponent implements OnInit{
   friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
   friendsList: FriendInfo[] = []; // Array to store friends' info
 
-  infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
+  aboutOrBetLink: string = 'loading..';
+  infoString: string[] | undefined;
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
-  friendActions: string[] = ['3683211.png','add-friend-24.png'];
+  friendActions: string[] = ['3683211.png','add-friend-24.svg'];
   selectedLink = 'link1';
+
 
   ownedPlayersDetails: PlayerWithClubDetails[] = [];
   currentUserID: string | undefined
@@ -168,6 +170,8 @@ export class CommonComponent implements OnInit{
 
     this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
     this.userRefId = this.isOwnProfile ? null : urlUserId;
+    this.aboutOrBetLink= this.isOwnProfile? "Betting Overview" : "About";
+    this.infoString=['Friends', 'Leagues', this.aboutOrBetLink,'Player Collection'];
 
     try {
       const profileData = this.userRefId
@@ -432,7 +436,7 @@ export class CommonComponent implements OnInit{
     const visitorId=  this.authService.session?.user?.id;
     if(userId === undefined) throw new Error('User ID is undefined');
     if(visitorId === undefined) throw new Error('User ID is undefined');
-    if (userId) {
+    if(userId) {
       const friendIds = await this.friendshipService.getFriends(userId);
       for (const friendId of friendIds) {
         const friendProfile = await this.authService.profileById(friendId);
