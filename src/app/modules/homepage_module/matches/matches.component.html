@@ -11,8 +11,9 @@
         </svg>
       </button>
       <button
-        class="text-black dark:text-white items-center font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">{{formatShortDate(startDate)}}
-        - {{formatShortDate(endDate)}}</button>
+        class="text-black dark:text-white items-center font-medium px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:focus:bg-dark-gray dark:hover:bg-dark-gray ">
+        <!-- {{formatShortDate(startDate)}} - {{formatShortDate(endDate)}}</button> -->
+        {{formatWeek(startDate,endDate)}}</button>
 
       <button (click)="goToNextWeek()"
               class="font-medium items-end rounded-r-lg px-6 py-2 transition duration-150 ease-in-out focus:bg-navbar-hover-light hover:bg-navbar-hover-light dark:text-white dark:focus:bg-dark-gray dark:hover:bg-dark-gray">
