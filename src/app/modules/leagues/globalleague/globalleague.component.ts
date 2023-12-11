@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../core/services/auth.service";
-import {Session} from "@supabase/supabase-js";
+import {Session, SupabaseClient} from "@supabase/supabase-js";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
+import {SupabaseService} from "../../../core/services/supabase.service";
 
 
 interface Friend {
@@ -30,12 +31,15 @@ export class GloballeagueComponent implements OnInit {
     private fb: FormBuilder,
     private  authService: AuthService,
     private userService: UserServiceService,
-    private leagueService: CreatefriendsleagueService )
-
-  {  this.leagueForm = this.fb.group({
+    private leagueService: CreatefriendsleagueService
+  )
+  {
+    this.leagueForm = this.fb.group({
     leagueName: ['', Validators.required],
     friends: this.fb.array([])
   });
+
+
     }
 
 
