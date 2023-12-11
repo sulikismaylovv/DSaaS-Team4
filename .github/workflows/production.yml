@@ -72,6 +72,21 @@ jobs:
           EOF
           cat src/environments/environment.prod.ts
 
+      - name: Create Development Environment File 2
+        run: |
+          cat << EOF > src/environments/environment.ts
+          export const environment = {
+            production: false,
+            supabaseUrl: '${{ secrets.SUPABASE_URL }}',
+            supabaseKey: '${{ secrets.SUPABASE_KEY }}',
+            baseUrl: 'http://localhost:4200/',
+            appTitle: 'Remontada (preview)'
+          };
+          EOF
+          cat src/environments/environment.development.ts
+
+
+
 
 
       #Build
