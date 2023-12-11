@@ -1,10 +1,10 @@
 <div class="p-4 mb-4 h-144">
   <form (ngSubmit)="onSubmit()">
     <!-- component -->
-    <div class="editor mx-auto flex flex-col border bg-light-mode border-gray-300 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
+    <div class="editor mx-auto flex flex-col border-0 bg-light-mode border-purple-600 p-4 shadow-lg rounded-2xl max-w-2xl dark:bg-[#3a4151]">
       <div class="flex flex-row">
-        <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4 mb-4 border border-gray-500 "/>
-        <p class="font-bold text-md dark:text-white" >{{ profile?.username }}</p>
+        <img [src]="avatarSafeUrl" alt="User Image" class="inline-block h-12 w-12 rounded-full mr-4 mb-4 border-0 "/>
+        <p class="font-bold mt-2 text-md dark:text-white" >{{ profile?.username }}</p>
 
       </div>
       <div *ngIf="retweet" class="original-post-preview p-4 my-4 bg-gray-100 rounded-lg ">
@@ -32,8 +32,8 @@
       </div>
       <!-- buttons -->
       <div class="flex justify-end">
-        <button (click)="resetForm()" type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-[#999a9c] focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Cancel</button>
-        <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Post</button>
+        <button (click)="resetForm()" type="button" class="text-purple-600 hover:text-white border border-purple-600 hover:bg-[#999a9c] focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Cancel</button>
+        <button type="submit" class="focus:outline-none text-white bg-purple-600 hover:bg-purple-900 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Post</button>
       </div>
     </div>
   </form>

@@ -1,6 +1,6 @@
-<aside class="fixed overflow-y-auto top-0 right-0 w-fit p-4 hidden 2xl:block flex flex-col h-screen no-scrollbar">
+<aside class="fixed overflow-y-auto top-0 right-0 w-fit p-2 hidden 2xl:block flex flex-col h-screen no-scrollbar">
 
-<div class="bg-white  dark:bg-[#394151] rounded-lg shadow-md p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+<div class="bg-white  dark:bg-[#394151] rounded-lg p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
         <p class="text-3xl font-bold text-black dark:text-white">Your Credits: {{availableCredits}}</p>
@@ -18,7 +18,7 @@
 
   <div class="flex-grow overflow-y-auto">
 
-    <div class="rounded-lg bg-white dark:bg-[#394151] shadow-lg mt-5 mb-8 p-4">
+    <div class="rounded-lg bg-white dark:bg-[#394151] shadow-md mt-5 mb-8 p-4">
     <div class="h-fit bg-white dark:bg-[#394151] flex flex-col">
       <div class="flex items-center justify-between bg-white dark:bg-[#394151] ">
         <div class="flex flex-col  items-start">
@@ -63,30 +63,32 @@
 </aside>
 
 <div class="p-4 2xl:ml-64 lg:ml-28 sm:mx-auto 2xl:mr-121">
+
   <div class="p-2">
-    <button (click)="goBack()" type="button"
-            class="ml-2 mb-4 p-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-      <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-           viewBox="0 0 14 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M13 5H1m0 0 4 4M1 5l4-4" />
-      </svg>
-    </button>
+
     <!--top modal -->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] rounded-lg">
       <div class="flex items-center">
 
-        <p class="text-black p-4 mt-2 dark:text-white font-semibold text-xl">Matches</p>
+        <button (click)="goBack()" type="button"
+                class="m-2 p-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+          <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 5H1m0 0 4 4M1 5l4-4" />
+          </svg>
+        </button>
+
+        <p class="text-black p-4 dark:text-white font-semibold text-xl"></p>
       </div>
-      <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
       <div class="flex items-start justify-between p-4">
         <div class="flex items-center">
           <img src={{fixture.club0?.logo}} alt="team-left" class="w-22 h-22">
           <p class="ml-2 font-medium text-black dark:text-white "> {{fixture.club0?.name}} </p>
         </div>
-        <div class="flex flex-col items-center">
-          <p class="text-black dark:text-white font-bold">{{time}}</p>
-          <p class="text-black dark:text-white font-semibold">{{timeLeft}}</p>
+        <div class="flex flex-col justify-center mt-4 items-center">
+          <p class="text-black dark:text-white text-2xl font-bold">{{time}}</p>
+          <p class="text-black dark:text-white text-lg font-semibold">{{timeLeft}}</p>
         </div>
         <div class="flex items-center">
           <p class="truncate font-medium mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
@@ -94,7 +96,7 @@
         </div>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
-      <div class="flex justify-between pl-6 pr-6">
+      <div class="flex justify-center">
         <div class="flex mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 20 20">
@@ -335,12 +337,12 @@
         <!-- Team Left Lineup -->
         <div class="flex flex-col ml-10 mt-5">
           <ul class="space-y-4">
-            <li *ngFor="let player of lineupHome" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+            <li *ngFor="let player of lineupHome" class="bg-white dark:bg-[#3a4153] p-4 ">
               <div class="flex items-center space-x-4">
                 <img class="w-10 h-10 rounded-full border-2 border-purple-400" src="{{player.photo}}" alt="Player image">
                 <div class="flex flex-col flex-grow">
                   <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
-                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                  <p class="text-md text-black dark:text-white">{{player.number}} - {{player.position}}</p>
                 </div>
               </div>
             </li>
@@ -351,12 +353,12 @@
         <!-- Team Right Lineup -->
         <div class="flex flex-col mr-10 mt-5">
           <ul class="space-y-4">
-            <li *ngFor="let player of lineupAway" class="bg-light-mode-acc dark:bg-[#394151] p-4 rounded-lg shadow-md">
+            <li *ngFor="let player of lineupAway" class="bg-white dark:bg-[#3a4153] p-4 ">
               <div class="flex items-center justify-end space-x-4 rtl:space-x-reverse">
                 <!-- Player Info -->
                 <div class="flex flex-col text-right">
                   <p class="text-lg font-bold text-black dark:text-white">{{player.name}}</p>
-                  <p class="text-md text-gray-500 dark:text-gray-400">{{player.number}} - {{player.position}}</p>
+                  <p class="text-md text-black dark:text-white">{{player.number}} - {{player.position}}</p>
                 </div>
 
                 <!-- Avatar -->
@@ -369,7 +371,7 @@
 
 
         <!--Only for smartphone screens-->
-      <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
+      <div class="flex flex-col h-fit rounded bg-white w-full dark:bg-[#3a4153] mt-4 block 2xl:hidden">
         <div class="">
           <div class="flex items-center justify-between">
             <div class="flex flex-col items-start">
@@ -417,16 +419,16 @@
           </table>
         </div>
       </div>
-      <!--TBA widget-->
-      <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-        <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Live chat</p>
-        <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
-        <div class=" ps-10 pe-10 pb-10 mt-10 mb-10 flex flex-col mx-auto bg-[#565e79] rounded-lg justify-center">
-          <p class="text-4xl text-center mt-2 ml-2 text-black dark:text-white font-bold">To be added</p>
-          <p class="text-2xl mt-2 ml-2 text-black dark:text-white font-bold"> This feature is still under development
-            and will be added as soon as it is ready</p>
+        <div class="flex flex-col h-screen w-full rounded bg-white dark:bg-[#3a4153] mt-4 pb-4 lg:h-fit">
+          <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Live chat</p>
+          <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
+          <div class="flex-grow ps-10 pe-10 pb-10 mt-10 mb-10 flex flex-col mx-auto bg-[#565e79] rounded-lg justify-center items-center">
+            <p class="text-4xl text-center text-black dark:text-white font-bold">To be added</p>
+            <p class="text-2xl text-center text-black dark:text-white font-bold"> This feature is still under development
+              and will be added as soon as it is ready</p>
+          </div>
         </div>
-      </div>
+
     </div>
   </div>
   </div>
