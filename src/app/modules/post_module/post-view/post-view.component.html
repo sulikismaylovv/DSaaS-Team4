@@ -9,7 +9,16 @@
       </div>
         <div>
         <!-- Retweeter's Username -->
-        <p (click)="onAvatarClick(post.user_id)" class="font-bold text-xl text-gray-800 dark:text-white">{{ username }}</p>
+          <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
+            <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+            <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold bg-white dark.bg-white rounded-full">
+            <img class="w-full h-full lg:w-4 lg:h-4" [src]="favoriteClub?.logo" alt="hehe"/>
+              <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->
+
+
+            <span class="sr-only">Icon description</span>
+          </span>
+          </div>
         <!-- Retweet Date -->
         <p class="text-sm text-light-gray" (click)="onAvatarClick(post.user_id)">{{ post.created_at | date: 'medium' }}</p>
       </div>
@@ -26,7 +35,16 @@
       <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
       <div>
         <!-- Original Poster's Username -->
-        <p class="font-bold text-xl text-gray-800 dark:text-white ">{{ usernameRetweeted }}</p>
+        <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
+          <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+          <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold bg-white dark.bg-white rounded-full">
+            <img class="w-full h-full lg:w-4 lg:h-4" [src]="favoriteClub?.logo" alt="hehe"/>
+            <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->
+
+
+            <span class="sr-only">Icon description</span>
+          </span>
+        </div>
         <!-- Original Post Date -->
         <p class="text-sm text-light-gray"  >{{ originalPost.created_at | date: 'medium' }}</p>
       </div>
