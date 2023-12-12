@@ -41,8 +41,20 @@
           <div class="inline-flex items-center">
             <img *ngIf="notification.type === 'friendRequest'" [src]="notification.avatarSafeUrl" alt="user image"
                  class="w-8 h-8 rounded-full mr-3"/>
-            <img *ngIf="notification.type === 'bettingNotification'" alt="Betting Icon"
-                 class="w-8 h-8 mr-3" src="https://cdn-icons-png.flaticon.com/128/763/763812.png"/>
+
+            <div *ngIf="notification.logoType === 'C'">
+              <svg class="w-6 h-6  m-2 text-[#00ce00] " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+              </svg>
+            </div>
+
+            <div *ngIf="notification.logoType === 'U'">
+              <!-- SVG for Logo U -->
+              <svg class="w-6 h-6  m-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+              </svg>
+            </div>
+
             <!-- Add more img tags for different notification types with corresponding icons -->
             <h3 class="font-bold text-base text-gray-800 dark:text-white">{{ notification.title }}</h3>
           </div>

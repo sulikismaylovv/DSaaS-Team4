@@ -8,6 +8,8 @@ import {NotificationsService , Notification} from "../../../core/services/notifi
 import {NavbarService} from "../../../core/services/navbar.service";
 
 
+
+
 interface FriendRequest {
   profile: Profile;
   avatarSafeUrl: SafeResourceUrl;
@@ -22,6 +24,8 @@ interface CombinedNotification {
   createdAt: Date ;
   type: 'friendRequest' | 'bettingNotification'; // Add more types as necessary
   profile?: Profile;
+  logoType?: 'C' | 'U';
+
 }
 
 
@@ -98,6 +102,8 @@ export class NotificationComponent implements OnInit {
         type: 'bettingNotification' as 'bettingNotification'
       }));
       this.allNotifications.push(...formattedNotifications);
+      this.allNotifications.forEach(notification => this.assignLogoType(notification));
+
     }
   }
 
@@ -123,6 +129,8 @@ export class NotificationComponent implements OnInit {
           profile: requestProfile.data, // Include the profile data
         };
         this.allNotifications.push(formattedRequest);
+        this.allNotifications.forEach(notification => this.assignLogoType(notification));
+
       }
     }
   }
@@ -154,6 +162,7 @@ export class NotificationComponent implements OnInit {
 
     this.notificationsCount = this.allNotifications.length;
     this.navbarService.changeNotificationCount(0);
+    await this.navbarService.setNotificationCount(this.currentUserId);
     await new Promise<void>((resolve) => {
       this.navbarService.currentNotificationCount$.subscribe((count) => {
         this.notificationsCount = count;
@@ -199,5 +208,22 @@ export class NotificationComponent implements OnInit {
     // Re-categorize the remaining notifications
     window.location.reload();
   }
+
+  shouldShowLogoC(text: string): boolean {
+    return text.startsWith('C');
+  }
+
+  shouldShowLogoU(text: string): boolean {
+    return text.startsWith('U');
+  }
+
+  assignLogoType(notification: CombinedNotification): void {
+    if (notification.text?.startsWith('C')) {
+      notification.logoType = 'C';
+    } else if (notification.text?.startsWith('U')) {
+      notification.logoType = 'U';
+    }
+  }
+
 
 }
