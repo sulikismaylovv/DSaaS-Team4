@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Fixture } from '../models/fixtures.model';
 import { SupabaseFixture } from '../models/supabase-fixtures.model';
 
 @Injectable({

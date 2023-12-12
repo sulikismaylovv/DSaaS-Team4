@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Comment} from "../../../core/models/posts.model";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   templateUrl: './comment-view.component.html',
   styleUrls: ['./comment-view.component.css']
 })
-export class CommentViewComponent {
+export class CommentViewComponent implements OnInit{
   @Input() comment!: Comment;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;

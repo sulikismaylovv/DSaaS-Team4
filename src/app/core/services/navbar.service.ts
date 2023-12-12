@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {NotificationsService} from "./notifications.service";
-import {SupabaseService} from "./supabase.service";
 import {FriendshipService} from "./friendship.service";
 
 @Injectable({

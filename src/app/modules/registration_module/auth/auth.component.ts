@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-
-
 import {AuthService} from '../../../core/services/auth.service';
 import {NavbarService} from "../../../core/services/navbar.service";
 import {Session} from "@supabase/supabase-js";

@@ -4,7 +4,7 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {NotificationsService , Notification} from "../../../core/services/notifications.service";
+import {NotificationsService} from "../../../core/services/notifications.service";
 import {NavbarService} from "../../../core/services/navbar.service";
 
 
@@ -42,7 +42,7 @@ export class NotificationComponent implements OnInit {
   currentUserId: string | undefined = this.authService.session?.user.id;
   allNotifications: CombinedNotification[] = [];
   categorizedNotifications: { [key: string]: CombinedNotification[] } = {};
-  public notificationsCount: number = 0;
+  public notificationsCount = 0;
 
 
   constructor(
@@ -99,7 +99,7 @@ export class NotificationComponent implements OnInit {
         title: notification.title,
         text: notification.text,
         createdAt: new Date(notification.created_at || Date.now()),
-        type: 'bettingNotification' as 'bettingNotification'
+        type: 'bettingNotification' as const
       }));
       this.allNotifications.push(...formattedNotifications);
       this.allNotifications.forEach(notification => this.assignLogoType(notification));

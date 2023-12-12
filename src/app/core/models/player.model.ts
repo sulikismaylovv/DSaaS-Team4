@@ -5,7 +5,7 @@ export interface Player {
     age: number;       // Player's age
     number: number;    // Player's jersey number
     position: string;  // Player's position on the field
-    photo: string;     // URL to the player's photo
+    photo: string;     // URL to the player's photo
   }
 
   export class PlayerModel implements Player {

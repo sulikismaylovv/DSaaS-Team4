@@ -5,8 +5,6 @@ import { PostsService } from "../../../core/services/posts.service";
 import { UserServiceService } from "../../../core/services/user-service.service";
 import { ImageDownloadService } from "../../../core/services/imageDownload.service";
 import { MatDialog } from "@angular/material/dialog";
-import { of } from 'rxjs';
-import any = jasmine.any;
 
 describe('PostViewComponent', () => {
   let component: PostViewComponent;

@@ -1,6 +1,6 @@
 // src/app/pages/createleague/createleague.component.ts
 
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
@@ -15,7 +15,7 @@ interface Friend {
   templateUrl: './createleague.component.html',
   styleUrls: ['./createleague.component.css']
 })
-export class CreateleagueComponent implements OnInit {
+export class CreateleagueComponent {
   leagueForm: FormGroup;
   showModal = false;
   submittedLeagueName = '';
@@ -32,8 +32,6 @@ export class CreateleagueComponent implements OnInit {
       friends: this.fb.array([])
     });
   }
-
-  ngOnInit(): void {}
 
   createFriendGroup(username = ''): FormGroup {
     return this.fb.group({
@@ -144,7 +142,7 @@ export class CreateleagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      let results = await this.userService.searchFriendsByUsername(searchTerm);
+      const results = await this.userService.searchFriendsByUsername(searchTerm);
       // Filter out usernames that have already been added
       const addedUsernames = this.friends.value.map((f: Friend) => f.username);
       this.userSearchResults = results.filter((user: { username: any; }) => !addedUsernames.includes(user.username));

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../core/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserServiceService} from "../../core/services/user-service.service";
@@ -14,7 +14,7 @@ import {PreferencesService} from "../../core/services/preference.service";
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.css']
 })
-export class AsideComponent {
+export class AsideComponent implements OnInit {
 
   userSearchResults: any[] = [];
   session: any; // Adjust the type based on your session object
@@ -24,11 +24,7 @@ export class AsideComponent {
 
   nextClub: Club = new Club();
   myClub: Club = new Club();
-  clubID: number = 0;
-
-
-
-
+  clubID = 0;
 
   constructor(
     protected readonly authService: AuthService,
@@ -171,7 +167,7 @@ ngOnInit() {
 
   bindClubData(clubData: any): Club {
     // Assuming clubData has properties that match those in your Club model
-    let club = new Club();
+    const club = new Club();
     club.id = clubData.id;
     club.name = clubData.name;
     club.logo = clubData.logo;

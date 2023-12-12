@@ -48,9 +48,6 @@ export class ThemeService {
   }
 
   // Clean up the listener when the service is destroyed
-  ngOnDestroy() {
-    this.mediaQueryListener.removeEventListener('change', this.systemThemeChanged.bind(this));
-  }
 }
 
 

@@ -4,7 +4,6 @@ import { CreateleagueComponent } from './createleague.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "../../../core/services/auth.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
-import {using} from "rxjs";
 import {CreatefriendsleagueService} from "../../../core/services/createfriendsleague.service";
 
 describe('CreateleagueComponent', () => {

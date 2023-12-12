@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {CanActivate, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AuthService} from "../services/auth.service";
@@ -12,8 +12,6 @@ export class FirstSignGuard implements CanActivate {
   }
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.checkUserProfile();
   }

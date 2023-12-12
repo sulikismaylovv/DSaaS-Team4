@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../core/services/auth.service";
-import {Session, SupabaseClient} from "@supabase/supabase-js";
+import {Session} from "@supabase/supabase-js";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {CreatefriendsleagueService, League} from "../../../core/services/createfriendsleague.service";
-import {SupabaseService} from "../../../core/services/supabase.service";
 
 
 interface Friend {
@@ -155,7 +154,7 @@ export class GloballeagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      let results = await this.userService.searchFriendsByUsername(searchTerm);
+      const results = await this.userService.searchFriendsByUsername(searchTerm);
       // Filter out usernames that have already been added
       const addedUsernames = this.friends.value.map((f: Friend) => f.username);
       this.userSearchResults = results.filter((user: { username: any; }) => !addedUsernames.includes(user.username));

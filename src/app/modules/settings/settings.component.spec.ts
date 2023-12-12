@@ -4,7 +4,6 @@ import { SettingsComponent } from './settings.component';
 import { AvatarComponent } from "../account_module/avatar/avatar.component";
 import { AuthService } from '../../core/services/auth.service';
 import { PreferencesService } from '../../core/services/preference.service';
-import { of } from 'rxjs';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;

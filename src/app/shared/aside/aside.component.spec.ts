@@ -3,26 +3,10 @@ import { AsideComponent } from './aside.component';
 import { AuthService } from "../../core/services/auth.service";
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
 
 // Mock services and their methods
 class MockAuthService {
   // Mock whatever method you need from AuthService
-}
-
-class MockUserService {
-  // Mock methods from UserService
-}
-
-class MockPreferencesService {
-  // Mock methods from PreferencesService
-}
-
-class MockApiService {
-  // Mock methods from ApiService
-  fetchStandings() {
-    return of([]); // Return an observable of the expected data
-  }
 }
 
 describe('AsideComponent', () => {

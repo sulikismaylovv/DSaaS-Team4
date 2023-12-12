@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SinglePostComponent } from './single-post.component';
 import { PostsService } from "../../../core/services/posts.service";
 import { AuthService } from "../../../core/services/auth.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { of } from 'rxjs';
+import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SinglePostComponent', () => {
