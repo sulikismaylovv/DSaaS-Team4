@@ -6,6 +6,7 @@ import { UserServiceService } from "../../../core/services/user-service.service"
 import { CreatefriendsleagueService } from "../../../core/services/createfriendsleague.service";
 import { FriendsleagueComponent } from "../friendsleague/friendsleague.component";
 import { RouterTestingModule } from "@angular/router/testing";
+import {AsideComponent} from "../../../shared/aside/aside.component";
 
 describe('GloballeagueComponent', () => {
   let component: GloballeagueComponent;
@@ -22,7 +23,8 @@ describe('GloballeagueComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         GloballeagueComponent,
-        FriendsleagueComponent // Declare the component here
+        FriendsleagueComponent, // Declare the component here
+        AsideComponent
       ],
       imports: [
         ReactiveFormsModule,
