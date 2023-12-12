@@ -12,6 +12,7 @@ import { FixtureTransferService } from '../../../core/services/fixture-transfer.
 import { ApiService } from '../../../core/services/api.service';
 import { DailyAwardService } from '../../../core/services/daily-award.service';
 import { MatchesComponent } from "../matches/matches.component";
+import {AsideComponent} from "../../../shared/aside/aside.component";
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -43,7 +44,7 @@ describe('HomeComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [HomeComponent, MatchesComponent],
+      declarations: [HomeComponent, MatchesComponent, AsideComponent],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: UserServiceService, useValue: mockUserService },
