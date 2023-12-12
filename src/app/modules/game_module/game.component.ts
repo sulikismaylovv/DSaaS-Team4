@@ -252,6 +252,7 @@ export class GameComponent implements OnInit {
       this.betAmount += number;
       console.log(this.betAmount);
     }
+    this.trackButtonClick1();
   }
 
   async getUserCredits() {
@@ -284,6 +285,18 @@ export class GameComponent implements OnInit {
     this.league = data;
   }
 
+  trackButtonClick(): void {
+    console.log("success", "hey");
+    gtag('event', 'Bet', {
+      event_category: 'Button1',
+      event_label: 'BetButton'
+    });}
+  trackButtonClick1(): void {
+    console.log("success1", "hey1");
+    gtag('event', 'ChangeBetValue', {
+      event_category: 'Button2',
+      event_label: 'ChangeButton'
+    });}
   async placeBet() {
     console.log("placeBet() called");
     const user = this.authService.session?.user;
@@ -311,7 +324,9 @@ export class GameComponent implements OnInit {
       this.handleBetAlreadyExists();
       throw new Error("Bet already exists");
     }
+    this.trackButtonClick();
   }
+
 
   handleBetAlreadyExists() {
     //something needs to be done here
@@ -408,7 +423,7 @@ export class GameComponent implements OnInit {
         this.teamChosen = "away";
       }  else if (team === "draw") {
         this.teamChosen = "draw";
-      } 
+      }
     }
   }
 
