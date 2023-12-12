@@ -421,7 +421,9 @@ export class GameComponent implements OnInit {
   toggleTheme() {
     this.themeService.toggleTheme();
   }
-
+  goToShop() {
+    this.router.navigate(["/shop"]);
+  }
   toggleContent(team: string) {
     if (this.clickedImage === team) {
       // If the same team is clicked again, reset everything

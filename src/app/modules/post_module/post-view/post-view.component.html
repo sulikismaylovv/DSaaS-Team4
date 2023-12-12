@@ -11,11 +11,9 @@
         <!-- Retweeter's Username -->
           <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
             <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
-            <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold bg-white dark.bg-white rounded-full">
-            <img class="w-full h-full lg:w-4 lg:h-4" [src]="favoriteClub?.logo" alt="hehe"/>
+            <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold rounded-full">
+            <img [src]="favoriteClub?.logo" alt="hehe"/>
               <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->
-
-
             <span class="sr-only">Icon description</span>
           </span>
           </div>
@@ -37,8 +35,8 @@
         <!-- Original Poster's Username -->
         <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
           <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ usernameRetweeted }}</p>
-          <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold bg-white dark.bg-white rounded-full">
-            <img class="w-full h-full lg:w-4 lg:h-4 " [src]="clubRetweeted?.logo" alt="hehe"/>
+          <span class="flex items-center justify-center w-4 h-4 lg:w-6 lg:h-6 me-2 ml-2 font-semibold rounded-full">
+            <img [src]="clubRetweeted?.logo" alt="hehe"/>
             <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->
 
 
@@ -144,7 +142,6 @@
     </div>
   </ng-template>
 
-
   <!-- Interaction buttons like, comment, etc. -->
   <div class="flex items-center mt-4">
     <!-- Like Button -->
@@ -177,7 +174,6 @@
       </svg>
       <span class="text-gray-800 dark:text-white">{{ getRetweetCount(this.post.id) | number }}</span>
     </button>
-
   </div>
 </div>
 
