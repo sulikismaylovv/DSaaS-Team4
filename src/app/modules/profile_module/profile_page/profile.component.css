@@ -11,3 +11,19 @@
 .custom-dialog {
   background-color: #111111;
 }
+
+#friendRemovedFeedBack {
+  display: none;
+}
+
+#friendRemovedFeedBack.active {
+  display: flex;
+}
+
+#removeFriendModal {
+  display: none;
+}
+
+#removeFriendModal.active {
+  display: flex;
+}

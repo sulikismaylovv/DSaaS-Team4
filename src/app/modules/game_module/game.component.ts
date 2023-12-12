@@ -95,6 +95,27 @@ export class GameComponent implements OnInit {
       }).subscribe();
   }
 
+  checkCredits():void{
+    console.log(this.betAmount + " and "+ this.availableCredits);
+    if(this.availableCredits < this.betAmount){
+      this.openModal("insufficientCredits");
+    }
+  }
+
+  openModal(id: string): void {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('active');
+    }
+  }
+
+  closeModal(id: string): void {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('active');
+    }
+  }
+
   // async updateTheTime() {
   //   this.time = this.formatDateToHHMM(this.fixture.time);
   //   this.cdr.detectChanges();
@@ -408,7 +429,7 @@ export class GameComponent implements OnInit {
         this.teamChosen = "away";
       }  else if (team === "draw") {
         this.teamChosen = "draw";
-      } 
+      }
     }
   }
 
