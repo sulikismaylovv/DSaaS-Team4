@@ -4,10 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AuthService} from "../../../core/services/auth.service";
 import {PostsService} from "../../../core/services/posts.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
-import {of} from 'rxjs';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import any = jasmine.any;
-import anything = jasmine.anything;
 
 describe('CreatePostComponent', () => {
   let component: CreatePostComponent;

@@ -4,8 +4,10 @@ import {FriendshipService} from "../../../core/services/friendship.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
-import {NotificationsService , Notification} from "../../../core/services/notifications.service";
+import {NotificationsService} from "../../../core/services/notifications.service";
 import {NavbarService} from "../../../core/services/navbar.service";
+
+
 
 
 interface FriendRequest {
@@ -22,6 +24,8 @@ interface CombinedNotification {
   createdAt: Date ;
   type: 'friendRequest' | 'bettingNotification'; // Add more types as necessary
   profile?: Profile;
+  logoType?: 'C' | 'U';
+
 }
 
 
@@ -38,7 +42,7 @@ export class NotificationComponent implements OnInit {
   currentUserId: string | undefined = this.authService.session?.user.id;
   allNotifications: CombinedNotification[] = [];
   categorizedNotifications: { [key: string]: CombinedNotification[] } = {};
-  public notificationsCount: number = 0;
+  public notificationsCount = 0;
 
 
   constructor(
@@ -95,9 +99,11 @@ export class NotificationComponent implements OnInit {
         title: notification.title,
         text: notification.text,
         createdAt: new Date(notification.created_at || Date.now()),
-        type: 'bettingNotification' as 'bettingNotification'
+        type: 'bettingNotification' as const
       }));
       this.allNotifications.push(...formattedNotifications);
+      this.allNotifications.forEach(notification => this.assignLogoType(notification));
+
     }
   }
 
@@ -123,6 +129,8 @@ export class NotificationComponent implements OnInit {
           profile: requestProfile.data, // Include the profile data
         };
         this.allNotifications.push(formattedRequest);
+        this.allNotifications.forEach(notification => this.assignLogoType(notification));
+
       }
     }
   }
@@ -154,6 +162,7 @@ export class NotificationComponent implements OnInit {
 
     this.notificationsCount = this.allNotifications.length;
     this.navbarService.changeNotificationCount(0);
+    await this.navbarService.setNotificationCount(this.currentUserId);
     await new Promise<void>((resolve) => {
       this.navbarService.currentNotificationCount$.subscribe((count) => {
         this.notificationsCount = count;
@@ -199,5 +208,22 @@ export class NotificationComponent implements OnInit {
     // Re-categorize the remaining notifications
     window.location.reload();
   }
+
+  shouldShowLogoC(text: string): boolean {
+    return text.startsWith('C');
+  }
+
+  shouldShowLogoU(text: string): boolean {
+    return text.startsWith('U');
+  }
+
+  assignLogoType(notification: CombinedNotification): void {
+    if (notification.text?.startsWith('C')) {
+      notification.logoType = 'C';
+    } else if (notification.text?.startsWith('U')) {
+      notification.logoType = 'U';
+    }
+  }
+
 
 }

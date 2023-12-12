@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Bet, Better } from '../models/bets.model';
-import {Fixture,fixtureInfo} from "../models/fixtures.model";
-import { Observable } from 'rxjs';
-import { from } from 'rxjs';
+import { Bet } from '../models/bets.model';
+import {Fixture} from "../models/fixtures.model";
 import {Club} from "../models/club.model";
 
 export interface BetWithFixture {
@@ -380,6 +378,22 @@ export class BetsService {
     } catch (error) {
       console.error('Error fetching pending bets:', error);
       throw error;
+    }
+  }
+
+  async getUserXP(userID: string): Promise<number | null> {
+    try {
+      const { data, error } = await this.supabase.supabaseClient
+        .from('usersinbetting')
+        .select('xp')
+        .eq('userID', userID)
+        .single();
+
+      if (error) throw error;
+      return data ? data.xp : null;
+    } catch (error) {
+      console.error('Error fetching user XP:', error);
+      return null;
     }
   }
 }

@@ -15,7 +15,6 @@ import {
   FriendsLeague} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
-import {Bet} from "../../../core/models/bets.model";
 
 
 export enum FriendRequestStatus {
@@ -83,7 +82,7 @@ export class CommonComponent implements OnInit{
   friendsList: FriendInfo[] = []; // Array to store friends' info
   showModal: boolean = false;
 
-  aboutOrBetLink: string = 'loading..';
+  aboutOrBetLink = 'loading..';
   infoString: string[] | undefined;
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
@@ -124,12 +123,31 @@ export class CommonComponent implements OnInit{
         {
           event: '*',
           schema: 'public',
+          table: 'friendships',
+        },
+        async () => {
+          //await this.fetchFriends(this.profile?.id);
+          await this.checkFriendStatus();
+        }
+      )
+      .subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates2')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
           table: 'posts',
         },
         async () => {
           await this.loadPosts(this.profile?.id);
         }
-      )
+      ).subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates3')
       .on(
         'postgres_changes',
         {
@@ -140,20 +158,7 @@ export class CommonComponent implements OnInit{
         async (payload) => {
           this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
         }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'friendships',
-        },
-        async () => {
-          //await this.fetchFriends(this.profile?.id);
-          await this.checkFriendStatus();
-        }
-      )
-      .subscribe();
+      ).subscribe();
   }
 
 
@@ -182,7 +187,6 @@ export class CommonComponent implements OnInit{
         await this.checkFriendStatus();
       }
 
-      this.loadBets();
 
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
@@ -190,22 +194,23 @@ export class CommonComponent implements OnInit{
       const postsPromise = this.loadPosts(this.profile?.id || '');
 
       // Wait for all promises to resolve
+      await Promise.all([friendsPromise]);
+      this.loading = false;
+
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
-
-      await this.loadUserLeagues(this.profile?.id);
-      await this.updateOwnedPlayers();
 
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
       }
 
+      await this.loadUserLeagues(this.profile?.id);
+      this.loadBets();
+      await this.updateOwnedPlayers();
+
     } catch (error) {
       console.error('An error occurred during initialization:', error);
-      // Handle the error properly
-    } finally {
-      this.loading = false; // Ensure loading is set to false after operations complete
     }
   }
 
@@ -515,7 +520,7 @@ export class CommonComponent implements OnInit{
       const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
       //console.log("Fetched league members:", leagueMembers);
 
-      let userLeaguesTemp: UserLeague[] = [];
+      const userLeaguesTemp: UserLeague[] = [];
 
       for (const league of leagues) {
         if (league.id !== undefined) {
@@ -532,7 +537,7 @@ export class CommonComponent implements OnInit{
           const topMembers = sortedMembers.slice(0, 3);
 
           const isUserInTop = topMembers.some(member => member.userid === userId);
-          let currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
+          const currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
           let userPosition: number | string = "Not in league";
 
           if (!isUserInTop) {

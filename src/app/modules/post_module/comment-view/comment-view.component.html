@@ -1,10 +1,10 @@
 <article class="p-6 text-base bg-white rounded-lg dark:bg-[#3a4151]">
   <footer class="flex justify-between items-center mb-2">
-    <div class="flex flex-col items-start" (click)="onAvatarClick(comment.user_id)">
+    <div class="flex flex-col items-start" (click)="onAvatarClick(comment.user_id)" tabindex="0">
       <p class="inline-flex items-center mr-3 mb-1 text-sm text-gray-900 dark:text-white font-semibold">
         <img [src]="avatarSafeUrl"
-        class="mr-2 w-6 h-6 rounded-full"
-        alt="user_profile_pic">{{username}}
+             class="mr-2 w-6 h-6 rounded-full"
+             alt="user_profile_pic">{{username}}
       </p>
       <p class="text-xs text-gray-600 dark:text-white">
         <time pubdate datetime="2022-02-08" title="February 8th, 2022">
@@ -12,6 +12,7 @@
         </time>
       </p>
     </div>
+
   </footer>
   <p class="text-gray-500 dark:text-white">
     {{ comment.content }}

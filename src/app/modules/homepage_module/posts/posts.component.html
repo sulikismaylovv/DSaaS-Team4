@@ -1,21 +1,28 @@
-<!-- posts.component.html -->
 
-<div class="min-h-screen">
-    <div class="container mx-auto flex flex-col items-center lg:px-4">
-        <!-- Create Post Section -->
-        <div *ngIf="authService.isAuthenticated$ | async" class="w-full justify-center pt-3">
-            <div class="flex items-center border-2 border-purple-500 rounded-lg pl-4 pr-2 py-2 bg-white dark:bg-[#394151] shadow-sm w-full">
-                <img [src]="avataUrl" alt="Your profile" class="h-8 w-8 rounded-full"/>
-                <input type="text" placeholder="Start a post" class="flex-1 w-1/2 lg:max-w-full border-none focus:ring-0 pl-4 dark:bg-[#394151] rounded-full" readonly (click)="openCreatePostModal()"/>
-            </div>
-        </div>
-        <!-- Posts Feed -->
-        <div class="w-fit py-6">
-            <div *ngFor="let post of posts" class="mb-4">
-              <div (click)="onPostClick(post.id)" class="cursor-pointer">
-                <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false"></app-post-view>
-              </div>
-            </div>
-        </div>
+<div class="min-h-screen no-scrollbar">
+  <div class="container mx-auto px-4 no-scrollbar">
+    <!-- Create Post Section -->
+    <div *ngIf="authService.isAuthenticated$ | async" class="w-full justify-center pt-3">
+      <div class="flex items-center border-2 border-purple-500 rounded-lg pl-4 pr-2 py-2 bg-white dark:bg-[#394151] shadow-sm w-full">
+        <img [src]="avataUrl" alt="Your profile" class="h-8 w-8 rounded-full"/>
+        <input type="text" placeholder="Start a post" class="flex-1 w-1/2 lg:max-w-full border-none focus:ring-0 pl-4 dark:bg-[#394151] rounded-full" readonly (click)="openCreatePostModal()"/>
+      </div>
     </div>
+    <!-- Posts Feed -->
+    <div class="w-[300px] sm:w-[500px] md:w-[600px] lg:w-fit 2xl:w-[900px] 3xl:w-[1000px] py-6">
+      <div *ngIf="posts.length > 0; else noPosts">
+      <div *ngFor="let post of posts" class="mb-4">
+        <div (click)="onPostClick(post.id)" class="cursor-pointer w-full">
+          <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false" class="max-w-full"></app-post-view>
+        </div>
+      </div>
+      </div>
+
+      <ng-template #noPosts>
+        <div class="text-center py-10">
+          <p class="text-gray-600 dark:text-primary-100">No posts yet.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
 </div>

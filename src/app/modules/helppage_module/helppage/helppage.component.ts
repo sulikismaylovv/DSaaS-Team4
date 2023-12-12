@@ -6,8 +6,8 @@ import { Component, Input  } from '@angular/core';
   styleUrls: ['./helppage.component.css']
 })
 export class HelppageComponent {
-  @Input() question: string = '';
-  @Input() answer: string = '';
+  @Input() question = '';
+  @Input() answer = '';
   isOpen = false;
   toggle() {
     this.isOpen = !this.isOpen;

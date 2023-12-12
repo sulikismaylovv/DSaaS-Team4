@@ -10,11 +10,27 @@ export class PostsService {
   }
 
   // Fetch all posts
-  async getPosts(): Promise<Post[]> {
+  // async getPosts(): Promise<Post[]> {
+  //   try {
+  //     const { data, error } = await this.supabase.supabaseClient
+  //       .from("posts")
+  //       .select("*");
+  //
+  //     if (error) throw error;
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Error fetching posts:", error);
+  //     throw error;
+  //   }
+  // }
+
+  async getPosts(offset = 0, limit = 10): Promise<Post[]> {
     try {
       const { data, error } = await this.supabase.supabaseClient
         .from("posts")
-        .select("*");
+        .select("*")
+        .order("created_at", { ascending: false }) // Assuming you have a 'created_at' field to sort by
+        .range(offset, offset + limit - 1);
 
       if (error) throw error;
       return data;

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation,} from '@angular/core';
 
 @Component({
     selector: 'app-stepper',
@@ -6,7 +6,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation,} f
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepperComponent implements OnInit {
+export class StepperComponent {
     @Input()
         // currentStep!: number;
         // steps: number[] = [1, 2, 3, 4]; // Adjust the array based on the number of steps
@@ -15,8 +15,6 @@ export class StepperComponent implements OnInit {
 
     steps = [1, 2, 3, 4];
 
-    ngOnInit(): void {
-    }
 
     getStepDescription(stepNumber: number): string {
         switch (stepNumber) {

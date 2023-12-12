@@ -52,7 +52,7 @@ export class FirstSignGuard implements CanActivate {
     const difference = Math.abs(lastSignInDate.getTime() - createdDate.getTime());
 
     // Check if the difference is less than or equal to 60,000 milliseconds (1 minute)
-    return difference <= 30000;
+    return difference <= 60000;
   }
 
 

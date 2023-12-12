@@ -51,10 +51,18 @@ export class CreatefriendsleagueService {
     }
   }
 
-  async addUserToLeague(userId: string, leagueId: number): Promise<any> {
+  async addUserToLeague(userId: string, leagueId: number, xp?: number): Promise<any> {
+    // Initialize the record object with mandatory fields
+    const record: { userid: string; leagueid: number; xp?: number } = { userid: userId, leagueid: leagueId };
+
+    // Add xp to the record only if it's provided and not null
+    if (xp !== undefined && xp !== null) {
+      record.xp = xp;
+    }
+
     const { data, error } = await this.supabase.supabaseClient
       .from('usersinfriendsleague')
-      .upsert([{ userid: userId, leagueid: leagueId }]);
+      .upsert([record]);
 
     if (error) {
       console.error('Error adding user to league:', error);
@@ -63,5 +71,6 @@ export class CreatefriendsleagueService {
 
     return data;
   }
+
 
 }

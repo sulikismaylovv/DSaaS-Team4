@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {NotificationsService} from "./notifications.service";
-import {SupabaseService} from "./supabase.service";
+import {FriendshipService} from "./friendship.service";
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,9 @@ export class NavbarService {
   public notificationCountSubject = new BehaviorSubject<number>(0);
   currentNotificationCount$: Observable<number> = this.notificationCountSubject.asObservable();
 
-  constructor( private notificationsService: NotificationsService) {
+  constructor( private readonly notificationsService: NotificationsService,
+               private readonly friendshipService: FriendshipService
+               ){
 
   }
 
@@ -41,10 +43,12 @@ export class NavbarService {
 
     // Fetch notifications
     const notifications = await this.notificationsService.getNotificationsForUser(userId);
+    const requests = await this.friendshipService.getFriendRequests(userId);
 
 
     // Update the notification count
-    const totalNotifications = notifications.length;
+    const totalNotifications = notifications.length + requests.length;
+
     this.changeNotificationCount(totalNotifications);
   }
 

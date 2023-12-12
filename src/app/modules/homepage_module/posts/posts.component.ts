@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PostsService } from 'src/app/core/services/posts.service';
 import { Post } from "../../../core/models/posts.model";
 import { AuthService, Profile } from "../../../core/services/auth.service";
@@ -19,7 +19,8 @@ export class PostsComponent implements OnInit {
   avataUrl: SafeResourceUrl | undefined;
   profile: Profile | undefined;
   followedClubIds: number[] = [];
-
+  currentPage = 1;
+  postsPerPage = 10;
 
   constructor(
     private readonly postsService: PostsService,
@@ -155,6 +156,43 @@ export class PostsComponent implements OnInit {
       // If authenticated, you can perform other actions, such as opening the post details
     });
   }
+
+  lastScrollTop = 0; // property to hold the position of last scroll
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(): void {
+    // Current scroll position
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Check if we're at the bottom of the page and if we're scrolling down
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight
+      && currentScroll > this.lastScrollTop) {
+      this.loadMorePosts(); // Load more posts
+      console.log('At bottom, loading more posts');
+    }
+    // Set the new last scroll position to the current scroll position
+    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+  }
+
+  isLoading = false;
+
+  async loadMorePosts(): Promise<void> {
+    if (this.isLoading) {
+      return;
+    }
+    this.isLoading = true;
+
+    try {
+      const newPosts = await this.postsService.getPosts(this.posts.length, this.postsPerPage);
+      this.posts = [...this.posts, ...newPosts];
+      this.currentPage++;
+    } catch (error) {
+      console.error('Error loading more posts:', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
 
 
 
