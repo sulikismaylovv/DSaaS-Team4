@@ -81,11 +81,13 @@ export class CommonComponent implements OnInit{
   friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
   friendsList: FriendInfo[] = []; // Array to store friends' info
 
-  infoString: string[]= ['Friends', 'Leagues', 'About','Player Collection'];
+  aboutOrBetLink: string = 'loading..';
+  infoString: string[] | undefined;
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
-  friendActions: string[] = ['3683211.png','add-friend-24.png'];
+  friendActions: string[] = ['3683211.png','add-friend-24.svg'];
   selectedLink = 'link1';
+
 
   ownedPlayersDetails: PlayerWithClubDetails[] = [];
   currentUserID: string | undefined
@@ -120,12 +122,31 @@ export class CommonComponent implements OnInit{
         {
           event: '*',
           schema: 'public',
+          table: 'friendships',
+        },
+        async () => {
+          //await this.fetchFriends(this.profile?.id);
+          await this.checkFriendStatus();
+        }
+      )
+      .subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates2')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
           table: 'posts',
         },
         async () => {
           await this.loadPosts(this.profile?.id);
         }
-      )
+      ).subscribe();
+
+    this.supabase.supabaseClient
+      .channel('realtime-updates3')
       .on(
         'postgres_changes',
         {
@@ -136,20 +157,7 @@ export class CommonComponent implements OnInit{
         async (payload) => {
           this.bgImageSafeUrl = await this.imageService.loadBackgroundImage(this.profile?.id);
         }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'friendships',
-        },
-        async () => {
-          //await this.fetchFriends(this.profile?.id);
-          await this.checkFriendStatus();
-        }
-      )
-      .subscribe();
+      ).subscribe();
   }
 
 
@@ -162,6 +170,8 @@ export class CommonComponent implements OnInit{
 
     this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
     this.userRefId = this.isOwnProfile ? null : urlUserId;
+    this.aboutOrBetLink= this.isOwnProfile? "Betting Overview" : "About";
+    this.infoString=['Friends', 'Leagues', this.aboutOrBetLink,'Player Collection'];
 
     try {
       const profileData = this.userRefId
@@ -176,7 +186,6 @@ export class CommonComponent implements OnInit{
         await this.checkFriendStatus();
       }
 
-      this.loadBets();
 
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
@@ -184,22 +193,23 @@ export class CommonComponent implements OnInit{
       const postsPromise = this.loadPosts(this.profile?.id || '');
 
       // Wait for all promises to resolve
+      await Promise.all([friendsPromise]);
+      this.loading = false;
+
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
-
-      await this.loadUserLeagues(this.profile?.id);
-      await this.updateOwnedPlayers();
 
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
       }
 
+      await this.loadUserLeagues(this.profile?.id);
+      this.loadBets();
+      await this.updateOwnedPlayers();
+
     } catch (error) {
       console.error('An error occurred during initialization:', error);
-      // Handle the error properly
-    } finally {
-      this.loading = false; // Ensure loading is set to false after operations complete
     }
   }
 
@@ -426,7 +436,7 @@ export class CommonComponent implements OnInit{
     const visitorId=  this.authService.session?.user?.id;
     if(userId === undefined) throw new Error('User ID is undefined');
     if(visitorId === undefined) throw new Error('User ID is undefined');
-    if (userId) {
+    if(userId) {
       const friendIds = await this.friendshipService.getFriends(userId);
       for (const friendId of friendIds) {
         const friendProfile = await this.authService.profileById(friendId);

@@ -57,14 +57,14 @@ export class NavigationComponent {
         this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id));
         await this.navbarService.setNotificationCount(this.profile?.id);
         await this.navbarService.refreshNotificationCount(this.profile?.id);
-      console.log(this.avatarSafeUrl);
-      console.log(this.profile);
+      //console.log(this.avatarSafeUrl);
+      //console.log(this.profile);
     }
 
     await new Promise<void>((resolve) => {
       this.navbarService.currentNotificationCount$.subscribe((count) => {
         this.notificationCount = count;
-        console.log(this.notificationCount);
+        //console.log(this.notificationCount);
         resolve();
       });
     });

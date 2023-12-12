@@ -64,6 +64,8 @@ export class MatchesComponent implements OnInit {
 
   }
 
+
+
   hasFixturesForDate(date: string): boolean {
     return this.groupedFixtures[date]?.length > 0;
   }
@@ -155,7 +157,7 @@ export class MatchesComponent implements OnInit {
   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 }
 
-  
+
   didFixtureStart(fixture: SupabaseFixture): boolean {
     const fixtureDate = new Date(fixture.time);
     const currentDate = new Date();
@@ -239,6 +241,26 @@ export class MatchesComponent implements OnInit {
   formatShortDate(date: Date): string {
     return this.datePipe.transform(date, "MMM d") || "";
   }
+
+  formatWeek(startDate: Date, endDate: Date): string {
+    const start = this.formatShortDate(startDate);
+    const end = this.formatShortDate(endDate);
+
+    const current = new Date();
+    const startOfThisWeek = startOfWeek(current, { weekStartsOn: 5 });
+    const endOfThisWeek = endOfWeek(current, { weekStartsOn: 5 });
+
+    if (compareAsc(startDate, startOfThisWeek) === 0 && compareAsc(endDate, endOfThisWeek) === 0) {
+      return 'This Week';
+    } else if (compareAsc(startDate, subDays(startOfThisWeek, 7)) === 0 && compareAsc(endDate, subDays(endOfThisWeek, 7)) === 0) {
+      return 'Previous Week';
+    } else if (compareAsc(startDate, addDays(startOfThisWeek, 7)) === 0 && compareAsc(endDate, addDays(endOfThisWeek, 7)) === 0) {
+      return 'Next Week';
+    } else {
+      return `${start} - ${end}`;
+    }
+  }
+
 
   //convert from type string YYYY-MM-DD to type string MMM d
   formatShortDateString(dateString: string): string {
