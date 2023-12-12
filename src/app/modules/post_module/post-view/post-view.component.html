@@ -108,11 +108,10 @@
     <!-- Display post content -->
     <p *ngIf="!this.post.is_official" class="text-gray-800 mt-3 dark:text-white" (click)="onPostClick(post.id)">{{ post.content }}</p>
     <div *ngIf="this.post.is_official" (click)="onPostClick(post.id)" class="flex flex-row items-center justify-between">
-      <div class="flex flex-col 2xl:flex-row">
-        <p class="text-gray-800 dark:text-white text-sm md:text-lg lg:text-2xl  lg:mx-2  2xl:mr-1 2xl:ml-4">{{ splitTextAtSecondHyphen(post.content)[0] }} </p>
-        <p class="text-gray-800 dark:text-white text-sm md:text-lg lg:text-2xl  lg:mx-2  2xl:ml-1 2xl:mr-4 font-medium">{{ splitTextAtSecondHyphen(post.content)[1] }}</p>
-      </div>
-      <img src="assets/logos/kvc-westerlo.svg" alt="Post image" class="rounded-lg w-20 h-20 md:w-28 md:h-28 lg:w-40 lg:h-40 mx-1 lg:mx-6">
+      <span>
+        <p class="text-gray-800 dark:text-white text-sm md:text-lg xl:text-2xl xl:mx-2 ">{{ splitTextAtSecondHyphen(post.content)[0]}}:  <span class="font-semibold whitespace-nowrap"> {{ splitTextAtSecondHyphen(post.content)[1] }}</span></p>
+      </span>
+      <img src="assets/logos/kvc-westerlo.svg" alt="Post image" class="rounded-lg w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 xl:w-40 xl:h-40 mx-1 lg:mx-6">
     </div>
 
     <!-- Display post image if exists -->
