@@ -37,12 +37,13 @@
           </h2>
           <p class="mt-2 text-sm">Please sign in to your account</p>
         </div>
-        <div (click)="signInWithProvider()" class="flex flex-row justify-center items-center space-x-3">
-          <button class="flex items-center justify-center text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900 transition duration-150">
+        <div class="flex flex-row justify-center items-center space-x-3">
+          <button (click)="signInWithProvider()" class="flex items-center justify-center text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900 transition duration-150">
             <img alt="google logo" class="w-6 h-6 mr-2" loading="lazy" src="https://www.svgrepo.com/show/475656/google-color.svg">
             <span>Login with Google</span>
           </button>
         </div>
+
         <div class="flex items-center justify-center space-x-2">
           <span class="h-px w-16 bg-gray-200 dark:bg-white"></span>
           <span class="text-gray-300 font-normal dark:text-white">or continue with email</span>

@@ -19,8 +19,8 @@
     <div class="space-y-4">
         <form (ngSubmit)="updateProfile()" [formGroup]="updateProfileForm" class="form-widget space-y-4">
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Avatar</label>
-                <app-avatar (upload)="updateAvatar($event)" [avatarUrl]="this.avatarUrl"></app-avatar>
+                <p id="avatarLabel" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Avatar</p>
+                <app-avatar (upload)="updateAvatar($event)" [avatarUrl]="this.avatarUrl" aria-labelledby="avatarLabel"></app-avatar>
                 <!-- input fields -->
             </div>
             <div>

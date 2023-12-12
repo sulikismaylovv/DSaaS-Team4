@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit{
   favoriteClub: ClubShow | undefined;
   followedClubs: ClubShow[] = [];
   selectedFavoriteClubId: number | undefined;  // Temporary state for selected favorite club
-  showModal: boolean = false;
+  showModal = false;
 
 
 

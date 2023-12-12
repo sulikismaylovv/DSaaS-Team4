@@ -3,7 +3,7 @@ import { PostsComponent } from './posts.component';
 import { AuthService } from "../../../core/services/auth.service";
 import { PostsService } from "../../../core/services/posts.service";
 import { MatDialog } from "@angular/material/dialog";
-import { of, BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('PostsComponent', () => {
   let component: PostsComponent;

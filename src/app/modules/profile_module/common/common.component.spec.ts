@@ -4,10 +4,9 @@ import { AuthService } from "../../../core/services/auth.service";
 import { PostsService } from "../../../core/services/posts.service";
 import { PreferencesService } from "../../../core/services/preference.service";
 import { FriendshipService } from "../../../core/services/friendship.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from "@angular/material/dialog";
-import { of } from 'rxjs';
 
 describe('CommonComponent', () => {
   let component: CommonComponent;

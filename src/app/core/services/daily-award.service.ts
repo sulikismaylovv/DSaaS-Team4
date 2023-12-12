@@ -31,7 +31,4 @@ export class DailyAwardService {
       });
     }
   }
-  closePopup(): void{
-    const dialogRef= this.dialog.closeAll();
-  }
 }

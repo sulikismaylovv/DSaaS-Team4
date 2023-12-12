@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { DailyAwardService } from './daily-award.service';
 import { MatDialog } from "@angular/material/dialog";
-import { DailyAwardComponent } from "../../modules/homepage_module/daily-award/daily-award.component";
 
 describe('DailyAwardService', () => {
   let service: DailyAwardService;
