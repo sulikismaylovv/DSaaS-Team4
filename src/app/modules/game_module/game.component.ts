@@ -18,6 +18,7 @@ import { SupabaseService } from "src/app/core/services/supabase.service";
 import { Observable } from "rxjs";
 import { from } from "rxjs";
 import { Player } from "src/app/core/models/player.model";
+declare let gtag: Function;
 
 @Component({
   selector: "app-game",
