@@ -286,18 +286,6 @@ export class GameComponent implements OnInit {
     this.league = data;
   }
 
-  trackButtonClick(): void {
-    console.log("success", "hey");
-    gtag('event', 'Bet', {
-      event_category: 'Button1',
-      event_label: 'BetButton'
-    });}
-  trackButtonClick1(): void {
-    console.log("success1", "hey1");
-    gtag('event', 'ChangeBetValue', {
-      event_category: 'Button2',
-      event_label: 'ChangeButton'
-    });}
   async placeBet() {
     console.log("placeBet() called");
     const user = this.authService.session?.user;
@@ -431,4 +419,17 @@ export class GameComponent implements OnInit {
   toggleNewContent() {
     this.showNewContent = true;
   }
+
+  trackButtonClick(): void {
+    console.log("success", "hey");
+    gtag('event', 'Bet', {
+      event_category: 'Button1',
+      event_label: 'BetButton'
+    });}
+  trackButtonClick1(): void {
+    console.log("success1", "hey1");
+    gtag('event', 'ChangeBetValue', {
+      event_category: 'Button2',
+      event_label: 'ChangeButton'
+    });}
 }
