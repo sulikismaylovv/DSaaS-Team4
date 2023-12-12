@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
-import { Bet, Better } from '../models/bets.model';
-import {Fixture,fixtureInfo} from "../models/fixtures.model";
-import { Observable } from 'rxjs';
-import { from } from 'rxjs';
+import { Bet } from '../models/bets.model';
+import {Fixture} from "../models/fixtures.model";
 import {Club} from "../models/club.model";
 
 export interface BetWithFixture {

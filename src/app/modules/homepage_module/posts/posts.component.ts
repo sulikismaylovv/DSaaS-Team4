@@ -162,7 +162,7 @@ export class PostsComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(): void {
     // Current scroll position
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     // Check if we're at the bottom of the page and if we're scrolling down
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight

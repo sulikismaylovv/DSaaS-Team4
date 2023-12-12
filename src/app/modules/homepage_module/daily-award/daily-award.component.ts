@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { UserServiceService } from "../../../core/services/user-service.service";
 import { AuthService } from "../../../core/services/auth.service";
@@ -8,8 +8,8 @@ import { AuthService } from "../../../core/services/auth.service";
   templateUrl: "./daily-award.component.html",
   styleUrls: ["./daily-award.component.css"],
 })
-export class DailyAwardComponent {
-  isRecentlyLogged: boolean = true;
+export class DailyAwardComponent implements OnInit{
+  isRecentlyLogged = true;
 
   constructor(
     public dialogRef: MatDialogRef<DailyAwardComponent>,

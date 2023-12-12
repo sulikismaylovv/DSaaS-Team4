@@ -19,7 +19,6 @@ import {ProfileComponent} from "./modules/profile_module/profile_page/profile.co
 import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
 import {FirstSignGuard} from "./core/guards/first-sign.guard";
 import {ErrorComponent} from "./modules/error/error.component";
-import {HelppageComponent} from "./modules/helppage_module/helppage/helppage.component";
 import {FAQPageComponentComponent} from "./modules/helppage_module/faqpage-component/faqpage-component.component";
 
 

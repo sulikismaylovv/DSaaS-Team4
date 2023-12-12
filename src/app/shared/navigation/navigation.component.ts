@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavbarService} from "../../core/services/navbar.service";
 import {ThemeService} from "../../core/services/theme.service";
 import {AuthService, Profile} from "../../core/services/auth.service";
@@ -13,9 +13,9 @@ import {SupabaseService} from "../../core/services/supabase.service";
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit, OnDestroy{
 
-  notificationCount: number = 0;
+  notificationCount = 0;
   private subscription: Subscription | undefined;
   profile: Profile | undefined;
   username: string | undefined;

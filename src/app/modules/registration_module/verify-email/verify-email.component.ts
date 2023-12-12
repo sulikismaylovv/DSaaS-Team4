@@ -10,8 +10,8 @@ import {timer} from "rxjs";
 })
 export class VerifyEmailComponent implements OnInit {
   email: string | null = null;
-  secondsCounter: number = 45; // start from 45 seconds
-  canResendEmail: boolean = false;
+  secondsCounter = 45; // start from 45 seconds
+  canResendEmail = false;
 
 
   constructor(

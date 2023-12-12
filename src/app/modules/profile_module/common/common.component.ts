@@ -15,7 +15,6 @@ import {
   FriendsLeague} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
-import {Bet} from "../../../core/models/bets.model";
 
 
 export enum FriendRequestStatus {
@@ -81,7 +80,7 @@ export class CommonComponent implements OnInit{
   friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
   friendsList: FriendInfo[] = []; // Array to store friends' info
 
-  aboutOrBetLink: string = 'loading..';
+  aboutOrBetLink = 'loading..';
   infoString: string[] | undefined;
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
@@ -514,7 +513,7 @@ export class CommonComponent implements OnInit{
       const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
       //console.log("Fetched league members:", leagueMembers);
 
-      let userLeaguesTemp: UserLeague[] = [];
+      const userLeaguesTemp: UserLeague[] = [];
 
       for (const league of leagues) {
         if (league.id !== undefined) {
@@ -531,7 +530,7 @@ export class CommonComponent implements OnInit{
           const topMembers = sortedMembers.slice(0, 3);
 
           const isUserInTop = topMembers.some(member => member.userid === userId);
-          let currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
+          const currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
           let userPosition: number | string = "Not in league";
 
           if (!isUserInTop) {

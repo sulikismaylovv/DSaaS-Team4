@@ -24,7 +24,7 @@ export class PostsService {
   //   }
   // }
 
-  async getPosts(offset: number = 0, limit: number = 10): Promise<Post[]> {
+  async getPosts(offset = 0, limit = 10): Promise<Post[]> {
     try {
       const { data, error } = await this.supabase.supabaseClient
         .from("posts")
