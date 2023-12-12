@@ -30,7 +30,7 @@
   <!-- matches.component.html -->
   <div class="w-full">
     <div *ngIf="authService.isLogged() && hasFollowingClubs()"
-         class="bg-white   dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+         class="bg-white   dark:bg-[#394151] rounded-lg p-2 md:p-4 overflow-y-auto h-fit w-full">
       <div class="relative">
         <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">Clubs you follow</span>
       </div>
@@ -41,7 +41,7 @@
           <ng-container *ngFor="let fixture of groupedFixtures[date]">
             <ng-container
               *ngIf="isClubRelevantToUserPreferences(fixture.club0) || isClubRelevantToUserPreferences(fixture.club1)">
-              <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+              <div class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-2 md:p-4">
                 <!-- Fixture details for followed clubs -->
                 <div class="mt-4 relative">
                   <button (click)="onGameSelect(fixture)" class="text-white w-full">
@@ -53,21 +53,21 @@
                     <!-- --------------------------------------------------- -->
                     <div *ngIf="didFixtureStart(fixture)" class="flex justify-between w-full">
                       <!-- Team 1 -->
-                      <div class="flex flex-row items-center w-full">
+                      <div class="flex flex-row items-center w-1/3">
                         <div class="flex flex-col items-center justify-center w-full">
                           <img [src]="fixture.club0?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
-                          <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                          <span class="font-semibold text-md md:text-lg truncate">{{limitMatchNameLength(fixture.club0?.name, 12) }}</span>
                         </div>
                       </div>
                       <!-- Score -->
-                      <div class="flex items-center justify-center font-bold text-xl w-full">
+                      <div class="flex items-center justify-center font-bold text-xl w-1/3">
                         {{ fixture.home_goals }} - {{ fixture.away_goals }}
                       </div>
                       <!-- Team 2 -->
-                      <div class="flex flex-row items-center w-full">
+                      <div class="flex flex-row items-center w-1/3">
                         <div class="flex flex-col items-center justify-center w-full">
                           <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
-                          <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                          <span class="font-semibold text-md md:text-lg truncate">{{limitMatchNameLength(fixture.club1?.name, 12) }}</span>
                         </div>
                       </div>
                     </div>
@@ -104,7 +104,7 @@
     </div>
   </div>
   <!-- All Fixtures Section -->
-  <div  class="bg-white mt-4   dark:bg-[#394151] rounded-lg p-4 overflow-y-auto h-fit w-full">
+  <div  class="bg-white mt-4   dark:bg-[#394151] rounded-lg p-2 md:p-4 overflow-y-auto h-fit w-full">
     <div class="relative">
       <span class="relative bottom-2 top-1 left-2 text-lg font-bold text-dark-gray dark:text-light-mode">All Games</span>
     </div>
@@ -115,24 +115,24 @@
         <ng-container *ngFor="let fixture of groupedFixtures[date]">
           <ng-container
             *ngIf="!isClubRelevantToUserPreferences(fixture.club0) && !isClubRelevantToUserPreferences(fixture.club1)">
-            <div *ngIf="didFixtureStart(fixture)" class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-4">
+            <div *ngIf="didFixtureStart(fixture)" class="mt-4 bg-light-gradient dark:bg-dark-gradient text-dark-mode-text rounded-lg shadow-lg p-2 md:p-4">
               <!-- Fixture details for non-followed clubs -->
               <div class="mt-4">
                 <button (click)="onGameSelect(fixture)" class="text-white  w-full">
                   <div class="flex justify-between w-full">
                     <!-- Team 1 -->
-                    <div class="flex flex-col items-center justify-center w-full">
+                    <div class="flex flex-col items-center justify-center w-1/3">
                       <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
-                      <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
+                      <span class="font-semibold text-md md:text-lg truncate">{{limitMatchNameLength(fixture.club0?.name, 12) }}</span>
                     </div>
                     <!-- Score -->
-                    <div class="flex items-center justify-center font-bold text-xl w-full">
+                    <div class="flex items-center justify-center font-bold text-xl w-1/3">
                       {{ fixture.home_goals }} - {{ fixture.away_goals }}
                     </div>
                     <!-- Team 2 -->
-                    <div class="flex flex-col items-center justify-center w-full">
+                    <div class="flex flex-col items-center justify-center w-1/3">
                       <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
-                      <span class="font-semibold text-lg truncate">{{ fixture.club1?.name }}</span>
+                      <span class="font-semibold tex-md md:text-lg truncate">{{limitMatchNameLength(fixture.club1?.name, 16) }}</span>
                     </div>
                   </div>
                 </button>

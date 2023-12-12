@@ -32,6 +32,22 @@
   display: flex;
 }
 
+#friendRemovedFeedBack {
+  display: none;
+}
+
+#friendRemovedFeedBack.active {
+  display: flex;
+}
+
+#removeFriendModal {
+  display: none;
+}
+
+#removeFriendModal.active {
+  display: flex;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
