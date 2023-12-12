@@ -4,7 +4,7 @@
     <!-- Retweeter's Info -->
     <div class="flex items-center mb-4">
       <!-- Retweeter's Avatar -->
-      <div class=" h-10 w-10">
+      <div class=" h-10 w-10 mr-2">
         <img [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="Retweeter's profile image" class="inline-block h-full w-full rounded-full mr-4" tabindex="0"/>
       </div>
         <div>
@@ -32,13 +32,13 @@
        class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
     <div class="flex items-center mb-4 w-fit">
       <!-- Original Poster's Avatar -->
-      <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4 bg-inherit"/>
       <div>
         <!-- Original Poster's Username -->
         <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
-          <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+          <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ usernameRetweeted }}</p>
           <span class="flex items-center justify-center  w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 font-semibold bg-white dark.bg-white rounded-full">
-            <img class="w-full h-full lg:w-4 lg:h-4" [src]="favoriteClub?.logo" alt="hehe"/>
+            <img class="w-full h-full lg:w-4 lg:h-4 " [src]="clubRetweeted?.logo" alt="hehe"/>
             <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->
 
 
@@ -61,7 +61,7 @@
   <ng-template #originalContent>
     <div class="flex items-center mb-4 w-full">
       <!-- Display poster's avatar -->
-      <img *ngIf="!this.post.is_official" [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-4"/>
+      <img *ngIf="!this.post.is_official" [src]="avatarSafeUrl" (click)="onAvatarClick(post.user_id)" alt="User profile image" class="inline-block h-10 w-10 rounded-full mr-2"/>
       <svg *ngIf="this.post.is_official" preserveAspectRatio="xMidYMid meet" viewBox="0 0 3200.000000 3200.000000" xmlns="http://www.w3.org/2000/svg" class="fill-current text-black dark:text-white w-12 h-12 lg:w-16 lg:h-16">
         <g transform="translate(0.000000,3200.000000) scale(0.100000,-0.100000)">
           <path d="M12782 24605 c-115 -21 -210 -53 -312 -106 -282 -145 -473 -385 -562-706 -21 -75 -22 -99 -26 -604 l-3 -527 43 8 c106 20 308 41 478 50 498 26 1025 -51 1515 -224 l129 -46 1457 0 c921 0 1495 -4 1560 -10 1143 -113 2120-849 2543 -1915 142 -359 208 -711 209 -1110 0 -443 -79 -823 -254 -1224 -391
@@ -107,7 +107,13 @@
       </svg>
       <div>
         <!-- Display poster's username -->
-        <p *ngIf="!this.post.is_official" class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+        <div *ngIf="!this.post.is_official" class="flex items-center">
+          <p  class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ username }}</p>
+          <span class="inline-flex items-center justify-center w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 text-sm font-semibold bg-inherit rounded-full">
+            <img src={{favoriteClub?.logo}} alt="logo">
+            <span class="sr-only">Icon description</span>
+          </span>
+        </div>
         <div *ngIf="this.post.is_official" class="flex items-center">
           <p  class="font-bold text-md lg:text-xl text-gray-800 dark:text-white">Remontada live</p>
           <span class="inline-flex items-center justify-center w-4 h-4 lg:w-6 lg:h-6 me-2  ml-2 text-sm font-semibold bg-purple-300 rounded-full">
