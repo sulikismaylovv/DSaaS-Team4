@@ -3,10 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 
 console.log("Hello from Functions!");
-import {
-  createClient,
-  SupabaseClient,
-} from "https://esm.sh/@supabase/supabase-js@2.7.1";
+import {createClient, SupabaseClient,} from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
 type bettingrecord = {
   betterID: number
@@ -119,7 +116,7 @@ Deno.serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2amhvaWZtYWJ4aXRrZWxmZW9kIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NzEzNDc0MywiZXhwIjoyMDEyNzEwNzQzfQ.E7YyyKG0NUWAyk0mmaVUhPd4PeDW2QqNqeX3YtFP6XQ",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4c3BvYmt1Z3lpcHdxa3FvYXZvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMjMwNDU1MywiZXhwIjoyMDE3ODgwNTUzfQ.naiRatAl8zh98kl5spT11srWhnnK7sz1fOpZY0m-Q14",
     {
       global: {
         headers: { Authorization: req.headers.get("Authorization")! },
