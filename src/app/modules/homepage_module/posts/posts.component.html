@@ -9,7 +9,7 @@
       </div>
     </div>
     <!-- Posts Feed -->
-    <div class="w-full py-6">
+    <div class="w-[300px] sm:w-[500px] md:w-[600px] lg:w-fit 2xl:w-[900px] 3xl:w-[1000px] py-6">
       <div *ngFor="let post of posts" class="mb-4">
         <div (click)="onPostClick(post.id)" class="cursor-pointer w-full">
           <app-post-view [post]="post" [clickable]="(authService.isAuthenticated$ | async) ?? false" class="max-w-full"></app-post-view>
