@@ -181,8 +181,8 @@
               at <a class="text-blue-500 hover:underline" href="mailto:help@remontada.com">
               help@remontada.com</a>.
             </p>
-            <a class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-               href="/login">Home</a>
+            <button class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+               (click)="redirect()">Home</button>
           </section>
 
           <nav *ngIf="!lastPage" [ngClass]="{ 'flex-row': currentStep === 1 }" class="flex items-center justify-end h-fit rounded bg-gray-50 dark:bg-gray-800 mt-2">
