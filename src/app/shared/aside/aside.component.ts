@@ -53,12 +53,12 @@ ngOnInit() {
     try {
       const userId = this.authService.session?.user?.id;
       if (!userId) {
-        console.error('User ID is undefined');
+        //console.error('User ID is undefined');
         return;
       }
 
       this.clubID = await this.preferencesService.getFavoriteClub(userId);
-      console.log("Club ID", this.clubID);
+      //console.log("Club ID", this.clubID);
     } catch (error) {
       console.error('Error', error);
     }
@@ -74,7 +74,7 @@ ngOnInit() {
   async getStanding() {
     const data = await this.apiService.fetchStandings();
     this.league = data;
-    console.log(this.league);
+    //console.log(this.league);
   }
 
 
@@ -97,9 +97,10 @@ ngOnInit() {
   async getNextFixture(clubID: number) {
     try {
       this.nextFixture =(await this.apiService.testFunction(clubID))[0];
-      console.log("This. nect ficture", this.nextFixture);
+      //console.log("This. nect ficture", this.nextFixture);
     } catch (error) {
-      console.error('Error fetching next fixture:', error);
+      return;
+      //console.error('Error fetching next fixture:', error);
     }
     this.nextClub = this.getNextOpponentClub();
     this.myClub = this.getMyClub();
@@ -108,7 +109,6 @@ ngOnInit() {
 
   getNextOpponentClub(): Club {
     if (!this.nextFixture) {
-      console.error('Next fixture is not set');
       return new Club(); // or handle this case as per your application's logic
     }
 
@@ -117,14 +117,14 @@ ngOnInit() {
     } else if (this.nextFixture.club1?.id === this.clubID) {
       return this.bindClubData(this.nextFixture.club0);
     } else {
-      console.error('Favorite club is not part of the next fixture');
+      //console.error('Favorite club is not part of the next fixture');
       return new Club(); // or handle this case as per your application's logic
     }
   }
 
   getMyClub(): Club {
     if (!this.nextFixture) {
-      console.error('Next fixture is not set');
+      //console.error('Next fixture is not set');
       return new Club(); // or handle this case as per your application's logic
     }
 
@@ -133,7 +133,7 @@ ngOnInit() {
     } else if (this.nextFixture.club1?.id === this.clubID) {
       return this.bindClubData(this.nextFixture.club1);
     } else {
-      console.error('Favorite club is not part of the next fixture');
+      //console.error('Favorite club is not part of the next fixture');
       return new Club(); // or handle this case as per your application's logic
     }
 
