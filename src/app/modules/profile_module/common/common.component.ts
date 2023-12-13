@@ -460,6 +460,7 @@ export class CommonComponent implements OnInit{
   async onFriendClick(friendId: string | undefined): Promise<void> {
     if (friendId === undefined) throw new Error('Friend ID is undefined');
     await this.router.navigate(['/profile', friendId]);
+    window.location.reload();
   }
 
 
