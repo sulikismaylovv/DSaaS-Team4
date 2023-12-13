@@ -23,6 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - run: supabase db push
+
       # Get the npm cache directory.
       - name: Get npm cache directory
         id: npm-cache-dir
