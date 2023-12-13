@@ -196,6 +196,7 @@ export class MultistepformComponent implements OnInit {
   }
   closeModal(): void {
     this.showModal = false;
+    this.trackButtonClick1();
   }
 
   usernameValidator(): AsyncValidatorFn {
@@ -287,6 +288,8 @@ export class MultistepformComponent implements OnInit {
     }
     if (!isNextPage) {
       return this.currentStep--;
+      this.trackButtonClick2();
+
     } else {
       if (this.currentStep === 3 && this.topOfPageElement) {
         if (this.updateProfileForm.get('plan')?.value === 'arcadePlan') {
@@ -297,6 +300,7 @@ export class MultistepformComponent implements OnInit {
           this.total = this.proPlan + addOns;
         }
       }
+      this.trackButtonClick3();
 
       return this.currentStep++;
     }
@@ -350,7 +354,11 @@ export class MultistepformComponent implements OnInit {
     }
   }
 
-
+  async redirect(){
+    await this.authService.restoreSession();
+    await this.router.navigate(['/home']);
+    this.trackButtonClick4()
+  }
   trackButtonClick(): void {
     console.log("success", "hey");
     gtag('event', 'Click', {
@@ -358,8 +366,32 @@ export class MultistepformComponent implements OnInit {
       event_label: 'DownloadButton'
     });}
 
-  async redirect(){
-    await this.authService.restoreSession();
-    await this.router.navigate(['/home']);
-  }
+  trackButtonClick1(): void {
+    console.log("success", "hey");
+    gtag('event', 'ModalClosed', {
+      event_category: 'Button01',
+      event_label: 'CloseButton'
+    });}
+
+  trackButtonClick2(): void {
+    console.log("success", "hey");
+    gtag('event', 'backButton', {
+      event_category: 'Button02',
+      event_label: 'BackButton'
+    });}
+
+  trackButtonClick3(): void {
+    console.log("success", "hey");
+    gtag('event', 'nextButton', {
+      event_category: 'Button03',
+      event_label: 'NextButton'
+    });}
+
+  trackButtonClick4(): void {
+    console.log("success", "hey");
+    gtag('event', 'homeButton', {
+      event_category: 'Button04',
+      event_label: 'HomeButton'
+    });}
+
 }
