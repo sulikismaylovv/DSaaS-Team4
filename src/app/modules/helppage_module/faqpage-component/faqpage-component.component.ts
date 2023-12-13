@@ -32,8 +32,8 @@ export class FAQPageComponentComponent {
       answer: 'Yes, if you have any issues or inquiries, our customer support team is available 24/7. Contact us through the \'Help\' section.'
     },
     {
-      question:'7. I found a bug, what should I do?',
-      answer: 'Eat it'
+      question:'7. I would like to provide you some feedback, what should I do?',
+      answer: 'Fill in the following form and we will get back to you as soon as possible: https://forms.office.com/e/c219HYW6dh'
     },
 
 
