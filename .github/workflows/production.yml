@@ -74,8 +74,8 @@ jobs:
         with:
           version: latest
 
-      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
-      - run: supabase db push
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID <<< "$SUPABASE_DB_PASSWORD"
+      - run: supabase db push <<< "$SUPABASE_DB_PASSWORD"
 
 
   Deploy-Preview:
