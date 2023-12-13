@@ -10,9 +10,7 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
-import {
-  FriendsLeagueInterface,
-  FriendsLeague} from "../../../core/services/friends-league.service";
+import {FriendsLeague, FriendsLeagueInterface} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
 
@@ -597,5 +595,4 @@ export class CommonComponent implements OnInit{
   }
 
 
-  protected readonly close = close;
 }
