@@ -436,10 +436,14 @@ export class GameComponent implements OnInit {
       this.clickedImage = team;
       if (team === "team1") {
         this.teamChosen = "home";
+        this. trackButtonClick2();
       } else if (team === "team2") {
         this.teamChosen = "away";
+        this. trackButtonClick3();
       }  else if (team === "draw") {
         this.teamChosen = "draw";
+        this. trackButtonClick4();
+
       }
     }
   }
@@ -460,4 +464,26 @@ export class GameComponent implements OnInit {
       event_category: 'Button2',
       event_label: 'ChangeButton'
     });}
+
+  trackButtonClick2(): void {
+    console.log("success", "hey");
+    gtag('event', 'Team1', {
+      event_category: 'Button3',
+      event_label: 'TeamButton1'
+    });}
+  trackButtonClick3(): void {
+    console.log("success1", "hey1");
+    gtag('event', 'Team2', {
+      event_category: 'Button4',
+      event_label: 'TeamButton2'
+    });}
+  trackButtonClick4(): void {
+    console.log("success1", "hey1");
+    gtag('event', 'Draw', {
+      event_category: 'Button5',
+      event_label: 'DrawButton'
+    });}
+
+
+
 }
