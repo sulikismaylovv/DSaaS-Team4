@@ -126,12 +126,12 @@
           <span class="ms-3 hidden 2xl:inline">Sign out</span>
         </button>
       </li>
-      <li *ngIf="!(authService.isAuthenticated$ | async)">
+      <li *ngIf="(authService.isAuthenticated$ | async)===false">
         <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigatetoRegister()">
           Register
         </button>
       </li>
-      <li *ngIf="!(authService.isAuthenticated$ | async)">
+      <li *ngIf="(authService.isAuthenticated$ | async)===false">
         <button  class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="button" (click)="navigateToLogin()">
           Log In
         </button>
@@ -258,7 +258,7 @@
     <!--Profile signed in -->
     <li *ngIf="authService.isAuthenticated$ | async">
       <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
-        <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
+        <img [src]="this.avatarSafeUrl" alt="User avatar" class="w-10 h-10 rounded-full">
         <div class="flex flex-col">
           <span class="ms-3 hidden 2xl:inline">{{username}}</span>
           <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>

@@ -16,6 +16,7 @@ export interface Profile {
     last_name: string;
     avatar_url?: string;
     bg_url?: string;
+    updated_at?: Date;
 }
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,38 @@ export class AuthService {
   getCurrentUserEmail(): Observable<string | null> {
     return this.currentUserEmail.asObservable();
   }
+
+    async getUserUpdatedAt(): Promise<Date> {
+        const profile = await this.getProfile();
+
+        if (profile === undefined || profile.updated_at === undefined) {
+            // Return a default date value (e.g., the current date) when profile is undefined or updated_at is null
+            return new Date(); // You can replace this with your desired default date
+        }
+
+        return profile.updated_at;
+    }
+
+    async getProfile(): Promise<Profile | undefined> {
+        try {
+            const {data: profile, error} = await this.supabase.supabaseClient
+                .from('users')
+                .select(`*`)
+                .eq('id', this._session?.user?.id)
+                .single();
+
+            if (error) {
+                return undefined;
+            }
+
+            return profile;
+        } catch (error) {
+            if (error instanceof Error) {
+                return undefined;
+            }
+        }
+        return undefined;
+    }
 
 
   get session() {
@@ -199,6 +232,8 @@ export class AuthService {
             .eq('id', user.id)
             .single()
     }
+
+
 
     downLoadImage(path: string) {
         return this.supabase.supabaseClient.storage.from('avatars').download(path)

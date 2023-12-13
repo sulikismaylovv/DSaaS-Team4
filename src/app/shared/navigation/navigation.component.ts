@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavbarService} from "../../core/services/navbar.service";
 import {ThemeService} from "../../core/services/theme.service";
 import {AuthService, Profile} from "../../core/services/auth.service";
@@ -6,7 +6,6 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {ImageDownloadService} from "../../core/services/imageDownload.service";
-import {data} from "autoprefixer";
 import {SupabaseService} from "../../core/services/supabase.service";
 
 @Component({
@@ -14,9 +13,9 @@ import {SupabaseService} from "../../core/services/supabase.service";
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit, OnDestroy{
 
-  notificationCount: number = 0;
+  notificationCount = 0;
   private subscription: Subscription | undefined;
   profile: Profile | undefined;
   username: string | undefined;
@@ -53,21 +52,21 @@ export class NavigationComponent {
     await this.authService.restoreSession();
 
     if(this.authService.session?.user.id) {
-      await this.getProfile().then(async r =>
-        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id));
+      await this.getProfile();
+      if (this.profile?.username) {
+        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id)
         await this.navbarService.setNotificationCount(this.profile?.id);
         await this.navbarService.refreshNotificationCount(this.profile?.id);
-      //console.log(this.avatarSafeUrl);
-      //console.log(this.profile);
+        await new Promise<void>((resolve) => {
+          this.navbarService.currentNotificationCount$.subscribe((count) => {
+            this.notificationCount = count;
+            //console.log(this.notificationCount);
+            resolve();
+          });
+        });
+      }
     }
 
-    await new Promise<void>((resolve) => {
-      this.navbarService.currentNotificationCount$.subscribe((count) => {
-        this.notificationCount = count;
-        //console.log(this.notificationCount);
-        resolve();
-      });
-    });
   }
 
   async getProfile() {

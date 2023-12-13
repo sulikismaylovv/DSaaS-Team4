@@ -12,14 +12,13 @@ import {GameComponent} from "./modules/game_module/game.component";
 import {PostsComponent} from "./modules/homepage_module/posts/posts.component";
 import {MatchesComponent} from "./modules/homepage_module/matches/matches.component";
 import {SinglePostComponent} from "./modules/post_module/single-post/single-post.component";
-import {ShopComponent} from "./modules/shop/shop.component";
-import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
-import {SettingsComponent} from "./modules/settings/settings.component";
+import {ShopComponent} from "./modules/shop_module/shop.component";
+import {GloballeagueComponent} from "./modules/leagues_module/globalleague/globalleague.component";
+import {SettingsComponent} from "./modules/settings_module/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {NotificationComponent} from "./modules/notification-module/notification/notification.component";
 import {FirstSignGuard} from "./core/guards/first-sign.guard";
 import {ErrorComponent} from "./modules/error/error.component";
-import {HelppageComponent} from "./modules/helppage_module/helppage/helppage.component";
 import {FAQPageComponentComponent} from "./modules/helppage_module/faqpage-component/faqpage-component.component";
 
 

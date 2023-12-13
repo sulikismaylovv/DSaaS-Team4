@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../core/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserServiceService} from "../../core/services/user-service.service";
@@ -14,7 +14,7 @@ import {PreferencesService} from "../../core/services/preference.service";
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.css']
 })
-export class AsideComponent {
+export class AsideComponent implements OnInit {
 
   userSearchResults: any[] = [];
   session: any; // Adjust the type based on your session object
@@ -24,11 +24,7 @@ export class AsideComponent {
 
   nextClub: Club = new Club();
   myClub: Club = new Club();
-  clubID: number = 0;
-
-
-
-
+  clubID = 0;
 
   constructor(
     protected readonly authService: AuthService,
@@ -57,12 +53,12 @@ ngOnInit() {
     try {
       const userId = this.authService.session?.user?.id;
       if (!userId) {
-        console.error('User ID is undefined');
+        //console.error('User ID is undefined');
         return;
       }
 
       this.clubID = await this.preferencesService.getFavoriteClub(userId);
-      console.log("Club ID", this.clubID);
+      //console.log("Club ID", this.clubID);
     } catch (error) {
       console.error('Error', error);
     }
@@ -78,7 +74,7 @@ ngOnInit() {
   async getStanding() {
     const data = await this.apiService.fetchStandings();
     this.league = data;
-    console.log(this.league);
+    //console.log(this.league);
   }
 
 
@@ -101,9 +97,10 @@ ngOnInit() {
   async getNextFixture(clubID: number) {
     try {
       this.nextFixture =(await this.apiService.testFunction(clubID))[0];
-      console.log("This. nect ficture", this.nextFixture);
+      //console.log("This. nect ficture", this.nextFixture);
     } catch (error) {
-      console.error('Error fetching next fixture:', error);
+      return;
+      //console.error('Error fetching next fixture:', error);
     }
     this.nextClub = this.getNextOpponentClub();
     this.myClub = this.getMyClub();
@@ -112,7 +109,6 @@ ngOnInit() {
 
   getNextOpponentClub(): Club {
     if (!this.nextFixture) {
-      console.error('Next fixture is not set');
       return new Club(); // or handle this case as per your application's logic
     }
 
@@ -121,14 +117,14 @@ ngOnInit() {
     } else if (this.nextFixture.club1?.id === this.clubID) {
       return this.bindClubData(this.nextFixture.club0);
     } else {
-      console.error('Favorite club is not part of the next fixture');
+      //console.error('Favorite club is not part of the next fixture');
       return new Club(); // or handle this case as per your application's logic
     }
   }
 
   getMyClub(): Club {
     if (!this.nextFixture) {
-      console.error('Next fixture is not set');
+      //console.error('Next fixture is not set');
       return new Club(); // or handle this case as per your application's logic
     }
 
@@ -137,7 +133,7 @@ ngOnInit() {
     } else if (this.nextFixture.club1?.id === this.clubID) {
       return this.bindClubData(this.nextFixture.club1);
     } else {
-      console.error('Favorite club is not part of the next fixture');
+      //console.error('Favorite club is not part of the next fixture');
       return new Club(); // or handle this case as per your application's logic
     }
 
@@ -171,7 +167,7 @@ ngOnInit() {
 
   bindClubData(clubData: any): Club {
     // Assuming clubData has properties that match those in your Club model
-    let club = new Club();
+    const club = new Club();
     club.id = clubData.id;
     club.name = clubData.name;
     club.logo = clubData.logo;

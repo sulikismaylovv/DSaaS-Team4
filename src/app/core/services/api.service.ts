@@ -8,7 +8,7 @@ import { Player } from "../models/player.model";
   providedIn: "root",
 })
 export class ApiService {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService) { }
 
   async fetchStandings(): Promise<Club[]> { // This should return an array of Club
     try {
@@ -199,7 +199,7 @@ export class ApiService {
       console.error("Error fetching fixtures with club info:", error);
       throw error;
     }
-  } 
+  }
 
   async testFunction(
     clubID: number,
@@ -220,7 +220,7 @@ export class ApiService {
             name,
             logo
           )        `)
-        .eq("team0", clubID)
+        .or(`team0.eq.${clubID},team1.eq.${clubID}`)
         .gte("time", new Date().toISOString())
 
       if (error) {
@@ -232,12 +232,12 @@ export class ApiService {
       console.error("Error fetching fixtures with club info:", error);
       throw error;
     }
-  } 
+  }
   async fetchNextFixture(clubID: number): Promise<SupabaseFixture[]> {
     try {
       const currentDate = new Date().toISOString();
       console.log(`Fetching fixtures greater than or equal to: ${currentDate}`);
-      
+
       const { data, error } = await this.supabase.supabaseClient
         .from("fixtures")
         .select(`
@@ -256,17 +256,17 @@ export class ApiService {
         .or(`team0.eq.${clubID},team1.eq.${clubID}`)
         .gte("time", currentDate)
         .order("time", { ascending: true });
-  
+
       if (error) {
         console.error("Supabase error:", error.message);
         throw error;
       }
-  
+
       if (!data || data.length === 0) {
         console.log("No fixtures found with the current query parameters.");
         return []; // or handle this case as needed
       }
-  
+
       console.log("Fetched data:", data);
       return data;
     } catch (error) {
@@ -274,7 +274,7 @@ export class ApiService {
       throw error;
     }
   }
-  
+
 
   // async fetchNextFixture(clubID: number): Promise<SupabaseFixture> {
   //   try {

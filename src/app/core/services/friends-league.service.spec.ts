@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { FriendsLeagueServiceService, FriendsLeagueInterface, UserInFriendsLeague } from './friends-league.service';
+import { FriendsLeagueServiceService } from './friends-league.service';
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { AuthService } from './auth.service';
 

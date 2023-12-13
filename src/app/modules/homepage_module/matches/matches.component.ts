@@ -4,7 +4,7 @@ import {addDays, compareAsc, endOfWeek, startOfWeek, subDays,} from "date-fns";
 import {ApiService} from "../../../core/services/api.service";
 import {Router} from "@angular/router";
 import {FixtureTransferService} from "../../../core/services/fixture-transfer.service";
-import {SupabaseFixture , club} from "../../../core/models/supabase-fixtures.model";
+import {club, SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
 import {AuthService} from "../../../core/services/auth.service";
 import {PreferencesService} from "../../../core/services/preference.service";
 
@@ -41,7 +41,7 @@ export class MatchesComponent implements OnInit {
 
     async onGameSelect(fixture: SupabaseFixture) {
         if (this.authService.isLogged()) {
-            console.log("Authenticated");
+          //console.log("Authenticated");
             this.fixtureTransferService.changeFixture(fixture);
             await this.router.navigateByUrl("/game/" + fixture.fixtureID, {
                 state: {fixture: fixture},
@@ -60,7 +60,7 @@ export class MatchesComponent implements OnInit {
       this.filterFixturesForUserPreferences();
     }
 
-    console.log(this.fixtures);
+    //console.log(this.fixtures);
 
   }
 
@@ -80,6 +80,14 @@ export class MatchesComponent implements OnInit {
 
   hasNonFollowedFixtureforDate(date: string): boolean {
     return this.groupedFixtures[date]?.some(fixture => !this.isClubRelevantToUserPreferences(fixture.club0) && !this.isClubRelevantToUserPreferences(fixture.club1));
+  }
+
+  limitMatchNameLength(username: string | undefined, maxLength: number): string | undefined{
+    if(username)
+    if (username.length > maxLength) {
+      return `${username.slice(0, maxLength)}..`;
+    }
+    return username;
   }
 
   // Set the start of the week to Friday and end to next Thursday

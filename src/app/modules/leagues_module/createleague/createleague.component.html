@@ -14,9 +14,9 @@
 
     <!-- Invite Friends Section -->
     <div class="mb-4">
-      <label class="block text-sm font-bold mb-2 text-white">
+      <p class="block text-sm font-bold mb-2 text-white">
         Invite Friends
-      </label>
+      </p>
 
       <!-- Input to search and add a new friend -->
       <div class="flex items-center mb-2">
@@ -35,7 +35,7 @@
       <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">
         <li *ngFor="let user of userSearchResults"
             (click)="addAndClear(user.username, newFriendInput)"
-            class="cursor-pointer text-black hover:bg-lighter-purple p-2">
+            class="cursor-pointer text-black hover:bg-lighter-purple p-2" tabindex="0">
           {{ user.username }}
         </li>
       </ul>

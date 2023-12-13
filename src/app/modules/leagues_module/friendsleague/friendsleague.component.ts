@@ -7,7 +7,6 @@ import { FriendsLeague, FriendsLeagueInterface, EnhancedUserInFriendsLeague } fr
 import { ImageDownloadService } from "../../../core/services/imageDownload.service";
 import { SafeResourceUrl } from "@angular/platform-browser";
 import { CreatefriendsleagueService } from "../../../core/services/createfriendsleague.service";
-import { Bet, BetModel, Better, BetterModel } from "../../../core/models/bets.model";
 import {BetsService} from "../../../core/services/bets.service";
 import {SupabaseService} from "../../../core/services/supabase.service";
 
@@ -27,7 +26,7 @@ export class FriendsleagueComponent implements OnInit {
   leagueIds: number[] = [];
   leagues: FriendsLeagueInterface[] = [];
   leagueMembers: { [key: number]: EnhancedUserInFriendsLeague[] } = {};
-  searchUsername: string = '';
+  searchUsername = '';
   userSearchResults: any[] = [];
   protected session: Session | null | undefined;
   currentLeagueIndex = 0;
@@ -106,7 +105,7 @@ export class FriendsleagueComponent implements OnInit {
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
     if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
-      let results = await this.userService.searchFriendsByUsername(searchTerm);
+      const results = await this.userService.searchFriendsByUsername(searchTerm);
       // Filter out usernames that have already been added
       const addedUsernames = this.friends.value.map((f: Friend) => f.username);
       this.userSearchResults = results.filter((user: { username: any; }) => !addedUsernames.includes(user.username));

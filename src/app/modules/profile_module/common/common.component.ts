@@ -10,12 +10,9 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
-import {
-  FriendsLeagueInterface,
-  FriendsLeague} from "../../../core/services/friends-league.service";
+import {FriendsLeague, FriendsLeagueInterface} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
-import {Bet} from "../../../core/models/bets.model";
 
 
 export enum FriendRequestStatus {
@@ -67,6 +64,7 @@ export class CommonComponent implements OnInit{
   @Input() userRefId: string | null | undefined;
   isOwnProfile = false;
   loading = true;
+  transferFriend: string[]=[];
   profile: Profile | undefined;
   username: string | undefined;
   avatarSafeUrl: SafeResourceUrl | undefined;
@@ -80,8 +78,9 @@ export class CommonComponent implements OnInit{
   followedClubs: string[] | undefined;
   friendRequestStatus: FriendRequestStatus = FriendRequestStatus.None;
   friendsList: FriendInfo[] = []; // Array to store friends' info
+  showModal: boolean = false;
 
-  aboutOrBetLink: string = 'loading..';
+  aboutOrBetLink = 'loading..';
   infoString: string[] | undefined;
   postString: string[]= ['Posts', 'Likes', 'Mentions'];
   achievementList: string[]= ['Collector 1', 'Gambler 1', 'Spender 1'];
@@ -300,19 +299,24 @@ export class CommonComponent implements OnInit{
   }
 
 
-  changeContent(link: string): void {
+  changeContent(link: string, friendId?: string): void {
     this.selectedLink = link;
   }
 
-  openModal(): void {
-    const modal = document.getElementById('friendListModal');
+  openModal(id: string, friendId?:string, friendUsername?:string): void {
+    const modal = document.getElementById(id);
     if (modal) {
       modal.classList.add('active');
     }
+    if(friendId && friendUsername && this.transferFriend){
+      console.log("werkt")
+      this.transferFriend[0]= (friendId);
+      this.transferFriend[1]= (friendUsername);
+    }
   }
 
-  closeModal(): void {
-    const modal = document.getElementById('friendListModal');
+  closeModal(id: string): void {
+    const modal = document.getElementById(id);
     if (modal) {
       modal.classList.remove('active');
     }
@@ -454,6 +458,7 @@ export class CommonComponent implements OnInit{
   async onFriendClick(friendId: string | undefined): Promise<void> {
     if (friendId === undefined) throw new Error('Friend ID is undefined');
     await this.router.navigate(['/profile', friendId]);
+    window.location.reload();
   }
 
 
@@ -512,7 +517,7 @@ export class CommonComponent implements OnInit{
       const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
       //console.log("Fetched league members:", leagueMembers);
 
-      let userLeaguesTemp: UserLeague[] = [];
+      const userLeaguesTemp: UserLeague[] = [];
 
       for (const league of leagues) {
         if (league.id !== undefined) {
@@ -529,7 +534,7 @@ export class CommonComponent implements OnInit{
           const topMembers = sortedMembers.slice(0, 3);
 
           const isUserInTop = topMembers.some(member => member.userid === userId);
-          let currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
+          const currentUserPosition = isUserInTop ? topMembers.findIndex(member => member.userid === userId) + 1 : undefined;
           let userPosition: number | string = "Not in league";
 
           if (!isUserInTop) {
@@ -587,7 +592,6 @@ export class CommonComponent implements OnInit{
         console.error('Error fetching settled bets:', error);
       });
   }
-
 
 
 }

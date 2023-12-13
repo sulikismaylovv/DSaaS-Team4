@@ -86,7 +86,7 @@
           <div *ngIf="userSearchResults.length > 0" class="w-full mt-1">
             <ul class="list-none bg-white text-black p-2 rounded">
               <li *ngFor="let user of userSearchResults" (click)="addAndClear(user.username, newFriendInput)"
-                  class="cursor-pointer text-black hover:bg-lighter-purple p-2">
+                  class="cursor-pointer text-black hover:bg-lighter-purple p-2" tabindex="0">
                 {{ user.username }}
               </li>
             </ul>

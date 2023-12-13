@@ -24,12 +24,12 @@ import {PostViewComponent} from './modules/post_module/post-view/post-view.compo
 import {CreatePostComponent} from './modules/post_module/create-post/create-post.component';
 import { SinglePostComponent } from './modules/post_module/single-post/single-post.component';
 import { CommentViewComponent } from './modules/post_module/comment-view/comment-view.component';
-import { ShopComponent } from './modules/shop/shop.component';
-import {GloballeagueComponent} from "./modules/leagues/globalleague/globalleague.component";
-import {FriendsleagueComponent} from "./modules/leagues/friendsleague/friendsleague.component";
-import {LeagueComponent} from "./modules/leagues/league/league.component";
+import { ShopComponent } from './modules/shop_module/shop.component';
+import {GloballeagueComponent} from "./modules/leagues_module/globalleague/globalleague.component";
+import {FriendsleagueComponent} from "./modules/leagues_module/friendsleague/friendsleague.component";
+import {LeagueComponent} from "./modules/leagues_module/league/league.component";
 import { MatDialogModule } from '@angular/material/dialog';
-import {SettingsComponent} from "./modules/settings/settings.component";
+import {SettingsComponent} from "./modules/settings_module/settings.component";
 import {ProfileComponent} from "./modules/profile_module/profile_page/profile.component";
 import {CommonComponent} from "./modules/profile_module/common/common.component";
 import {UserComponent} from "./modules/profile_module/user/user.component";
@@ -39,7 +39,7 @@ import { BgImageSelectorComponent } from './modules/profile_module/bg-image-sele
 import { ImageCropperModule } from 'ngx-image-cropper';
 import 'hammerjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {CreateleagueComponent} from "./modules/leagues/createleague/createleague.component";
+import {CreateleagueComponent} from "./modules/leagues_module/createleague/createleague.component";
 import {TermsAndConditionsComponent} from "./modules/registration_module/terms-and-conditions/terms-and-conditions.component";
 import {MomentModule} from "ngx-moment";
 import {NavbarService} from "./core/services/navbar.service";

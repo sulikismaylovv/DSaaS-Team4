@@ -27,6 +27,7 @@ declare let gtag: Function;
   providers: [DatePipe],
 })
 export class GameComponent implements OnInit {
+  loading = true;
   showContent = false;
   clickedImage: string | null = null;
   fixture: SupabaseFixture = new SupabaseFixtureModel();
@@ -96,6 +97,27 @@ export class GameComponent implements OnInit {
       }).subscribe();
   }
 
+  checkCredits():void{
+    console.log(this.betAmount + " and "+ this.availableCredits);
+    if(this.availableCredits < this.betAmount){
+      this.openModal("insufficientCredits");
+    }
+  }
+
+  openModal(id: string): void {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('active');
+    }
+  }
+
+  closeModal(id: string): void {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('active');
+    }
+  }
+
   // async updateTheTime() {
   //   this.time = this.formatDateToHHMM(this.fixture.time);
   //   this.cdr.detectChanges();
@@ -108,36 +130,40 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id")!;
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
 
           this.fixture = fixture;
-          this.fetchSquads();
-          // this.fetchLineups();
-          this.updateTheTime();
-          this.checkIfBetCanBePlaced();
+          const squadPromise = await this.fetchSquads();
+          const timePromise = await this.updateTheTime();
+          const checkPromise = await this.checkIfBetCanBePlaced();
+
+          await Promise.all([squadPromise, timePromise, checkPromise]);
+          this.loading = false;
+
           if (this.betAlreadyPlaced) {
             this.getBetInfo().then(() => this.logData());
           }
         } else {
-          this.fetchFixture(id);
+          await this.fetchFixture(id);
         }
 
         this.navbarService.setShowNavbar(true);
         this.time = "test";
-        this.updateTheTime();
+        await this.updateTheTime();
         (async () => await this.updateTheTime());
         // this.fetchLineup(this.fixture.fixtureID);
         // this.initializeLineups();
-        this.getUserCredits();
-        this.getStanding();
+        await this.getUserCredits();
+        await this.getStanding();
       });
     });
   }
   goBack(){
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home']).then(r => console.log("back"));
   }
   async getBetInfo() {
     const user = this.authService.session?.user;
@@ -395,7 +421,9 @@ export class GameComponent implements OnInit {
   toggleTheme() {
     this.themeService.toggleTheme();
   }
-
+  goToShop() {
+    this.router.navigate(["/shop"]);
+  }
   toggleContent(team: string) {
     if (this.clickedImage === team) {
       // If the same team is clicked again, reset everything

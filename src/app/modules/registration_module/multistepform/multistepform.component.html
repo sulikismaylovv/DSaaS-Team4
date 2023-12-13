@@ -21,7 +21,7 @@
             <h1 class="text-2xl mb-2 font-bold xl:text-3xl text-black dark:text-white">Complete profile</h1>
             <div class>
               <!-- First Name -->
-              <label class="xl:text-base text-black dark:text-white">First Name</label>
+              <p class="xl:text-base text-black dark:text-white">First Name</p>
               <div class="relative flex">
                 <!-- First Name Input -->
                 <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
@@ -46,7 +46,7 @@
                 </span>
               </p>
               <!--Last name-->
-              <label class="xl:text-base text-black dark:text-white">Last Name</label>
+              <p class="xl:text-base text-black dark:text-white">Last Name</p>
               <div class="relative flex">
                 <!-- Last Name Input -->
                 <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
@@ -71,7 +71,7 @@
                 </span>
               </p>
               <!--Last name-->
-              <label class="xl:text-base text-black dark:text-white">Username</label>
+              <p class="xl:text-base text-black dark:text-white">Username</p>
               <div class="relative flex">
                 <!-- Last Name Input -->
                 <input class="h-10 border rounded-md text-gray xl:py-4 w-full"
@@ -96,7 +96,7 @@
                 </span>
               </p>
               <!-- Birthdate -->
-              <label class="xl:text-base text-black dark:text-white">Birthdate</label>
+              <p class="xl:text-base text-black dark:text-white">Birthdate</p>
               <div class="relative flex">
                 <!-- Birthdate Input -->
                 <input class="h-10 border text-gray rounded-md xl:py-4 w-full"
@@ -181,8 +181,8 @@
               at <a class="text-blue-500 hover:underline" href="mailto:help@remontada.com">
               help@remontada.com</a>.
             </p>
-            <a class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-               href="/login">Home</a>
+            <button class="focus:outline-none disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+               (click)="redirect()">Home</button>
           </section>
 
           <nav *ngIf="!lastPage" [ngClass]="{ 'flex-row': currentStep === 1 }" class="flex items-center justify-end h-fit rounded bg-gray-50 dark:bg-gray-800 mt-2">

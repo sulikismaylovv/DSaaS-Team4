@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ElementRef, ViewChild,} from '@angular/core';
-import {FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {AuthService, Profile} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {PreferencesService} from "../../../core/services/preference.service";
@@ -36,7 +36,7 @@ export class MultistepformComponent implements OnInit {
   total = 9;
   showSummary = true;
   isSubmitting = false;
-  showModal: boolean = true;
+  showModal = true;
 
 
   teams = [
@@ -337,6 +337,7 @@ export class MultistepformComponent implements OnInit {
         last_name: formValues.last_name,
         first_name: formValues.first_name,
         birthdate: formValues.birthdate,
+        updated_at: new Date(),
       };
       console.log(updatedProfile);
       await this.authService.updateProfile(updatedProfile);
@@ -356,4 +357,9 @@ export class MultistepformComponent implements OnInit {
       event_category: 'Button',
       event_label: 'DownloadButton'
     });}
+
+  async redirect(){
+    await this.authService.restoreSession();
+    await this.router.navigate(['/home']);
+  }
 }
