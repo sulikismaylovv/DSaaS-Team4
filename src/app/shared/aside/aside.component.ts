@@ -31,7 +31,6 @@ export class AsideComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
 
-
     private apiService: ApiService,
     private preferencesService: PreferencesService,
     protected readonly userService: UserServiceService,

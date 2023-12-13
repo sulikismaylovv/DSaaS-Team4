@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-[#394151] rounded-lg p-2 shadow-lg mb-4 w-full">
+<div class="bg-white dark:bg-[#394151] rounded-lg p-2 mb-4 w-full">
   <!-- Check if it's a retweet and display retweet info -->
   <div *ngIf="post.original_post_id" class="retweet-indicator mb-4">
     <!-- Retweeter's Info -->
@@ -27,7 +27,7 @@
 
   <!-- Original Post Content -->
   <div *ngIf="originalPost else originalContent" (click)="onPostClick(originalPost.id)"
-       class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
+       class="border border-gray-300 rounded-lg p-2 scale-95 bg-gray-100 mt-4 mt:border-t-4">
     <div class="flex items-center mb-4 w-fit">
       <!-- Original Poster's Avatar -->
       <img (click)="onAvatarClick(this.originalPost.user_id)" [src]="retweetAvatarSafeUrl"

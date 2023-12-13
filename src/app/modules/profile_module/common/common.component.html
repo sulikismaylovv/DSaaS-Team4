@@ -60,7 +60,7 @@
             <!-- Friends -->
             <ng-container *ngIf="selectedLink === 'link1'">
               <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-4 2xl:p-8 h-full w-full">
-                <div class="flex flex-col items-center justify-center bg-light-mode-acc dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl
+                <div class="flex flex-col items-center justify-center bg-light-mode dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl
 ">
                   <ng-container *ngIf="friendsList.length !== 0">
                     <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-2">
@@ -142,12 +142,12 @@
             <ng-container *ngIf="selectedLink === 'link2'">
               <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 sm:px-1 md:px-4 lg:px-8 2xl:p-8 py-4 h-full ">
                 <ng-container *ngIf="userLeagues.length !== 0">
-                  <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow p-2 lg:py-4 rounded-2xl h-full w-full">
+                  <div class="flex flex-col bg-light-mode dark:bg-dark-mode shadow-sm p-2 lg:py-4 rounded-2xl h-full w-full">
                     <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg:text-xl mb-2">{{ profile?.first_name }}'s Leagues</h1>
                     <!-- Horizontally Scrollable Container -->
                     <div class="flex flex-row flex-nowrap overflow-x-auto hide-scrollbar py-2">
                       <ng-container *ngFor="let league of userLeagues">
-                        <div class="flex flex-col items-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 mx-2">
+                        <div class="flex flex-col items-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-lg p-1 lg:p-2 mx-2">
                           <p class="text-center text-dark-mode dark:text-primary-200 font-medium">{{ limitUsernameLength(league.leagueName, 16) }}</p>
                           <p class="text-center text-xs text-dark-mode dark:text-primary-100">{{ 'Position: #' + league.currentUserPosition }}</p>
                           <!-- Leaderboard Section -->
@@ -169,7 +169,7 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="userLeagues.length === 0">
-                  <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
+                  <div class="bg-light-mode content-center dark:bg-dark-mode shadow-sm mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div *ngIf="isOwnProfile" class="flex flex-col max-w-sm mx-4">
                         <h1 class="text-light-mode-text dark:text-primary-200 text-sm lg:text-lg ">You haven't joined any Leagues</h1>
@@ -225,7 +225,7 @@
               <!-- Bettinglist -->
               <div *ngIf="isOwnProfile" class="overflow-y-auto h-full">
                 <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg p-2 sm:px-1 md:px-4 lg:px-8 2xl:p-8 py-4 h-full overflow-y-hidden ">
-                  <div class="flex flex-col bg-light-mode-acc h-full dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl w-full">
+                  <div class="flex flex-col bg-light-mode h-full dark:bg-dark-mode shadow-sm px-2 lg:px-4 py-2 rounded-2xl w-full">
                     <div class="overflow-y-auto scrollbar-hide">
                     <h1 class="flex text-light-mode-text dark:text-primary-100 font-semibold text-sm md:text-md md:text-lg lg-text-xl mt-2 mb-1 ml-2 p-2 ">Pending Bets</h1>
                     <ng-container *ngFor="let betWithFixture of pendingBets">
@@ -237,15 +237,15 @@
                                        'yellow'
                                        }"></div>
                         <!-- Column 2: Bet card content -->
-                        <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-r-lg p-1 lg:p-2 flex-grow">
+                        <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-r-lg p-1 lg:p-2 flex-grow">
                           <ng-container *ngIf="betWithFixture.bet.team_chosen === 'draw'">
-                            <p class="flex items-center">
+                            <p>
                               Betted on a draw between
-                              <strong class="ml-1 mr-1">{{ betWithFixture.team0_details.name }}</strong>
+                             {{ betWithFixture.team0_details.name }}
                               and
-                              <strong class="mr-1 ml-1">{{ betWithFixture.team1_details.name }}</strong>
+                             {{ betWithFixture.team1_details.name }}
                               by
-                              <span class="flex items-center space-x-1 ml-2">
+                              <span class="inline-flex space-x-1 ml-2 whitespace-nowrap">
                                              <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
                                              <strong> {{ betWithFixture.bet.credits }}</strong>
                                              </span>
@@ -254,11 +254,11 @@
                           <ng-container *ngIf="betWithFixture.bet.team_chosen !== 'draw'">
                             <p class="flex items-center">
                               Betted on
-                              <strong class="mr-1 ml-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}</strong>
+                             {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}
                               to win against
-                              <strong class="mr-1 ml-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}</strong>
+                              {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}
                               by
-                              <span class="flex items-center space-x-1 ml-2">
+                              <span class="inline-flex space-x-1 ml-2 whitespace-nowrap">
                                              <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
                                              <strong> {{ betWithFixture.bet.credits }}</strong>
                                              </span>
@@ -269,7 +269,7 @@
                     </ng-container>
                     <!-- Container for when there are no pending bets -->
                     <ng-container *ngIf="pendingBets.length === 0">
-                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 p-2 m-2">
+                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-lg p-1 lg:p-2 p-2 m-2">
                         <p>No pending bets</p>
                       </div>
                     </ng-container>
@@ -285,7 +285,7 @@
                                              'rgba(255, 255, 0, 0.8)'
                                              }"></div>
                             <!-- Column 2: Bet card content -->
-                            <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-r-lg p-1 lg:p-2 flex-grow">
+                            <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-r-lg p-1 lg:p-2 flex-grow">
                               <ng-container *ngIf="betWithFixture.bet.team_chosen === 'draw'">
                                 <p class="flex items-center">
                                   Betted on a draw between
@@ -300,13 +300,13 @@
                                 </p>
                               </ng-container>
                               <ng-container *ngIf="betWithFixture.bet.team_chosen !== 'draw'">
-                                <p class="flex items-center">
+                                <p>
                                   Betted on
-                                  <strong class="mr-1 ml-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}</strong>
+                                 {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}
                                   to win against
-                                  <strong class="mr-1 ml-1">{{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}</strong>
+                                 {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}
                                   by
-                                  <span class="flex items-center space-x-1 ml-2">
+                                  <span class="inline-flex items-center space-x-1 ml-2">
                                                    <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
                                                    <strong> {{ betWithFixture.bet.credits }}</strong>
                                                    </span>
@@ -319,7 +319,7 @@
                     </ng-container>
                     <!-- Container for when there are no settled bets -->
                     <ng-container *ngIf="settledBets.length === 0">
-                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 p-2 m-2">
+                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-lg p-1 lg:p-2 p-2 m-2">
                         <p>No settled bets</p>
                       </div>
                     </ng-container>
@@ -333,12 +333,12 @@
             <ng-container *ngIf="selectedLink === 'link4'">
               <div class="flex items-center justify-center bg-white dark:bg-test shadow-sm rounded-b-lg px-2 py-4 sm:px-1 md:px-4 lg:px-8 2xl:p-8 h-full">
                 <ng-container *ngIf="ownedPlayersDetails.length !== 0">
-                  <div class="flex flex-col bg-light-mode-acc dark:bg-dark-mode shadow px-2 lg:px-4 py-2 rounded-2xl h-full w-full">
+                  <div class="flex flex-col bg-light-mode dark:bg-dark-mode shadow-sm px-2 lg:px-4 py-2 rounded-2xl h-full w-full">
                     <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl mb-2"> {{profile?.first_name}}'s Owned Players</h1>
                     <div class="flex flex-row justify-around">
                       <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
                         <ng-container *ngFor="let player of ownedPlayersDetails">
-                          <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-full">
+                          <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
                             <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
                             <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
                             <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p>
@@ -350,7 +350,7 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="ownedPlayersDetails.length === 0">
-                  <div class="bg-light-mode-acc content-center dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
+                  <div class="bg-light-mode content-center dark:bg-dark-mode shadow-sm mx-auto p-2 lg:p-4 rounded-2xl max-w-fit max-h-fit">
                     <div class="flex flex-col">
                       <div *ngIf="isOwnProfile" class="flex flex-col max-w-sm mx-4">
                         <h1 class="text-light-mode-text dark:text-primary-200 text-sm lg:text-lg  ">You haven't bought any players</h1>
@@ -371,11 +371,11 @@
             </ng-container>
           </div>
         </div>
-        <div class="border-4 dark:border-dark-mode rounded-xl p-1 mb-4 mx-4">
+        <div class="border-4 border-light-mode dark:border-dark-mode rounded-xl p-1 mb-4 mx-4">
           <div class="flex-col bg-white dark:bg-test shadow-sm rounded-lg p-2 xl:p-4 m-2 relative">
             <div class="opacity-30 p-6 ">
               <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-md md:text-lg lg-text-xl py-2">Achievements</h1>
-              <div class="bg-light-mode-acc dark:bg-dark-mode px-2 lg:px-4 py-2 lg:py-4 rounded-lg">
+              <div class="bg-light-mode dark:bg-dark-mode px-2 lg:px-4 py-2 lg:py-4 rounded-lg">
                 <div class="flex flex-col gap-2 lg:gap-4">
                   <ng-container *ngFor="let achievement of achievementList; let i = index">
                     <div *ngIf="i < 3" class="flex flex-col items-center bg-white shadow-sm dark:bg-test rounded-md p-1 lg:p-2">
@@ -387,8 +387,8 @@
                 </div>
               </div>
             </div>
-            <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg-dark-mode p-1">
-              <h1 class="text-white md:text-xl lg:text-2xl">Coming Soon</h1>
+            <div class="flex justify-center items-center rounded-md absolute top-1/2 left-1/2 w-[85%] transform -translate-x-1/2 bg dark:bg-dark-mode p-1">
+              <h1 class=" dark:text-primary-100 md:text-xl lg:text-2xl">Coming Soon</h1>
             </div>
           </div>
         </div>
@@ -400,18 +400,18 @@
       </div>
       <!-- End: Own profile only-->
       <!-- Posts -->
-      <div class="bg-white dark:bg-test shadow my-4 px-4 py-2 rounded-lg">
+      <div class="bg-white dark:bg-test shadow-sm my-4 px-4 py-2 rounded-lg">
         <!-- Post Navbar -->
         <div class="px-4 bg-white dark:bg-test rounded-t-lg">
           <ul class="flex justify-around">
             <li
-              class="bg-light-mode-acc dark:bg-search-bar px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl">
+              class="bg-light-mode dark:bg-search-bar px-4 py-2 text-light-mode-text dark:text-primary-100 text-2xl rounded-t-3xl">
               <p>{{postString[0]}}</p>
             </li>
           </ul>
         </div>
         <!-- User Posts -->
-        <div class=" px-4 bg-light-mode-acc dark:bg-search-bar shadow mx-2 rounded-lg">
+        <div class=" px-4 bg-light-mode dark:bg-search-bar shadow-sm mx-2 rounded-lg">
           <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
             <!-- Post 1 -->
             <div *ngIf="posts.length > 0; else noPosts">

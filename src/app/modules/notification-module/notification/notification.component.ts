@@ -28,9 +28,6 @@ interface CombinedNotification {
 
 }
 
-
-
-
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
