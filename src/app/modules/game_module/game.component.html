@@ -57,7 +57,9 @@
       </table>
     </div>
   </div>
+
   </div>
+
 </aside>
 
 <div *ngIf="loading; else loadedContent">
@@ -75,10 +77,13 @@
 
 <ng-template #loadedContent>
 <div class="p-4 2xl:ml-64 lg:ml-28 sm:mx-auto 2xl:mr-121">
+
   <div class="p-2">
+
     <!--top modal -->
     <div class="flex flex-col h-fit bg-white dark:bg-[#3a4153] rounded-lg">
       <div class="flex items-center">
+
         <button (click)="goBack()" type="button"
                 class="m-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
           <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -141,43 +146,71 @@
         </div>
       </div>
     </div>
-    <!--Betting widget abdo-->
+    <!--Betting widget-->
     <div *ngIf="betCanBePlaced" class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
       <ng-container *ngIf="!betAlreadyPlaced">
-        <p class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Place your bets!</p>
+        <p class="text-black  p-4 mt-2 dark:text-white font-semibold text-2xl">Place your bets!</p>
         <p class="text-black  ml-3 p-1 dark:text-white  text-md">Who's taking home the victory?</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
-        <div class="flex items-center justify-evenly pb-3 pt-3">
-          <!--Team 1-->
-          <div class="flex flex-col items-center pr-3 cursor-pointer">
-            <img src="{{fixture.club0?.logo}}" alt="bla bla" class="w-24 h-24 hover:-translate-y-1 transition"
-              [class.opacity-50]="clickedImage && clickedImage!=='team1'"
-              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team1'" (click)="toggleContent('team1')">
-            <p class="text-white"> {{fixture.club0?.name}} </p>
-            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_home}} </p>
+
+        <!-- Combined Bar with margins and rounded corners -->
+        <div class="flex ml-5 mr-5 rounded-xl m-4 mb-6 overflow-hidden">
+          <!-- Team 1 Section -->
+          <div class="flex flex-col flex-grow   transition-transform cursor-pointer">
+            <!-- Color Box -->
+            <div class="h-8 rounded-l-xl" [ngStyle]="{'background-color': fixture.club0 ? jupilerProLeagueColors[fixture.club0!.id] : 'defaultColor'}"
+                 [class.opacity-50]="clickedImage && clickedImage!=='team1'"
+                 [class.hover:scale-105]="!clickedImage || clickedImage === 'team1'"
+                 (click)="toggleContent('team1')"> <!-- Adjust the height as needed -->
+              <!-- This div is the color box, no content here -->
+            </div>
+            <!-- Text Row -->
+            <div class="pt-2 pb-2"> <!-- Padding for spacing around the text -->
+              <p class="text-black dark:text-white  text-center font-semibold"> {{fixture.club0?.name}} </p>
+              <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_home}} </p>
+            </div>
           </div>
-          <!--Draw-->
-          <div class="flex flex-col items-center cursor-pointer">
-            <svg [class.opacity-50]="clickedImage && clickedImage!=='draw'"
-              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'draw'" (click)="toggleContent('draw')"
-              class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-            <p class="text-white"> Draw </p>
-            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_draw}} </p>
+
+
+          <!-- Draw Section -->
+          <div class="flex flex-col flex-grow  transition-transform cursor-pointer"
+          >
+            <!-- Color Box -->
+            <div class="h-8" [ngStyle]="{'background-color': 'gray'}"
+                 [class.opacity-50]="clickedImage && clickedImage!=='draw'"
+                 [class.hover:scale-105]="!clickedImage || clickedImage === 'draw'"
+                 (click)="toggleContent('draw')">
+              <!-- This div is the color box, no content here -->
+            </div>
+            <!-- Text Row -->
+            <div class="pt-2 pb-2">
+              <p class="text-black dark:text-white  text-center font-semibold"> Draw </p>
+              <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_draw}} </p>
+            </div>
           </div>
-          <!--Team 2-->
-          <div class="flex flex-col items-center pl-3 cursor-pointer">
-            <img src="{{fixture.club1?.logo}}" alt="Team Logo" class="w-24 h-24 transition"
-              [class.opacity-50]="clickedImage && clickedImage!=='team2'"
-              [class.hover:-translate-y-1]="!clickedImage || clickedImage === 'team2'" (click)="toggleContent('team2')">
-            <p class="truncate ml-2 text-white">{{fixture.club1?.name}}</p>
-            <p class="text-black dark:text-white font-semibold"> {{fixture.odds_away}} </p>
+
+          <!-- Team 2 Section -->
+          <div class="flex flex-col flex-grow  transition-transform cursor-pointer"
+               (click)="toggleContent('team2')">
+            <!-- Color Box -->
+            <div class="h-8 rounded-r-xl" [ngStyle]="{'background-color': fixture.club1 ? jupilerProLeagueColors[fixture.club1!.id] : 'defaultColor'}"
+                 [class.opacity-50]="clickedImage && clickedImage!=='team2'"
+                 [class.hover:scale-105]="!clickedImage || clickedImage === 'team2'">
+              <!-- This div is the color box, no content here -->
+            </div>
+            <!-- Text Row -->
+            <div class="pt-2 pb-2">
+              <p class="truncate text-black dark:text-white text-center font-semibold">{{fixture.club1?.name}}</p>
+              <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_away}} </p>
+            </div>
           </div>
         </div>
-        <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
+
+
+
+
+
+          <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
           [class.pointer-events-none]="!showContent">
           <form class="flex  sm:flex-row items-center justify-center mt-2 ml-2 mb-4">
             <!--Button group for the rest-->
@@ -228,11 +261,14 @@
             </div>
             <!-- End Input Number -->
             <!--Button group smartphones-tablets-->
+
           </form>
         </div>
       </ng-container>
       <!--After betting-->
+      <!--Abdoooo change this :D-->
       <ng-container *ngIf="betAlreadyPlaced">
+        <!-- <button (click)="logData()"> TESTTTTT</button> -->
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
@@ -296,8 +332,9 @@
     </div>
     <!--Third widget-->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-      <p *ngIf="isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Lineup</p>
-      <p *ngIf="!isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Squad</p>
+
+      <p *ngIf="isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-2xl">Lineup</p>
+      <p *ngIf="!isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-2xl">Squad</p>
       <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
       <!--Add the team images to the left and right-->
 
