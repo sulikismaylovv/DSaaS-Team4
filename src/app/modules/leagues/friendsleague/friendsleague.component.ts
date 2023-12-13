@@ -200,7 +200,7 @@ export class FriendsleagueComponent implements OnInit {
         }
       } else {
         console.log("User is either not found, already added, or currentLeagueId is undefined");
-        alert("User is either not found, already added, or currentLeagueId is undefined");
+        alert("User does not exist, check again!");
         this.userSearchResults = [];
         inputElement.value = '';
       }

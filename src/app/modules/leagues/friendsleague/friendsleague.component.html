@@ -69,14 +69,17 @@
           <div class="flex w-full group">
             <!-- Input Field with flex-grow, initially hidden -->
             <input #newFriendInput type="text" (input)="onUserSearch($event)" placeholder="Add users to your league"
-                   class="flex-grow bg-very-light-purple  text-black border border-purple-600 rounded-lg px-4 py-2 focus:border-purple-700 focus:outline-none hidden group-hover:block" />
+                   class="flex-grow bg-very-light-purple  text-black border border-purple-600 rounded-lg px-4 py-2 focus:border-purple-700 focus:outline-none " />
 
             <!-- Plus Icon without flex-grow, remains its natural size -->
-            <div class="bg-purple-600 rounded-lg ml-1 p-2 cursor-pointer border-purple-400">
+            <div class="bg-purple-600 rounded-lg ml-1 p-2 cursor-pointer border-purple-400"
+                 (click)="addAndClear(newFriendInput.value, newFriendInput)">
               <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
               </svg>
             </div>
+
+
           </div>
 
           <!-- Row 2: Search Results -->
@@ -89,9 +92,6 @@
             </ul>
           </div>
         </div>
-
-
-
 
 
         <!-- Ensure league members are defined for the current league -->

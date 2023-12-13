@@ -186,7 +186,6 @@ export class CommonComponent implements OnInit{
         await this.checkFriendStatus();
       }
 
-
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
       const friendsPromise = this.fetchFriends(this.profile?.id);
@@ -198,7 +197,6 @@ export class CommonComponent implements OnInit{
 
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
-
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
