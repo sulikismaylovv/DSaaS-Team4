@@ -1,0 +1,6 @@
+#dailyAwardModal{
+  display: none;
+}
+#dailyAwardModal.active{
+  display: flex;
+}

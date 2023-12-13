@@ -15,6 +15,7 @@ import {ImageDownloadService} from "../../../core/services/imageDownload.service
 export class HomeComponent implements OnInit {
   league: Club[] = [];
   userSearchResults: any[] = [];
+  isRecentlyLogged = true;
   showPosts = false;
   showMatches = true;
   activeContent = 'matches';
@@ -28,8 +29,12 @@ export class HomeComponent implements OnInit {
     protected readonly imageDownloadService: ImageDownloadService,
 ) {
   }
-  ngOnInit() {
-    this.dailyAwardService.openPopup();
+  async ngOnInit() {
+    await this.updateRecentlyLoggedStatus();
+    if(!this.isRecentlyLogged) {
+      this.dailyAwardService.openPopup();
+    }
+
     this.navbarService.setShowNavbar(true);
 
   }
@@ -58,6 +63,20 @@ export class HomeComponent implements OnInit {
     this.showMatches = true;
   }
 
+  private async updateRecentlyLoggedStatus(): Promise<void> {
+    const userId = this.authService.session?.user?.id;
 
+    if (!userId) {
+      console.log("User ID is undefined.");
+      return;
+    }
 
+    try {
+      this.isRecentlyLogged = await this.userService.checkIfRecentlyLogged(userId);
+      await this.userService.setRecentlyLogged(userId);
+      console.log("Recently logged status updated for userID:", userId);
+    } catch (error) {
+      console.error("Error updating recently logged status:", error);
+    }
+  }
 }
