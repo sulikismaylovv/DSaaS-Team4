@@ -55,6 +55,31 @@ export class GameComponent implements OnInit {
   timeLeft = "";
   date = "";
 
+  //
+  jupilerProLeagueColors: { [id: string]: string } = {
+    '740': 'rgb(223, 23, 43)', // Antwerp: Red
+    '742': 'rgb(0, 77, 157)', // Genk: Blue
+    '569': 'rgb(0, 120, 187)', // Club Brugge KV: Blue
+    '741': 'rgb(0, 215, 25)', // Cercle Brugge: Green
+    '735': 'rgb(245, 209, 40)', // St. Truiden: Yellow
+    '733': 'rgb(152, 131, 68)', // Standard Liege: Red
+    '266': 'rgb(255, 229, 0)', // KV Mechelen: Yellow
+    '6224': 'rgb(238, 50, 36)', // RWDM: Black
+    '736': 'rgb(255, 230, 0)', // Charleroi: Black
+    '739': 'rgb(0, 0, 0)', // AS Eupen: Black
+    '260': 'rgb(255, 255, 255)', // OH Leuven: White
+    '734': 'rgb(200, 16, 46)', // Kortrijk: Red
+    '1393': 'rgb(246, 211, 48)', // Union St. Gilloise: Yellow
+    '554': 'rgb(81, 46, 143)', // Anderlecht: Purple
+    '261': 'rgb(42, 102, 157)', // KVC Westerlo: Red
+    '631': 'rgb(0, 71, 148)', // KAA Gent: Blue
+  };
+
+  idTeam0: number = 0;
+  idTeam1: number = 0;
+  oddHome: number = 0;
+  oddAway: number = 0;
+
   constructor(
     public themeService: ThemeService,
     public navbarService: NavbarService,
@@ -153,6 +178,10 @@ export class GameComponent implements OnInit {
 
         this.navbarService.setShowNavbar(true);
         this.time = "test";
+        this.idTeam0= this.fixture.club0?.id ?? 260;
+        this.idTeam1= this.fixture.club1?.id ?? 260;
+        this.oddHome = this.fixture.odds_home ?? 0;
+        this.oddAway = this.fixture.odds_away ?? 0;
         await this.updateTheTime();
         (async () => await this.updateTheTime());
         // this.fetchLineup(this.fixture.fixtureID);
@@ -180,10 +209,9 @@ export class GameComponent implements OnInit {
   }
 
   async fetchSquads() {
-    const clubID0 = this.fixture.club0?.id ?? 260;
-    const clubID1 = this.fixture.club1?.id ?? 260;
-    this.squadHome = await this.apiService.fetchSquad(clubID0);
-    this.squadAway = await this.apiService.fetchSquad(clubID1);
+
+    this.squadHome = await this.apiService.fetchSquad(this.idTeam0);
+    this.squadAway = await this.apiService.fetchSquad(this.idTeam1);
 
     await this.fetchLineups();
     this.cdr.detectChanges();
