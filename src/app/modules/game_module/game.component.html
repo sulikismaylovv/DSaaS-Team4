@@ -144,7 +144,6 @@
     <!--Betting widget abdo-->
     <div *ngIf="betCanBePlaced" class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4">
       <ng-container *ngIf="!betAlreadyPlaced">
-
         <p class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Place your bets!</p>
         <p class="text-black  ml-3 p-1 dark:text-white  text-md">Who's taking home the victory?</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -229,14 +228,11 @@
             </div>
             <!-- End Input Number -->
             <!--Button group smartphones-tablets-->
-
           </form>
         </div>
       </ng-container>
       <!--After betting-->
-      <!--Abdoooo change this :D-->
       <ng-container *ngIf="betAlreadyPlaced">
-        <!-- <button (click)="logData()"> TESTTTTT</button> -->
         <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
         <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
         <!--Here the image of the selected team should be displayed-->
@@ -300,7 +296,6 @@
     </div>
     <!--Third widget-->
     <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 pb-4">
-
       <p *ngIf="isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Lineup</p>
       <p *ngIf="!isLineupAvailable" class="text-black  p-4 mt-2 dark:text-white font-semibold text-xl">Squad</p>
       <hr class="h-px my-2 bg-gray-200 border-0 bg-dark-mode">
@@ -309,7 +304,7 @@
       <!-- Lineup Teams -->
       <div *ngIf="!isLineupAvailable" class="grid grid-cols-2 gap-4">
         <!-- Team Left Lineup -->
-        <div class="flex flex-col ml-10 mt-5">
+        <div class="flex flex-col lg:ml-10 mt-5">
           <ul class="space-y-4">
             <li *ngFor="let player of squadHome" class="bg-white dark:bg-[#3a4153] p-4 ">
               <div class="flex items-center space-x-4">
@@ -324,7 +319,7 @@
         </div>
 
         <!-- Team Right Lineup -->
-        <div class="flex flex-col mr-10 mt-5">
+        <div class="flex flex-col lg:mr-10 mt-5">
           <ul class="space-y-4">
             <li *ngFor="let player of squadAway" class=" bg-white dark:bg-[#3a4153] p-4 ">
               <div class="flex items-center justify-end space-x-4 rtl:space-x-reverse">
