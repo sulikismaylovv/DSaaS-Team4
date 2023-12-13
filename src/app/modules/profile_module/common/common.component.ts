@@ -322,6 +322,8 @@ export class CommonComponent implements OnInit{
     }
   }
 
+
+
   addFriend(targetUserId?:string | undefined): void {
     // Assuming you have the target user's ID and the current user's ID available
 
