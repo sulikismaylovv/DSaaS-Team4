@@ -1,8 +1,11 @@
 <aside class="fixed overflow-y-auto top-0 right-0 w-fit p-2 hidden 2xl:block flex flex-col h-screen no-scrollbar">
+
 <div class="bg-white  dark:bg-[#394151] rounded-lg p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
-        <p class="text-3xl font-bold text-black dark:text-white">Your Credits: {{availableCredits}}</p>
+        <p class="text-3xl font-bold text-black dark:text-white">Your Credits:
+          <img src="assets/logos/r-coin.svg" alt="Credits" class="inline w-8 h-8 mb-1 "> <!-- Image placed inline with text -->
+          {{availableCredits}}</p>
         <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending
           your credits</p>
         <div class="flex justify-center">
@@ -16,6 +19,7 @@
   </div>
 
   <div class="flex-grow overflow-y-auto">
+
     <div class="rounded-lg bg-white dark:bg-[#394151] shadow-md mt-5 mb-8 p-4">
     <div class="h-fit bg-white dark:bg-[#394151] flex flex-col">
       <div class="flex items-center justify-between bg-white dark:bg-[#394151] ">
@@ -90,11 +94,12 @@
                   d="M13 5H1m0 0 4 4M1 5l4-4" />
           </svg>
         </button>
+
         <p class="text-black p-4 dark:text-white font-semibold text-xl"></p>
       </div>
       <div class="flex items-start justify-between p-4">
         <div class="flex flex-col lg:flex-row items-center justify-center">
-          <img src={{fixture.club0?.logo}} alt="team-left" class="w-22 h-22">
+          <img src="{{fixture.club0?.logo}}" alt="team-left" class="w-24 h-24 max-w-xs object-contain">
           <p class="mt-2 lg:ml-2 lg:mt-0 font-medium text-black dark:text-white "> {{fixture.club0?.name}} </p>
         </div>
         <div class="flex flex-col justify-center mt-4 items-center">
@@ -103,7 +108,7 @@
         </div>
         <div class="flex flex-col-reverse lg:flex-row items-center justify-center">
           <p class="truncate font-medium mt-2 lg:mr-2 lg:mt-0 text-black dark:text-white"> {{fixture.club1?.name}} </p>
-          <img src="{{fixture.club1?.logo}}" alt="team-right" class="w-22 h-22">
+          <img src="{{fixture.club1?.logo}}" alt="team-left" class="w-24 h-24 max-w-xs object-contain">
         </div>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
@@ -153,59 +158,58 @@
         <!-- Combined Bar with margins and rounded corners -->
         <div class="flex ml-5 mr-5 rounded-xl m-4 mb-6 overflow-hidden">
           <!-- Team 1 Section -->
-          <div class="flex flex-col flex-grow   transition-transform cursor-pointer">
+          <div class="flex flex-col flex-grow transition-transform cursor-pointer">
             <!-- Color Box -->
-            <div class="h-8 rounded-l-xl" [ngStyle]="{'background-color': fixture.club0 ? jupilerProLeagueColors[fixture.club0!.id] : 'defaultColor'}"
+            <div class="h-8 rounded-l-xl shadow-lg"
+                 [ngStyle]="{'background-color': fixture.club0 ? jupilerProLeagueColors[fixture.club0!.id] : 'defaultColor'}"
                  [class.opacity-50]="clickedImage && clickedImage!=='team1'"
                  [class.hover:scale-105]="!clickedImage || clickedImage === 'team1'"
-                 (click)="toggleContent('team1')"> <!-- Adjust the height as needed -->
+                 (click)="toggleContent('team1')">
               <!-- This div is the color box, no content here -->
             </div>
             <!-- Text Row -->
-            <div class="pt-2 pb-2"> <!-- Padding for spacing around the text -->
-              <p class="text-black dark:text-white  text-center font-semibold"> {{fixture.club0?.name}} </p>
+            <div class="pt-2 pb-2"
+                 [class.opacity-50]="clickedImage && clickedImage!=='team1'"> <!-- Apply dimming effect -->
+              <p class="text-black dark:text-white text-center font-semibold"> {{fixture.club0?.name}} </p>
               <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_home}} </p>
             </div>
           </div>
 
 
           <!-- Draw Section -->
-          <div class="flex flex-col flex-grow  transition-transform cursor-pointer"
-          >
+          <div class="flex flex-col flex-grow transition-transform cursor-pointer">
             <!-- Color Box -->
-            <div class="h-8" [ngStyle]="{'background-color': 'gray'}"
+            <div class="h-8 shadow-lg" [ngStyle]="{'background-color': 'gray'}"
                  [class.opacity-50]="clickedImage && clickedImage!=='draw'"
                  [class.hover:scale-105]="!clickedImage || clickedImage === 'draw'"
                  (click)="toggleContent('draw')">
               <!-- This div is the color box, no content here -->
             </div>
             <!-- Text Row -->
-            <div class="pt-2 pb-2">
-              <p class="text-black dark:text-white  text-center font-semibold"> Draw </p>
+            <div class="pt-2 pb-2"
+                 [class.opacity-50]="clickedImage && clickedImage!=='draw'"> <!-- Apply dimming effect -->
+              <p class="text-black dark:text-white text-center font-semibold"> Draw </p>
               <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_draw}} </p>
             </div>
           </div>
 
           <!-- Team 2 Section -->
-          <div class="flex flex-col flex-grow  transition-transform cursor-pointer"
-               (click)="toggleContent('team2')">
+          <div class="flex flex-col flex-grow transition-transform cursor-pointer">
             <!-- Color Box -->
             <div class="h-8 rounded-r-xl" [ngStyle]="{'background-color': fixture.club1 ? jupilerProLeagueColors[fixture.club1!.id] : 'defaultColor'}"
                  [class.opacity-50]="clickedImage && clickedImage!=='team2'"
-                 [class.hover:scale-105]="!clickedImage || clickedImage === 'team2'">
+                 [class.hover:scale-105]="!clickedImage || clickedImage === 'team2'"
+                 (click)="toggleContent('team2')">
               <!-- This div is the color box, no content here -->
             </div>
             <!-- Text Row -->
-            <div class="pt-2 pb-2">
+            <div class="pt-2 pb-2 shadow-xl"
+                 [class.opacity-50]="clickedImage && clickedImage!=='team2'"> <!-- Apply dimming effect -->
               <p class="truncate text-black dark:text-white text-center font-semibold">{{fixture.club1?.name}}</p>
               <p class="text-black dark:text-white font-semibold text-center"> {{fixture.odds_away}} </p>
             </div>
           </div>
         </div>
-
-
-
-
 
           <div [class.opacity-50]="!showContent" [class.opacity-100]="showContent"
           [class.pointer-events-none]="!showContent">
@@ -263,33 +267,42 @@
         </div>
       </ng-container>
       <!--After betting-->
-      <!--Abdoooo change this :D-->
-      <ng-container *ngIf="betAlreadyPlaced">
-        <!-- <button (click)="logData()"> TESTTTTT</button> -->
-        <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Your bet</p>
-        <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
-        <!--Here the image of the selected team should be displayed-->
-        <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl mt-2 ml-6 text-black dark:text-white font-bold">Chosen team:</p>
-          <div *ngIf="betCanBePlaced" class="mt-4">
-            <img *ngIf="teamChosen === 'home'" [src]="fixture.club0?.logo" alt="{{fixture.club0?.name}}"
-              class="w-36 h-36">
-            <p *ngIf="teamChosen === 'home'" class="text-white text-center"> {{fixture.club0?.name}} </p>
 
-            <img *ngIf="teamChosen === 'away'" [src]="fixture.club1?.logo" alt="{{fixture.club1?.name}}"
-              class="w-24 h-24">
-            <p *ngIf="teamChosen === 'away'" class="text-white text-center "> {{fixture.club1?.name}} </p>
-            <svg *ngIf="teamChosen ==='draw'"
-              class="w-16 h-16 text-gray-800 dark:text-white hover:-translate-y-1 transition" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-            <p *ngIf="teamChosen === 'draw'" class="text-white text-center "> Draw </p>
+      <ng-container *ngIf="betAlreadyPlaced">
+          <p class="text-2xl mt-2 ml-6 text-black dark:text-white text-center p-2 font-bold">Your wager was on</p>
+          <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-dark-mode">
+        <div class="mt-4 mx-8"> <!-- Apply margin here to the container -->
+          <!-- Team 1 Selected -->
+          <div *ngIf="teamChosen === 'home'" class="mb-2 overflow-hidden">
+            <div class="animate-grow rounded-xl shadow-lg"
+                 [ngStyle]="{'background-color': fixture.club0 ? jupilerProLeagueColors[fixture.club0!.id] : 'defaultColor'}"
+                 style="height: 20px;"></div> <!-- Color bar -->
+            <p class="text-white text-center text-2xl font-bold mt-2">{{fixture.club0?.name}}</p> <!-- Text below -->
+          </div>
+
+          <!-- Team 2 Selected -->
+          <div *ngIf="teamChosen === 'away'" class="mb-2 overflow-hidden">
+            <div class="animate-grow rounded-xl shadow-lg"
+                 [ngStyle]="{'background-color': fixture.club1 ? jupilerProLeagueColors[fixture.club1!.id] : 'defaultColor'}"
+                 style="height: 20px;"></div> <!-- Color bar -->
+            <p class="text-white text-center text-2xl font-bold mt-2">{{fixture.club1?.name}}</p> <!-- Text below -->
+          </div>
+
+          <!-- Draw Selected -->
+          <div *ngIf="teamChosen ==='draw'" class="mb-2 overflow-hidden">
+            <div class="animate-grow rounded-xl shadow-lg"
+                 style="background-color: gray; height: 20px;"></div> <!-- Color bar -->
+            <p class="text-white text-center text-2xl font-bold mt-2">a Draw</p> <!-- Text below -->
           </div>
         </div>
-        <div class="flex items-center justify-start ml-6 mb-4">
-          <p class="text-2xl text-black dark:text-white font-bold">Number of credits at stake: {{betAmount}}</p>
+
+
+        <div class="flex items-center justify-start ml-6 m-4 ">
+          <p class="text-2xl text-black dark:text-white mr-4 font-bold">
+            Number of credits at stake:
+            <img src="assets/logos/r-coin.svg" alt="Credits" class="inline w-8 h-8 mb-1 "> <!-- Image placed inline with text -->
+            {{betAmount}}
+          </p>
         </div>
       </ng-container>
       <!--Modal for bet confirmation-->

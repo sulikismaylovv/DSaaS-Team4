@@ -54,17 +54,17 @@ export class NavigationComponent implements OnInit, OnDestroy{
     if(this.authService.session?.user.id) {
       await this.getProfile();
       if (this.profile?.username) {
-        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id)
-        await this.navbarService.setNotificationCount(this.profile?.id);
-        await this.navbarService.refreshNotificationCount(this.profile?.id);
-        await new Promise<void>((resolve) => {
-          this.navbarService.currentNotificationCount$.subscribe((count) => {
-            this.notificationCount = count;
-            //console.log(this.notificationCount);
-            resolve();
-          });
-        });
+        this.avatarSafeUrl = await this.imageService.loadAvatarImage(this.profile?.id);
       }
+      await this.navbarService.setNotificationCount(this.profile?.id);
+      await this.navbarService.refreshNotificationCount(this.profile?.id);
+      await new Promise<void>((resolve) => {
+        this.navbarService.currentNotificationCount$.subscribe((count) => {
+          this.notificationCount = count;
+          //console.log(this.notificationCount);
+          resolve();
+        });
+      });
     }
 
   }

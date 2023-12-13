@@ -33,7 +33,12 @@ export class NavbarService {
   public async refreshNotificationCount(userId: string| undefined): Promise<void> {
     if(!userId) return;
     const notifications = await this.notificationsService.getNotificationsForUser(userId);
-    this.notificationCountSubject.next(notifications.length);
+    const requests = await this.friendshipService.getFriendRequests(userId);
+
+    // Update the notification count
+    const totalNotifications = notifications.length + requests.length;
+
+    this.notificationCountSubject.next(totalNotifications);
   }
 
   public async setNotificationCount(userId: string | undefined): Promise<void> {
