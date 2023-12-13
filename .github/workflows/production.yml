@@ -3,6 +3,7 @@ name: Vercel Preview(Develop) Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_KEY }}
   SUPABASE_DB_PASSWORD: ${{ secrets.DEVELOP_DB_PASSWORD }}
   SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_URL  }}
 
@@ -20,7 +21,7 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Get the npm cache directory.
       - name: Get npm cache directory
