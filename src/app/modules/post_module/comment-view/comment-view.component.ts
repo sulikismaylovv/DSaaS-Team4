@@ -4,6 +4,7 @@ import {UserServiceService} from "../../../core/services/user-service.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
   selector: 'app-comment-view',
@@ -19,7 +20,8 @@ export class CommentViewComponent implements OnInit{
     private readonly authService: AuthService,
     private readonly userService: UserServiceService,
     private readonly sanitizer: DomSanitizer,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly imageDownloadService: ImageDownloadService
   ) {
   }
 
@@ -28,16 +30,7 @@ export class CommentViewComponent implements OnInit{
     await this.getUsernameById(this.comment.user_id);
 
     if (this.comment && this.comment.user_id) {
-      try {
-        const {data} = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.comment.user_id))
-        if (data instanceof Blob) {
-          this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Error downloading image: ', error.message)
-        }
-      }
+      this.avatarSafeUrl = await this.imageDownloadService.loadAvatarImage(this.comment.user_id);
     }
   }
 

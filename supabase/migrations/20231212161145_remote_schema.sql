@@ -1,27 +1,7 @@
-alter table "public"."usersinfriendsleague" drop constraint "usersinfriendsleague_leagueid_fkey";
-
-alter table "public"."usersinfriendsleague"
-    add constraint "usersinfriendsleague_leagueid_fkey" FOREIGN KEY (leagueid) REFERENCES friendsleagues (id) ON UPDATE CASCADE not valid;
-
-alter table "public"."usersinfriendsleague" validate constraint "usersinfriendsleague_leagueid_fkey";
+alter table "public"."result" enable row level security;
 
 set
 check_function_bodies = off;
-
-CREATE
-OR REPLACE FUNCTION public.update_xp_on_insert()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-UPDATE public.usersinfriendsleague AS uib
-SET xp = ufl.xp FROM public.usersinbetting AS ufl
-WHERE uib.userid = ufl."userID";
-
-RETURN NEW; -- Return the new row
-END;
-$function$
-;
 
 CREATE
 OR REPLACE FUNCTION public.call_supabase_function()
@@ -35,9 +15,9 @@ BEGIN
 BEGIN
 SELECT net.http_post(
          'https://exspobkugyipwqkqoavo.supabase.co/functions/v1/fixture-caller',
-               '{"name":"Functions"}', -- Your payload here
-               'application/json', -- Content type
-               '' -- Headers, add your authorization if needed
+         '{"name":"Functions"}', -- Your payload here
+         'application/json', -- Content type
+         '' -- Headers, add your authorization if needed
        )
 INTO response;
 EXCEPTION WHEN OTHERS THEN
@@ -101,7 +81,7 @@ begin
 select
 into status, content result.status::int, result.content::text
 FROM extensions.http((
-    'DELETE', url, ARRAY[extensions.http_header('authorization', 'Bearer '||service_role_key)], NULL, NULL)::extensions.http_request) as result;
+  'DELETE', url, ARRAY[extensions.http_header('authorization', 'Bearer '||service_role_key)], NULL, NULL)::extensions.http_request) as result;
 end;
 $function$
 ;
@@ -120,7 +100,7 @@ is_fav_team THEN
 SELECT p.*
 INTO result
 FROM randomplayers rp
-         JOIN players p ON rp.player_id = p.id
+       JOIN players p ON rp.player_id = p.id
 WHERE NOT (p.id = ANY (excluded_players))
   AND rp.club_id = fav_team_id
 ORDER BY random() LIMIT 1;
@@ -132,11 +112,11 @@ ELSE
 SELECT p.*
 INTO result
 FROM randomplayers rp
-         JOIN players p ON rp.player_id = p.id
+       JOIN players p ON rp.player_id = p.id
 WHERE NOT (p.id = ANY (excluded_players))
   AND rp.club_id != fav_team_id
 ORDER BY random()
-    LIMIT 1;
+  LIMIT 1;
 
 RETURN
 NEXT result;
@@ -163,7 +143,7 @@ NEW.email IS NOT NULL THEN
     VALUES (NEW.id, NEW.email)
     ON CONFLICT (id) DO
 UPDATE
-    SET email = EXCLUDED.email;
+  SET email = EXCLUDED.email;
 ELSE
     -- Handle the case where email is null. Perhaps log or notify.
     RAISE EXCEPTION 'Email cannot be null for user %', NEW.id;
@@ -253,14 +233,19 @@ END;
 $function$
 ;
 
-CREATE TRIGGER trigger_update_xp_after_insert
-    AFTER INSERT
-    ON public.usersinfriendsleague
-    FOR EACH ROW EXECUTE FUNCTION update_xp_on_insert();
+CREATE
+OR REPLACE FUNCTION public.update_xp_on_insert()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+UPDATE public.usersinfriendsleague AS uib
+SET xp = ufl.xp FROM public.usersinbetting AS ufl
+WHERE uib.userid = ufl."userID";
 
-CREATE TRIGGER trigger_update_xp_on_change
-    AFTER INSERT OR
-UPDATE ON public.usersinfriendsleague FOR EACH ROW
-    EXECUTE FUNCTION update_xp_on_insert();
+RETURN NEW; -- Return the new row
+END;
+$function$
+;
 
 
