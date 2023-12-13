@@ -57,9 +57,7 @@
       </table>
     </div>
   </div>
-
   </div>
-
 </aside>
 
 <div *ngIf="loading; else loadedContent">
@@ -77,15 +75,12 @@
 
 <ng-template #loadedContent>
 <div class="p-4 2xl:ml-64 lg:ml-28 sm:mx-auto 2xl:mr-121">
-
   <div class="p-2">
-
     <!--top modal -->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] rounded-lg">
+    <div class="flex flex-col h-fit bg-white dark:bg-[#3a4153] rounded-lg">
       <div class="flex items-center">
-
         <button (click)="goBack()" type="button"
-                class="m-2 p-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                class="m-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm p-2.5 me-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
           <svg class="w-[10px] h-[10px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -96,31 +91,31 @@
         <p class="text-black p-4 dark:text-white font-semibold text-xl"></p>
       </div>
       <div class="flex items-start justify-between p-4">
-        <div class="flex items-center">
+        <div class="flex flex-col lg:flex-row items-center justify-center">
           <img src={{fixture.club0?.logo}} alt="team-left" class="w-22 h-22">
-          <p class="ml-2 font-medium text-black dark:text-white "> {{fixture.club0?.name}} </p>
+          <p class="mt-2 lg:ml-2 lg:mt-0 font-medium text-black dark:text-white "> {{fixture.club0?.name}} </p>
         </div>
         <div class="flex flex-col justify-center mt-4 items-center">
           <p class="text-black dark:text-white text-2xl font-bold">{{time}}</p>
           <p class="text-black dark:text-white text-lg font-semibold">{{timeLeft}}</p>
         </div>
-        <div class="flex items-center">
-          <p class="truncate font-medium mr-2 text-black dark:text-white "> {{fixture.club1?.name}} </p>
-          <img src={{fixture.club1?.logo}} alt="team-right" class="w-22 h-22">
+        <div class="flex flex-col-reverse lg:flex-row items-center justify-center">
+          <p class="truncate font-medium mt-2 lg:ml-2 lg:mt-0 text-black dark:text-white"> {{fixture.club1?.name}} </p>
+          <img src="{{fixture.club1?.logo}}" alt="team-right" class="w-22 h-22">
         </div>
       </div>
       <hr class="h-px my-4 bg-gray-200 border-0 bg-dark-mode">
       <div class="flex justify-center">
-        <div class="flex mb-4 items-center">
+        <div class="flex flex-col lg:flex-row mb-4 items-center">
           <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 20 20">
             <path fill="currentColor"
               d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z" />
           </svg>
-          <p class="ml-2 text-black dark:text-white">{{ date }}</p>
+          <p class="mt-2 ml-2 lg:mt-0 text-black dark:text-white">{{ date }}</p>
         </div>
 
-        <div class="ml-4 flex mb-4 items-center">
+        <div class="ml-4 flex mb-4  flex-col lg:flex-row items-center">
           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 25 25" class="text-gray-800 dark:text-white">
             <g id="ic_venue_24px" transform="translate(-168 -1536)">
               <path id="Rectangle_2928" fill="none" d="M0 0H25V25H0z" transform="translate(168 1536)"></path>
@@ -128,7 +123,7 @@
                 <path id="Path_807" d="M13.762 8.936h3.423l-1.308-3.524-.2-.4A2.6 2.6 0 0 0 13.561 3.7H8.426A2.586 2.586 0 0 0 6.11 5.311L4.7 8.936h3.524a2.967 2.967 0 0 1 2.819-1.712 2.923 2.923 0 0 1 2.719 1.712z" class="cls-2" transform="translate(.032 .026)"></path><path id="Path_808" d="M21.447 8.156l-2.819-6.142-.3-.5A3.588 3.588 0 0 0 15.3 0H6.646a3.725 3.725 0 0 0-3.223 1.913L.7 7.753a6.346 6.346 0 0 0-.7 3.021v4.833a4.834 4.834 0 0 0 4.833 4.833h12.385a4.834 4.834 0 0 0 4.833-4.833v-4.733a6.307 6.307 0 0 0-.604-2.718zm-1.41 3.121v.4A2.739 2.739 0 0 1 17.52 14.4a4.517 4.517 0 0 0 .5-1.913v-.6a2.788 2.788 0 0 0-.1-.906H13.9a2.967 2.967 0 0 1-2.819 1.712 3.072 3.072 0 0 1-2.819-1.712H4.128c0 .3-.1.6-.1.906v.6a4.165 4.165 0 0 0 .5 1.913 2.739 2.739 0 0 1-2.514-2.72v-.906a5.892 5.892 0 0 1 .5-2.215l2.722-5.74a1.607 1.607 0 0 1 1.41-.806H15.3a2 2 0 0 1 1.309.6l3.021 6.444a3.949 3.949 0 0 1 .4 1.812z" class=></path>              </g>
             </g>
           </svg>
-          <p class=" ml-2 text-gray-800 dark:text-white ">{{fixture.venue}}</p>
+          <p class="mt-2 mr-2 lg:mt-0 text-black dark:text-white">{{fixture.venue}}</p>
         </div>
       </div>
     </div>
