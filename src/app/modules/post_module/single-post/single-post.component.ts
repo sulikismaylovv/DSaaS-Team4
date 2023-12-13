@@ -6,6 +6,7 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SupabaseService} from "../../../core/services/supabase.service";
 import {Location} from '@angular/common';
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
   selector: 'app-single-post',
@@ -26,6 +27,7 @@ export class SinglePostComponent implements OnInit {
     private readonly postsService: PostsService,
     private readonly authService: AuthService,
     private readonly sanitizer: DomSanitizer,
+    private readonly ImageDownloadService: ImageDownloadService,
     private readonly supabase: SupabaseService,
     private readonly router: Router,
     private location: Location
@@ -62,17 +64,8 @@ export class SinglePostComponent implements OnInit {
 
     await this.getProfile();
 
-    if (this.profile && this.profile.avatar_url) {
-      try {
-        const {data} = await this.authService.downLoadImage(this.profile.avatar_url)
-        if (data instanceof Blob) {
-          this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Error downloading image: ', error.message)
-        }
-      }
+    if (this.profile) {
+      this.avatarSafeUrl = await this.ImageDownloadService.loadAvatarImage(this.profile.id);
     }
     this.loadComments().then(r => console.log("loadComments() finished"));
     this.loading = false;

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { UserServiceService } from "../../../core/services/user-service.service";
 import { AuthService } from "../../../core/services/auth.service";
-
+declare let gtag: Function;
 @Component({
   selector: "app-daily-award",
   templateUrl: "./daily-award.component.html",
@@ -26,6 +26,7 @@ export class DailyAwardComponent implements OnInit{
 
   close(): void {
     this.dialogRef.close();
+    this.trackButtonClick1();
   }
 
   private async updateRecentlyLoggedStatus(): Promise<void> {
@@ -44,4 +45,10 @@ export class DailyAwardComponent implements OnInit{
       console.error("Error updating recently logged status:", error);
     }
   }
+  trackButtonClick1(): void {
+    console.log("success", "hey");
+    gtag('event', 'rewardButton', {
+      event_category: 'Button05',
+      event_label: 'RewardButton'
+    });}
 }

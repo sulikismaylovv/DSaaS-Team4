@@ -5,6 +5,7 @@ import {AuthService, Profile} from "../../../core/services/auth.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {UserServiceService} from "../../../core/services/user-service.service";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
   selector: 'app-create-post',
@@ -34,6 +35,7 @@ export class CreatePostComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private readonly authService: AuthService,
+    private readonly imageDownloadService: ImageDownloadService,
     private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<CreatePostComponent>,
     private readonly userService: UserServiceService,
@@ -45,17 +47,8 @@ export class CreatePostComponent implements OnInit {
   async ngOnInit() {
     await this.getProfile();
 
-    if (this.profile && this.profile.avatar_url) {
-      try {
-        const {data} = await this.authService.downLoadImage(this.profile.avatar_url)
-        if (data instanceof Blob) {
-          this.avatarSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Error downloading image: ', error.message)
-        }
-      }
+    if (this.profile) {
+      this.avatarSafeUrl = await this.imageDownloadService.loadAvatarImage(this.profile.id);
     }
 
 
@@ -64,16 +57,7 @@ export class CreatePostComponent implements OnInit {
       await this.getUsernameRetweetedById(this.data.originalPost.user_id)
       // Load the avatar of the user who made the original post
       // Assuming you have a method to get a user's avatar by their user_id
-      try {
-        const {data} = await this.authService.downLoadImage(await this.getAvatarUrlByID(this.data.originalPost.user_id))
-        if (data instanceof Blob) {
-          this.originalPostAvatar = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Error downloading image: ', error.message)
-        }
-      }
+      this.originalPostAvatar = await this.imageDownloadService.loadAvatarImage(this.data.originalPost.user_id);
 
       // Set the image preview to the original post's image if it exists
       //this.originalPostImage = this.data.originalPost.image_url;

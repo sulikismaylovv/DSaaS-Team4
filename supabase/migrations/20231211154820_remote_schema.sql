@@ -33,7 +33,7 @@ response json;
 BEGIN
 BEGIN
 SELECT net.http_post(
-         'https://kvjhoifmabxitkelfeod.supabase.co/functions/v1/fixture-caller',
+         'https://exspobkugyipwqkqoavo.supabase.co/functions/v1/fixture-caller',
          '{"name":"Functions"}', -- Your payload here
          'application/json', -- Content type
          '' -- Headers, add your authorization if needed

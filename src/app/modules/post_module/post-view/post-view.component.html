@@ -30,11 +30,13 @@
        class="border border-gray-300 rounded-lg p-2 ml-4 scale-95 bg-gray-100 mt-4 mt:border-t-4">
     <div class="flex items-center mb-4 w-fit">
       <!-- Original Poster's Avatar -->
-      <img [src]="retweetAvatarSafeUrl"  alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4 bg-inherit"/>
+      <img (click)="onAvatarClick(this.originalPost.user_id)" [src]="retweetAvatarSafeUrl"
+           alt="Original poster's profile image" class="inline-block h-10 w-10 rounded-full mr-4 bg-inherit"/>
       <div>
         <!-- Original Poster's Username -->
         <div *ngIf="!this.post.is_official" class="flex flex-row items-center">
-          <p class="font-bold text-xl text-gray-800 dark:text-white" (click)="onAvatarClick(post.user_id)">{{ usernameRetweeted }}</p>
+          <p (click)="onAvatarClick(this.originalPost.user_id)"
+             class="font-bold text-xl text-gray-800 dark:text-white">{{ usernameRetweeted }}</p>
           <span class="flex items-center justify-center w-4 h-4 lg:w-6 lg:h-6 me-2 ml-2 font-semibold rounded-full">
             <img [src]="clubRetweeted?.logo" alt="hehe"/>
             <!-- <img [src]="favoriteClub?.logo" alt="Favorite Club Logo"> -->

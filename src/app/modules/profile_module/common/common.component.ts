@@ -10,9 +10,7 @@ import {SupabaseService} from "../../../core/services/supabase.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FriendshipService} from "../../../core/services/friendship.service";
 import {Player} from "../../../core/services/player.service";
-import {
-  FriendsLeagueInterface,
-  FriendsLeague} from "../../../core/services/friends-league.service";
+import {FriendsLeague, FriendsLeagueInterface} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
 
@@ -187,7 +185,6 @@ export class CommonComponent implements OnInit{
         await this.checkFriendStatus();
       }
 
-
       // Assuming `getProfile` and `getProfileById` set `this.profile`
       const preferencePromise = this.preferenceService.getPreferences(<string>this.profile?.id);
       const friendsPromise = this.fetchFriends(this.profile?.id);
@@ -199,7 +196,6 @@ export class CommonComponent implements OnInit{
 
       const [preferences, , ] = await Promise.all([preferencePromise, friendsPromise, postsPromise]);
       this.preference = preferences;
-
 
       for (const preference of this.preference) {
         await this.sortPreference(preference);
@@ -462,6 +458,7 @@ export class CommonComponent implements OnInit{
   async onFriendClick(friendId: string | undefined): Promise<void> {
     if (friendId === undefined) throw new Error('Friend ID is undefined');
     await this.router.navigate(['/profile', friendId]);
+    window.location.reload();
   }
 
 
@@ -597,5 +594,4 @@ export class CommonComponent implements OnInit{
   }
 
 
-  protected readonly close = close;
 }

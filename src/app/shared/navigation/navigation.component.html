@@ -258,7 +258,7 @@
     <!--Profile signed in -->
     <li *ngIf="authService.isAuthenticated$ | async">
       <a class="flex items-center justify-center 2xl:justify-start p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-navbar-hover-light dark:hover:bg-dark-gray dark:text-white group cursor-pointer" href="/profile">
-        <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
+        <img [src]="this.avatarSafeUrl" alt="User avatar" class="w-10 h-10 rounded-full">
         <div class="flex flex-col">
           <span class="ms-3 hidden 2xl:inline">{{username}}</span>
           <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
