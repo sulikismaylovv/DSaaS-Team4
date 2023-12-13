@@ -23,32 +23,6 @@ END;
 $function$
 ;
 
-CREATE
-OR REPLACE FUNCTION public.call_supabase_function()
- RETURNS json
- LANGUAGE plpgsql
- SECURITY DEFINER
-AS $function$
-DECLARE
-response json;
-BEGIN
-BEGIN
-SELECT net.http_post(
-         'https://exspobkugyipwqkqoavo.supabase.co/functions/v1/fixture-caller',
-               '{"name":"Functions"}', -- Your payload here
-               'application/json', -- Content type
-               '' -- Headers, add your authorization if needed
-       )
-INTO response;
-EXCEPTION WHEN OTHERS THEN
-        -- In case of error, return the error message
-        RETURN json_build_object('error', SQLERRM);
-END;
-
-RETURN response;
-END;
-$function$
-;
 
 CREATE
 OR REPLACE FUNCTION public.delete_avatar(avatar_url text, OUT status integer, OUT content text)
