@@ -1,13 +1,14 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { PostsService } from 'src/app/core/services/posts.service';
-import { Post } from "../../../core/models/posts.model";
-import { AuthService, Profile } from "../../../core/services/auth.service";
-import { SupabaseService } from "../../../core/services/supabase.service";
-import { MatDialog } from "@angular/material/dialog";
-import { CreatePostComponent } from "../../post_module/create-post/create-post.component";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { Router } from "@angular/router";
-import { PreferencesService } from "../../../core/services/preference.service";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {PostsService} from 'src/app/core/services/posts.service';
+import {Post} from "../../../core/models/posts.model";
+import {AuthService, Profile} from "../../../core/services/auth.service";
+import {SupabaseService} from "../../../core/services/supabase.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreatePostComponent} from "../../post_module/create-post/create-post.component";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {PreferencesService} from "../../../core/services/preference.service";
+import {ImageDownloadService} from "../../../core/services/imageDownload.service";
 
 @Component({
   selector: 'app-posts',
@@ -29,6 +30,7 @@ export class PostsComponent implements OnInit {
     private readonly sanitizer: DomSanitizer,
     protected readonly router: Router,
     private readonly preferenceService: PreferencesService,
+    private readonly imageDownloadService: ImageDownloadService,
     public dialog: MatDialog
 
   ) {
@@ -51,17 +53,8 @@ export class PostsComponent implements OnInit {
   async ngOnInit() {
     await this.getProfile();
 
-    if (this.profile && this.profile.avatar_url) {
-      try {
-        const { data } = await this.authService.downLoadImage(this.profile.avatar_url)
-        if (data instanceof Blob) {
-          this.avataUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data))
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Error downloading image: ', error.message)
-        }
-      }
+    if (this.profile) {
+      this.avataUrl = await this.imageDownloadService.loadAvatarImage(this.profile.id);
     }
     await this.loadPosts();
   }
