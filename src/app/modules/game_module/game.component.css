@@ -72,3 +72,18 @@
 #insufficientCredits.active{
   display: flex;
 }
+
+.animate-grow {
+  width: 0;
+  animation: grow 0.5s ease-out forwards;
+}
+
+@keyframes grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
