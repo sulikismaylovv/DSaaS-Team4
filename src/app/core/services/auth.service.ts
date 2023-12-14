@@ -251,6 +251,10 @@ export class AuthService {
         return this.supabase.supabaseClient.storage.from('background_user').upload(filePath, file)
     }
 
+    downloadClub(path: string) {
+        return this.supabase.supabaseClient.storage.from('Club_logos').download(path)
+    }
+
     async restoreSession() {
         try {
             const {data: sessionData, error} = await this.supabase.supabaseClient.auth.getSession();

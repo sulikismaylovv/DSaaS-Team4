@@ -75,6 +75,7 @@ export class ImageDownloadService {
     }
   }
 
+
   async getAvatarUrlByID(id: string) {
     return this.userService.getUserByID(id).then(user => {
       return user.avatar_url;
@@ -100,7 +101,7 @@ export class ImageDownloadService {
 
   async loadClubImage(imageUrl: string): Promise<SafeResourceUrl | undefined> {
     try {
-      const data = await this.preferenceService.downLoadImage(imageUrl);
+      const data = await this.authService.downloadClub(imageUrl);
       if (data instanceof Blob) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
       }
