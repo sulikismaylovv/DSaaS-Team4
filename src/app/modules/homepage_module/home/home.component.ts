@@ -1,3 +1,5 @@
+import { User } from '@supabase/supabase-js';
+import { BetsService } from 'src/app/core/services/bets.service';
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../core/services/navbar.service";
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
     protected readonly authService: AuthService,
     protected readonly userService: UserServiceService,
     protected readonly imageDownloadService: ImageDownloadService,
+    private betsService: BetsService
 ) {
   }
   async ngOnInit() {
@@ -50,6 +53,7 @@ export class HomeComponent implements OnInit {
       this.userSearchResults = [];
     }
   }
+
 
   showPostsContent() {
     this.activeContent= 'posts';

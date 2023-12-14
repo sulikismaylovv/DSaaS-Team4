@@ -7,7 +7,7 @@ import {FixtureTransferService} from "../../../core/services/fixture-transfer.se
 import {club, SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
 import {AuthService} from "../../../core/services/auth.service";
 import {PreferencesService} from "../../../core/services/preference.service";
-
+import { BetsService } from "src/app/core/services/bets.service";
 
 @Component({
   selector: "app-matches",
@@ -33,7 +33,8 @@ export class MatchesComponent implements OnInit {
     private router: Router,
     protected authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
-    private preferenceService: PreferencesService
+    private preferenceService: PreferencesService,
+    private betsService: BetsService
   ) {
     this.currentDate = new Date();
     this.stringDate = this.currentDate.toISOString().split("T")[0];
@@ -64,6 +65,15 @@ export class MatchesComponent implements OnInit {
 
   }
 
+  async checkIfBet(fixtureID: number): Promise<boolean> {
+    const user = this.authService.session?.user;
+    const fixtures = await this.betsService.getBettedFixtures(user?.id as string);
+    for (const fixture of fixtures) {
+      if (fixture === fixtureID) {
+        return true;
+      }
+    } return false;
+  }
 
 
   hasFixturesForDate(date: string): boolean {

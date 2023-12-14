@@ -86,7 +86,7 @@
                           {{ formatDate(fixture.time) }}
                         </div>
                         <div class="flex items-center justify-center font-light text-lg w-full">
-                          Place your wager now!
+                          Wager Now!
                         </div>
                       </div>
 
@@ -160,8 +160,8 @@
                       <div class="flex items-center justify-center mt-3 font-bold text-xl w-full">
                         {{ formatDate(fixture.time) }}
                       </div>
-                      <div class="flex items-center justify-center font-light text-lg w-full">
-                        Place your wager now!
+                      <div *ngIf="checkIfBet(fixture.fixtureID)" class="flex items-center justify-center font-light text-lg w-full">
+                        Wager Now!
                       </div>
                     </div>
                     <!-- Team 2 -->
