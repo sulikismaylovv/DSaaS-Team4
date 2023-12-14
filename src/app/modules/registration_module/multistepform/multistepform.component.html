@@ -11,7 +11,7 @@
 </div>
 
 <div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 w-fit mx-auto">
+  <div class="p-4 rounded-lg dark:border-gray-700 w-fit mx-auto">
     <div class="flex flex-col items-center justify-center h-fit">
       <div class="bg-white dark:bg-[#394151] rounded-lg shadow-lg p-8 w-full">
         <div #topOfPage></div> <!-- Place this at the top of your component or where you want to scroll to -->
@@ -124,9 +124,9 @@
           </section>
           <section *ngIf="currentStep === 2">
             <h2 class="text-2xl text-start font-bold mb-4 xl:text-3xl text-black dark:text-white">Select your favorite team</h2>
-            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-4">
               <div (click)="selectFavorite(team)" *ngFor="let team of teams" [class.selected]="team.favorite" class="team-card mb-4 cursor-pointer hover:scale-130 transition-transform duration-300">
-                <img alt="{{ team.name }}" src="{{ team.logoPath }}" class="w-24 h-24">
+                <img alt="{{ team.name }}" src="{{ team.logoPath }}" class="w-16 h-16">
                 <p class="text-gray dark:text-white font-bold pt-4">{{ team.name }}</p>
                 <div *ngIf="team.favorite" class="star"></div>
               </div>
@@ -135,9 +135,9 @@
 
           <section *ngIf="currentStep === 3">
             <h2 class="text-2xl text-start font-bold mb-4 xl:text-3xl text-black dark:text-white"  [class.zoom-animation]="currentStep === 3">Choose clubs you want to follow</h2>
-            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-4">
               <div (click)="toggleTeamFollow(team)" *ngFor="let team of teams" [class.favorite]="team === favoriteTeam" [class.followed]="selectedFollowedTeams.has(team)" class="team-card mb-4 cursor-pointer hover:scale-130 transition-transform duration-300">
-                <img alt="{{ team.name }}" class="w-24 h-24" src="{{ team.logoPath }}">
+                <img alt="{{ team.name }}" class="w-16 h-16" src="{{ team.logoPath }}">
                 <p class="text-gray dark:text-white font-bold pt-4">{{ team.name }}</p>
                 <div *ngIf="team.favorite" class="star"></div>
                 <div *ngIf="selectedFollowedTeams.has(team) && team !== favoriteTeam" class="plus-sign">
