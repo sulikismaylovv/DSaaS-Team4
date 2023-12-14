@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-terms-and-conditions',
@@ -8,9 +8,9 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class TermsAndConditionsComponent {
   constructor(
-    protected dialog: MatDialog
+    public dialogRef: MatDialogRef<TermsAndConditionsComponent>,
   ){}
   closeTCModal(): void{
-    this.dialog.closeAll()
+    this.dialogRef.close()
   }
 }
