@@ -15,7 +15,7 @@ describe('GameComponent', () => {
 
   beforeEach(() => {
     mockApiService = jasmine.createSpyObj('ApiService', ['fetchSingleSupabaseFixture', 'fetchStandings']);
-    mockAuthService = jasmine.createSpyObj('AuthService', ['session']);
+    mockAuthService = jasmine.createSpyObj('AuthService', ['session', 'isLogged']);
     mockBetsService = jasmine.createSpyObj('BetsService', ['getUserCredits', 'checkIfUserIsRegistered', 'createBet']);
 
     TestBed.configureTestingModule({
