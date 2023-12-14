@@ -13,7 +13,7 @@ import {Player} from "../../../core/services/player.service";
 import {FriendsLeague, FriendsLeagueInterface} from "../../../core/services/friends-league.service";
 import {UserServiceService} from "../../../core/services/user-service.service";
 import {BetsService, BetWithFixture} from "../../../core/services/bets.service";
-
+import {ThemeService} from "../../../core/services/theme.service";
 
 export enum FriendRequestStatus {
   None = 'none',
@@ -111,7 +111,8 @@ export class CommonComponent implements OnInit{
     protected readonly friendshipService: FriendshipService,
     private friendsLeague: FriendsLeague,
     private userService: UserServiceService,
-    private betsService: BetsService
+    private betsService: BetsService,
+    public themeService: ThemeService
 
   ) {
     this.supabase.supabaseClient

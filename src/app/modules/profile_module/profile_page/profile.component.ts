@@ -11,6 +11,7 @@ import {BgImageSelectorComponent} from "../bg-image-selector/bg-image-selector.c
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent extends CommonComponent {
+  editPencil: string[]= ['edit-pencil-primary-100.svg', 'edit-pencil-light-mode-text.svg'];
 
   openCreatePostModal(): void {
     const dialogRef = this.dialog.open(CreatePostComponent, {
