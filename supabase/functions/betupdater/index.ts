@@ -85,6 +85,27 @@ async function getTodayBets(): Promise<ApiOdds[]> {
   }
 }
 
+async function getBetsForNextFiveDays(): Promise<ApiOdds[]> {
+  let allBets: ApiOdds[] = [];
+  for (let i = 0; i < 5; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    const dateString = date.toISOString().split("T")[0];
+    const url =
+      `https://api-football-v1.p.rapidapi.com/v3/odds?league=144&season=2023&date=${dateString}&bookmaker=16`;
+
+    try {
+      console.log(`Fetching bets for ${dateString}`);
+      const response = await fetch(url, options);
+      const data = await response.json();
+      allBets = allBets.concat(data.response);
+    } catch (error) {
+      console.error(`Error fetching bets for ${dateString}:`, error);
+    }
+  }
+  return allBets;
+}
+
 async function addBets(supabaseClient: SupabaseClient, bets: ApiOdds[]) {
   for (const bet of bets) {
     const odds = convertApiOddsToSupabaseOdds(bet);
@@ -122,9 +143,10 @@ Deno.serve(async (req) => {
     return new Response("ok", { status: 200 });
   }
 
-  const bets = await getTodayBets();
+  console.log("Starting to fetch and update bets for the next 5 days");
+  const bets = await getBetsForNextFiveDays();
   await addBets(supabaseClient, bets);
-
+  console.log("Finished updating bets");
 
   return new Response();
 });
