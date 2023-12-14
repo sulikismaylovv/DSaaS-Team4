@@ -260,10 +260,10 @@ export class GameComponent implements OnInit {
   }
 
   logData() {
-    // console.log("homeSquad: ", this.squadHome);
-    // console.log("awaySquad: ", this.squadAway);
-    // console.log("home: ", this.lineupHome);
-    // console.log("away: ", this.lineupAway);
+    console.log("homeSquad: ", this.squadHome);
+    console.log("awaySquad: ", this.squadAway);
+    console.log("home: ", this.lineupHome);
+    console.log("away: ", this.lineupAway);
   }
 
   async checkIfBetCanBePlaced() {
@@ -289,10 +289,10 @@ export class GameComponent implements OnInit {
     console.log("fetchFixture() called");
     console.log("date.time: ", data.time);
     this.fixture = data; // Ensure that this.fixture is updated with the fetched data
-    //await this.fetchSquads();
-    // await this.fetchLineups();
+    await this.fetchSquads();
+    await this.fetchLineups();
     await this.updateTheTime();
-    //this.checkIfBetCanBePlaced();
+    this.checkIfBetCanBePlaced();
 
     // this.time = this.formatDateToHHMM(this.fixture.time);
   }
