@@ -81,9 +81,15 @@
                         </div>
                       </div>
                       <!-- Score -->
-                      <div class="flex items-center justify-center font-bold text-xl w-full">
-                        {{ formatDate(fixture.time) }}
+                      <div class="flex flex-col items-center justify-center w-full">
+                        <div class="flex items-center justify-center mt-3 font-bold text-xl w-full">
+                          {{ formatDate(fixture.time) }}
+                        </div>
+                        <div class="flex items-center justify-center font-light text-lg w-full">
+                          Place your wager now!
+                        </div>
                       </div>
+
                       <!-- Team 2 -->
                       <div class="flex flex-row items-center w-full">
                         <div class="flex flex-col items-center justify-center w-full">
@@ -150,8 +156,13 @@
                       <span class="font-semibold text-lg truncate">{{ fixture.club0?.name }}</span>
                     </div>
                     <!-- Score -->
-                    <div class="flex items-center justify-center font-bold text-xl w-full">
-                      {{ formatDate(fixture.time) }}
+                    <div class="flex flex-col items-center justify-center w-full">
+                      <div class="flex items-center justify-center mt-3 font-bold text-xl w-full">
+                        {{ formatDate(fixture.time) }}
+                      </div>
+                      <div class="flex items-center justify-center font-light text-lg w-full">
+                        Place your wager now!
+                      </div>
                     </div>
                     <!-- Team 2 -->
                     <div class="flex flex-col items-center justify-center w-full">

@@ -161,8 +161,9 @@ export class GameComponent implements OnInit {
       this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
         if (fixture?.fixtureID === id) {
 
-          this.idTeam0= this.fixture.club0?.id ?? 260;
-          this.idTeam1= this.fixture.club1?.id ?? 260;
+          this.idTeam0 = this.fixture.club0?.id as number;
+          this.idTeam1 = this.fixture.club1?.id as number;
+
 
           this.fixture = fixture;
           const squadPromise = await this.fetchSquads();
@@ -211,6 +212,9 @@ export class GameComponent implements OnInit {
   }
 
   async fetchSquads() {
+
+    this.idTeam0 = this.fixture.club0?.id as number;
+    this.idTeam1 = this.fixture.club1?.id as number;
 
     this.squadHome = await this.apiService.fetchSquad(this.idTeam0);
     this.squadAway = await this.apiService.fetchSquad(this.idTeam1);
