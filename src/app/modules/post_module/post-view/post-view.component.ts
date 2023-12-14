@@ -87,8 +87,12 @@ export class PostViewComponent implements OnInit {
   private async loadOriginalPost(originalPostId: number) {
     try {
       this.originalPost = await this.postService.getOriginalPost(originalPostId)
-      if (this.originalPost.image_url) {
+      if (this.originalPost.image_url && !this.originalPost.is_official) {
         this.originalPostImageUrl = await this.imageDownloadService.loadPostImage(this.originalPost.image_url);
+      }
+
+      if(this.originalPost.image_url && this.originalPost.is_official){
+        this.originalPostImageUrl = this.originalPost.image_url;
       }
 
 
