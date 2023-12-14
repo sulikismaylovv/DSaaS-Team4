@@ -381,6 +381,21 @@ export class BetsService {
     }
   }
 
+  async getBettedFixtures(userID: string): Promise<number[]>{
+    const betterID = await this.getBetterID(userID);
+    try {
+      const {data, error} = await this.supabase.supabaseClient
+        .from('bettingrecord')
+        .select('fixtureID')
+        .eq('betterID', betterID);
+      if (error) throw error;
+      return data.map(item => item.fixtureID);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  }
+
   async getUserXP(userID: string): Promise<number | null> {
     try {
       const { data, error } = await this.supabase.supabaseClient

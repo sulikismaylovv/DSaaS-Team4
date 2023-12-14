@@ -167,7 +167,7 @@
             <img class="w-10 h-10 rounded-full" [src]="avatarSafeUrl" alt="User avatar">
             <div class="flex flex-col">
               <span class="ms-3 hidden 2xl:inline">{{username}}</span>
-              <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{ this.profile?.email }}</span>
+              <span class="ms-3 hidden text-[#979ead] text-xs 2xl:inline">{{limitEmailLength(this.profile?.email, 22)}}</span>
             </div>
           </a>
         </li>

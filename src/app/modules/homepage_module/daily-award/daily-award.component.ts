@@ -8,7 +8,6 @@ declare let gtag: Function;
   styleUrls: ["./daily-award.component.css"],
 })
 export class DailyAwardComponent implements OnInit{
-  isRecentlyLogged = true;
 
   constructor(
     public dialogRef: MatDialogRef<DailyAwardComponent>,

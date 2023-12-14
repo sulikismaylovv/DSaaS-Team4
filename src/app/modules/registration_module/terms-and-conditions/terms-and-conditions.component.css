@@ -36,3 +36,11 @@ ol.b{
   list-style-type:lower-roman;
   margin-left:24px;
 }
+
+#TCModal {
+  display: none;
+}
+
+#TCModal.active {
+  display: flex;
+}

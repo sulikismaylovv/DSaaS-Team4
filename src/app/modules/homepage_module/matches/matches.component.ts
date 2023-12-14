@@ -7,7 +7,8 @@ import {FixtureTransferService} from "../../../core/services/fixture-transfer.se
 import {club, SupabaseFixture} from "../../../core/models/supabase-fixtures.model";
 import {AuthService} from "../../../core/services/auth.service";
 import {PreferencesService} from "../../../core/services/preference.service";
-
+import { BetsService } from "src/app/core/services/bets.service";
+import { isAfter } from "date-fns";
 
 @Component({
   selector: "app-matches",
@@ -23,7 +24,8 @@ export class MatchesComponent implements OnInit {
   fixtures: SupabaseFixture[] = [];
   groupedFixtures: { [key: string]: SupabaseFixture[] } = {}; //grouped by date
   groupedFixtureKeys: string[] = [];
-
+  isBetted: {[key: number]: boolean} = {};
+   bettedFixtureIds: Set<number> = new Set();
   favoriteClubId?: number;
   followedClubIds: number[] = [];
 
@@ -33,7 +35,8 @@ export class MatchesComponent implements OnInit {
     private router: Router,
     protected authService: AuthService,
     private fixtureTransferService: FixtureTransferService,
-    private preferenceService: PreferencesService
+    private preferenceService: PreferencesService,
+    private betsService: BetsService
   ) {
     this.currentDate = new Date();
     this.stringDate = this.currentDate.toISOString().split("T")[0];
@@ -59,12 +62,46 @@ export class MatchesComponent implements OnInit {
       await this.loadUserPreferences();
       this.filterFixturesForUserPreferences();
     }
+    this.loadBettedFixtures();
 
     //console.log(this.fixtures);
 
   }
 
+  // async checkIfBet(): Promise<void> {
+  //   const userId = this.authService.session?.user?.id;
+  //   if (!userId) return;
 
+  //   const bettedFixtures = await this.betsService.getBettedFixtures(userId);
+
+  //   // Convert bettedFixtures to a set for efficient lookup
+  //   const bettedFixtureIds = new Set(bettedFixtures.map(fixture => fixture));
+
+  //   this.fixtures.forEach(fixture => {
+  //     this.isBetted[fixture.fixtureID] = bettedFixtureIds.has(fixture.fixtureID);
+  //   });
+  // }
+
+  async loadBettedFixtures(): Promise<void> {
+    const userId = this.authService.session?.user?.id;
+    if (!userId) return;
+
+    const bettedFixtures = await this.betsService.getBettedFixtures(userId);
+    this.bettedFixtureIds = new Set(bettedFixtures.map(fixture => fixture));
+  }
+
+  // Synchronous function to check if a fixture is betted
+  isFixtureBetted(fixtureID: number): boolean {
+    return this.bettedFixtureIds.has(fixtureID);
+  }
+
+  isMatchLive(fixture: SupabaseFixture): boolean {
+    const fixtureStartTime = new Date(fixture.time);
+    const currentTime = new Date();
+
+    // Check if current time is after the start time and fixture is not finished
+    return currentTime>fixtureStartTime && !fixture.is_finished;
+  }
 
   hasFixturesForDate(date: string): boolean {
     return this.groupedFixtures[date]?.length > 0;
