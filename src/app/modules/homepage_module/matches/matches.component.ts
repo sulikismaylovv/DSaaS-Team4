@@ -50,7 +50,12 @@ export class MatchesComponent implements OnInit {
                 state: {fixture: fixture},
             });
         } else {
-            await this.router.navigateByUrl("/login");
+            //await this.router.navigateByUrl("/login");
+
+          this.fixtureTransferService.changeFixture(fixture);
+          await this.router.navigateByUrl("/game/" + fixture.fixtureID, {
+            state: {fixture: fixture},
+          });
         }
   }
 

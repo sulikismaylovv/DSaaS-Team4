@@ -1,6 +1,6 @@
 <aside class="fixed overflow-y-auto top-0 right-0 w-fit p-2 hidden 2xl:block flex flex-col h-screen no-scrollbar">
 
-<div class="bg-white  dark:bg-[#394151] rounded-lg p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+<div *ngIf="authService.isLogged()" class="bg-white  dark:bg-[#394151] rounded-lg p-4 mt-4 grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
     <div class="grid grid-cols-1 gap-4">
       <div class="flex flex-col justify-start">
         <p class="text-3xl font-bold text-black dark:text-white">Your Credits:
@@ -135,7 +135,7 @@
       </div>
     </div>
     <!--Only for smartphone screens credit balance-->
-    <div class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
+    <div *ngIf="authService.isLogged()" class="flex flex-col h-fit rounded bg-white dark:bg-[#3a4153] mt-4 block 2xl:hidden">
       <div class="justify-start">
         <p class="text-3xl font-bold ml-4 mt-4 m text-white">Your Credits: {{availableCredits}}</p>
         <p class=" mb-4 mt-4 text-center text-black dark:text-white">Visit the store to explore more ways of spending
@@ -222,7 +222,7 @@
               <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-slate-900 dark:border-gray-700"
                 data-hs-input-number>
                 <div class="w-full flex justify-between items-center gap-x-3">
-                  <div>
+                  <div *ngIf="authService.isLogged()">
                     <span class="block font-normal text-xl text-gray-800 dark:text-white">
                       How much do you want to bet?
                     </span>
@@ -256,7 +256,8 @@
                   </div>
                 </div>
               </div>
-              <button type="button" (click)="placeBet(); checkCredits();"
+              <button type="button" (click)=" checkIfLoggedIn();
+              placeBet(); checkCredits();"
                 class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                 BET!
               </button>
@@ -268,7 +269,7 @@
       </ng-container>
       <!--After betting-->
 
-      <ng-container *ngIf="betAlreadyPlaced">
+      <ng-container *ngIf="betAlreadyPlaced && authService.isLogged()">
           <p class="text-2xl mt-2 ml-6 text-black dark:text-white text-center p-2 font-bold">Your wager was on</p>
           <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-dark-mode">
         <div class="mt-4 mx-8"> <!-- Apply margin here to the container -->

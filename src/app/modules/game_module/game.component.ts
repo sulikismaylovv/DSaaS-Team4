@@ -86,7 +86,7 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fixtureTransferService: FixtureTransferService,
-    private authService: AuthService,
+    protected authService: AuthService,
     private apiService: ApiService,
     private betsService: BetsService,
     private cdr: ChangeDetectorRef,
@@ -108,21 +108,23 @@ export class GameComponent implements OnInit {
         //   this.credits -= credits;
         // } else this.betCanBePlaced=true;
         //console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
+        if(this.authService.isLogged()){
         this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
           await this.getBetterID(),
           this.fixture.fixtureID,
         );
         console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
         this.cdr.detectChanges();
-        if (this.betAlreadyPlaced) {
+        if (this.betAlreadyPlaced && this.authService.isLogged()) {
           //console.log("getBetInfo() called");
           this.getBetInfo();
           this.availableCredits = await this.betsService.getUserCredits(this.authService.session?.user?.id!);
         }
-      }).subscribe();
+      }}).subscribe();
   }
 
-  checkCredits(): void {
+  async checkCredits(): Promise<void> {
+    await this.checkIfLoggedIn();
     console.log(this.betAmount + " and " + this.availableCredits);
     if (this.availableCredits < this.betAmount) {
       this.openModal("insufficientCredits");
@@ -168,12 +170,15 @@ export class GameComponent implements OnInit {
           this.fixture = fixture;
           const squadPromise = await this.fetchSquads();
           const timePromise = await this.updateTheTime();
+          if(this.authService.isLogged()){
           const checkPromise = await this.checkIfBetCanBePlaced();
 
-          await Promise.all([squadPromise, timePromise, checkPromise]);
+          await Promise.all([squadPromise, timePromise, checkPromise]);}
+
+          await Promise.all([squadPromise, timePromise]);
           this.loading = false;
 
-          if (this.betAlreadyPlaced) {
+          if (this.betAlreadyPlaced && this.authService.isLogged()) {
             this.getBetInfo().then(() => this.logData());
           }
         } else {
@@ -189,7 +194,8 @@ export class GameComponent implements OnInit {
         (async () => await this.updateTheTime());
         // this.fetchLineup(this.fixture.fixtureID);
         // this.initializeLineups();
-        await this.getUserCredits();
+        if(this.authService.isLogged()){
+        await this.getUserCredits();}
         await this.getStanding();
       });
     });
@@ -278,7 +284,7 @@ export class GameComponent implements OnInit {
       await this.getBetterID(),
       this.fixture.fixtureID,
     );
-    if (this.betAlreadyPlaced) {
+    if (this.betAlreadyPlaced && this.authService.isLogged()) {
       console.log("getBetInfo() called");
       this.getBetInfo();
     }
@@ -347,6 +353,7 @@ export class GameComponent implements OnInit {
   }
 
   async placeBet() {
+    await this.checkIfLoggedIn();
     console.log("placeBet() called");
     const user = this.authService.session?.user;
     const betterID = await this.getBetterID();
@@ -530,5 +537,9 @@ export class GameComponent implements OnInit {
   }
 
 
-
+  async checkIfLoggedIn() {
+    if (!this.authService.isLogged()) {
+      await this.router.navigate(["/login"]);
+    }
+  }
 }

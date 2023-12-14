@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full',},
   { path: 'home', component: HomeComponent, pathMatch: 'full'},
   { path: 'verify-email', component: VerifyEmailComponent, pathMatch: 'full'},
-  {path: 'game/:id', component: GameComponent, pathMatch: 'full', canActivate: [ProfileGuard]},
+  {path: 'game/:id', component: GameComponent, pathMatch: 'full'},
   { path: 'posts', component: PostsComponent, pathMatch: 'full'},
   { path: 'games', component: MatchesComponent, pathMatch: 'full'},
   {path: 'post/:id', component: SinglePostComponent, canActivate: [ProfileGuard]},
