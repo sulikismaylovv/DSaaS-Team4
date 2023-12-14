@@ -230,11 +230,15 @@ $function$
 CREATE TRIGGER trigger_update_xp_after_insert
     AFTER INSERT
     ON public.usersinfriendsleague
-    FOR EACH ROW EXECUTE FUNCTION update_xp_on_insert();
+  FOR EACH ROW
+  WHEN (pg_trigger_depth() = 0)
+  EXECUTE FUNCTION update_xp_on_insert();
 
 CREATE TRIGGER trigger_update_xp_on_change
-    AFTER INSERT OR
-UPDATE ON public.usersinfriendsleague FOR EACH ROW
+  UPDATE
+  ON public.usersinfriendsleague
+  FOR EACH ROW
+  WHEN (pg_trigger_depth() = 0)
     EXECUTE FUNCTION update_xp_on_insert();
 
 
