@@ -309,7 +309,6 @@ export class CommonComponent implements OnInit{
       modal.classList.add('active');
     }
     if(friendId && friendUsername && this.transferFriend){
-      console.log("werkt")
       this.transferFriend[0]= (friendId);
       this.transferFriend[1]= (friendUsername);
     }
@@ -407,6 +406,15 @@ export class CommonComponent implements OnInit{
           .then(() => {
             //console.log('Friend removed');
             this.friendRequestStatus = FriendRequestStatus.None;
+            if (this.isOwnProfile){
+              this.friendsList = this.friendsList.filter(friend => friend.profile.id !== finalTargetUserId);
+            }
+            else{
+                const friendIndex = this.friendsList.findIndex(friend => friend.profile.id === finalTargetUserId);
+                if (friendIndex !== -1) {
+                    this.friendsList[friendIndex].commonFriend = false;
+              }
+            }
             // You can update the UI accordingly
           })
           .catch(error => {

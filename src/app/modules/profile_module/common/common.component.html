@@ -60,13 +60,13 @@
             <!-- Friends -->
             <ng-container *ngIf="selectedLink === 'link1'">
               <div class="flex items-center bg-white dark:bg-test shadow-sm rounded-b-lg p-4 2xl:p-8 h-full w-full">
-                <div class="flex flex-col items-center justify-center bg-light-mode dark:bg-dark-mode shadow mx-auto p-2 lg:p-4 rounded-2xl w-full">
+                <div class="flex flex-col items-center justify-center bg-light-mode dark:bg-dark-mode shadow mx-auto py-2 md:p-2 lg:p-4 rounded-2xl w-full">
                   <ng-container *ngIf="friendsList.length !== 0">
                     <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-2">
                       <li *ngFor="let friend of friendsList.slice(0,12)" class="xl:mb-2 xl:mx-2">
                         <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md p-1">
                           <img [src]="friend.avatarSafeUrl || '/assets/User-Profile-PNG_Image.png'" alt="{{friend.profile.username}}" class="w-4 h-4 md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full object-cover">
-                          <span (click)="onFriendClick(friend.profile.id)" class="cursor-pointer mx-1 xl:mx-2 font-light text-md md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{ limitUsernameLength(friend.profile.username, 16) }}</span>
+                          <span (click)="onFriendClick(friend.profile.id)" class="cursor-pointer mx-1 xl:mx-2 font-light text-xs sm:text-sm md:text-md 2xl:text-lg text-light-mode-text dark:text-primary-100">{{ limitUsernameLength(friend.profile.username, 16) }}</span>
                           <div *ngIf="checkVisitor(friend.profile.id)">
                             <img [src]="'../assets/icons/' + (friend.commonFriend === true ? friendActions[0] : friendActions[1] )" (click)="friend.commonFriend === true ? openModal('removeFriendModal', friend.profile.id, friend.profile.username) : addFriend(friend.profile.id)" class="w-3 h-3 md:w-6 md:h-6 xl:w-6 xl:h-6 cursor-pointer" alt="image">
                           </div>
@@ -125,7 +125,10 @@
                       <div class="flex items-center justify-between bg-white dark:bg-test dark:bg-gray-800 rounded-lg shadow-md my-1 p-1">
                         <img [src]=" friend.avatarSafeUrl || '/assets/User-Profile-PNG-Image.png'" alt="{{ friend.profile.username }}" class="w-10 h-10 rounded-full object-cover">
                         <span (click)="onFriendClick(friend.profile.id)" class="cursor-pointer mx-8 font-light text-lg text-light-mode-text dark:text-primary-100">{{ friend.profile.username }}</span>
-                        <img  [src]="'../assets/icons/' + (friend.commonFriend === true ? friendActions[0] : friendActions[1] )" (click)="friend.commonFriend === true ? removeFriend(friend.profile.id) : addFriend(friend.profile.id)" class="cursor-pointer w-6 h-6" alt="image"/>
+                        <div *ngIf="checkVisitor(friend.profile.id)">
+                          <img [src]="'../assets/icons/' + (friend.commonFriend === true ? friendActions[0] : friendActions[1] )" (click)="friend.commonFriend === true ? openModal('removeFriendModal', friend.profile.id, friend.profile.username) : addFriend(friend.profile.id)" class="w-3 h-3 md:w-6 md:h-6 xl:w-6 xl:h-6 cursor-pointer" alt="image">
+                        </div>
+                        <div *ngIf="!checkVisitor(friend.profile.id)"></div>
                       </div>
                     </li>
                   </ul>
@@ -335,9 +338,9 @@
                   <div class="flex flex-col bg-light-mode dark:bg-dark-mode shadow-sm px-2 lg:px-4 py-2 rounded-2xl h-full w-full">
                     <h1 class="flex justify-center text-light-mode-text dark:text-primary-100 text-sm md:text-md md:text-lg lg-text-xl"> {{profile?.first_name}}'s Owned Players</h1>
                     <div class="flex flex-row justify-around h-full">
-                      <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide sm:h-96 md:h-88">
+                      <div class="grid grid-cols-3 lg:grid-cols-4 gap-2 2xl:gap-4 overflow-y-auto scrollbar-hide h-96 md:h-88">
                         <ng-container *ngFor="let player of ownedPlayersDetails">
-                          <div class="flex flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2">
+                          <div class="flex flex-grow-0 flex-col items-center justify-center text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow rounded-lg p-1 lg:p-2 h-1/2 self-center">
                             <img class="w-12 h-12 md:w-14 md:h-14 xl:w-14 xl:h-14 2xl:h-16 2xl:w-16" [src]="player.photo" alt="{{ player.name }}">
                             <p class="text-center text-dark-mode dark:text-light-mode">{{ player.name }}</p>
                             <p class="text-center text-sm text-dark-mode dark:text-light-mode">{{ player.clubname }}</p>
