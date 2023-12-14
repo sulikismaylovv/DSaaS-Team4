@@ -11,7 +11,7 @@
 </div>
 <ng-template #loadedContent>
   <section class="bg-light-mode dark:bg-dark-mode" >
-    <div class="bg-light-mode dark:bg-dark-mode my-1 mx-auto py-2 px-4 2xl:ml-64 lg:ml-28 sm:mx-auto rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
+    <div class="bg-light-mode dark:bg-dark-mode my-1 mx-auto py-2 px-2 md:px-4 2xl:ml-64 lg:ml-28 sm:mx-auto rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
       <!-- Cover photo -->
       <div class="flex items-center dark:bg-dark-gray max-h-96 relative overflow-hidden rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl">
         <img class="object-contain min-w-full h-full rounded-t-md md:rounded-t-lg lg:rounded-t-xl xl:rounded-t-2xl 2xl:rounded-t-3xl" [src]="bgImageSafeUrl" alt="None">
@@ -245,21 +245,21 @@
                               and
                              {{ betWithFixture.team1_details.name }}
                               by
-                              <span class="inline-flex space-x-1 ml-2 whitespace-nowrap">
-                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                              <span class="inline-flex items-baseline whitespace-nowrap">
+                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4 self-center">
                                              <strong> {{ betWithFixture.bet.credits }}</strong>
                                              </span>
                             </p>
                           </ng-container>
                           <ng-container *ngIf="betWithFixture.bet.team_chosen !== 'draw'">
-                            <p class="flex items-center">
+                            <p>
                               Betted on
                              {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team0_details.name : betWithFixture.team1_details.name }}
                               to win against
                               {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}
                               by
-                              <span class="inline-flex space-x-1 ml-2 whitespace-nowrap">
-                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                              <span class="inline-flex items-baseline whitespace-nowrap">
+                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="self-center w-4 h-4">
                                              <strong> {{ betWithFixture.bet.credits }}</strong>
                                              </span>
                             </p>
@@ -269,7 +269,7 @@
                     </ng-container>
                     <!-- Container for when there are no pending bets -->
                     <ng-container *ngIf="pendingBets.length === 0">
-                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-lg p-1 lg:p-2 p-2 m-2">
+                      <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-lg p-1 lg:p-2 m-2">
                         <p>No pending bets</p>
                       </div>
                     </ng-container>
@@ -287,14 +287,14 @@
                             <!-- Column 2: Bet card content -->
                             <div class="flex flex-col text-dark-mode dark:text-light-mode bg-white dark:bg-test shadow-sm rounded-r-lg p-1 lg:p-2 flex-grow">
                               <ng-container *ngIf="betWithFixture.bet.team_chosen === 'draw'">
-                                <p class="flex items-center">
+                                <p>
                                   Betted on a draw between
-                                  <strong class="ml-1 mr-1">{{ betWithFixture.team0_details.name }}</strong>
+                                  {{ betWithFixture.team0_details.name }}
                                   and
-                                  <strong class="mr-1 ml-1">{{ betWithFixture.team1_details.name }}</strong>
+                                 {{ betWithFixture.team1_details.name }}
                                   by
-                                  <span class="flex items-center space-x-1 ml-2">
-                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                                  <span class="inline-flex items-baseline whitespace-nowrap">
+                                             <img src="assets/logos/r-coin.svg" alt="Credits" class="self-center w-4 h-4">
                                              <strong> {{ betWithFixture.bet.credits }}</strong>
                                              </span>
                                 </p>
@@ -306,8 +306,8 @@
                                   to win against
                                  {{ betWithFixture.bet.team_chosen === 'home' ? betWithFixture.team1_details.name : betWithFixture.team0_details.name }}
                                   by
-                                  <span class="inline-flex items-center space-x-1 ml-2">
-                                                   <img src="assets/logos/r-coin.svg" alt="Credits" class="w-4 h-4">
+                                  <span class="inline-flex items-baseline whitespace-nowrap">
+                                                   <img src="assets/logos/r-coin.svg" alt="Credits" class="self-center w-4 h-4">
                                                    <strong> {{ betWithFixture.bet.credits }}</strong>
                                                    </span>
                                 </p>
@@ -400,7 +400,7 @@
       </div>
       <!-- End: Own profile only-->
       <!-- Posts -->
-      <div class="bg-white dark:bg-test shadow-sm my-4 px-4 py-2 rounded-lg">
+      <div class="bg-white dark:bg-test shadow-sm my-4 px-2 md:px-4 py-2 rounded-lg">
         <!-- Post Navbar -->
         <div class="px-4 bg-white dark:bg-test rounded-t-lg">
           <ul class="flex justify-around">
@@ -411,11 +411,11 @@
           </ul>
         </div>
         <!-- User Posts -->
-        <div class="bg-light-mode dark:bg-search-bar shadow-sm  mx-1 px-1  md:mx-2 md:px-4  rounded-lg">
-          <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+        <div class="bg-light-mode dark:bg-search-bar shadow-sm  px-2  md:mx-2 md:px-4  rounded-lg">
+          <div class="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-4">
             <!-- Post 1 -->
             <div *ngIf="posts.length > 0; else noPosts">
-              <div *ngFor="let post of posts" class="my-4">
+              <div *ngFor="let post of posts" class="my-2 md:my-2">
                 <div (click)="onPostClick(post.id)">
                   <app-post-view [clickable]="(authService.isAuthenticated$ | async) ?? false"
                                  [post]="post"></app-post-view>
