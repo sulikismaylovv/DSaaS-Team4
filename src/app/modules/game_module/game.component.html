@@ -277,7 +277,7 @@
             <div class="animate-grow rounded-xl shadow-lg"
                  [ngStyle]="{'background-color': fixture.club0 ? jupilerProLeagueColors[fixture.club0!.id] : 'defaultColor'}"
                  style="height: 20px;"></div> <!-- Color bar -->
-            <p class="text-white text-center text-2xl font-bold mt-2">{{fixture.club0?.name}}</p> <!-- Text below -->
+            <p class="dark:text-white text-black text-center text-2xl font-bold mt-2">{{fixture.club0?.name}}</p> <!-- Text below -->
           </div>
 
           <!-- Team 2 Selected -->
@@ -285,14 +285,14 @@
             <div class="animate-grow rounded-xl shadow-lg"
                  [ngStyle]="{'background-color': fixture.club1 ? jupilerProLeagueColors[fixture.club1!.id] : 'defaultColor'}"
                  style="height: 20px;"></div> <!-- Color bar -->
-            <p class="text-white text-center text-2xl font-bold mt-2">{{fixture.club1?.name}}</p> <!-- Text below -->
+            <p class="dark:text-white dark:text-black text-center text-2xl font-bold mt-2">{{fixture.club1?.name}}</p> <!-- Text below -->
           </div>
 
           <!-- Draw Selected -->
           <div *ngIf="teamChosen ==='draw'" class="mb-2 overflow-hidden">
             <div class="animate-grow rounded-xl shadow-lg"
                  style="background-color: gray; height: 20px;"></div> <!-- Color bar -->
-            <p class="text-white text-center text-2xl font-bold mt-2">a Draw</p> <!-- Text below -->
+            <p class="dark:text-white text-black text-center text-2xl font-bold mt-2">a Draw</p> <!-- Text below -->
           </div>
         </div>
 
