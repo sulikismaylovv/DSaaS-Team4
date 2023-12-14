@@ -215,6 +215,8 @@ $function$
 CREATE TRIGGER trigger_update_usersinfriendsleague_xp
   AFTER UPDATE OF xp
   ON public.usersinbetting
-  FOR EACH ROW EXECUTE FUNCTION update_usersinfriendsleague_xp();
+  FOR EACH ROW
+  WHEN (pg_trigger_depth() = 0)
+  EXECUTE FUNCTION update_usersinfriendsleague_xp();
 
 
