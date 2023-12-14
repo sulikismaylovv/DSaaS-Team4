@@ -10,23 +10,23 @@
 
   <div class="first-code">
     <div class="flex items-start" *ngIf="!isOwnProfile">
-      <button (click)="friendRequestStatus === 'friends' ? openModal('removeFriendModal') : addFriend()" class="flex items-center focus:outline-none my-3 mx-1">
+      <button (click)="friendRequestStatus === 'friends' ? openModal('removeHostModal') : addFriend()" class="flex items-center focus:outline-none my-3 mx-1">
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-xl 2xl:text-2xl px-1">{{ friendRequestStatus === 'none' ? 'Add Friend' : (friendRequestStatus === 'friends' ? 'Following' : 'Requested') }}</span>
       </button>
-      <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center" id="removeFriendModal">
+      <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center" id="removeHostModal">
         <div class="bg-white dark:bg-[#394151] p-6 rounded-lg shadow-lg text-black dark:text-white">
           <h2 class="text-xl font-bold mb-4">Are you sure you want to delete {{username}} from your friends</h2>
           <div class="flex justify-center w-full ">
-            <button (click)="removeFriend();  openModal('friendRemovedFeedBack'); closeModal('removeFriendModal');" type="button" class="w-1/2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Remove Friend</button>
+            <button (click)="removeFriend();  openModal('HostRemovedFeedBack'); closeModal('removeFriendModal');" type="button" class="w-1/2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Remove Friend</button>
             <button (click)="closeModal('removeFriendModal')" type="button" class="w-1/2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"> Cancel</button>
           </div>
         </div>
       </div>
-      <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center" id="friendRemovedFeedBack">
+      <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center" id="HostRemovedFeedBack">
         <div class="bg-white dark:bg-[#394151] p-6 rounded-lg shadow-lg text-black dark:text-white">
           <h2 class="text-xl font-bold mb-4">{{username}} deleted from friendslist</h2>
           <div class="flex justify-center w-full ">
-            <button (click)="closeModal('friendRemovedFeedBack')" type="button" class="w-1/2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Back</button>
+            <button (click)="closeModal('HostRemovedFeedBack')" type="button" class="w-1/2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm mx-4 px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Back</button>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
     <div   *ngIf="isOwnProfile">
       <a href="/settings" class="flex items-center mt-3 md:mt-2 px-1">
         <span class="text-light-mode-text dark:text-primary-100 font-extralight text-sm sm:text-md md:text-2xl 2xl:text-3xl px-1">Edit Profile</span>
-        <img class="w-4 h-4 sm: md:w-6 md:h-6  2xl:w-8 2xl:h-8" src="../../../../assets/icons/edit-pencil-primary-100.svg" alt="edit image"/>
+        <img class="w-4 h-4 sm: md:w-6 md:h-6  2xl:w-8 2xl:h-8" [src]="themeService.isDarkModeEnabled() ?  '../../../../assets/icons/'+ editPencil[0]: '../../../../assets/icons/'+editPencil[1]" alt="edit image"/>
       </a>
     </div>
   </div>

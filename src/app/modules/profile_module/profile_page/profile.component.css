@@ -12,18 +12,18 @@
   background-color: #111111;
 }
 
-#friendRemovedFeedBack {
+#removeHostModal {
   display: none;
 }
 
-#friendRemovedFeedBack.active {
+#removeHostModal.active {
   display: flex;
 }
 
-#removeFriendModal {
+#HostRemovedFeedBack {
   display: none;
 }
 
-#removeFriendModal.active {
+#HostRemovedFeedBack.active{
   display: flex;
 }
