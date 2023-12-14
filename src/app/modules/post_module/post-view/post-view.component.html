@@ -135,7 +135,7 @@
       <span>
         <p class="text-gray-800 dark:text-white text-sm md:text-lg xl:text-2xl xl:mx-2 ">{{ splitTextAtSecondHyphen(post.content)[0]}}:  <span class="font-semibold whitespace-nowrap"> {{ splitTextAtSecondHyphen(post.content)[1] }}</span></p>
       </span>
-      <img [src]="this.post?.image_url" alt="Post image" class="rounded-lg w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 xl:w-40 xl:h-40 mx-1 lg:mx-6">
+      <img [src]="this.post.image_url" alt="Post image" class="rounded-lg w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 xl:w-40 xl:h-40 mx-1 lg:mx-6">
     </div>
 
     <!-- Display post image if exists -->
