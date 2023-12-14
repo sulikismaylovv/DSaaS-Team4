@@ -24,7 +24,7 @@ export class MatchesComponent implements OnInit {
   groupedFixtures: { [key: string]: SupabaseFixture[] } = {}; //grouped by date
   groupedFixtureKeys: string[] = [];
   isBetted: {[key: number]: boolean} = {};
-
+   bettedFixtureIds: Set<number> = new Set();
   favoriteClubId?: number;
   followedClubIds: number[] = [];
 
@@ -61,18 +61,39 @@ export class MatchesComponent implements OnInit {
       await this.loadUserPreferences();
       this.filterFixturesForUserPreferences();
     }
+    this.loadBettedFixtures();
 
     //console.log(this.fixtures);
 
   }
 
-  // async checkIfBet(fixtureID: number): Promise<boolean> {
-  //   const user = this.authService.session?.user;
-  //   const fixtures = await this.betsService.getBettedFixtures(user?.id as string);
-  //   for (const fixture of fixtures) {
-  //     // this.isBetted[fixture] = a;
-  //   } return false
+  // async checkIfBet(): Promise<void> {
+  //   const userId = this.authService.session?.user?.id;
+  //   if (!userId) return;
+
+  //   const bettedFixtures = await this.betsService.getBettedFixtures(userId);
+
+  //   // Convert bettedFixtures to a set for efficient lookup
+  //   const bettedFixtureIds = new Set(bettedFixtures.map(fixture => fixture));
+
+  //   this.fixtures.forEach(fixture => {
+  //     this.isBetted[fixture.fixtureID] = bettedFixtureIds.has(fixture.fixtureID);
+  //   });
   // }
+
+  async loadBettedFixtures(): Promise<void> {
+    const userId = this.authService.session?.user?.id;
+    if (!userId) return;
+
+    const bettedFixtures = await this.betsService.getBettedFixtures(userId);
+    this.bettedFixtureIds = new Set(bettedFixtures.map(fixture => fixture));
+  }
+
+  // Synchronous function to check if a fixture is betted
+  isFixtureBetted(fixtureID: number): boolean {
+    return this.bettedFixtureIds.has(fixtureID);
+  }
+
 
 
   hasFixturesForDate(date: string): boolean {
