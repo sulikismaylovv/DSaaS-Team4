@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TermsAndConditionsComponent } from './terms-and-conditions.component';
-import { MatDialog } from "@angular/material/dialog";
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {TermsAndConditionsComponent} from './terms-and-conditions.component';
+import {MatDialogRef} from "@angular/material/dialog";
 
 describe('TermsAndConditionsComponent', () => {
   let component: TermsAndConditionsComponent;
   let fixture: ComponentFixture<TermsAndConditionsComponent>;
-  let mockDialog: jasmine.SpyObj<MatDialog>;
+  let mockDialogRef: jasmine.SpyObj<MatDialogRef<TermsAndConditionsComponent>>;
 
   beforeEach(() => {
-    // Create a spy object for MatDialog with a closeAll method
-    mockDialog = jasmine.createSpyObj('MatDialog', ['closeAll']);
+    // Create a spy object for MatDialogRef with a close method
+    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     TestBed.configureTestingModule({
       declarations: [TermsAndConditionsComponent],
       providers: [
-        { provide: MatDialog, useValue: mockDialog } // Provide the mock instead of the real service
+        {provide: MatDialogRef, useValue: mockDialogRef} // Provide the mock instead of the real service
       ]
     });
 
@@ -29,6 +29,6 @@ describe('TermsAndConditionsComponent', () => {
 
   it('should close the dialog when closeTCModal is called', () => {
     component.closeTCModal(); // Call the method
-    expect(mockDialog.closeAll).toHaveBeenCalled(); // Check if the MatDialog's closeAll method was called
+    expect(mockDialogRef.close).toHaveBeenCalled(); // Check if the MatDialogRef's close method was called
   });
 });
