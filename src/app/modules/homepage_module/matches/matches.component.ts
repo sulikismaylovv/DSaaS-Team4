@@ -8,6 +8,7 @@ import {club, SupabaseFixture} from "../../../core/models/supabase-fixtures.mode
 import {AuthService} from "../../../core/services/auth.service";
 import {PreferencesService} from "../../../core/services/preference.service";
 import { BetsService } from "src/app/core/services/bets.service";
+import { isAfter } from "date-fns";
 
 @Component({
   selector: "app-matches",
@@ -94,7 +95,13 @@ export class MatchesComponent implements OnInit {
     return this.bettedFixtureIds.has(fixtureID);
   }
 
+  isMatchLive(fixture: SupabaseFixture): boolean {
+    const fixtureStartTime = new Date(fixture.time);
+    const currentTime = new Date();
 
+    // Check if current time is after the start time and fixture is not finished
+    return currentTime>fixtureStartTime && !fixture.is_finished;
+  }
 
   hasFixturesForDate(date: string): boolean {
     return this.groupedFixtures[date]?.length > 0;

@@ -60,8 +60,17 @@
                         </div>
                       </div>
                       <!-- Score -->
-                      <div class="flex items-center justify-center font-bold text-xl w-1/3">
-                        {{ fixture.home_goals }} - {{ fixture.away_goals }}
+                      <div class="flex flex-col items-center w-1/3">
+
+                            <div class="flex items-center justify-center  font-bold text-xl w-1/3">
+                              {{ fixture.home_goals }} - {{ fixture.away_goals }}
+
+                            </div>
+
+                            <div *ngIf="isMatchLive(fixture)" class="flex items-center justify-center font-light text-md w-full">
+                              LIVE
+                            </div>
+
                       </div>
                       <!-- Team 2 -->
                       <div class="flex flex-row items-center w-1/3">
@@ -87,6 +96,10 @@
                         </div>
                         <div *ngIf="!isFixtureBetted(fixture.fixtureID)" class="flex items-center justify-center font-light text-lg w-full">
                           Wager Now!
+                        </div>
+
+                        <div *ngIf="isMatchLive(fixture)" class="flex items-center justify-center font-light text-md w-full">
+                          LIVE
                         </div>
                       </div>
 
@@ -131,10 +144,18 @@
                       <img [src]="fixture.club0?.logo" alt="Team 1" class="w-10 h-10 rounded-full">
                       <span class="font-semibold text-md md:text-lg truncate">{{limitMatchNameLength(fixture.club0?.name, 12) }}</span>
                     </div>
-                    <!-- Score -->
-                    <div class="flex items-center justify-center font-bold text-xl w-1/3">
-                      {{ fixture.home_goals }} - {{ fixture.away_goals }}
-                    </div>
+                    <div class="flex flex-col items-center w-1/3">
+
+                      <div class="flex items-center justify-center  font-bold text-xl w-1/3">
+                        {{ fixture.home_goals }} - {{ fixture.away_goals }}
+
+                      </div>
+
+                      <div *ngIf="isMatchLive(fixture)" class="flex items-center justify-center font-light text-md w-full">
+                        LIVE
+                      </div>
+
+                </div>
                     <!-- Team 2 -->
                     <div class="flex flex-col items-center justify-center w-1/3">
                       <img [src]="fixture.club1?.logo" alt="Team 2" class="w-10 h-10 rounded-full">
@@ -162,6 +183,10 @@
                       </div>
                       <div class="flex items-center justify-center font-light text-lg w-full">
                         Wager Now!
+                      </div>
+
+                      <div *ngIf="isMatchLive(fixture)" class="flex items-center justify-center font-light text-md w-full">
+                        LIVE
                       </div>
                     </div>
                     <!-- Team 2 -->

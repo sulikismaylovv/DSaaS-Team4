@@ -122,9 +122,9 @@ export class GameComponent implements OnInit {
       }).subscribe();
   }
 
-  checkCredits():void{
-    console.log(this.betAmount + " and "+ this.availableCredits);
-    if(this.availableCredits < this.betAmount){
+  checkCredits(): void {
+    console.log(this.betAmount + " and " + this.availableCredits);
+    if (this.availableCredits < this.betAmount) {
       this.openModal("insufficientCredits");
     }
   }
@@ -194,7 +194,7 @@ export class GameComponent implements OnInit {
       });
     });
   }
-  goBack(){
+  goBack() {
     this.router.navigate(['/home']).then(r => console.log("back"));
   }
   async getBetInfo() {
@@ -230,12 +230,12 @@ export class GameComponent implements OnInit {
     const numbersRaw = await this.apiService.fetchLineup(this.fixture.fixtureID);
     if (numbersRaw === null) {
       this.isLineupAvailable = false;
-      console.log("Lineup is not available");
+      //console.log("Lineup is not available");
       return;
     }
     this.isLineupAvailable = true;
     const numbers = numbersRaw.split("|");
-    console.log("numbers: ", numbers);
+    //console.log("numbers: ", numbers);
     const listHome = numbers[0].split(",").map(Number);
     const listAway = numbers[1].split(",").map(Number);
 
@@ -260,10 +260,10 @@ export class GameComponent implements OnInit {
   }
 
   logData() {
-    console.log("homeSquad: ", this.squadHome);
-    console.log("awaySquad: ", this.squadAway);
-    console.log("home: ", this.lineupHome);
-    console.log("away: ", this.lineupAway);
+    // console.log("homeSquad: ", this.squadHome);
+    // console.log("awaySquad: ", this.squadAway);
+    // console.log("home: ", this.lineupHome);
+    // console.log("away: ", this.lineupAway);
   }
 
   async checkIfBetCanBePlaced() {
@@ -289,10 +289,10 @@ export class GameComponent implements OnInit {
     console.log("fetchFixture() called");
     console.log("date.time: ", data.time);
     this.fixture = data; // Ensure that this.fixture is updated with the fetched data
-    await this.fetchSquads();
+    //await this.fetchSquads();
     // await this.fetchLineups();
     await this.updateTheTime();
-    this.checkIfBetCanBePlaced();
+    //this.checkIfBetCanBePlaced();
 
     // this.time = this.formatDateToHHMM(this.fixture.time);
   }
@@ -388,11 +388,13 @@ export class GameComponent implements OnInit {
   }
 
   convertToLocaleTimeString(dateString: string): string {
-    if (this.fixture.is_finished) {
+
+    if (this.fixture.is_finished || this.hasFixtureTimePassed()) {
       return `${this.fixture.home_goals} - ${this.fixture.away_goals}`;
-    } else if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
-      return "LIVE";
-    } else {
+    }
+    //  else if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
+    //   return "LIVE";}
+    else {
       // Parse the date string into a Date object
       const date = new Date(dateString);
 
@@ -441,15 +443,19 @@ export class GameComponent implements OnInit {
     matchDate.setHours(0, 0, 0, 0);
     tomorrow.setHours(0, 0, 0, 0);
 
-    if (matchDate.getTime() === today.getTime()) {
-      return "Today";
-    } else if (matchDate.getTime() === tomorrow.getTime()) {
-      return "Tomorrow";
-    } else {
-      const diffTime = Math.abs(matchDate.getTime() - today.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays + " days";
+    if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
+      return "LIVE";
     }
+    else
+      if (matchDate.getTime() === today.getTime()) {
+        return "Today";
+      } else if (matchDate.getTime() === tomorrow.getTime()) {
+        return "Tomorrow";
+      } else {
+        const diffTime = Math.abs(matchDate.getTime() - today.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays + " days";
+      }
   }
 
   toggleTheme() {
@@ -470,13 +476,13 @@ export class GameComponent implements OnInit {
       this.clickedImage = team;
       if (team === "team1") {
         this.teamChosen = "home";
-        this. trackButtonClick2();
+        this.trackButtonClick2();
       } else if (team === "team2") {
         this.teamChosen = "away";
-        this. trackButtonClick3();
-      }  else if (team === "draw") {
+        this.trackButtonClick3();
+      } else if (team === "draw") {
         this.teamChosen = "draw";
-        this. trackButtonClick4();
+        this.trackButtonClick4();
 
       }
     }
@@ -491,32 +497,37 @@ export class GameComponent implements OnInit {
     gtag('event', 'Bet', {
       event_category: 'Button1',
       event_label: 'BetButton'
-    });}
+    });
+  }
   trackButtonClick1(): void {
     console.log("success1", "hey1");
     gtag('event', 'ChangeBetValue', {
       event_category: 'Button2',
       event_label: 'ChangeButton'
-    });}
+    });
+  }
 
   trackButtonClick2(): void {
     console.log("success", "hey");
     gtag('event', 'Team1', {
       event_category: 'Button3',
       event_label: 'TeamButton1'
-    });}
+    });
+  }
   trackButtonClick3(): void {
     console.log("success1", "hey1");
     gtag('event', 'Team2', {
       event_category: 'Button4',
       event_label: 'TeamButton2'
-    });}
+    });
+  }
   trackButtonClick4(): void {
     console.log("success1", "hey1");
     gtag('event', 'Draw', {
       event_category: 'Button5',
       event_label: 'DrawButton'
-    });}
+    });
+  }
 
 
 
