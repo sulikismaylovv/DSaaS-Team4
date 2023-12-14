@@ -23,6 +23,7 @@ export class MatchesComponent implements OnInit {
   fixtures: SupabaseFixture[] = [];
   groupedFixtures: { [key: string]: SupabaseFixture[] } = {}; //grouped by date
   groupedFixtureKeys: string[] = [];
+  isBetted: {[key: number]: boolean} = {};
 
   favoriteClubId?: number;
   followedClubIds: number[] = [];
@@ -65,15 +66,13 @@ export class MatchesComponent implements OnInit {
 
   }
 
-  async checkIfBet(fixtureID: number): Promise<boolean> {
-    const user = this.authService.session?.user;
-    const fixtures = await this.betsService.getBettedFixtures(user?.id as string);
-    for (const fixture of fixtures) {
-      if (fixture === fixtureID) {
-        return true;
-      }
-    } return false;
-  }
+  // async checkIfBet(fixtureID: number): Promise<boolean> {
+  //   const user = this.authService.session?.user;
+  //   const fixtures = await this.betsService.getBettedFixtures(user?.id as string);
+  //   for (const fixture of fixtures) {
+  //     // this.isBetted[fixture] = a;
+  //   } return false
+  // }
 
 
   hasFixturesForDate(date: string): boolean {
