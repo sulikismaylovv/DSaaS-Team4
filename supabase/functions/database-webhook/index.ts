@@ -55,14 +55,15 @@ async function addPost(
   newInfo: string,
   club0: number,
   club1: number,
+  image_url: string,
 ) {
   const { data, error } = await SupabaseClient
     .from("posts")
     .insert([
       {
-        user_id: "c83cef52-7948-41be-b5af-d2bdef31e033",
+        user_id: "a4bb1d91-7558-4cfc-9f8b-4e5192518373",
         content: newInfo,
-        image_url: "",
+        image_url: image_url,
         created_at: new Date(),
         original_post_id: null,
         is_official: true,
@@ -71,7 +72,8 @@ async function addPost(
       },
     ]);
   if (error) throw error;
-  console.log("Inserted", data);
+  console.log("Inserted: ", data);
+  console.log("error: ", error);
 }
 
 // async function getClubInformation(
@@ -160,6 +162,7 @@ Deno.serve(async (req) => {
   //   );
   // }
 
+  let image_url;
   if (isGoalScored(payload.record, payload.old_record!)) {
     const score =
       `${homeTeam} ${payload.record.home_goals} - ${payload.record.away_goals} ${awayTeam}`;
@@ -178,12 +181,20 @@ Deno.serve(async (req) => {
     console.log("payload.record.team0: ", payload.record.team0);
     console.log("payload.record.team1: ", payload.record.team1);
 
+    const {data, error} = await supabaseClient.from("clubs").select("logo")
+      .eq("id", whoScoredResult === "home" ? payload.record.team0 : payload.record.team1);
+
+    console.log("image_url: ", data[0]?.logo);
+
+    image_url = data[0]?.logo;
+
     if (message) {
-      addPost(
+      await addPost(
         supabaseClient,
         `${score} - ${message}`,
         payload.record.team0,
         payload.record.team1,
+        image_url
       );
     }
   } else {
