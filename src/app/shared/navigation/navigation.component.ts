@@ -66,7 +66,16 @@ export class NavigationComponent implements OnInit, OnDestroy{
         });
       });
     }
+  }
 
+  limitEmailLength(mail: string|undefined, maxLength: number): string | undefined{
+    if (mail) {
+      if (mail.length > maxLength) {
+        return `${mail.slice(0, maxLength)}...`;
+      }
+      return mail;
+    }
+    return;
   }
 
   async getProfile() {
