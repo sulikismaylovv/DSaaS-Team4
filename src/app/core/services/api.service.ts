@@ -221,7 +221,7 @@ export class ApiService {
             logo
           )        `)
         .or(`team0.eq.${clubID},team1.eq.${clubID}`)
-        .gte("time", new Date().toISOString())
+        // .gte("time", new Date().toISOString())
 
       if (error) {
         throw error;
