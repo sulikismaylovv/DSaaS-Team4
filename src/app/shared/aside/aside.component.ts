@@ -92,18 +92,40 @@ ngOnInit() {
   goToFixture(){
     this.router.navigate(['/game', this.nextFixture.fixtureID]);
   }
-
+  
   async getNextFixture(clubID: number) {
     try {
-      this.nextFixture =(await this.apiService.testFunction(clubID))[0];
-      //console.log("This. nect ficture", this.nextFixture);
+      const fixtures = await this.apiService.testFunction(clubID);
+      const currentTime = new Date(); // Get the current time
+
+      // Sort fixtures by time in ascending order
+      const sortedFixtures = fixtures.sort((a, b) => {
+        const timeA = new Date(a.time).getTime();
+        const timeB = new Date(b.time).getTime();
+        return timeA - timeB;
+      });
+
+      // Find the first fixture that is starting now or in the future
+      this.nextFixture = sortedFixtures.find(fixture => {
+        const fixtureTime = new Date(fixture.time);
+        return fixtureTime >= currentTime;
+      })!;
+
+      if (!this.nextFixture) {
+        console.log("No upcoming fixtures found");
+        return;
+      }
+
+      this.nextClub = this.getNextOpponentClub();
+      this.myClub = this.getMyClub();
     } catch (error) {
+      console.error('Error fetching next fixture:', error);
       return;
-      //console.error('Error fetching next fixture:', error);
     }
-    this.nextClub = this.getNextOpponentClub();
-    this.myClub = this.getMyClub();
   }
+
+
+
 
 
   getNextOpponentClub(): Club {

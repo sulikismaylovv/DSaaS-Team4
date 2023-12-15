@@ -58,8 +58,6 @@ export class SinglePostComponent implements OnInit {
         this.originalPost = await this.postsService.getPostById(this.post.original_post_id);
       }
     }
-    console.log('Post:', this.post);
-    console.log('Original post:', this.originalPost);
 
 
     await this.getProfile();
@@ -67,7 +65,7 @@ export class SinglePostComponent implements OnInit {
     if (this.profile) {
       this.avatarSafeUrl = await this.ImageDownloadService.loadAvatarImage(this.profile.id);
     }
-    this.loadComments().then(r => console.log("loadComments() finished"));
+    await this.loadComments();
     this.loading = false;
   }
 
@@ -115,7 +113,6 @@ export class SinglePostComponent implements OnInit {
 
     try {
       const createdComment = await this.postsService.addComment(newComment);
-      console.log('Created comment:', createdComment);
       this.comments.push(createdComment);
       this.commentContent = ''; // Clear the input after posting
     } catch (error) {

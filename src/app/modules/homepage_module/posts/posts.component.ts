@@ -95,8 +95,6 @@ export class PostsComponent implements OnInit {
     // Load user preferences if profile.id is defined
     if (this.profile?.id) {
       await this.loadUserPreferences();
-      // console.log('Followed Club IDs:', this.followedClubIds);
-      //console.log('Favorite Club ID:', this.favoriteClubId);
     }
 
     try {
@@ -130,7 +128,6 @@ export class PostsComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -161,7 +158,6 @@ export class PostsComponent implements OnInit {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight
       && currentScroll > this.lastScrollTop) {
       this.loadMorePosts(); // Load more posts
-      console.log('At bottom, loading more posts');
     }
     // Set the new last scroll position to the current scroll position
     this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling

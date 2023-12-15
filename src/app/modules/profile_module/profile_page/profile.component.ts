@@ -20,7 +20,6 @@ export class ProfileComponent extends CommonComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -32,7 +31,6 @@ export class ProfileComponent extends CommonComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 

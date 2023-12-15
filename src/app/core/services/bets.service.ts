@@ -136,8 +136,6 @@ export class BetsService {
       const newCredits = currentData.credits - creditsOffset;
       const newActiveCredits = currentData.activeCredits + creditsOffset;
 
-      console.log('New credits:', newCredits);
-
       // Update both credits and activeCredits
       const {data: updateData, error: updateError} = await this.supabase.supabaseClient
         .from('usersinbetting')
@@ -243,7 +241,6 @@ export class BetsService {
 
       if (betterError) throw betterError;
       if (!betterData) throw new Error('Better not found');
-      console.log(betterData);
 
       const response = await this.supabase.supabaseClient
         .from('bettingrecord')
@@ -259,7 +256,6 @@ export class BetsService {
 
       if (response.error) throw response.error;
 
-      console.log(response.data);
 
       const betsWithFixtures: BetWithFixture[] = response.data.map(item => {
         // Destructure your item to access nested fixture and team details directly
@@ -317,7 +313,6 @@ export class BetsService {
 
       if (betterError) throw betterError;
       if (!betterData) throw new Error('Better not found');
-      console.log(betterData);
 
       const response = await this.supabase.supabaseClient
         .from('bettingrecord')
@@ -334,7 +329,6 @@ export class BetsService {
 
       if (response.error) throw response.error;
 
-      console.log(response.data);
 
       const betsWithFixtures: BetWithFixture[] = response.data.map(item => {
         // Destructure your item to access nested fixture and team details directly

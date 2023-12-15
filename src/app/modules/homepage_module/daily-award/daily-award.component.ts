@@ -23,7 +23,6 @@ export class DailyAwardComponent implements OnInit{
   }
 
   trackButtonClick1(): void {
-    console.log("success", "hey");
     gtag('event', 'rewardButton', {
       event_category: 'Button05',
       event_label: 'RewardButton'

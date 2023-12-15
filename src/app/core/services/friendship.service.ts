@@ -53,7 +53,6 @@ export class FriendshipService {
 
   // Remove a friend regardless of who initiated the friendship
   async removeFriend(userId: string, friendId: string) {
-    console.log('removeFriend', userId, friendId);
     // First try to delete where userId is user1_id and friendId is user2_id
     let {error} = await this.supabase.supabaseClient
       .from('friendships')
@@ -116,7 +115,6 @@ export class FriendshipService {
       }
 
       // Log the data for debugging purposes
-      //console.log('Friend request status:', data);
 
       // Determine the friendship status
       if (data && data.length > 0) {

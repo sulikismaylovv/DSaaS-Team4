@@ -44,7 +44,6 @@ export class MatchesComponent implements OnInit {
 
     async onGameSelect(fixture: SupabaseFixture) {
         if (this.authService.isLogged()) {
-          //console.log("Authenticated");
             this.fixtureTransferService.changeFixture(fixture);
             await this.router.navigateByUrl("/game/" + fixture.fixtureID, {
                 state: {fixture: fixture},
@@ -68,9 +67,6 @@ export class MatchesComponent implements OnInit {
       this.filterFixturesForUserPreferences();
     }
     this.loadBettedFixtures();
-
-    //console.log(this.fixtures);
-
   }
 
   // async checkIfBet(): Promise<void> {
