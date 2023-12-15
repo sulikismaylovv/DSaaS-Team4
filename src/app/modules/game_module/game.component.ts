@@ -1,19 +1,23 @@
-import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
-import {ThemeService} from "../../core/services/theme.service";
-import {DatePipe} from "@angular/common";
-import {NavbarService} from "../../core/services/navbar.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FixtureTransferService} from "../../core/services/fixture-transfer.service";
-import {Lineup} from "src/app/core/models/lineup.model";
-import {ApiService} from "src/app/core/services/api.service";
-import {Bet} from "src/app/core/models/bets.model";
-import {BetsService} from "src/app/core/services/bets.service";
-import {AuthService} from "src/app/core/services/auth.service";
-import {Club} from "src/app/core/models/club.model";
-import {SupabaseFixture, SupabaseFixtureModel,} from "src/app/core/models/supabase-fixtures.model";
-import {SupabaseService} from "src/app/core/services/supabase.service";
-import {from, Observable} from "rxjs";
-import {Player} from "src/app/core/models/player.model";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ThemeService } from "../../core/services/theme.service";
+import { DatePipe } from "@angular/common";
+import { NavbarService } from "../../core/services/navbar.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FixtureTransferService } from "../../core/services/fixture-transfer.service";
+import { Lineup } from "src/app/core/models/lineup.model";
+import { ApiService } from "src/app/core/services/api.service";
+import { Bet } from "src/app/core/models/bets.model";
+import { BetsService } from "src/app/core/services/bets.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { Club } from "src/app/core/models/club.model";
+import {
+  SupabaseFixture,
+  SupabaseFixtureModel,
+} from "src/app/core/models/supabase-fixtures.model";
+import { SupabaseService } from "src/app/core/services/supabase.service";
+import { from, Observable } from "rxjs";
+import { Player } from "src/app/core/models/player.model";
+import { take } from "rxjs/operators";
 
 declare let gtag: Function;
 
@@ -51,22 +55,22 @@ export class GameComponent implements OnInit {
 
   //
   jupilerProLeagueColors: { [id: string]: string } = {
-    '740': 'rgb(223, 23, 43)', // Antwerp: Red
-    '742': 'rgb(0, 77, 157)', // Genk: Blue
-    '569': 'rgb(0, 120, 187)', // Club Brugge KV: Blue
-    '741': 'rgb(0, 215, 25)', // Cercle Brugge: Green
-    '735': 'rgb(245, 209, 40)', // St. Truiden: Yellow
-    '733': 'rgb(152, 131, 68)', // Standard Liege: Red
-    '266': 'rgb(255, 229, 0)', // KV Mechelen: Yellow
-    '6224': 'rgb(238, 50, 36)', // RWDM: Black
-    '736': 'rgb(255, 230, 0)', // Charleroi: Black
-    '739': 'rgb(0, 0, 0)', // AS Eupen: Black
-    '260': 'rgb(255, 255, 255)', // OH Leuven: White
-    '734': 'rgb(200, 16, 46)', // Kortrijk: Red
-    '1393': 'rgb(246, 211, 48)', // Union St. Gilloise: Yellow
-    '554': 'rgb(81, 46, 143)', // Anderlecht: Purple
-    '261': 'rgb(42, 102, 157)', // KVC Westerlo: Red
-    '631': 'rgb(0, 71, 148)', // KAA Gent: Blue
+    "740": "rgb(223, 23, 43)", // Antwerp: Red
+    "742": "rgb(0, 77, 157)", // Genk: Blue
+    "569": "rgb(0, 120, 187)", // Club Brugge KV: Blue
+    "741": "rgb(0, 215, 25)", // Cercle Brugge: Green
+    "735": "rgb(245, 209, 40)", // St. Truiden: Yellow
+    "733": "rgb(152, 131, 68)", // Standard Liege: Red
+    "266": "rgb(255, 229, 0)", // KV Mechelen: Yellow
+    "6224": "rgb(238, 50, 36)", // RWDM: Black
+    "736": "rgb(255, 230, 0)", // Charleroi: Black
+    "739": "rgb(0, 0, 0)", // AS Eupen: Black
+    "260": "rgb(255, 255, 255)", // OH Leuven: White
+    "734": "rgb(200, 16, 46)", // Kortrijk: Red
+    "1393": "rgb(246, 211, 48)", // Union St. Gilloise: Yellow
+    "554": "rgb(81, 46, 143)", // Anderlecht: Purple
+    "261": "rgb(42, 102, 157)", // KVC Westerlo: Red
+    "631": "rgb(0, 71, 148)", // KAA Gent: Blue
   };
 
   idTeam0: number = 0;
@@ -92,24 +96,30 @@ export class GameComponent implements OnInit {
         schema: "public",
         table: "bettingrecord",
       }, async () => {
-        if(this.authService.isLogged()){
-        this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
-          await this.getBetterID(),
-          this.fixture.fixtureID,
-        );
-        console.log("betAlreadyPlaced before update: ", this.betAlreadyPlaced);
-        this.cdr.detectChanges();
-        if (this.betAlreadyPlaced && this.authService.isLogged()) {
-          //console.log("getBetInfo() called");
-          await this.getBetInfo();
-          this.availableCredits = await this.betsService.getUserCredits(this.authService.session?.user?.id!);
+        if (this.authService.isLogged()) {
+          this.betAlreadyPlaced = await this.betsService.checkIfBetExists(
+            await this.getBetterID(),
+            this.fixture.fixtureID,
+          );
+          // console.log(
+          //   "betAlreadyPlaced before update: ",
+          //   this.betAlreadyPlaced,
+          // );
+          this.cdr.detectChanges();
+          if (this.betAlreadyPlaced && this.authService.isLogged()) {
+            //console.log("getBetInfo() called");
+            await this.getBetInfo();
+            this.availableCredits = await this.betsService.getUserCredits(
+              this.authService.session?.user?.id!,
+            );
+          }
         }
-      }}).subscribe();
+      }).subscribe();
   }
 
   async checkCredits(): Promise<void> {
     await this.checkIfLoggedIn();
-    console.log(this.betAmount + " and " + this.availableCredits);
+    // console.log(this.betAmount + " and " + this.availableCredits);
     if (this.availableCredits < this.betAmount) {
       this.openModal("insufficientCredits");
     }
@@ -118,14 +128,14 @@ export class GameComponent implements OnInit {
   openModal(id: string): void {
     const modal = document.getElementById(id);
     if (modal) {
-      modal.classList.add('active');
+      modal.classList.add("active");
     }
   }
 
   closeModal(id: string): void {
     const modal = document.getElementById(id);
     if (modal) {
-      modal.classList.remove('active');
+      modal.classList.remove("active");
     }
   }
 
@@ -140,61 +150,126 @@ export class GameComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  // ngOnInit(): void {
+  //   console.log("ngOnInit() called");
+  //   this.loading = true;
+  //   this.route.paramMap.subscribe((params) => {
+  //     const id = +params.get("id")!;
+  //     console.log("test------------------------------------------------------------------------------------");
+  //     console.log("id: ", id);
+  //     this.assignFixture(id);
+  //     console.log("fixture in ngOn init: ", this.fixture.club0);
+  //     console.log("test------------------------------------------------------------------------------------");
+
+  //     console;
+  //     this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
+  //       console.log("fixtureTransferService.currentFixture.subscribe() called");
+  //       console.log("fixture sdddd: ", fixture);
+  //       if (fixture?.fixtureID === id) {
+  //         this.idTeam0 = this.fixture.club0?.id as number;
+  //         this.idTeam1 = this.fixture.club1?.id as number;
+
+  //         this.fixture = fixture;
+  //         this.fixtureTransferService.changeFixture(fixture); // Update the fixture in the service
+  //         console.log("fixture: ", this.fixture);
+  //         const squadPromise = await this.fetchSquads();
+  //         const timePromise = await this.updateTheTime();
+  //         if (this.authService.isLogged()) {
+  //           const checkPromise = await this.checkIfBetCanBePlaced();
+
+  //           await Promise.all([squadPromise, timePromise, checkPromise]);
+  //         } else {
+  //           await Promise.all([squadPromise, timePromise]);
+  //         }
+
+  //         console.log("loading changed");
+  //         this.loading = false;
+
+  //         if (this.betAlreadyPlaced && this.authService.isLogged()) {
+  //           this.getBetInfo().then(() => this.logData());
+  //         }
+  //       } else {
+  //         console.log("step one");
+  //         await this.fetchFixture(id);
+  //         // this.fixtureTransferService.currentFixture.pipe(take(1)).subscribe(
+  //         //   (currentFixture) => {
+  //         //     if (currentFixture) {
+  //         //       this.fixture = currentFixture;
+  //         //     }
+  //         //   },
+  //         // );
+  //         this.cdr.detectChanges(); // Trigger change detection
+  //       }
+
+  //       this.navbarService.setShowNavbar(true);
+  //       this.time = "test";
+
+  //       this.oddHome = this.fixture.odds_home ?? 0;
+  //       this.oddAway = this.fixture.odds_away ?? 0;
+  //       await this.updateTheTime();
+  //       (async () => await this.updateTheTime());
+  //       // this.fetchLineup(this.fixture.fixtureID);
+  //       // this.initializeLineups();
+  //       if (this.authService.isLogged()) {
+  //         await this.getUserCredits();
+  //       }
+  //       await this.getStanding();
+  //     });
+  //   });
+  // }
+
   ngOnInit(): void {
     console.log("ngOnInit() called");
     this.loading = true;
-    this.route.paramMap.subscribe((params) => {
-      const id = +params.get("id")!;
-      this.fixtureTransferService.currentFixture.subscribe(async (fixture) => {
-        console.log("fixtureTransferService.currentFixture.subscribe() called");
-        console.log("fixture sdddd: ", fixture);
-        if (fixture?.fixtureID === id) {
+    this.route.paramMap.subscribe(async (params) => {
+        const id = +params.get("id")!;
+        console.log("id: ", id);
 
-          this.idTeam0 = this.fixture.club0?.id as number;
-          this.idTeam1 = this.fixture.club1?.id as number;
+        await this.assignFixture(id);
 
+        if (this.fixture?.fixtureID === id) {
+            this.idTeam0 = this.fixture.club0?.id as number;
+            this.idTeam1 = this.fixture.club1?.id as number;
 
-          this.fixture = fixture;
-          this.fixtureTransferService.changeFixture(fixture); // Update the fixture in the service
-          console.log("fixture: ", this.fixture);
-          const squadPromise = await this.fetchSquads();
-          const timePromise = await this.updateTheTime();
-          if(this.authService.isLogged()){
-          const checkPromise = await this.checkIfBetCanBePlaced();
+            const squadPromise = await this.fetchSquads();
+            const timePromise = await this.updateTheTime();
 
-          await Promise.all([squadPromise, timePromise, checkPromise]);}
-          else{
-            await Promise.all([squadPromise, timePromise]);
-          }
+            if (this.authService.isLogged()) {
+                const checkPromise = await this.checkIfBetCanBePlaced();
+                await Promise.all([squadPromise, timePromise, checkPromise]);
+            } else {
+                await Promise.all([squadPromise, timePromise]);
+            }
 
-
-          console.log("loading changed");
-          this.loading = false;
-
-          if (this.betAlreadyPlaced && this.authService.isLogged()) {
-            this.getBetInfo().then(() => this.logData());
-          }
+            if (this.betAlreadyPlaced && this.authService.isLogged()) {
+                await this.getBetInfo();
+                this.logData();
+            }
         } else {
-          await this.fetchFixture(id);
+            await this.fetchFixture(id);
         }
 
         this.navbarService.setShowNavbar(true);
-        this.time = "test";
-
-        this.oddHome = this.fixture.odds_home ?? 0;
-        this.oddAway = this.fixture.odds_away ?? 0;
+        this.oddHome = this.fixture?.odds_home ?? 0;
+        this.oddAway = this.fixture?.odds_away ?? 0;
         await this.updateTheTime();
-        (async () => await this.updateTheTime());
-        // this.fetchLineup(this.fixture.fixtureID);
-        // this.initializeLineups();
-        if(this.authService.isLogged()){
-        await this.getUserCredits();}
+
+        if (this.authService.isLogged()) {
+            await this.getUserCredits();
+        }
+
         await this.getStanding();
-      });
+        this.loading = false;
     });
+}
+
+  async assignFixture(id: number) {
+    this.fixture = await this.apiService.fetchSingleSupabaseFixture(id);
+    console.log("fixture in assignFixture: ", this.fixture);
   }
+
   goBack() {
-    this.router.navigate(['/home']).then(r => console.log("back"));
+    this.router.navigate(["/home"]).then((r) => console.log("back"));
   }
   async getBetInfo() {
     const user = this.authService.session?.user;
@@ -212,7 +287,6 @@ export class GameComponent implements OnInit {
   }
 
   async fetchSquads() {
-
     this.idTeam0 = this.fixture.club0?.id as number;
     this.idTeam1 = this.fixture.club1?.id as number;
 
@@ -227,7 +301,9 @@ export class GameComponent implements OnInit {
     // const numbers = this.fixture.lineups?.split("|");
     // console.log("numbers: ", numbers);
     console.log("fixture.lineups: ", this.fixture.lineups);
-    const numbersRaw = await this.apiService.fetchLineup(this.fixture.fixtureID);
+    const numbersRaw = await this.apiService.fetchLineup(
+      this.fixture.fixtureID,
+    );
     if (numbersRaw === null) {
       this.isLineupAvailable = false;
       //console.log("Lineup is not available");
@@ -240,19 +316,18 @@ export class GameComponent implements OnInit {
     const listAway = numbers[1].split(",").map(Number);
 
     for (const playerId of listHome) {
-      const player = this.squadHome.find(p => p.id === playerId);
+      const player = this.squadHome.find((p) => p.id === playerId);
       if (player) {
         this.lineupHome.push(player);
       }
     }
     for (const playerId of listAway) {
-      const player = this.squadAway.find(p => p.id === playerId);
+      const player = this.squadAway.find((p) => p.id === playerId);
       if (player) {
         this.lineupAway.push(player);
       }
     }
     this.cdr.detectChanges();
-
   }
 
   fetchBetInfoObservable(betterID: number, fixtureID: number): Observable<Bet> {
@@ -281,7 +356,6 @@ export class GameComponent implements OnInit {
     if (this.betAlreadyPlaced && this.authService.isLogged()) {
       console.log("getBetInfo() called");
       await this.getBetInfo();
-
     }
     console.log("betAlreadyPlaced: ", this.betAlreadyPlaced);
   }
@@ -377,7 +451,6 @@ export class GameComponent implements OnInit {
     this.trackButtonClick();
   }
 
-
   handleBetAlreadyExists() {
     //something needs to be done here
   }
@@ -389,11 +462,9 @@ export class GameComponent implements OnInit {
   }
 
   convertToLocaleTimeString(dateString: string): string {
-
     if (this.fixture.is_finished || this.hasFixtureTimePassed()) {
       return `${this.fixture.home_goals} - ${this.fixture.away_goals}`;
-    }
-    //  else if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
+    } //  else if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
     //   return "LIVE";}
     else {
       // Parse the date string into a Date object
@@ -446,17 +517,15 @@ export class GameComponent implements OnInit {
 
     if (this.fixture.is_finished == false && this.hasFixtureTimePassed()) {
       return "LIVE";
+    } else if (matchDate.getTime() === today.getTime()) {
+      return "Today";
+    } else if (matchDate.getTime() === tomorrow.getTime()) {
+      return "Tomorrow";
+    } else {
+      const diffTime = Math.abs(matchDate.getTime() - today.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays + " days";
     }
-    else
-      if (matchDate.getTime() === today.getTime()) {
-        return "Today";
-      } else if (matchDate.getTime() === tomorrow.getTime()) {
-        return "Tomorrow";
-      } else {
-        const diffTime = Math.abs(matchDate.getTime() - today.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays + " days";
-      }
   }
 
   toggleTheme() {
@@ -484,7 +553,6 @@ export class GameComponent implements OnInit {
       } else if (team === "draw") {
         this.teamChosen = "draw";
         this.trackButtonClick4();
-
       }
     }
   }
@@ -495,41 +563,40 @@ export class GameComponent implements OnInit {
 
   trackButtonClick(): void {
     console.log("success", "hey");
-    gtag('event', 'Bet', {
-      event_category: 'Button1',
-      event_label: 'BetButton'
+    gtag("event", "Bet", {
+      event_category: "Button1",
+      event_label: "BetButton",
     });
   }
   trackButtonClick1(): void {
     console.log("success1", "hey1");
-    gtag('event', 'ChangeBetValue', {
-      event_category: 'Button2',
-      event_label: 'ChangeButton'
+    gtag("event", "ChangeBetValue", {
+      event_category: "Button2",
+      event_label: "ChangeButton",
     });
   }
 
   trackButtonClick2(): void {
     console.log("success", "hey");
-    gtag('event', 'Team1', {
-      event_category: 'Button3',
-      event_label: 'TeamButton1'
+    gtag("event", "Team1", {
+      event_category: "Button3",
+      event_label: "TeamButton1",
     });
   }
   trackButtonClick3(): void {
     console.log("success1", "hey1");
-    gtag('event', 'Team2', {
-      event_category: 'Button4',
-      event_label: 'TeamButton2'
+    gtag("event", "Team2", {
+      event_category: "Button4",
+      event_label: "TeamButton2",
     });
   }
   trackButtonClick4(): void {
     console.log("success1", "hey1");
-    gtag('event', 'Draw', {
-      event_category: 'Button5',
-      event_label: 'DrawButton'
+    gtag("event", "Draw", {
+      event_category: "Button5",
+      event_label: "DrawButton",
     });
   }
-
 
   async checkIfLoggedIn() {
     if (!this.authService.isLogged()) {
