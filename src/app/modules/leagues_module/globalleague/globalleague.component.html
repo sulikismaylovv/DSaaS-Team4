@@ -79,77 +79,102 @@
                   <input formControlName="leagueName" id="leagueName" type="text"
                          placeholder="Enter league name"
                          class="bg-very-light-purple text-dark-mode border border-light-gray rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                         required>
-                </div>
+                         [class.error]="leagueForm.get('leagueName')?.invalid && leagueForm.get('leagueName')?.touched">
 
-                <div class="m-2">
-                  <div class="mb-4">
-                    <p class="block text-sm font-bold mb-2 text-dark-mode dark:text-white">
-                      Invite Friends
-                    </p>
-
-                    <!-- Input to search and add a new friend -->
-                    <div class="flex items-center mb-2">
-                      <input #newFriendInput type="text"
-                             (input)="onUserSearch($event)"
-                             placeholder="Search and add friends by username"
-                             class="bg-very-light-purple text-black border border-light-gray w-full rounded px-4 py-2 mr-2 flex-grow">
-                    </div>
+                  <!-- Display validation error message -->
+                  <div *ngIf="leagueForm.get('leagueName')?.invalid && leagueForm.get('leagueName')?.touched" class="text-red-500 mt-1">
+                    League name is required.
                   </div>
 
-                  <div class="col-span-2">
-                    <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">
-                      <li *ngFor="let user of userSearchResults"
-                          (click)="addAndClear(user.username, newFriendInput)"
-                          class="cursor-pointer text-black hover:bg-lighter-purple p-2">
-                        {{ user.username }}
-                      </li>
-                    </ul>
-                    <!-- Container for added friends -->
-                    <div class="flex flex-col space-y-4 mb-4">
-                      <div *ngFor="let friendControl of friends.controls; let i = index" class="flex items-center">
-                        <div class="bg-lighter-purple text-white rounded px-4 py-2 flex-grow">
-                          {{ friendControl.value.username }}
-                        </div>
-                        <button (click)="removeFriend(i)" type="button"
-                                class="ml-2 bg-red-500 text-white w-8 h-8 rounded flex items-center justify-center">
-                          <svg class="w-6 h-6 p-0.5 m-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
-                          </svg>
-                        </button>
+                  <!-- Display success message -->
+                  <div *ngIf="leagueForm.get('leagueName')?.valid && leagueForm.get('leagueName')?.touched" class="text-green-500 mt-1">
+                    League name is valid!
+                  </div>
 
+
+
+                    <div class="mt-4">
+                      <p class="block text-sm font-bold mb-2 text-dark-mode dark:text-white">
+                        Invite Friends
+                      </p>
+
+                      <div class="flex items-center mb-1">
+                        <input #newFriendInput type="text"
+                               (input)="onUserSearch($event)"
+                               placeholder="Search and add friends by username"
+                               class="bg-very-light-purple text-black border border-light-gray w-full rounded px-4 py-2 flex-grow">
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-span-2">
-                <div class="flex justify-end mt-4">
-                  <button  class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="submit">
-                    Create League
-                  </button>
 
-                </div>
-              </div>
-            </form>
-            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showModalConfirm">
-              <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-                <div class="mt-3 text-center">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">League Created Successfully!</h3>
-                  <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">League Name: {{ submittedLeagueName }}</p>
-                    <p class="text-sm text-gray-500">
-                      Friends Invited:
-                    <ul>
-                      <li *ngFor="let username of submittedFriendsUsernames">{{ username }}</li>
-                    </ul>
+
+                    <div class="col-span-2">
+                      <ul *ngIf="userSearchResults.length > 0" class="list-none bg-white text-black p-2 rounded mb-4">
+                        <li *ngFor="let user of userSearchResults"
+                            (click)="addAndClear(user.username, newFriendInput)"
+                            class="cursor-pointer text-black hover:bg-lighter-purple p-2">
+                          {{ user.username }}
+                        </li>
+                      </ul>
+
+                      <!-- Container for added friends -->
+                      <div class="flex flex-col space-y-4 mb-4">
+                        <div *ngFor="let friendControl of friends.controls; let i = index" class="flex items-center">
+                          <div class="bg-lighter-purple text-white rounded px-4 py-2 flex-grow">
+                            {{ friendControl.value.username }}
+                          </div>
+                          <button (click)="removeFriend(i)" type="button"
+                                  class="ml-2 bg-red-500 text-white w-8 h-8 rounded flex items-center justify-center">
+                            <svg class="w-6 h-6 p-0.5 m-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Display validation error message for friends -->
+                      <div *ngIf="friends.length === 0" class="text-red-500">
+                        At least one friend should be added.
+                      </div>
+
                   </div>
-                  <div class="items-center px-4 pb-3">
-                    <button class="bg-blue-500 text-white rounded-md px-4 py-2" (click)="closeModalConfirm()">Close</button>
+              </div>
+                <div class="col-span-2">
+                  <div class="flex justify-end mt-4">
+                    <button
+                      [class.opacity-50]="leagueForm.invalid || friends.length === 0"
+                    [disabled]="leagueForm.invalid || friends.length === 0"
+                    class="focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900
+                    hover:{{ leagueForm.valid && friends.length > 0 ? 'bg-purple-800' : '' }} dark:hover:{{ leagueForm.valid && friends.length > 0 ? 'bg-purple-700' : '' }}"
+                    type="submit">
+                    Create League
+                    </button>
+                  </div>
+                </div>
+
+          </div>
+      </form>
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" *ngIf="showModalConfirm">
+              <div class="flex items-center justify-center h-full">
+                <div class="p-4 bg-white dark:bg-dark-mode border-purple-400 border-2 shadow-lg rounded-lg">
+                  <div class="mt-3 text-center">
+                    <h3 class="text-lg leading-6 font-medium  dark:text-white text-black">League Created Successfully!</h3>
+                    <div class="mt-2 px-7 py-3">
+                      <p class="text-sm dark:text-white text-black">League Name: {{ submittedLeagueName }}</p>
+                      <p class="text-sm dark:text-white text-black">
+                        Friends Invited:
+                          <ul>
+                            <li *ngFor="let username of submittedFriendsUsernames" class="text-black dark:text-white">{{ username }}</li>
+                          </ul>
+                    </div>
+                    <div class="items-center px-4 pb-3">
+                      <button class="focus:outline-none text-white bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:focus:ring-purple-900" (click)="closeModalConfirm()">Close</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
           </div>
         </div>
       </div>

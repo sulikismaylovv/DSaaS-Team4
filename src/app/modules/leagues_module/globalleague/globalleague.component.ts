@@ -153,7 +153,7 @@ export class GloballeagueComponent implements OnInit {
   // Optional: Add a method for user search if you have an input field for it
   async onUserSearch(event: any): Promise<void> {
     const searchTerm = event.target.value;
-    if (searchTerm.length > 2) { // Trigger search when at least 3 characters are typed
+    if (searchTerm.length > 1) { // Trigger search when at least 3 characters are typed
       const results = await this.userService.searchFriendsByUsername(searchTerm);
       // Filter out usernames that have already been added
       const addedUsernames = this.friends.value.map((f: Friend) => f.username);
