@@ -170,7 +170,7 @@ export class CommonComponent implements OnInit{
 
     this.isOwnProfile = !urlUserId || (urlUserId === authenticatedUserId);
     this.userRefId = this.isOwnProfile ? null : urlUserId;
-    this.aboutOrBetLink= this.isOwnProfile? "Betting Overview" : "About";
+    this.aboutOrBetLink= this.isOwnProfile? "Wagers Overview" : "About";
     this.infoString=['Friends', 'Leagues', this.aboutOrBetLink,'Player Collection'];
 
     try {

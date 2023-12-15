@@ -308,7 +308,7 @@ export class ShopComponent implements OnInit {
         return false;
       }
 
-      const cost = isSurprise ? 50 : 100; // Cost depends on whether it's a surprise
+      const cost = isSurprise ? 250 : 500; // Cost depends on whether it's a surprise
       if (this.userCredits < cost) {
         console.error('Not enough credits');
         return false;
