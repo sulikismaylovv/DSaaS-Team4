@@ -61,7 +61,7 @@ async function addPost(
     .from("posts")
     .insert([
       {
-        user_id: "a4bb1d91-7558-4cfc-9f8b-4e5192518373",
+        user_id: "295e7323-6320-47e1-b9e1-a8f0a6597b63",
         content: newInfo,
         image_url: image_url,
         created_at: new Date(),
