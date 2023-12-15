@@ -71,14 +71,12 @@ export class HomeComponent implements OnInit {
     const userId = this.authService.session?.user?.id;
 
     if (!userId) {
-      console.log("User ID is undefined.");
       return;
     }
 
     try {
       this.isRecentlyLogged = await this.userService.checkIfRecentlyLogged(userId);
       await this.userService.setRecentlyLogged(userId);
-      console.log("Recently logged status updated for userID:", userId);
     } catch (error) {
       console.error("Error updating recently logged status:", error);
     }

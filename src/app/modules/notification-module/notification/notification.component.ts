@@ -170,7 +170,6 @@ export class NotificationComponent implements OnInit {
 
   async acceptRequest(userId: string | undefined): Promise<void> {
     if (userId === undefined && this.currentUserId === undefined) throw new Error('User ID is undefined');
-    console.log('Accepted request from:', userId);
     await this.friendshipService.updateFriendRequest(<string>this.currentUserId, <string>userId, 'accepted');
     // Handle accept request logic
     window.location.reload();
@@ -178,7 +177,6 @@ export class NotificationComponent implements OnInit {
 
   async declineRequest(userId: string | undefined): Promise<void> {
     if (userId === undefined && this.currentUserId === undefined) throw new Error('User ID is undefined');
-    console.log('Rejected request from:', userId);
     await this.friendshipService.updateFriendRequest(<string>this.currentUserId, <string>userId, 'rejected');
     // Handle accept request logic
     window.location.reload();

@@ -42,8 +42,11 @@ export class GameComponent implements OnInit {
   league: Club[] = [];
   showNewContent = false;
   credits = 100;
+  testingdata: any;
   betAlreadyPlaced = false;
   isLineupAvailable = false;
+  betInfo$: Observable<{ betAmount: number; teamChosen: string }> =
+    new Observable<{ betAmount: number; teamChosen: string }>();
   squadHome: Player[] = [];
   squadAway: Player[] = [];
   lineupHome: Player[] = [];
@@ -299,11 +302,7 @@ export class GameComponent implements OnInit {
 
   async fetchLineups() { //if its there
     // const numbers = this.fixture.lineups?.split("|");
-    // console.log("numbers: ", numbers);
-    console.log("fixture.lineups: ", this.fixture.lineups);
-    const numbersRaw = await this.apiService.fetchLineup(
-      this.fixture.fixtureID,
-    );
+    const numbersRaw = await this.apiService.fetchLineup(this.fixture.fixtureID);
     if (numbersRaw === null) {
       this.isLineupAvailable = false;
       //console.log("Lineup is not available");
@@ -335,10 +334,6 @@ export class GameComponent implements OnInit {
   }
 
   logData() {
-    console.log("homeSquad: ", this.squadHome);
-    console.log("awaySquad: ", this.squadAway);
-    console.log("home: ", this.lineupHome);
-    console.log("away: ", this.lineupAway);
   }
 
   async checkIfBetCanBePlaced() {
@@ -354,10 +349,8 @@ export class GameComponent implements OnInit {
       this.fixture.fixtureID,
     );
     if (this.betAlreadyPlaced && this.authService.isLogged()) {
-      console.log("getBetInfo() called");
-      await this.getBetInfo();
+      this.getBetInfo();
     }
-    console.log("betAlreadyPlaced: ", this.betAlreadyPlaced);
   }
 
   async fetchFixture(fixtureID: number) {
@@ -396,8 +389,6 @@ export class GameComponent implements OnInit {
     const userId = this.authService.session?.user?.id;
     if (userId) {
       this.availableCredits = await this.betsService.getUserCredits(userId);
-    } else {
-      console.log("User not logged in");
     }
   }
 
@@ -440,7 +431,6 @@ export class GameComponent implements OnInit {
     if (!checkIfBetExists && this.betCanBePlaced) {
       const betCreated = await this.betsService.createBet(bet, user.id);
       if (betCreated) {
-        console.log("Bet created");
       } else {
         throw new Error("Error creating bet");
       }
@@ -450,6 +440,7 @@ export class GameComponent implements OnInit {
     }
     this.trackButtonClick();
   }
+
 
   handleBetAlreadyExists() {
     //something needs to be done here

@@ -44,7 +44,6 @@ export class GloballeagueComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.authChanges((_, session) => (this.session = session));
-    //console.log(this.session);
   }
 
 
@@ -89,7 +88,6 @@ export class GloballeagueComponent implements OnInit {
 
         // Create league and get the ID
         leagueId = await this.leagueService.createLeague(league);
-        //console.log('leagueId:', leagueId);
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {

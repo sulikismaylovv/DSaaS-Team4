@@ -355,12 +355,10 @@ export class CommonComponent implements OnInit{
   async checkFriendStatus(): Promise<void> {
     // Call the service to check the friend status
     if(this.userRefId == null) throw new Error('User ID is undefined');
-    //console.log(this.userRefId);
     const targetUserId = this.userRefId;
     const currentUserId = this.authService.session?.user?.id; // Or however you retrieve the current user's ID
     // This is a hypothetical method that you would need to implement
     const status = await this.friendshipService.checkFriendRequestStatus(currentUserId, targetUserId);
-    //console.log(status);
     if(status === 'accepted') {
       this.friendRequestStatus = FriendRequestStatus.Friends;
     } else if (status === 'pending') {
@@ -405,7 +403,6 @@ export class CommonComponent implements OnInit{
       }
       this.friendshipService.removeFriend(currentUserId, finalTargetUserId)
           .then(() => {
-            //console.log('Friend removed');
             this.friendRequestStatus = FriendRequestStatus.None;
             if (this.isOwnProfile){
               this.friendsList = this.friendsList.filter(friend => friend.profile.id !== finalTargetUserId);
@@ -518,22 +515,14 @@ export class CommonComponent implements OnInit{
   async loadUserLeagues(userId: string | undefined): Promise<void> {
     if(userId === undefined) throw new Error("Error");
     try {
-      //console.log("Loading leagues for user ID:", userId);
-
       const leagueIds = await this.friendsLeague.getLeaguesIDForUser(userId);
-      //console.log("Fetched league IDs:", leagueIds);
       const leagues = await this.friendsLeague.getLeaguesByIds(leagueIds);
-      //console.log("Fetched league details:", leagues);
-
       const leagueMembers = await this.friendsLeague.getMembersForLeagues(leagueIds);
-      //console.log("Fetched league members:", leagueMembers);
-
       const userLeaguesTemp: UserLeague[] = [];
 
       for (const league of leagues) {
         if (league.id !== undefined) {
           let members = leagueMembers[league.id] || [];
-          //console.log(`Processing league: ${league.name}, Members:`, members);
 
           // Fetch usernames for each member
           members = await Promise.all(members.map(async (member) => {
@@ -564,12 +553,10 @@ export class CommonComponent implements OnInit{
             isCurrentUserInTop: isUserInTop,
             currentUserInLeague: isUserInTop ? sortedMembers.find(member => member.userid === userId) || null : null
           });
-          //console.log(`Processed league: ${league.name}`, userLeaguesTemp[userLeaguesTemp.length - 1]);
         }
       }
 
       this.userLeagues = userLeaguesTemp;
-      //console.log("Final userLeagues data:", this.userLeagues);
 
     } catch (error) {
       console.error("Error loading leagues for user:", error);
@@ -587,7 +574,6 @@ export class CommonComponent implements OnInit{
     this.betsService.fetchAllPendingBets(this.currentUserID)
       .then(bets => {
         this.pendingBets = bets;
-        console.log("pending:" , this.pendingBets);
       })
       .catch(error => {
         console.error('Error fetching pending bets:', error);
@@ -597,7 +583,6 @@ export class CommonComponent implements OnInit{
     this.betsService.fetchSettledBets(this.currentUserID)
       .then(bets => {
         this.settledBets = bets;
-        console.log("settled:" , this.settledBets);
       })
       .catch(error => {
         console.error('Error fetching settled bets:', error);

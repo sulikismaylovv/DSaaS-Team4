@@ -162,50 +162,38 @@ export class FriendsleagueComponent implements OnInit {
     return [];
   }
   async addAndClear(username: string, inputElement: HTMLInputElement): Promise<void> {
-    console.log("addAndClear called with username:", username);
 
     if (username.trim()) {
       const user = this.userSearchResults.find(user => user.username === username);
-      console.log("Found user in search results:", user);
 
       const currentLeague = this.leagues[this.currentLeagueIndex];
-      //console.log("Current league:", currentLeague);
-      //console.log('isAlreadyAdded:', this.isAlreadyAdded(user.id));
 
       if (user && currentLeague?.id !== undefined && !this.isAlreadyAdded(user.id)) {
         try {
-          //console.log("Fetching betterID for userID:", user.id);
           const betterID = await this.betsService.getBetterID(user.id);
-          //console.log("Retrieved betterID:", betterID);
 
           if (betterID !== 0) {
-            //console.log("Fetching XP for betterID:", betterID);
             const userXP = await this.betsService.getUserXP(user.id);
-            console.log("Retrieved XP:", userXP);
 
             if (userXP !== null) {
-              console.log("Adding user to league:", currentLeague.id, "with XP:", userXP);
               await this.leagueService.addUserToLeague(user.id, currentLeague.id, userXP);
 
               const updatedMember = { ...user, username: user.username, xp: userXP };
               this.leagueMembers[currentLeague.id].push(updatedMember);
 
               this.userSearchResults = [];
-              console.log("User added successfully. Updated league members:", this.leagueMembers[currentLeague.id]);
             }
           }
         } catch (error) {
           console.error('Error adding user to league:', error);
         }
       } else {
-        console.log("User is either not found, already added, or currentLeagueId is undefined");
         alert("User does not exist, check again!");
         this.userSearchResults = [];
         inputElement.value = '';
       }
       inputElement.value = '';
     } else {
-      //console.log("Username is empty after trimming");
     }
   }
 

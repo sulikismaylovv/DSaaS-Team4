@@ -206,7 +206,6 @@ export class AuthService {
             updated_at: new Date(),
             avatar_url
         };
-        console.log(update);
         return this.supabase.supabaseClient.from('users').upsert(update);
     }
 
@@ -217,7 +216,6 @@ export class AuthService {
     async logout() {
         try {
             await this.supabase.supabaseClient.auth.signOut();
-            console.log('User logged out successfully');
             this.updateLoginStatus();
         } catch (error) {
             console.error('Logout Error:', error);
@@ -264,7 +262,6 @@ export class AuthService {
             }
             this._session = sessionData.session;
             if (this._session) {
-                //console.log('Session restored:', this._session);
                 // You may want to perform additional logic here if a session is restored
             }
         } catch (error) {
@@ -276,12 +273,10 @@ export class AuthService {
         this.isAuthenticatedSubject.next(session !== null);
         this._session = session;
         if (event === 'SIGNED_IN') {
-            console.log('User signed in:', session?.user);
             // Handle successful sign in
             //await this.router.navigate(['/home']);
 
         } else if (event === 'SIGNED_OUT') {
-            console.log('User signed out');
             // Handle sign out
             await this.router.navigate(['/login']);
         }
@@ -297,7 +292,6 @@ export class AuthService {
   }
 
   async updateUser(param: { background: string }) {
-      console.log("Param: " , param);
     const {background} = param;
     const update = {
       id: this._session?.user?.id, // Ensure the correct user ID is used
@@ -305,14 +299,12 @@ export class AuthService {
       bg_url: background,
       updated_at: new Date(),
     };
-    console.log(update);
     return this.supabase.supabaseClient.from('users').upsert(update);
 
   }
 
   async resendVerificationEmail() {
       const email = this.currentUserEmail.value;
-      console.log(email);
       if (email){
         return this.supabase.supabaseClient.auth.resend(
           {

@@ -73,7 +73,6 @@ export class CreateleagueComponent {
 
         // Create league and get the ID
         leagueId = await this.leagueService.createLeague(league);
-        console.log('leagueId:', leagueId);
 
         // Check if leagueId is a number before proceeding
         if (typeof leagueId === 'number') {
